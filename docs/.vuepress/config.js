@@ -19,6 +19,18 @@ module.exports = {
             link: '/HTML.html',
           },
           {
+            text: 'CSS',
+            link: '/CSS.html',
+          },
+          {
+            text: 'JavaScript',
+            link: '/JavaScript.html',
+          },
+          {
+            text: 'ES6',
+            link: '/ES6.html',
+          },
+          {
             text: 'Vue 2.X',
             link: '/Vue2.html',
           },
@@ -33,7 +45,7 @@ module.exports = {
         ],
       },
       {
-        text: '后端',
+        text: 'Java',
         children: [
           {
             text: 'ActiveMQ',
@@ -60,6 +72,19 @@ module.exports = {
             link: '/SpringCloud.html',
           },
           {
+            text: 'Dubbo',
+            link: '/Dubbo.html',
+          },
+          {
+            text: 'Docker',
+            link: '/Docker.html',
+          },
+        ],
+      },
+      {
+        text: 'Go',
+        children: [
+          {
             text: 'Go',
             link: '/Go.html',
           },
@@ -71,18 +96,23 @@ module.exports = {
             text: 'Gin',
             link: '/gin.html',
           },
-          {
-            text: 'Docker',
-            link: '/Docker.html',
-          },
         ],
       },
       {
         text: '数据库',
         children: [
           {
-            text: 'ActiveMQ',
-            link: '/ActiveMQ.html',
+            text: 'MongoDB',
+            link: '/MongoDB.html',
+          }
+        ],
+      },
+      {
+        text: 'Git',
+        children: [
+          {
+            text: 'Git',
+            link: '/Git.html',
           }
         ],
       },

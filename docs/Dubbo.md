@@ -1,37 +1,39 @@
-# Dubbo工作原理
+# Dubbo
 
-![//imgs/architecture.png](/Dubbo/architecture.png)
+## Dubbo 的几个组成部分
+
+![Dubbo 工作流程图](/Dubbo/architecture.png)
 
 - 服务提供者（Provider）：暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。
 - 服务消费者（Consumer）: 调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。
 - 注册中心（Registry）：注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。
 - 监控中心（Monitor）：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。
 
-# 环境准备
+## 环境准备
 
-### 注册中心ZooKeeper
+### 注册中心 ZooKeeper
 
 下载地址：[ZooKeeper](http://zookeeper.apache.org/releases.html)
 
-下载完成后解压，在conf目录下有zoo.cfg文件，其中保存着ZooKeeper的配置，例如端口号等，这里我们使用默认配置，端口号为2181
+下载完成后解压，在 conf 目录下有 zoo.cfg 文件，其中保存着 ZooKeeper 的配置，例如端口号等，这里我们使用默认配置，端口号为 2181。
 
-Windows环境下双击bin目录下的`zkServer.cmd`即可开启ZooKeeper
+Windows 环境下双击 bin 目录下的 `zkServer.cmd` 即可开启 ZooKeeper。
 
 ### Dubbo可视化面板
 
-下载地址：[Dubbo-Admin](https://github.com/apache/dubbo-admin/tree/master-0.2.0)
+下载地址：[Dubbo-Admin](https://github.com/apache/dubbo-admin/tree/master-0.2.0)。
 
-以下命令需要配置Maven环境变量及Node.js环境变量
+以下命令需要配置 Maven 环境变量及 Node.js 环境变量：
 
-默认分支最新已经切换为Vue前后端分离版，master-0.2.0分支仍然是不分离版，此处方便起见使用不分离版本，如果要使用前后端分离，则将后台打包后启动，在前端中运行`npm install`下载依赖然后运行`npm run dev`启动前端，访问对应端口即可
+默认分支最新已经切换为 Vue 前后端分离版，master-0.2.0 分支仍然是不分离版，此处方便起见使用不分离版本，如果要使用前后端分离，则将后台打包后启动，在前端中运行 `npm install` 下载依赖然后运行 `npm run dev` 启动前端，访问对应端口即可。
 
-进入dubbo-admin目录中，运行`mvn package`命令，生成一个target文件夹，使用`java -jar`命令运行其中jar包即可
+进入 dubbo-admin 目录中，运行 `mvn package` 命令，生成一个 target 文件夹，使用 `java -jar` 命令运行其中 jar 包即可。
 
-进入dubbo-monitor-simple文件夹，运行`mvn package`命令生成target文件夹，解压其中生成的压缩包，进入解压后的目录，其中config文件中的配置文件配置了相关端口等，可自行修改，这里使用默认即可，进入bin目录运行`start.bat`即可
+进入 dubbo-monitor-simple 文件夹，运行 `mvn package` 命令生成 target 文件夹，解压其中生成的压缩包，进入解压后的目录，其中 config 文件中的配置文件配置了相关端口等，可自行修改，这里使用默认即可，进入 bin 目录运行 `start.bat` 即可。
 
-# Spring整合Dubbo
+## Spring 整合 Dubbo
 
-实际开发中往往存在很多接口，Dubbo通过动态代理为接口生成代理对象，并在调用时利用Netty发送请求获取结果，调用的是服务提供者的接口实现类，因此消费者与提供者是面向接口交互的，为了开发方便，避免同一个接口在生产者消费者中多次重复定义的情况，将共用的接口、实体类全部放在一个工程中，并通过Maven管理在生产者消费者中引用
+实际开发中往往存在很多接口，Dubbo 通过动态代理为接口生成代理对象，并在调用时利用 Netty 发送请求获取结果，调用的是服务提供者的接口实现类，因此消费者与提供者是面向接口交互的，为了开发方便，避免同一个接口在生产者消费者中多次重复定义的情况，将共用的接口、实体类全部放在一个工程中，并通过 Maven 管理在生产者消费者中引用。
 
 ### 定义接口模块
 
@@ -93,13 +95,13 @@ public interface IUserServiceConsumer {
 
 ### 定义服务提供者
 
-##### 导入依赖，引入API接口模块及Dubbo
+#### 导入依赖，引入 API 接口模块及 Dubbo
 
 依赖问题：
 
-当前Maven仓库中包含`com.alibaba.dubbo`以及`org.apache.dubbo`
+当前 Maven 仓库中包含 `com.alibaba.dubbo` 以及 `org.apache.dubbo`。
 
-- 当引用阿里巴巴的dubbo依赖时，需要再引入netty，且如果要使用ZooKeeper还要引入ZooKeeper依赖，这样引入`curator-framework`一个依赖即可：
+- 当引用阿里巴巴的 Dubbo 依赖时，需要再引入 Netty，且如果要使用 ZooKeeper 还要引入 ZooKeeper 依赖，这样引入 `curator-framework` 一个依赖即可：
 
 ```xml
 <dependency>
@@ -121,7 +123,7 @@ public interface IUserServiceConsumer {
 </dependency>
 ```
 
-- 当引用Apache的dubbo时，不需要再引入Netty但要引入ZooKeeper，Apache为我们提供了一个集成依赖：`dubbo-dependencies-zookeeper`
+- 当引用 Apache 的 Dubbo 时，不需要再引入 Netty 但要引入 ZooKeeper，Apache为我们提供了一个集成依赖：`dubbo-dependencies-zookeeper`：
 
 ```xml
 <dependency>
@@ -143,7 +145,7 @@ public interface IUserServiceConsumer {
 </dependency>
 ```
 
-- 如果使用了阿里巴巴dubbo同时使用了阿帕奇的集成依赖，要再引入netty
+- 如果使用了阿里巴巴 Dubbo 同时使用了 Apache 的集成依赖，要再引入 Netty：
 
 ```xml
 <dependency>
@@ -153,7 +155,7 @@ public interface IUserServiceConsumer {
 </dependency>
 ```
 
-- 如果使用了Apache的dubbo同时使用了curator-framework，要再引入curator-recipes
+- 如果使用了 Apache 的 Dubbo 同时使用了 curator-framework，要再引入 curator-recipes。
 
 ```xml
 <dependency>
@@ -163,9 +165,9 @@ public interface IUserServiceConsumer {
 </dependency>
 ```
 
-由于curator-recipes中包含了curator-framework，所以可以不引入curator-framework
+由于 curator-recipes 中包含了 curator-framework，所以可以不引入 curator-framework。
 
-Dubbo中包含了Spring所以不需要显式引入Spring
+Dubbo 中包含了 Spring 所以不需要显式引入 Spring。
 
 实现接口
 
@@ -183,7 +185,7 @@ public class UserServiceImpl implements IUserService {
 }
 ```
 
-##### 使用xml配置Spring并启动
+#### 使用 xml 配置 Spring 并启动
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -269,8 +271,6 @@ public class UserServiceImpl implements IUserService {
 }
 ```
 
-
-
 引入Apache dubbo时：
 
 配置类
@@ -307,11 +307,11 @@ public class UserServiceImpl implements IUserService {
 
 ### 定义消费者
 
-##### 导入依赖
+#### 导入依赖
 
 依赖关系与生产者相同
 
-##### 使用xml配置Spring并调用
+#### 使用 xml 配置 Spring 并调用
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -334,7 +334,7 @@ public class UserServiceImpl implements IUserService {
     <dubbo:reference interface="service.IUserService" id="userService"/>
     <!--直连-->
     <dubbo:monitor address="localhost:8888"/>
-   
+
 <!--    <dubbo:monitor protocol="registry"/>-->
     <context:component-scan base-package="service"/>
     <context:annotation-config/>
@@ -483,17 +483,17 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 }
 ```
 
-# 各配置项、标签说明
+## 各配置项、标签说明
 
 ### dubbo:application
 
-对应配置类==org.apache.dubbo.config.ApplicationConfig==
+对应配置类*org.apache.dubbo.config.ApplicationConfig*
 
 属性：
 
 | 属性         | 类型   | 是否必填 | 描述                                                         | 默认值    |
 | ------------ | ------ | -------- | ------------------------------------------------------------ | --------- |
-| name         | String | ==必填== | 当前应用名称，用于注册中心计算应用间依赖关系，注意：消费者和提供者应用名不要一样 |           |
+| name         | String | *必填* | 当前应用名称，用于注册中心计算应用间依赖关系，注意：消费者和提供者应用名不要一样 |           |
 | version      | String |          | 当前应用的版本                                               |           |
 | owner        | String |          | 应用负责人，用于服务治理，请填写负责人公司邮箱前缀           |           |
 | organization | String |          | 组织名称(BU或部门)，用于注册中心区分服务来源，此配置项建议不要使用autoconfig，直接写死在配置中 |           |
@@ -506,14 +506,14 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 注册中心配置
 
-对应的配置类： ==org.apache.dubbo.config.RegistryConfig==
+对应的配置类： *org.apache.dubbo.config.RegistryConfig*
 
 可以有多个
 
 | 属性       | 类型    | 是否必填 | 描述                                                         | 默认值 |
 | ---------- | ------- | -------- | ------------------------------------------------------------ | ------ |
 | id         | string  |          | 注册中心引用BeanId，可以在<dubbo:service registry="">或<dubbo:reference registry="">中引用此ID |        |
-| address    | string  | ==必填== | 注册中心服务器地址，如果地址没有端口缺省为9090，同一集群内的多个地址用逗号分隔，如：ip:port,ip:port，不同集群的注册中心，请配置多个<dubbo:registry>标签 |        |
+| address    | string  | *必填* | 注册中心服务器地址，如果地址没有端口缺省为9090，同一集群内的多个地址用逗号分隔，如：ip:port,ip:port，不同集群的注册中心，请配置多个<dubbo:registry>标签 |        |
 | protocol   | string  |          | 注册中心地址协议，支持`dubbo`, `multicast`, `zookeeper`, `redis`, `consul(2.7.1)`, `sofa(2.7.2)`, `etcd(2.7.2)`, `nacos(2.7.2)`等协议 | dubbo  |
 | port       | int     |          | 注册中心缺省端口，当address没有带端口时使用此端口做为缺省值  | 9090   |
 | username   | string  |          | 登录注册中心用户名，如果注册中心不需要验证可不填             |        |
@@ -535,14 +535,14 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 服务提供者协议配置
 
-对应的配置类：==org.apache.dubbo.config.ProtocolConfig==
+对应的配置类：*org.apache.dubbo.config.ProtocolConfig*
 
 可以有多个，在dubbo:service中通过protocol指定
 
 | 属性          | 类型           | 是否必填 | 描述                                                         | 默认值                                                       |
 | ------------- | -------------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | id            | string         |          | 协议BeanId，可以在<dubbo:service protocol="">中引用此ID，如果ID不填，缺省和name属性值一样，重复则在name后加序号 | dubbo                                                        |
-| name          | string         | ==必填== | 协议名称                                                     | dubbo                                                        |
+| name          | string         | *必填* | 协议名称                                                     | dubbo                                                        |
 | port          | int            |          | 服务端口                                                     | dubbo协议缺省端口为20880，rmi协议缺省端口为1099，http和hessian协议缺省端口为80；如果**没有**配置port，则自动采用默认端口，如果配置为**-1**，则会分配一个没有被占用的端口。 |
 | host          | string         |          |                                                              | 自动查找本机IP                                               |
 | threadpool    | string         |          | 线程池类型，可选：fixed/cached                               | fixed                                                        |
@@ -573,12 +573,12 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 服务提供者暴露服务配置
 
-对应的配置类：==org.apache.dubbo.config.ServiceConfig==
+对应的配置类：*org.apache.dubbo.config.ServiceConfig*
 
 | 属性        | 类型           | 是否必填 | 描述                                                         | 默认值                     |
 | ----------- | -------------- | -------- | ------------------------------------------------------------ | -------------------------- |
-| interface   | class          | ==必填== | 服务接口名                                                   |                            |
-| ref         | object         | ==必填== | 服务对象实现引用                                             |                            |
+| interface   | class          | *必填* | 服务接口名                                                   |                            |
+| ref         | object         | *必填* | 服务对象实现引用                                             |                            |
 | version     | string         | 可选     | 服务版本，建议使用两位数字版本，如：1.0，通常在接口不兼容时版本号才需要升级 | 0.0.0                      |
 | group       | string         | 可选     | 服务分组，当一个接口有多个实现，可以用分组区分               |                            |
 | path        | string         | 可选     | 服务路径 (注意：1.0不支持自定义路径，总是使用接口名，如果有1.0调2.0，配置服务路径可能不兼容) | 缺省为接口名               |
@@ -613,7 +613,7 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 监控中心配置。
 
-对应的配置类：==org.apache.dubbo.config.MonitorConfig==
+对应的配置类：*org.apache.dubbo.config.MonitorConfig*
 
 | 属性     | 类型   | 是否必填 | 描述                                                         | 默认值 |
 | -------- | ------ | -------- | ------------------------------------------------------------ | ------ |
@@ -624,12 +624,12 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 服务消费者引用服务配置。
 
-对应的配置类：==org.apache.dubbo.config.ReferenceConfig==
+对应的配置类：*org.apache.dubbo.config.ReferenceConfig*
 
 | 属性        | 类型           | 是否必填 | 描述                                                         | 缺省值                                   |
 | ----------- | -------------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
-| id          | string         | ==必填== | 服务引用BeanId                                               |                                          |
-| interface   | class          | ==必填== | 服务接口名                                                   |                                          |
+| id          | string         | *必填* | 服务引用BeanId                                               |                                          |
+| interface   | class          | *必填* | 服务接口名                                                   |                                          |
 | version     | string         | 可选     | 服务版本，与服务提供者的版本一致                             |                                          |
 | group       | string         | 可选     | 服务分组，当一个接口有多个实现，可以用分组区分，必需和服务提供方一致 |                                          |
 | timeout     | long           | 可选     | 服务方法调用超时时间(毫秒)                                   | 缺省使用<dubbo:consumer>的timeout        |
@@ -660,12 +660,12 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 配置中心。
 
-对应的配置类：==org.apache.dubbo.config.ConfigCenterConfig==
+对应的配置类：*org.apache.dubbo.config.ConfigCenterConfig*
 
 | 属性               | 类型                | 是否必填 | 描述                                                         | 默认值           |
 | ------------------ | ------------------- | -------- | ------------------------------------------------------------ | ---------------- |
 | protocol           | string              | 可选     | 使用哪个配置中心：apollo、zookeeper、nacos等。 以zookeeper为例 1. 指定protocol，则address可以简化为`127.0.0.1:2181`； 2. 不指定protocol，则address取值为`zookeeper://127.0.0.1:2181` | zookeeper        |
-| address            | string              | ==必填== | 配置中心地址。 取值参见protocol说明                          |                  |
+| address            | string              | *必填* | 配置中心地址。 取值参见protocol说明                          |                  |
 | highest-priority   | boolean             | 可选     | 来自配置中心的配置项具有最高优先级，即会覆盖本地配置项。     | true             |
 | namespace          | string              | 可选     | 通常用于多租户隔离，实际含义视具体配置中心而不同。 如： zookeeper - 环境隔离，默认值`dubbo`； apollo - 区分不同领域的配置集合，默认使用`dubbo`和`application` | dubbo            |
 | cluster            | string              | 可选     | 含义视所选定的配置中心而不同。 如Apollo中用来区分不同的配置集群 |                  |
@@ -682,7 +682,7 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 服务提供者缺省值配置。
 
-对应的配置类： ==org.apache.dubbo.config.ProviderConfig==。
+对应的配置类： *org.apache.dubbo.config.ProviderConfig*。
 
 同时该标签为 `<dubbo:service>` 和 `<dubbo:protocol>` 标签的缺省值设置。
 
@@ -737,7 +737,7 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 服务消费者缺省值配置。
 
-配置类： ==org.apache.dubbo.config.ConsumerConfig==
+配置类： *org.apache.dubbo.config.ConsumerConfig*
 
 同时该标签为 `<dubbo:reference>` 标签的缺省值设置。
 
@@ -766,11 +766,11 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 模块信息配置。
 
-对应的配置类 ==org.apache.dubbo.config.ModuleConfig==
+对应的配置类 *org.apache.dubbo.config.ModuleConfig*
 
 | 属性         | 类型   | 是否必填 | 描述                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
-| name         | string | ==必填== | 当前模块名称，用于注册中心计算模块间依赖关系                 |
+| name         | string | *必填* | 当前模块名称，用于注册中心计算模块间依赖关系                 |
 | version      | string | 可选     | 当前模块的版本                                               |
 | owner        | string | 可选     | 模块负责人，用于服务治理，请填写负责人公司邮箱前缀           |
 | organization | string | 可选     | 组织名称(BU或部门)，用于注册中心区分服务来源，此配置项建议不要使用autoconfig，直接写死在配置中，比如china,intl,itu,crm,asc,dw,aliexpress等 |
@@ -779,13 +779,13 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 方法级配置。
 
-对应的配置类： ==org.apache.dubbo.config.MethodConfig==。
+对应的配置类： *org.apache.dubbo.config.MethodConfig*。
 
 同时该标签为 `<dubbo:service>` 或 `<dubbo:reference>` 的子标签，用于控制到方法级。
 
 | 属性        | 类型           | 是否必填 | 描述                                                         | 默认值                           |
 | ----------- | -------------- | -------- | ------------------------------------------------------------ | -------------------------------- |
-| name        | string         | ==必填== | 方法名                                                       |                                  |
+| name        | string         | *必填* | 方法名                                                       |                                  |
 | timeout     | int            | 可选     | 方法调用超时时间(毫秒)                                       | 缺省为的timeout                  |
 | retries     | int            | 可选     | 远程服务调用重试次数，不包括第一次调用，不需要重试请设为0    | 缺省为<dubbo:reference>的retries |
 | loadbalance | string         | 可选     | 负载均衡策略，可选值：random,roundrobin,leastactive，分别表示：随机，轮询，最少活跃调用 | 缺省为的loadbalance              |
@@ -812,13 +812,13 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 | 属性     | 类型    | 是否必填      | 描述                                                         |
 | -------- | ------- | ------------- | ------------------------------------------------------------ |
-| index    | int     | ==必填==      | 参数索引                                                     |
+| index    | int     | *必填*      | 参数索引                                                     |
 | type     | String  | 与index二选一 | 通过参数类型查找参数的index                                  |
 | callback | boolean | 可选          | 参数是否为callback接口，如果为callback，服务提供方将生成反向代理，可以从服务提供方反向调用消费方，通常用于事件推送. |
 
-# 完善此前例子的配置
+## 完善此前例子的配置
 
-这里都使用Apache dubbo
+这里都使用 Apache Dubbo。
 
 ### 服务提供者
 
@@ -935,7 +935,7 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 }
 ```
 
-# 整合SpringBoot
+## 整合 SpringBoot
 
 ### 导入依赖
 
@@ -975,7 +975,7 @@ public class UserServiceConsumerImpl implements IUserServiceConsumer{
 
 ### 服务提供者
 
-编写配置文件
+编写配置文件：
 
 ```yaml
 spring:
@@ -1004,7 +1004,7 @@ dubbo:
     protocol: registry
 ```
 
-编写接口实现类
+编写接口实现类：
 
 ```java
 @Service
@@ -1020,11 +1020,11 @@ public class UserServiceImpl implements IUserService {
 }
 ```
 
-主启动类上添加`@EnableDubbo`
+主启动类上添加 `@EnableDubbo`。
 
 ### 服务消费者
 
-编写配置文件
+编写配置文件：
 
 ```yaml
 spring:
@@ -1051,7 +1051,7 @@ dubbo:
     protocol: registry
 ```
 
-编写消费者接口实现类
+编写消费者接口实现类：
 
 ```java
 @Service
@@ -1088,7 +1088,7 @@ public class UserServiceConsumer implements IUserServiceConsumer {
 }
 ```
 
-编写controller
+编写controller：
 
 ```java
 @RestController
@@ -1108,22 +1108,20 @@ public class UserController {
 }
 ```
 
-主启动类上添加`@EnableDubbo`
+主启动类上添加 `@EnableDubbo`。
 
-# Dubbo配置规则
+## Dubbo 配置规则
 
 ### 配置覆盖优先级
 
-从Dubbo支持的配置来源说起，默认有6种配置来源：
+从 Dubbo 支持的配置来源说起，默认有 6 种配置来源：
 
-- JVM System Properties，JVM -D 参数
-- System environment，JVM进程的环境变量
-- Externalized Configuration，外部化配置，从配置中心读取
-- Application Configuration，应用的属性配置，从Spring应用的Environment中提取"dubbo"打头的属性集
-- API / XML /注解等编程接口采集的配置可以被理解成配置来源的一种，是直接面向用户编程的配置采集方式
-- 从classpath读取配置文件 dubbo.properties
-
-xml>properties
+- JVM System Properties：JVM -D 参数
+- System environment：JVM 进程的环境变量
+- Externalized Configuration：外部化配置，从配置中心读取
+- Application Configuration：应用的属性配置，从 Spring 应用的 Environment 中提取 "dubbo" 打头的属性集。
+- API、XML、注解等编程接口采集的配置可以被理解成配置来源的一种，是直接面向用户编程的配置采集方式。
+- 从 classpath 读取配置文件：dubbo.properties。
 
 ![覆盖关系](/Dubbo/configuration.jpg)
 
@@ -1131,95 +1129,103 @@ xml>properties
 
 ### 配置原则
 
-1. 作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等
-2. 在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的
+- 作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等。
+- 在 Provider 配置后，Consumer 不配置则会使用 Provider 的配置值，即 Provider 配置可以作为 Consumer 的缺省值。否则，Consumer 会使用 Consumer 端的全局设置，这对于 Provider 不可控的，并且往往是不合理的。
 
 ### 不同粒度配置的覆盖关系
 
 ![dubbo-config-override](/Dubbo/dubbo-config-override.jpg)
 
-1. 方法级优先，接口级次之，全局配置再次之。
-2. 如果级别一样，则消费方优先，提供方次之。
+- 方法级优先，接口级次之，全局配置再次之。
+- 如果级别一样，则消费方优先，提供方次之。
 
 ### 配置加载流程
 
 ![配置加载流程](/Dubbo/config-load.svg)
 
-# Dubbo高可用
+## Dubbo 高可用
 
 ### 注册中心宕机
 
-zookeeper注册中心宕机，还可以消费dubbo暴露的服务。
+zookeeper 注册中心宕机，还可以消费 dubbo 暴露的服务。
 
 健壮性：
 
-- 监控中心宕掉不影响使用，只是丢失部分采样数据
-- 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务
-- 注册中心对等集群，任意一台宕掉后，将自动切换到另一台
-- 注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯
-- 服务提供者无状态，任意一台宕掉后，不影响使用
-- 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复
+- 监控中心宕掉不影响使用，只是丢失部分采样数据。
+- 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务。
+- 注册中心对等集群，任意一台宕掉后，将自动切换到另一台。
+- 注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯。
+- 服务提供者无状态，任意一台宕掉后，不影响使用。
+- 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复。
 
-dubbo直连：
+dubbo 直连：
 
-指定reference的url属性为服务提供者的注册url即可绕过注册中心直接调用
+指定 reference 的 url 属性为服务提供者的注册 url 即可绕过注册中心直接调用。
 
 ### 负载均衡
 
-默认均衡策略为随机请求
+默认均衡策略为随机请求。
 
-##### Random LoadBalance 基于权重的随机负载均衡机制
+#### Random LoadBalance 基于权重的随机负载均衡机制
 
-![在这里插入图片描述](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
+![Random LoadBalance](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
 
 随机，按权重设置随机概率。 在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。
 
-##### RoundRobin LoadBalance 基于权重的轮询负载均衡机制
+#### RoundRobin LoadBalance 基于权重的轮询负载均衡机制
 
-![在这里插入图片描述](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
+![RoundRobin LoadBalance](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
 
 轮循，按公约后的权重设置轮循比率。 存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。
 
-##### LeastActive LoadBalance最少活跃数负载均衡机制
+#### LeastActive LoadBalance 最少活跃数负载均衡机制
 
-![在这里插入图片描述](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
+![LeastActive LoadBalance](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
 
-##### ConsistentHash LoadBalance一致性hash 负载均衡机制
+#### ConsistentHash LoadBalance 一致性 hash 负载均衡机制
 
-![在这里插入图片描述](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
+![ConsistentHash LoadBalance](/Dubbo/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMTU3NTg4,size_16,color_FFFFFF,t_70.png)
 
 一致性 Hash，相同参数的请求总是发到同一提供者。 当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。
 
 ### 服务降级
 
-在dubbo-admin面板中为对应消费者选择相应操作
+在 dubbo-admin 面板中为对应消费者选择相应操作
 
 屏蔽：
 
-所有请求返回为null
+所有请求返回为 null。
 
 容错：
 
-出错返回空对象
+出错返回空对象。
 
 ### 服务容错
 
-##### 集群容错
+#### 集群容错
 
-- Failover Cluster
+- Failover Cluster：
+
   失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=“2” 来设置重试次数(不含第一次)。
-- Failfast Cluster
+
+- Failfast Cluster：
+
   快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。
-- Failsafe Cluster
+
+- Failsafe Cluster：
+
   失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。
-- Failback Cluster
+
+- Failback Cluster：
+
   失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。
-- Forking Cluster
+
+- Forking Cluster：
+
   并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=“2” 来设置最大并行数。
-- Broadcast Cluster
+
+- Broadcast Cluster：
+
   广播调用所有提供者，逐个调用，任意一台报错则报错 [2]。通常用于通知所有提供者更新缓存或日志等本地资源信息。
 
-具体选择使用cluster属性传入即可
-
-
-
+具体选择使用 cluster 属性传入即可。
