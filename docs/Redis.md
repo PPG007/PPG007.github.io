@@ -73,27 +73,27 @@ OK
 ```
 ### 1.2 String
 - 获取字符串部分内容
-```shell
+```sh
 150.158.153.216:6379> getrange name 0 1
 "pp"
 ```
 - 先获取值再赋值
-```shell
+```sh
 150.158.153.216:6379> getset name PPG
 "ppg"
 ```
 - 通过键获取值
-```shell
+```sh
 150.158.153.216:6379> get name
 "PPG"
 ```
 - 获取字符串长度
-```shell
+```sh
 150.158.153.216:6379> strlen newname
 (integer) 6
 ```
 - 追加字符串，若key不存在则相当于set
-```shell
+```sh
 150.158.153.216:6379> get name
 "ppg"
 150.158.153.216:6379> append name 007
@@ -102,7 +102,7 @@ OK
 "ppg007"
 ```
 - 自增、自减
-```shell
+```sh
 150.158.153.216:6379> set views 0
 OK
 # 自增
@@ -127,7 +127,7 @@ OK
 "12"
 ```
 - 使用指定内容替换部分字符
-```shell
+```sh
 150.158.153.216:6379> set key1 hello
 OK
 150.158.153.216:6379> get key1
@@ -138,14 +138,14 @@ OK
 "hetto"
 ```
 - 设置键值并添加过期时间，单位为秒
-```shell
+```sh
 150.158.153.216:6379> setex name 50 ppg
 OK
 150.158.153.216:6379> ttl name
 (integer) 48
 ```
 - 设置键值对并添加过期时间，单位为毫秒
-```shell
+```sh
 150.158.153.216:6379> psetex test 10000 test
 OK
 150.158.153.216:6379> ttl test
@@ -154,12 +154,12 @@ OK
 (integer) 1845
 ```
 - set if not exist
-```shell
+```sh
 150.158.153.216:6379> setnx key1 ppp
 (integer) 0
 ```
 - 同时设置多个键值对
-```shell
+```sh
 150.158.153.216:6379> mset user1 ppg user2 eryuan
 OK
 150.158.153.216:6379> keys *
@@ -167,7 +167,7 @@ OK
 2) "user2"
 ```
 - 同时设置多个键值对，当且仅当所有键均不存在才会生效
-```shell
+```sh
 150.158.153.216:6379> msetnx user1 user1 user3 user3
 (integer) 0
 150.158.153.216:6379> keys *
@@ -182,7 +182,7 @@ OK
 4) "user4"
 ```
 - 同时获取多个值
-```shell
+```sh
 150.158.153.216:6379> mget user1 user2 user3 user4
 1) "ppg"
 2) "eryuan"
@@ -191,12 +191,12 @@ OK
 ```
 ### 1.2 List
 - 从左逐个推入list，先推入的在最后
-```shell
+```sh
 150.158.153.216:6379> lpush list a b c d e f
 (integer) 6
 ```
 - 获取list中的所有值
-```shell
+```sh
 150.158.153.216:6379> lrange list 0 -1
 1) "f"
 2) "e"
@@ -206,14 +206,14 @@ OK
 6) "a"
 ```
 - 获取指定一部分的值
-```shell
+```sh
 150.158.153.216:6379> lrange list 0 2
 1) "f"
 2) "e"
 3) "d"
 ```
 - 从右部逐个推入
-```shell
+```sh
 150.158.153.216:6379> rpush list 1 2 3
 (integer) 9
 150.158.153.216:6379> lrange list 0 -1
@@ -228,31 +228,31 @@ OK
 9) "3"
 ```
 - 获取列表长度
-```shell
+```sh
 150.158.153.216:6379> llen list
 (integer) 9
 ```
 - 从列表左部移出一个元素
-```shell
+```sh
 150.158.153.216:6379> lpop list
 "f"
 150.158.153.216:6379> llen list
 (integer) 8
 ```
 - 从列表右部移出一个元素
-```shell
+```sh
 150.158.153.216:6379> rpop list
 "3"
 150.158.153.216:6379> llen list
 (integer) 7
 ```
 - 获取指定下标的值
-```shell
+```sh
 150.158.153.216:6379> lindex list 5
 "1"
 ```
 - 移除指定列表的指定数量的值
-```shell
+```sh
 150.158.153.216:6379> lrange test 0 -1
 1) "b"
 2) "b"
@@ -264,7 +264,7 @@ OK
 2) "a"
 ```
 - 修剪列表，让列表只保留指定区间的元素，删除其他元素
-```shell
+```sh
 150.158.153.216:6379> lrange list 0 -1
 1) "hh"
 2) "e"
@@ -284,7 +284,7 @@ OK
 5) "a"
 ```
 - 移出列表的最后一个元素，并将其添加到另一个列表
-```shell
+```sh
 150.158.153.216:6379> rpoplpush list newlist
 "a"
 150.158.153.216:6379> lrange list 0 -1
@@ -296,7 +296,7 @@ OK
 1) "a"
 ```
 - 根据下标更改元素的值，列表必须已存在
-```shell
+```sh
 150.158.153.216:6379> lset list 0 ee
 OK
 150.158.153.216:6379> lrange list 0 -1
@@ -306,7 +306,7 @@ OK
 4) "b"
 ```
 - 将某个值插入列表中某个元素的前面或后面
-```shell
+```sh
 150.158.153.216:6379> linsert list before ee ll
 (integer) 5
 150.158.153.216:6379> lrange list 0 -1
@@ -327,14 +327,14 @@ OK
 ```
 ### 1.3 Set
 - 创建并添加元素
-```shell
+```sh
 150.158.153.216:6379> sadd set a b c
 (integer) 3
 150.158.153.216:6379> sadd set d e f
 (integer) 3
 ```
 - 查看所有的元素
-```shell
+```sh
 150.158.153.216:6379> smembers set
 1) "d"
 2) "a"
@@ -344,22 +344,22 @@ OK
 6) "c"
 ```
 - 判断是否是集合中的元素
-```shell
+```sh
 150.158.153.216:6379> sismember set a
 (integer) 1
 ```
 - 获取元素个数
-```shell
+```sh
 150.158.153.216:6379> scard set
 (integer) 6
 ```
 - 根据值删除元素
-```shell
+```sh
 150.158.153.216:6379> srem set a b
 (integer) 2
 ```
 - 随机获取集合中的值
-```shell
+```sh
 150.158.153.216:6379> srandmember set
 "d"
 150.158.153.216:6379> srandmember set 2
@@ -367,7 +367,7 @@ OK
 2) "e"
 ```
 - 随机删除集合中的元素
-```shell
+```sh
 150.158.153.216:6379> spop set
 "f"
 150.158.153.216:6379> spop set 2
@@ -377,7 +377,7 @@ OK
 1) "e"
 ```
 - 将指定的元素移动到另一个集合
-```shell
+```sh
 150.158.153.216:6379> sadd char a b c d
 (integer) 4
 150.158.153.216:6379> sadd int 1 2 3 4
@@ -396,7 +396,7 @@ OK
 5) "a"
 ```
 - 集合运算
-```shell
+```sh
 150.158.153.216:6379> smembers char
 1) "2"
 2) "c"
@@ -454,26 +454,26 @@ OK
 ```
 ### 1.4 Hash
 - 向hash中添加键值对
-```shell
+```sh
 150.158.153.216:6379> hset user name ppg
 (integer) 1
 150.158.153.216:6379> hset user age 21
 (integer) 1
 ```
 - 获取指定hash中的键对应的值
-```shell
+```sh
 150.158.153.216:6379> hget user name
 "ppg"
 150.158.153.216:6379> hget user age
 "21"
 ```
 - 同时设置多个键值对
-```shell
+```sh
 150.158.153.216:6379> hmset user f v f1 v1
 OK
 ```
 - 同时获取多个键对应的值
-```shell
+```sh
 150.158.153.216:6379> hmget user f f1 name age
 1) "v"
 2) "v1"
@@ -481,7 +481,7 @@ OK
 4) "21"
 ```
 - 获取指定hash中所有的键值对，上为键，下为值
-```shell
+```sh
 150.158.1532.16:6379> hgetall user
 1) "name"
 2) "ppg"
@@ -493,7 +493,7 @@ OK
 8) "v1"
 ```
 - 删除一个或多个哈希表字段
-```shell
+```sh
 150.158.153.216:6379> hdel user f f1
 (integer) 2
 150.158.153.216:6379> hgetall user
@@ -503,23 +503,23 @@ OK
 4) "21"
 ```
 - 获取哈希表中字段的数量
-```shell
+```sh
 150.158.153.216:6379> hlen user
 (integer) 2
 ```
 - 查看哈希表 key 中，指定的字段是否存在。
-```shell
+```sh
 150.158.153.216:6379> hexists user name
 (integer) 1
 ```
 - 获取所有哈希表中的字段
-```shell
+```sh
 150.158.153.216:6379> hkeys user
 1) "name"
 2) "age"
 ```
 - 只有在字段 field 不存在时，设置哈希表字段的值。
-```shell
+```sh
 150.158.153.216:6379> hsetnx user test test
 (integer) 1
 150.158.153.216:6379> hgetall user
@@ -531,14 +531,14 @@ OK
 6) "test"
 ```
 - 获取哈希表中所有值。
-```shell
+```sh
 150.158.153.216:6379> hvals user
 1) "ppg"
 2) "21"
 3) "test"
 ```
 - 为哈希表 key 中的指定字段的整数值加上增量 increment 。
-```shell
+```sh
 150.158.153.216:6379> hincrby user age 2
 (integer) 23
 150.158.153.216:6379> hget user age
@@ -547,7 +547,7 @@ OK
 (integer) 21
 ```
 - 为哈希表 key 中的指定字段的浮点数值加上增量 increment
-```shell
+```sh
 150.158.153.216:6379> hget user money
 "2.2"
 150.158.153.216:6379> hincrbyfloat user money 1.8
@@ -559,17 +559,17 @@ OK
 ```
 ### 1.5 ZSet
 - 向有序集合添加一个或多个成员，或者更新已存在成员的分数
-```shell
+```sh
 150.158.153.216:6379> zadd score 100 a 90 b 60 c
 (integer) 3
 ```
 - 返回有序集中，成员的分数值
-```shell
+```sh
 150.158.153.216:6379> zscore score a
 "100"
 ```
 - 返回有序集合中指定成员的索引
-```shell
+```sh
 150.158.153.216:6379> zrank score a
 (integer) 1
 150.158.153.216:6379> zrank score b
@@ -581,38 +581,38 @@ OK
 (integer) 0
 ```
 - 查看元素个数
-```shell
+```sh
 150.158.153.216:6379> zcard score
 (integer) 2
 ```
 - 获取指定区间的元素数量
-```shell
+```sh
 150.158.153.216:6379> zcount score 0 100
 (integer) 2
 150.158.153.216:6379> zcount score 0 (100
 (integer) 1
 ```
 - 在有序集合中计算指定字典区间内成员数量
-```shell
+```sh
 150.158.153.216:6379> zlexcount score - +
 (integer) 2
 150.158.153.216:6379> zlexcount score [a [z
 (integer) 2
 ```
 - 通过索引区间返回有序集合指定区间内的成员
-```shell
+```sh
 150.158.153.216:6379> zrange score 0 -1
 1) "b"
 2) "a"
 ```
 - 通过字典区间返回有序集合的成员
-```shell
+```sh
 150.158.153.216:6379> zrangebylex score [a [z
 1) "b"
 2) "a"
 ```
 - 通过分数顺序返回有序集合指定区间内的成员
-```shell
+```sh
 # 升序
 150.158.153.216:6379> zrangebyscore score -inf +inf
 1) "c"
@@ -637,19 +637,19 @@ OK
 1) "d"
 ```
 - 移除一个元素
-```shell
+```sh
 150.158.153.216:6379> zrem score c
 (integer) 1
 ```
 - 移除有序集合中给定的字典区间的所有成员
-```shell
+```sh
 150.158.153.216:6379> zremrangebylex aset [a [z
 (integer) 3
 150.158.153.216:6379> zrange aset 0 -1
 (empty list or set)
 ```
 - 移除有序集合中给定的排名区间的所有成员
-```shell
+```sh
 150.158.153.216:6379> zremrangebyrank bset 0 1
 (integer) 2
 150.158.153.216:6379> zrange bset 0 -1 withscores
@@ -657,17 +657,17 @@ OK
 2) "9"
 ```
 - 移除有序集合中给定的分数区间的所有成员
-```shell
+```sh
 150.158.153.216:6379> zremrangebyscore score 0 100
 (integer) 2
 ```
 - 有序集合中对指定成员的分数加上增量 increment
-```shell
+```sh
 150.158.153.216:6379> zincrby score 5 b
 "95"
 ```
 - 计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 destination 中
-```shell
+```sh
 # 其中给定 key 的数量必须以 numkeys 参数指定
 # 默认情况下，结果集中某个成员的分数值是所有给定集下该成员分数值之和。
 150.158.153.216:6379> zadd aset 0 a 1 b 2 c
@@ -680,7 +680,7 @@ OK
 (integer) 0
 ```
 - 计算给定的一个或多个有序集的并集，并存储在新的 key 中
-```shell
+```sh
 150.158.153.216:6379> zadd aset 1 one 2 two
 (integer) 2
 150.158.153.216:6379> zadd bset 2 two 3 three
@@ -697,14 +697,14 @@ OK
 ### 1.6 Geospatial地理位置
 - 添加地理位置的坐标。
 >将一个或多个经度(longitude)、纬度(latitude)、位置名称(member)添加到指定的 key 中
-```shell
+```sh
 150.158.153.216:6379> geoadd china 120.39629 36.30744 qingdao 116.75199 36.55358 jinan 116.23128 40.22077 beijing
 (integer) 3
 150.158.153.216:6379> geoadd china 121.48941 31.40527 shanghai
 (integer) 1
 ```
 - 获取地理位置的坐标。
-```shell
+```sh
 150.158.153.216:6379> geopos china qingdao jinan
 1) 1) "120.39629191160202026"
    2) "36.30744093841460796"
@@ -712,7 +712,7 @@ OK
    2) "36.55358010603453778"
 ```
 - 计算两个位置之间的距离。
-```shell
+```sh
 # 默认单位：米
 150.158.153.216:6379> geodist china qingdao jinan
 "327256.3444"
@@ -728,7 +728,7 @@ OK
 ```
 - 根据用户给定的经纬度坐标来获取指定范围内的地理位置集合。
 >georadius 以给定的经纬度为中心， 返回键包含的位置元素当中， 与中心的距离不超过给定最大距离的所有位置元素。
-```shell
+```sh
 # 返回距离
 150.158.153.216:6379> georadius china 120.39629191160202026 36.30744093841460796 600 km withdist
 1) 1) "jinan"
@@ -781,7 +781,7 @@ OK
    2) "327.2563"
 ```
 - 根据储存在位置集合里面的某个地点获取指定范围内的地理位置集合。
-```shell
+```sh
 150.158.153.216:6379> georadiusbymember china jinan 500 km withdist count 3 asc
 1) 1) "jinan"
    2) "0.0000"
@@ -791,7 +791,7 @@ OK
    2) "410.4039"
 ```
 - 返回一个或多个位置对象的 geohash 值。
-```shell
+```sh
 150.158.153.216:6379> geohash china qingdao jinan beijing shanghai
 1) "wwmwe9tfhv0"
 2) "ww7pby2hn90"
@@ -800,14 +800,14 @@ OK
 ```
 ### 1.7 Hyperloglog基数统计
 - 添加指定元素到 HyperLogLog 中
-```shell
+```sh
 150.158.153.216:6379> pfadd a 1 2 3 4 5
 (integer) 1
 150.158.153.216:6379> pfadd b 4 5 6 7 8 9 0
 (integer) 1
 ```
 - 返回给定 HyperLogLog 的基数估算值。
-```shell
+```sh
 150.158.153.216:6379> pfcount a
 (integer) 5
 150.158.153.216:6379> pfcount b
@@ -816,7 +816,7 @@ OK
 (integer) 10
 ```
 - 将多个 HyperLogLog 合并为一个 HyperLogLog
-```shell
+```sh
 150.158.153.216:6379> pfmerge dest a b
 OK
 150.158.153.216:6379> pfcount dest
@@ -824,7 +824,7 @@ OK
 ```
 ### 1.8 Bitmap位图
 - 添加元素
-```shell
+```sh
 150.158.153.216:6379> setbit sign 1 0
 (integer) 0
 150.158.153.216:6379> setbit sign 2 1
@@ -840,12 +840,12 @@ OK
 150.158.153.216:6379> setbit sign 7 0
 ```
 - 获取值
-```shell
+```sh
 150.158.153.216:6379> getbit sign 6
 (integer) 1
 ```
 - 统计1的个数
-```shell
+```sh
 150.158.153.216:6379> bitcount sign
 (integer) 3
 ```
@@ -859,7 +859,7 @@ OK
 - 执行事务(EXEC)
 ### 2.2 基础命令
 - 创建事务
-```shell
+```sh
 150.158.153.216:6379> multi
 OK
 150.158.153.216:6379> set key1 key1
@@ -872,7 +872,7 @@ QUEUED
 QUEUED
 ```
 - 执行事务
-```shell
+```sh
 150.158.153.216:6379> exec
 1) OK
 2) OK
@@ -880,7 +880,7 @@ QUEUED
 4) OK
 ```
 - 取消事务
-```shell
+```sh
 150.158.153.216:6379> multi
 OK
 150.158.153.216:6379> set a a
@@ -892,7 +892,7 @@ OK
 ```
 ### 2.3 事务中的异常
 - 语法错误
-```shell
+```sh
 # 所有命令都不会执行
 150.158.153.216:6379> multi
 OK
@@ -912,7 +912,7 @@ QUEUED
 (empty list or set)
 ```
 - 操作错误(运行时异常)
-```shell
+```sh
 # 正常命令依然正常执行
 150.158.153.216:6379> multi
 OK
@@ -930,7 +930,7 @@ QUEUED
 ### 2.4 乐观锁
 ==通过watch和unwatch命令开启/关闭对key的监视==
 - 正常执行
-```shell
+```sh
 150.158.153.216:6379> set money 100
 OK
 150.158.153.216:6379> set out 0
@@ -950,7 +950,7 @@ QUEUED
 - 异常执行
 
 客户端1
-```shell
+```sh
 150.158.153.216:6379> watch money out
 OK
 150.158.153.216:6379> multi
@@ -962,12 +962,12 @@ QUEUED
 ```
 客户端1的事务先不执行，此时插入客户端2的操作
 客户端2
-```shell
+```sh
 150.158.153.216:6379> decrby out 10
 (integer) 10
 ```
 然后客户端1再执行：
-```shell
+```sh
 150.158.153.216:6379> exec
 (nil)
 150.158.153.216:6379> get money
@@ -1043,7 +1043,7 @@ public void stringTest(){
 //        同时获取多个值
    List<String> mget = jedis.mget("user1", "user2");
    mget.forEach(System.out::println);
-   
+
 //        查看value类型
    System.out.println(jedis.type("name"));
 //        查看value长度
@@ -1843,7 +1843,7 @@ RedisTemplate默认使用jdk序列化，存在乱码等问题，将value的序�
 1. 包含其他配置文件
 ![include](/Redis/RedisConfig-include.jpg)
 2. 网络
-```shell
+```sh
 ################################## NETWORK #####################################
 # Examples:
 # bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses
@@ -1867,7 +1867,7 @@ timeout 0
 tcp-keepalive 300
 ```
 3. 通用设置
-```shell
+```sh
 # 默认情况下，redis不是在后台运行的，如果需要在后台运行，把该项的值更改为yes
 daemonize yes
 # 当运行多个redis服务时，需要指定不同的pid文件和端口
@@ -1890,7 +1890,7 @@ set-proc-title yes
 proc-title-template "{title} {listen-addr} {server-mode}"
 ```
 4. 快照
-```shell
+```sh
 # Save the DB to disk.
 # save <seconds> <changes>
 save 3600 1
@@ -1921,7 +1921,7 @@ rdb-del-sync-files no
 dir ./
 ```
 5. 复制
-```shell
+```sh
 #   +------------------+      +---------------+
 #   |      Master      | ---> |    Replica    |
 #   | (receive writes) |      |  (exact copy) |
@@ -1942,7 +1942,7 @@ repl-disable-tcp-nodelay no
 replica-priority 100
 ```
 6. 安全
-```shell
+```sh
 acllog-max-len 128
 
 # 设置密码
@@ -1952,7 +1952,7 @@ requirepass 123456
 - 客户端限制
 ![限制客户端数量](/Redis/RedisConfig-maxclients.jpg)
 - 内存限制
-```shell
+```sh
 # 内存最大值
 # maxmemory <bytes>
 
@@ -1970,7 +1970,7 @@ requirepass 123456
 # noeviction 永不过期，返回错误
 ```
 8. Append Only模式(AOF)
-```shell
+```sh
 # 是否开启AOF，默认关闭，使用RDB
 appendonly no
 
@@ -1991,12 +1991,12 @@ appendfsync everysec
 >1. 满足save规则
 >2. 执行flushall
 >3. 退出redis
-```shell
+```sh
 # 每经过六秒或六条更改就会触发RDB
 save 6 6
 ```
 - 手动保存
-```shell
+```sh
 # 该命令会阻塞当前Redis服务器，执行save命令期间，Redis不能处理其他命令，直到RDB过程完成为止。
 save
 # 执行该命令时，Redis会在后台异步进行快照操作，快照同时还可以响应客户端请求。
@@ -2007,7 +2007,7 @@ bgsave
 ##### 6.1.2 从文件中恢复数据
 1. 将数据文件放在redis启动目录即可
 >获取启动目录：
-```shell
+```sh
 150.158.153.216:6379> config get dir
 1) "dir"
 2) "/etc/cron.d" #启动目录
@@ -2015,13 +2015,13 @@ bgsave
 ### 6.2 AOF持久化
 >以日志形式记录所有写的操作，只许追加文件不可改写文件，redis重启时会读取AOF并依次执行所有操作
 ##### 6.2.1 开启AOF
-```shell
+```sh
 appendonly yes
 ```
 # 7.订阅发布
 ### 7.1 订阅频道
 客户端在订阅后会一直监听
-```shell
+```sh
 150.158.153.216:6379> subscribe ppg
 Reading messages... (press Ctrl-C to quit)
 1) "subscribe"
@@ -2030,18 +2030,18 @@ Reading messages... (press Ctrl-C to quit)
 ```
 ### 7.2 向指定的频道发送信息
 信息中不能有空格,加引号可以有空格
-```shell
+```sh
 publish ppg whatareyoudoing
 ```
 ### 7.3 退订频道
-```shell
+```sh
 150.158.153.216:6379> unsubscribe ppg
 1) "unsubscribe"
 2) "ppg"
 3) (integer) 0
 ```
 ### 7.4 查看订阅与发布系统状态
-```shell
+```sh
 150.158.153.216:6379> pubsub channels
 (empty list or set)
 ```
@@ -2100,7 +2100,7 @@ replicaof 127.0.0.1 6379
 
 连接redis后，执行：
 
-```shell
+```sh
 info replication
 ```
 
@@ -2172,36 +2172,36 @@ dir /tmp#哨兵工作目录
 sentinel monitor mymaster 127.0.0.1 6379 1#监控的主机。最后的数字表示要多少个哨兵认为主机挂掉才切换master
 sentinel down-after-milliseconds mymaster 30000#指定多少毫秒之后 主节点没有应答哨兵sentinel 此时 哨兵主观上认为主节点下线 默认30秒
 sentinel parallel-syncs mymaster 1# 这个配置项指定了在发生failover主备切换时最多可以有多少个slave同时对新的master进行 同 步，
-# 故障转移的超时时间 failover-timeout 可以用在以下这些方面： 
-#1. 同一个sentinel对同一个master两次failover之间的间隔时间。 
+# 故障转移的超时时间 failover-timeout 可以用在以下这些方面：
+#1. 同一个sentinel对同一个master两次failover之间的间隔时间。
 #2. 当一个slave从一个错误的master那里同步数据开始计算时间。直到slave被纠正为向正确的 master那里同步数据时。
-#3.当想要取消一个正在进行的failover所需要的时间。 
-#4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超 时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来了 
+#3.当想要取消一个正在进行的failover所需要的时间。
+#4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超 时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来了
 # 默认三分钟
 sentinel failover-timeout mymaster 180000
 
-# 当在Redis实例中开启了requirepass foobared 授权密码 这样所有连接Redis实例的客户端都 要提供密码 
-# 设置哨兵sentinel 连接主从的密码 注意必须为主从设置一样的验证密码 
+# 当在Redis实例中开启了requirepass foobared 授权密码 这样所有连接Redis实例的客户端都 要提供密码
+# 设置哨兵sentinel 连接主从的密码 注意必须为主从设置一样的验证密码
 # sentinel auth-pass <master-name> <password>
 
 #配置当某一事件发生时所需要执行的脚本，可以通过脚本来通知管理员，例如当系统运行不正常时发邮 件通知相关人员。
-#对于脚本的运行结果有以下规则： 
-#若脚本执行后返回1，那么该脚本稍后将会被再次执行，重复次数目前默认为10 
-#若脚本执行后返回2，或者比2更高的一个返回值，脚本将不会重复执行。 
+#对于脚本的运行结果有以下规则：
+#若脚本执行后返回1，那么该脚本稍后将会被再次执行，重复次数目前默认为10
+#若脚本执行后返回2，或者比2更高的一个返回值，脚本将不会重复执行。
 #如果脚本在执行过程中由于收到系统中断信号被终止了，则同返回值为1时的行为相同。
 #一个脚本的最大执行时间为60s，如果超过这个时间，脚本将会被一个SIGKILL信号终止，之后重新执 行。
 #通知型脚本:当sentinel有任何警告级别的事件发生时（比如说redis实例的主观失效和客观失效等 等），将会去调用这个脚本，这时这个脚本应该通过邮件，SMS等方式去通知系统管理员关于系统不正常 运行的信息。调用该脚本时，将传给脚本两个参数，一个是事件的类型，一个是事件的描述。如果 sentinel.conf配置文件中配置了这个脚本路径，那么必须保证这个脚本存在于这个路径，并且是可执 行的，否则sentinel无法正常启动成功。
-#通知脚本 
-# sentinel notification-script <master-name> <script-path> 
+#通知脚本
+# sentinel notification-script <master-name> <script-path>
 
-# 客户端重新配置主节点参数脚本 
-# 当一个master由于failover而发生改变时，这个脚本将会被调用，通知相关的客户端关于master 地址已经发生改变的信息。 
-# 以下参数将会在调用脚本时传给脚本: # <master-name> <role> <state> <from-ip> <from-port> <to-ip> <to-port> 
+# 客户端重新配置主节点参数脚本
+# 当一个master由于failover而发生改变时，这个脚本将会被调用，通知相关的客户端关于master 地址已经发生改变的信息。
+# 以下参数将会在调用脚本时传给脚本: # <master-name> <role> <state> <from-ip> <from-port> <to-ip> <to-port>
 # 目前<state>总是“failover”,
-# <role>是“leader”或者“observer”中的一个。 
+# <role>是“leader”或者“observer”中的一个。
 # 参数 from-ip, from-port, to-ip, to-port是用来和旧的master和新的master(即旧的 slave)通信的
-# 这个脚本应该是通用的，能被多次调用，不是针对性的。 
-# sentinel client-reconfig-script <master-name> <script-path> 
+# 这个脚本应该是通用的，能被多次调用，不是针对性的。
+# sentinel client-reconfig-script <master-name> <script-path>
 ```
 
 启动后如果master宕机会自动切换到剩余的一台从服务器
@@ -2263,7 +2263,7 @@ sentinel failover-timeout mymaster 180000
 
 创建六个配置文件，每个文件端口号不同，且均作出如下配置：
 
-```shell
+```sh
 cluster-enabled yes
 
 cluster-config-file nodes-6379.conf#这里的配置文件会自动生成，名字也要不同
@@ -2273,7 +2273,7 @@ cluster-node-timeout 15000
 
 分别启动六个redis进程，并确认启动成功且nodes.conf文件正确生成后执行命令：
 
-```shell
+```sh
 redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6389 127.0.0.1:6390 127.0.0.1:6391
 ```
 
@@ -2285,13 +2285,13 @@ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6379 127.0.0.1:6380 12
 
 使用redis-cli添加-c参数，然后连接任意端口进程都能连接到进程中
 
-```shell
+```sh
 redis-cli -c -p 6391
 ```
 
 通过以下命令查看集群节点
 
-```shell
+```sh
 127.0.0.1:6391> cluster nodes
 ```
 
@@ -2307,7 +2307,7 @@ redis-cli -c -p 6391
 
 例如
 
-```shell
+```sh
 mset name{user} ppg age{user} 20
 ```
 

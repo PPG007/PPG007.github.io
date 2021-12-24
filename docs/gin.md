@@ -2,7 +2,7 @@
 
 ## 获取 gin
 
-```shell
+```sh
 go get -u github.com/gin-gonic/gin
 ```
 

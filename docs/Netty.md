@@ -1728,11 +1728,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         System.out.println("client "+ctx);
-        
+
         Child child = Child.newBuilder().setName("孩子").setAge(1).build();
         School school = School.newBuilder().setDataType(School.DataType.ChildType).setChild(child).build();
         ctx.writeAndFlush(school);
-        
+
         Teacher teacher = Teacher.newBuilder().setId(2).setName("教师").build();
         School school1 = School.newBuilder().setDataType(School.DataType.TeacherType).setTeacher(teacher).build();
         ctx.channel().eventLoop().schedule(()->{
@@ -2356,4 +2356,3 @@ public class Client {
     }
 }
 ```
-

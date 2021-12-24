@@ -8,7 +8,7 @@
 
 修改数据快照目录
 
-```shell
+```sh
 dataDir=/opt/zookeeper
 ```
 
@@ -16,7 +16,7 @@ dataDir=/opt/zookeeper
 
 进入bin目录执行：
 
-```shell
+```sh
 ./zkServer.sh start#启动zookeeper
 ./zkServer.sh status#查看zookeeper状态
 ./zkServer.sh stop#停止zookeeper
@@ -24,13 +24,13 @@ dataDir=/opt/zookeeper
 
 启动客户端：
 
-```shell
+```sh
 ./zkCli.sh
 ```
 
 ### 配置参数
 
-```shell
+```sh
 tickTime=2000#心跳时间，毫秒
 initLimit=10#Leader和Follower初始连接时能容忍的最多心跳数
 syncLimit=5#Leader和Follower建立连接后的通信最大心跳数
@@ -42,7 +42,7 @@ clientPort=2181#客户端连接端口号
 
 zookeeper最好部署奇数台服务器，首先在每个服务器上都修改配置文件，指定数据目录并启动，启动后在指定的数据目录中创建`myid`文件，文件中输入一个整数，就像是数据库主键一样，每个服务器不同，例如这里将三台服务器分别配置为1、2、3，停掉zookeeper，修改配置文件，在配置文件中添加如下内容，这里以第三台服务器为例，格式为server.[id]=host:port1:port2，host是IP地址，端口号一是Follower与Leader交换信息端口，端口二是执行选举时的端口，注意，==自身要使用0.0.0.0而不是127.0.0.1==
 
-```shell
+```sh
 server.1=39.107.112.172:2888:3888
 server.2=150.158.153.216:2888:3888
 server.3=0.0.0.0:2888:3888
@@ -105,20 +105,20 @@ Epoch：每个Leader任期中的代号，每次投完一次票这个值就会增
 
 节点+描述
 
-```shell
+```sh
 create /sanguo "diaochan"
 create /sanguo/shuguo "liubei"
 ```
 
 获取节点信息
 
-```shell
+```sh
 get -s /sanguo
 ```
 
 创建带序号持久节点
 
-```shell
+```sh
 create -s /sanguo/weiguo/zhangliao "zhangliao"
 ```
 
@@ -126,19 +126,19 @@ create -s /sanguo/weiguo/zhangliao "zhangliao"
 
 创建临时节点
 
-```shell
+```sh
 create -e /sanguo/wuguo "zhouyu"
 ```
 
 创建临时带序号节点
 
-```shell
+```sh
 create -e -s /sanguo/wuguo "zhouyu"
 ```
 
 修改节点值
 
-```shell
+```sh
 set /sanguo/weiguo "simayi"
 ```
 
@@ -148,13 +148,13 @@ set /sanguo/weiguo "simayi"
 
 客户端：
 
-```shell
+```sh
 get -w /sanguo#监听此节点的值
 ```
 
 在另一个客户端修改这个节点的值：
 
-```shell
+```sh
 set /sanguo "xishi"
 ```
 
@@ -168,13 +168,13 @@ set /sanguo "xishi"
 
 客户端：
 
-```shell
+```sh
 ls -w /sanguo
 ```
 
 另一个客户端修改节点
 
-```shell
+```sh
 create /sanguo/zhugeliang "zhugeliang"
 ```
 
@@ -186,19 +186,19 @@ create /sanguo/zhugeliang "zhugeliang"
 
 删除单个节点
 
-```shell
+```sh
 delete /sanguo/zhugeliang
 ```
 
 递归删除全部子节点
 
-```shell
+```sh
 deleteall /sanguo
 ```
 
 查看节点信息
 
-```shell
+```sh
 stat /zookeeper
 ```
 

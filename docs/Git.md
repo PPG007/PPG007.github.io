@@ -14,7 +14,7 @@ Git 跟踪并管理的是修改，而不是文件。
 
 要创建版本库，在一个目录下使用如下命令：
 
-```shell
+```sh
 git init
 ```
 
@@ -26,13 +26,13 @@ git init
 
 现在创建一个文件 `README.txt` 文件，使用下面的命令将文件添加到暂存区：
 
-```shell
+```sh
 git add README.txt
 ```
 
 接着，执行下面的命令将暂存区中的文件提交给仓库：
 
-```shell
+```sh
 # -m 用来指定这次提交的信息
 git commit -m 'init'
 ```

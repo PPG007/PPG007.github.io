@@ -110,10 +110,10 @@ server:
   port: 9900
 spring:
   datasource:
-    username: 
+    username:
 ```
 - 注意：在项目中存在properties的情况下，SpringBoot优先使用properties配置文件
-- 
+-
 ### 2.4 通过YAML给属性赋值
 YAML配置如下：
 ```yml
@@ -1043,7 +1043,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-        
+
         // 自动建表
 //        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
@@ -1454,7 +1454,7 @@ public class SendMail {
         SendMail.mailMapper = mailMapper;
     }
 
-    
+
     public static void send() throws MessagingException {
         List<String> list = mailMapper.queryAllMailAddress();
 
@@ -1563,9 +1563,9 @@ dubbo.scan.base-packages=com.example.provider.service
 - 执行：
 ```
 mvn install:install-file -Dfile=D:\Javaweb\dubbo-zookeeper\provider\target\provider-0.0.1-SNAPSHOT.jar //jar包绝对路径
--DgroupId=com.example 
--DartifactId=provider 
--Dversion=0.0.1-SNAPSHOT 
+-DgroupId=com.example
+-DartifactId=provider
+-Dversion=0.0.1-SNAPSHOT
 -Dpackaging=jar
 ```
 ### 16.3 服务消费者

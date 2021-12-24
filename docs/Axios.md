@@ -2,7 +2,7 @@
 
 ## 安装 Axios
 
-```shell
+```sh
 npm install axios
 ```
 

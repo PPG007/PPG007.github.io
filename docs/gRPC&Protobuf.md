@@ -667,7 +667,7 @@ conn, err := grpc.Dial(*serverAddress, grpc.WithUnaryInterceptor(interceptor.Una
 
 首先使用 OpenSSL 生成 CA 密钥和证书、服务端密钥和证书、客户端密钥和证书：
 
-```shell
+```sh
 # 1. Generate CA's private key and self-signed certificate
 openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout ca-key.pem -out ca-cert.pem -subj "/C=CN/ST=ShanDong/L=QingDao/O=company/OU=demo/CN=koston/emailAddress=koston.zhuang@demo.com"
 

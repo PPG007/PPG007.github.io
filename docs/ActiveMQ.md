@@ -68,7 +68,7 @@ ActiveMQ功能配置文档：[ActiveMQ Feature](https://activemq.apache.org/feat
 
 在 Linux 中解压并进入解压后的目录，进入其中的 bin 文件夹(首先需要安装 Java 环境)：
 
-```shell
+```sh
 #启动
 ./activemq start
 #重启
@@ -609,7 +609,7 @@ Broker 其实就是实现了用代码的形式启动 ActiveMQ 将 MQ 嵌入到 J
 
 ### 指定 ActiveMQ 使用的配置文件
 
-```shell
+```sh
 ./activemq start xbean:file/root/apache-activemq-5.16.3/conf/activemq.xml
 ```
 

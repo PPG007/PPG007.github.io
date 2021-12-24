@@ -49,7 +49,7 @@ public class Servlet2 extends GenericServlet {
 
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
-        
+
     }
 }
 ```
@@ -258,10 +258,10 @@ public String test4(){
 ```
 ### 2.8 乱码问题
 - 情况一：jsp、html等静态页面没有设置UTF-8，或者文件格式不是UTF-8
-  
+
     - 解决：添加头部指定编码格式为UTF-8
 - 情况二：调试中，控制台输出乱码
-  
+
     - 解决：在Tomcat的启动参数中添加-Dfile.encoding=UTF-8，指定jvm以UTF-8启动。**注意：此项设置需要重启IDE方可生效**
 - 情况三：浏览器前端界面乱码
     - 解决：在web.xml中配置Spring的CharacterEncodingFilter即可
@@ -425,7 +425,7 @@ FastJsonHttpMessageConverter写与不写没区别(在基本使用上)，且若�
             <constructor-arg value="UTF-8"/>
 
         </bean>
-        
+
         <!-- <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
         </bean> -->
     </mvc:message-converters>
@@ -480,7 +480,7 @@ System.out.println(jsonArray.toString());
 ```
 ##### 3.4.3 使用org.json
 
-```Java
+```java
 Student student = new Student(1, "赵泽龙");
 //通过构造函数创建JSONObject
 JSONObject jsonObject = new JSONObject(student);
@@ -897,7 +897,7 @@ public class SpringInitializer extends AbstractAnnotationConfigDispatcherServlet
         characterEncodingFilter.setForceEncoding(true);
         return new Filter[]{characterEncodingFilter};
     }
-    
+
 }
 ```
 ### 8.2配置SpringConfig

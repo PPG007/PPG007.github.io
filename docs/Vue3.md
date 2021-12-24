@@ -16,13 +16,13 @@
 
 创建项目
 
-```shell
+```sh
 npm init vite-app <项目名>
 ```
 
 进入项目文件夹，安装依赖
 
-```shell
+```sh
 npm install
 ```
 
@@ -943,7 +943,7 @@ export default {
 
   ```js
   import {defineAsyncComponent} from "vue";
-  
+
   const A=defineAsyncComponent(()=>import("./components/A.vue"))
   export default {
     name: 'App',
@@ -951,9 +951,9 @@ export default {
       A
     },
     setup() {
-  
+
     },
-  
+
   }
   ```
 
@@ -1066,4 +1066,3 @@ export default {
 <!-- result -->
 <div id="red"></div>
 ```
-

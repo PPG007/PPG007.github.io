@@ -686,7 +686,7 @@ private static final String BASE_URL="http://payment-service";
 
 ### 安装Consul
 
-```shell
+```sh
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 sudo yum -y install consul
@@ -694,7 +694,7 @@ sudo yum -y install consul
 
 ### 启动consul并允许外网访问
 
-```shell
+```sh
 consul agent -dev   -client 0.0.0.0 -ui
 ```
 
@@ -806,7 +806,7 @@ public class Config {
 @RestController
 @RequestMapping("/api/v1/center")
 public class MessageCenterController {
- 
+
     @Autowired
     private LoadBalancerClient loadBalancer;
 
@@ -873,14 +873,14 @@ public Server choose(ILoadBalancer lb, Object key)
              {
                currentIndex = 0;
              }
-            } 
+            }
  if (server == null) {
     Thread.yield();
     continue;
    }
  if (server.isAlive()) {
     return (server);
-   }  
+   }
    server = null;
    Thread.yield();
    }
@@ -896,7 +896,7 @@ public Server choose(ILoadBalancer lb, Object key)
  public void initWithNiwsConfig(IClientConfig clientConfig)
  {
  }
- }             
+ }
 ```
 - 编写对应配置类
 ```java
@@ -921,15 +921,15 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.netflix.ribbon.ZonePreferenceServerListFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
- 
+
 import com.netflix.loadbalancer.IPing;
 import com.netflix.loadbalancer.PingUrl;
 import com.pengjunlee.TestConfiguration.MessageConfiguration;
- 
+
 @Configuration
 @RibbonClient(name = "message-service", configuration = MessageConfiguration.class)
 public class TestConfiguration {
- 
+
 	@Configuration
 	protected static class MessageConfiguration {
 		@Bean
@@ -938,7 +938,7 @@ public class TestConfiguration {
 			filter.setZone("myTestZone");
 			return filter;
 		}
- 
+
 		@Bean
 		public IPing ribbonPing() {
 			return new PingUrl();
@@ -1788,7 +1788,7 @@ zuul:
   host:
     connect-timeout-millis: 2000
     socket-timeout-millis: 10000
-  strip-prefix: false 
+  strip-prefix: false
   #设置是否跳过前缀，这里是全局配置，既影响prefix也影响给服务指定的url前缀，
   # 默认为true，以此处为例，若设置为true，则访问时输入
   # localhost:9527/dept/dept/dept/queryAll才可以正常访问，
@@ -1797,7 +1797,7 @@ zuul:
   # 也就是忽略了两个prefix但微服务内部前缀依然保留
   # strip-prefix也可以为指定的微服务设置，例如：
   # routes:
-  #   springcloud-provider-dept: 
+  #   springcloud-provider-dept:
   #   path: /dept/**
   #   strip-prefix: false
 ```

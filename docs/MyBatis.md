@@ -170,7 +170,7 @@ public interface UserMapper {
 public class MybatisUtil {
 
     // 每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实
-    // 例为核心的。SqlSessionFactory 的实例可以通过 
+    // 例为核心的。SqlSessionFactory 的实例可以通过
     // SqlSessionFactoryBuilder 获得。
     // 而 SqlSessionFactoryBuilder 则可以从 XML 配置文件
     // 或一个预先配置的 Configuration 实例来构建出 SqlSessionFactory 实例。
@@ -413,7 +413,7 @@ public class User {
 </settings>
 ```
 2. Log4j实现
-```properties
+```ini
 ### 配置根 ###
 log4j.rootLogger = debug,console,fileAppender
 
@@ -530,7 +530,7 @@ student mapper.xml配置
         select * from teacher where id=#{tid};
     </select>
     <!-- 方式二：类似多表联查 -->
-    <!-- 首先写出SQL语句 
+    <!-- 首先写出SQL语句
     然后配置resultMap，依然使用association配置老师
     其子标签中的result的property属性为老师类的属性
     column为SQL语句中重命名的属性名-->
@@ -545,7 +545,7 @@ student mapper.xml配置
     <select id="queryAllStudent2" resultMap="student2">
         select s.name sname,t.name tname,t.id tid from student s,teacher t where s.tid=t.id;
     </select>
-    
+
 </mapper>
 ```
 ### 8.2 一对多（老师对学生）
@@ -1050,4 +1050,3 @@ sqlSession.clearCache();
 >除了上述缓存的方式，也可以通过实现你己的缓存，或为其他第三方缓存方案创建适配器，来完全覆盖缓存行为。
 
 >Ehcache是一种广泛使用的开源Java分布式缓存。
-

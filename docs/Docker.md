@@ -10,7 +10,7 @@
 
 基于 Ubuntu 基础镜像构建 MySQL 的 Dockerfile：
 
-```dockerfile
+```docker
 FROM phusion/baseimage:master
 
 ENV HOME /root
@@ -29,7 +29,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 启动脚本：
 
-```shell
+```sh
 #!/bin/bash
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 service mysql start
@@ -42,7 +42,7 @@ service mysql restart
 
 基于 Ubuntu 基础镜像构建 PHP 的 Dockerfile：
 
-```dockerfile
+```docker
 FROM phusion/baseimage:master
 
 ENV HOME /root
@@ -61,14 +61,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 启动脚本：
 
-```shell
+```sh
 #!/bin/bash
 service php7.0-fpm start
 ```
 
 基于 Ubuntu 基础镜像构建 Nginx 的 Dockerfile：
 
-```dockerfile
+```docker
 FROM phusion/baseimage:master
 
 ENV HOME /root
@@ -82,7 +82,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 启动脚本：
 
-```shell
+```sh
 #!/bin/sh
 service nginx start
 ```

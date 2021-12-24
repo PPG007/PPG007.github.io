@@ -3188,7 +3188,7 @@ axios.get('http://localhost:90/api/getAllStudents').then(
 
 ### 安装vue-resource
 
-```shell
+```sh
 npm install vue-resource
 ```
 
@@ -3364,7 +3364,7 @@ export default {
 
 安装Vuex：
 
-```shell
+```sh
 npm install vuex --save
 ```
 
@@ -3936,7 +3936,7 @@ this.$store.getters["counterOptions/process"]
 
 ### 安装VueRouter
 
-```shell
+```sh
 npm install vue-router
 ```
 
