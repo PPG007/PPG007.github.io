@@ -16,7 +16,15 @@ module.exports = {
           {
             text: 'HTML',
             link: '/HTML.html',
-          }
+          },
+          {
+            text: 'Vue 2.X',
+            link: '/Vue2.html',
+          },
+          {
+            text: 'Vue 3',
+            link: 'Vue3.html',
+          },
         ],
       },
       {
