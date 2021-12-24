@@ -7,7 +7,9 @@ module.exports = {
   // 主题和它的配置
   theme: '@vuepress/theme-default',
   themeConfig: {
-    logo: 'https://vuejs.org/images/logo.png',
+    logo: 'logo.png',
+    repo: 'https://github.com/PPG007/PPG007.github.io',
+    editLink: false,
     sidebarDepth: 3,
     navbar: [
       '/',
@@ -47,6 +49,18 @@ module.exports = {
       {
         text: 'Java',
         children: [
+          {
+            text: 'Java IO',
+            link: '/JavaIO.html',
+          },
+          {
+            text: 'Java 知识点',
+            link: '/Java知识点.html',
+          },
+          {
+            text: 'Java 网络通信',
+            link: '/Java网络通信.html',
+          },
           {
             text: 'ActiveMQ',
             link: '/ActiveMQ.html',
@@ -122,6 +136,15 @@ module.exports = {
           {
             text: 'Coding Style',
             link: '/CodingStyle.html',
+          }
+        ],
+      },
+      {
+        text: 'others',
+        children: [
+          {
+            text: 'Markdown',
+            link: '/Markdown.html',
           }
         ],
       },

@@ -1,8 +1,10 @@
-### TCP通信
+# Java 网络通信
 
-##### 简单通信
+## TCP 通信
 
-客户端
+### 简单通信
+
+客户端：
 
 ```java
 public void client() throws IOException {
@@ -19,7 +21,7 @@ public void client() throws IOException {
 }
 ```
 
-服务端
+服务端：
 
 ```java
 public void server() {
@@ -41,9 +43,9 @@ public void server() {
 }
 ```
 
-##### 发送文件
+### 发送文件
 
-客户端
+客户端：
 
 ```java
 public void fileClient(){
@@ -71,7 +73,7 @@ public void fileClient(){
 }
 ```
 
-服务端
+服务端：
 
 ```java
 public void fileServer(){
@@ -95,13 +97,11 @@ public void fileServer(){
 }
 ```
 
+## UDP 通信
 
+### 简单通信
 
-### UDP通信
-
-##### 简单通信
-
-客户端
+客户端：
 
 ```java
 public void sender(){
@@ -117,9 +117,7 @@ public void sender(){
 }
 ```
 
-
-
-服务端
+服务端：
 
 ```java
 public void receiver(){
@@ -135,13 +133,13 @@ public void receiver(){
 }
 ```
 
+### 发送文件
 
+::: warning 注意
+使用 UDP 发送文件时，文件不能太大，且大小要已知，一般不用来传输文件。
+:::
 
-##### 发送文件
-
-使用UDP发送文件时，文件不能太大，且大小要已知，一般不用来传输文件
-
-客户端
+客户端：
 
 ```java
 public void sender(){
@@ -164,9 +162,7 @@ public void sender(){
 }
 ```
 
-
-
-服务端
+服务端：
 
 ```java
 public void receiver(){
@@ -184,9 +180,7 @@ public void receiver(){
 }
 ```
 
-
-
-### URL通信
+### URL 通信
 
 ```java
 public void test() throws IOException {
@@ -210,4 +204,3 @@ public void test() throws IOException {
     connection.disconnect();
 }
 ```
-

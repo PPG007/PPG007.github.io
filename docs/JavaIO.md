@@ -1,10 +1,12 @@
-![](/JavaIO/IO.jpg)
+# Java IO
 
-# 节点流
+![JavaIO表](/JavaIO/IO.jpg)
 
-### 使用字符输入流FileReader访问文件
+## 节点流
 
-使用无参read()方法
+### 使用字符输入流 FileReader 访问文件
+
+使用无参 `read()` 方法：
 
 ```java
 File file = new File("D:\\Javaweb\\Java-Basic\\IO\\src\\test.json");
@@ -18,9 +20,11 @@ try (FileReader fileReader = new FileReader(file)) {//这种写法不需要在fi
 }
 ```
 
-如果创建FileReader不在try括号内，则要在finally中关闭流，且创建过程要使用try...catch包裹，防止抛出异常后不关闭流
+::: warning
+如果创建 FileReader 不在 try 括号内，则要在 finally 中关闭流，且创建过程要使用 try...catch 包裹，防止抛出异常后不关闭流。
+:::
 
-使用有参read()方法，传入一个char数组
+使用有参 `read()` 方法，传入一个 char 数组：
 
 ```java
 File file = new File("D:\\Javaweb\\Java-Basic\\IO\\src\\test.json");
@@ -82,7 +86,7 @@ fileOutputStream.close();
 fileInputStream.close();
 ```
 
-# 缓冲流
+## 缓冲流
 
 ### 字节流
 
@@ -109,8 +113,6 @@ bufferedInputStream.close();
 fileOutputStream.close();
 fileInputStream.close();
 ```
-
-
 
 ### 字符流
 
@@ -141,10 +143,9 @@ bufferedWriter.close();
 bufferedReader.close();
 fileWriter.close();
 fileReader.close();
-}
 ```
 
-# 转换流
+## 转换流
 
 ```java
 File in = new File(PATH_PREFIX + "1.txt");
@@ -164,7 +165,7 @@ inputStreamReader.close();
 fileInputStream.close();
 ```
 
-# 标准输入输出流
+## 标准输入输出流
 
 ```java
 System.in//标准输入流
@@ -173,7 +174,7 @@ System.err//标准错误流
 //调用System的setIn(InputStream)、setOut(PrintStream)方法 指定输入输出流
 ```
 
-# 打印流
+## 打印流
 
 ```java
 PrintStream
@@ -187,7 +188,7 @@ for (int i = 0; i < 100; i++) {
 }
 ```
 
-# 数据流
+## 数据流
 
 ```java
 DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(PATH_PREFIX + "3.txt"));
@@ -206,11 +207,11 @@ System.out.println(dataInputStream.readDouble());
 dataInputStream.close();
 ```
 
-# 对象流
+## 对象流
 
-`ObjectOutputStream` `ObjectInputStream`
+`ObjectOutputStream` 和 `ObjectInputStream`。
 
-不能序列化`static`和`transient`修饰的变量，且序列化、反序列化的类必须实现序列化接口
+不能序列化 `static` 和 `transient` 修饰的变量，且序列化、反序列化的类必须实现序列化接口。
 
 ```java
 Person person = new Person();
@@ -228,11 +229,11 @@ objectOutputStream.flush();
 objectOutputStream.close();
 ```
 
-person类
+Person 类：
 
 ```java
 public class Person implements Serializable {
-	//表明类的不同版本间的兼容性，不指定就是Java运行时环境自动生成，若类实例变量做出了修改，这个值可能会变，建议显式指定
+	//表明类的不同版本间的兼容性，不指定就是Java运行时环境自动生成，若类实例变量做出了修改，这个值可能会变，建议显式指定。
     public static final long serialVersionUID = 41241252L;
 
     private String name;
@@ -297,16 +298,16 @@ public class Person implements Serializable {
 }
 ```
 
-进行反序列化时，jvm将传进字节流的序列化ID与本地实体类的序列化ID比较如果相同则可以进行反序列化，否则异常
+进行反序列化时，jvm 将传进字节流的序列化 ID 与本地实体类的序列化 ID 比较如果相同则可以进行反序列化，否则异常。
 
-# 随机存取文件流
+## 随机存取文件流
 
-多线程断点下载
+多线程断点下载。
 
-- r：以只读方式打开
-- rw：读写
-- rwd：读写、同步文件内容的更新
-- rws：读写、同步文件内容和元数据的更新
+- r：以只读方式打开。
+- rw：读写。
+- rwd：读写、同步文件内容的更新。
+- rws：读写、同步文件内容和元数据的更新。
 
 ```java
 RandomAccessFile rw = new RandomAccessFile(PATH_PREFIX + "rand.txt", "rw");
@@ -322,4 +323,3 @@ r.seek(0);
 System.out.println(r.readChar());
 r.close();
 ```
-
