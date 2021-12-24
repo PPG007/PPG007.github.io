@@ -8,6 +8,7 @@ module.exports = {
   theme: '@vuepress/theme-default',
   themeConfig: {
     logo: 'https://vuejs.org/images/logo.png',
+    sidebarDepth: 3,
     navbar: [
       '/',
       {
@@ -24,6 +25,10 @@ module.exports = {
           {
             text: 'Vue 3',
             link: 'Vue3.html',
+          },
+          {
+            text: 'Axios',
+            link: 'Axios.html',
           },
         ],
       },
