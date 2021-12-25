@@ -1,1 +1,4 @@
-# 首页
+---
+home: true
+heroImage: /indexImage
+---

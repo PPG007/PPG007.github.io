@@ -1,3 +1,8 @@
+const html = require('../html/index.js')
+const css = require('../css/index.js')
+const javascript = require('../javascript/index.js')
+const vue2 = require('../vue2/index.js')
+
 module.exports = {
   // 站点配置
   lang: 'zh-CN',
@@ -11,22 +16,27 @@ module.exports = {
     repo: 'https://github.com/PPG007/PPG007.github.io',
     editLink: false,
     sidebarDepth: 3,
+    contributors: true,
+    lastUpdated: true,
     navbar: [
-      '/',
+      {
+        text: '首页',
+        link: '/',
+      },
       {
         text: '前端',
         children: [
           {
             text: 'HTML',
-            link: '/HTML.html',
+            link: '/html',
           },
           {
             text: 'CSS',
-            link: '/CSS.html',
+            link: '/css',
           },
           {
             text: 'JavaScript',
-            link: '/JavaScript.html',
+            link: '/javascript',
           },
           {
             text: 'ES6',
@@ -34,7 +44,7 @@ module.exports = {
           },
           {
             text: 'Vue 2.X',
-            link: '/Vue2.html',
+            link: '/vue2',
           },
           {
             text: 'Vue 3',
@@ -149,6 +159,12 @@ module.exports = {
         ],
       },
     ],
+    sidebar: {
+      ...html.HTMLSidebar,
+      ...css.CssSidebar,
+      ...javascript.JavaScriptSidebar,
+      ...vue2.Vue2Sidebar,
+    },
   },
   public: 'docs/images',
   plugins: [
