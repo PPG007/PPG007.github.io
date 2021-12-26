@@ -2,6 +2,9 @@ const html = require('../html/index.js')
 const css = require('../css/index.js')
 const javascript = require('../javascript/index.js')
 const vue2 = require('../vue2/index.js')
+const vue3 = require('../vue3/index.js')
+const es6 = require('../es6/index.js')
+const axios = require('../axios/index.js')
 
 module.exports = {
   // 站点配置
@@ -40,7 +43,7 @@ module.exports = {
           },
           {
             text: 'ES6',
-            link: '/ES6.html',
+            link: '/es6',
           },
           {
             text: 'Vue 2.X',
@@ -48,11 +51,11 @@ module.exports = {
           },
           {
             text: 'Vue 3',
-            link: 'Vue3.html',
+            link: '/vue3',
           },
           {
             text: 'Axios',
-            link: 'Axios.html',
+            link: '/axios',
           },
         ],
       },
@@ -164,6 +167,9 @@ module.exports = {
       ...css.CssSidebar,
       ...javascript.JavaScriptSidebar,
       ...vue2.Vue2Sidebar,
+      ...es6.ES6Sidebar,
+      ...vue3.Vue3Sidebar,
+      ...axios.AxiosSidebar,
     },
   },
   public: 'docs/images',
