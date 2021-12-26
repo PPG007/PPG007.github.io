@@ -61,15 +61,15 @@ const Navbar = [
       },
       {
         text: 'Spring',
-        link: '/Spring.html',
+        link: '/spring',
       },
       {
         text: 'SpringMVC',
-        link: '/SpringMVC.html',
+        link: '/SpringMVC',
       },
       {
         text: 'SpringBoot',
-        link: '/SpringBoot.html',
+        link: '/SpringBoot',
       },
       {
         text: 'SpringCloud',
@@ -126,6 +126,10 @@ const Navbar = [
       {
         text: 'Coding Style',
         link: '/CodingStyle.html',
+      },
+      {
+        text: 'Clean Code',
+        link: '/clean-code',
       }
     ],
   },
@@ -135,6 +139,10 @@ const Navbar = [
       {
         text: 'Markdown',
         link: '/Markdown.html',
+      },
+      {
+        text: 'VsCode',
+        link: '/vscode',
       }
     ],
   },

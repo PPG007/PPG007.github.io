@@ -1,3 +1,9 @@
+---
+prev:
+  text: 首页
+  link: /go
+---
+
 # init 函数和 main 函数
 
 main 函数是程序的默认入口。

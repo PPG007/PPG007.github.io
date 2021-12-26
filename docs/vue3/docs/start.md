@@ -1,3 +1,9 @@
+---
+prev:
+  text: 首页
+  link: /vue3
+---
+
 # 创建 Vue3.0 工程
 
 ## 使用 vue-CLI

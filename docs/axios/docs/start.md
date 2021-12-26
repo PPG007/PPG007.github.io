@@ -1,3 +1,9 @@
+---
+prev:
+  text: 首页
+  link: /axios
+---
+
 # 安装 Axios
 
 ```sh

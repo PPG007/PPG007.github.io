@@ -1,3 +1,9 @@
+---
+prev:
+  text: 首页
+  link: /vue2
+---
+
 # 第一个 Vue 程序
 
 ```html
