@@ -8,6 +8,8 @@ const axios = require('../../axios/index.js')
 const go = require('../../go/index.js')
 const gin = require('../../gin/index.js')
 const gRPCAndProtobuf = require('../../grpc-and-protobuf/index.js')
+const mongodb = require('../../mongodb/index.js')
+const git = require('../../git/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -20,6 +22,8 @@ const Sidebar = {
   ...go.GoSidebar,
   ...gRPCAndProtobuf.gRPCAndProtobufSidebar,
   ...gin.GinSidebar,
+  ...mongodb.MongoDBSidebar,
+  ...git.GitSidebar,
 }
 
 module.exports.Sidebar = Sidebar

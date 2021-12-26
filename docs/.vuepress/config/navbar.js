@@ -107,7 +107,7 @@ const Navbar = [
     children: [
       {
         text: 'MongoDB',
-        link: '/MongoDB.html',
+        link: '/mongodb',
       }
     ],
   },
@@ -116,7 +116,7 @@ const Navbar = [
     children: [
       {
         text: 'Git',
-        link: '/Git.html',
+        link: '/git',
       }
     ],
   },
