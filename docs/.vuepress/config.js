@@ -1,10 +1,5 @@
-const html = require('../html/index.js')
-const css = require('../css/index.js')
-const javascript = require('../javascript/index.js')
-const vue2 = require('../vue2/index.js')
-const vue3 = require('../vue3/index.js')
-const es6 = require('../es6/index.js')
-const axios = require('../axios/index.js')
+const sidebar = require('./config/sidebar.js')
+const navbar = require('./config/navbar.js')
 
 module.exports = {
   // 站点配置
@@ -15,162 +10,14 @@ module.exports = {
   // 主题和它的配置
   theme: '@vuepress/theme-default',
   themeConfig: {
-    logo: 'logo.png',
+    logo: 'indexImage',
     repo: 'https://github.com/PPG007/PPG007.github.io',
     editLink: false,
     sidebarDepth: 3,
     contributors: true,
     lastUpdated: true,
-    navbar: [
-      {
-        text: '首页',
-        link: '/',
-      },
-      {
-        text: '前端',
-        children: [
-          {
-            text: 'HTML',
-            link: '/html',
-          },
-          {
-            text: 'CSS',
-            link: '/css',
-          },
-          {
-            text: 'JavaScript',
-            link: '/javascript',
-          },
-          {
-            text: 'ES6',
-            link: '/es6',
-          },
-          {
-            text: 'Vue 2.X',
-            link: '/vue2',
-          },
-          {
-            text: 'Vue 3',
-            link: '/vue3',
-          },
-          {
-            text: 'Axios',
-            link: '/axios',
-          },
-        ],
-      },
-      {
-        text: 'Java',
-        children: [
-          {
-            text: 'Java IO',
-            link: '/JavaIO.html',
-          },
-          {
-            text: 'Java 知识点',
-            link: '/Java知识点.html',
-          },
-          {
-            text: 'Java 网络通信',
-            link: '/Java网络通信.html',
-          },
-          {
-            text: 'ActiveMQ',
-            link: '/ActiveMQ.html',
-          },
-          {
-            text: 'Mybatis',
-            link: '/Mybatis.html',
-          },
-          {
-            text: 'Spring',
-            link: '/Spring.html',
-          },
-          {
-            text: 'SpringMVC',
-            link: '/SpringMVC.html',
-          },
-          {
-            text: 'SpringBoot',
-            link: '/SpringBoot.html',
-          },
-          {
-            text: 'SpringCloud',
-            link: '/SpringCloud.html',
-          },
-          {
-            text: 'Dubbo',
-            link: '/Dubbo.html',
-          },
-          {
-            text: 'Docker',
-            link: '/Docker.html',
-          },
-        ],
-      },
-      {
-        text: 'Go',
-        children: [
-          {
-            text: 'Go',
-            link: '/Go.html',
-          },
-          {
-            text: 'gRPC&Protobuf',
-            link: '/gRPC&Protobuf.html',
-          },
-          {
-            text: 'Gin',
-            link: '/gin.html',
-          },
-        ],
-      },
-      {
-        text: '数据库',
-        children: [
-          {
-            text: 'MongoDB',
-            link: '/MongoDB.html',
-          }
-        ],
-      },
-      {
-        text: 'Git',
-        children: [
-          {
-            text: 'Git',
-            link: '/Git.html',
-          }
-        ],
-      },
-      {
-        text: 'Be Professional',
-        children: [
-          {
-            text: 'Coding Style',
-            link: '/CodingStyle.html',
-          }
-        ],
-      },
-      {
-        text: 'others',
-        children: [
-          {
-            text: 'Markdown',
-            link: '/Markdown.html',
-          }
-        ],
-      },
-    ],
-    sidebar: {
-      ...html.HTMLSidebar,
-      ...css.CssSidebar,
-      ...javascript.JavaScriptSidebar,
-      ...vue2.Vue2Sidebar,
-      ...es6.ES6Sidebar,
-      ...vue3.Vue3Sidebar,
-      ...axios.AxiosSidebar,
-    },
+    navbar: navbar.Navbar,
+    sidebar: sidebar.Sidebar,
   },
   public: 'docs/images',
   plugins: [

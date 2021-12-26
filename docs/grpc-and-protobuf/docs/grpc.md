@@ -1,134 +1,10 @@
-# RPC&Protobuf
+# gRPC
 
-## ProtoBuf
-
-### 安装和编译
-
-安装 Protobuf 后，如果执行 `protoc` 命令出现 `Protobuf cannot find shared libraries` 的错误，可以执行：`sudo ldconfig` 命令解决。
-
-编译命令：
-
-- 对于没有定义 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} ${要编译的文件}` 编译。
-- 对于定义了 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} --go-grpc_out=${out_dir} ${要编译的文件}` 编译。
-- 对于同时定义了普通 message 和 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} --go-grpc_out=${out_dir} ${要编译的文件}` 编译。
-
-示例：`protoc -I ./proto/ --go_out=pb --go-grpc_out=pb proto/*.proto`。
-
-### 编写 proto 文件
-
-示例文件：
-
-```protobuf
-// 指定 Protobuf 的版本。
-syntax = "proto3";
-// 指明生成 go 代码的包名。
-option go_package = "./;pb";
-// 对于 Java，将一个 proto 文件编译为多个接口和类。
-option java_multiple_files = true;
-// 指定生成的 Java 代码的包名。
-option java_package = "com.demo.pb";
-// 引入其他 proto 文件。
-import "laptop_message.proto";
-import "filter_message.proto";
-
-// 使用 message 关键字定义一个普通变量。
-message CreateLaptopRequest {
-  Laptop laptop = 1;
-}
-
-message CreateLaptopResponse {
-  string id = 1;
-}
-
-message SearchLaptopRequest {
-  Filter filter = 1;
-}
-
-message SearchLaptopResponse {
-  Laptop laptop = 1;
-}
-
-message UploadImageRequest {
-  // oneof 关键字表示这个 message 中这两种成员同时只能存在一个，代码中会存在覆盖问题。
-  oneof data {
-    ImageInfo info =1;
-    bytes chunk_data = 2;
-  }
-}
-
-message ImageInfo {
-  string laptop_id = 1;
-  string image_type = 2;
-}
-
-message UploadImageResponse {
-  string id = 1;
-  uint32 size = 2;
-}
-
-message RateLaptopRequest {
-  string laptop_id = 1;
-  double score = 2;
-}
-
-message RateLaptopResponse {
-  string laptop_id = 1;
-  uint32 rated_count =2;
-  double average_score = 3;
-}
-
-message Laptop {
-  string id = 1;
-  string brand = 2;
-  string name = 3;
-  CPU cpu = 4;
-  Memory ram = 5;
-  // repeated 修饰数组。
-  repeated GPU gpus = 6;
-  repeated Storage storeges = 7;
-  Screen screen = 8;
-  Keyboard keyboard = 9;
-  oneof weight {
-    double weight_kg = 10;
-    double weight_lb = 11;
-  }
-  double price_usd = 12;
-  uint32 release_year = 13;
-  google.protobuf.Timestamp updated_at = 14;
-}
-
-message Memory {
-  // 枚举类要以 0 开始。
-  enum Unit {
-    UNKNOWN = 0;
-    BIT = 1;
-    BYTE = 2;
-    KILOBYTE = 3;
-    MEGABYTE = 4;
-    GIGABYTE = 5;
-    TERABYTE = 6;
-  }
-  uint64 value = 1;
-  Unit unit = 2;
-}
-
-service LaptopService {
-  // 注意是 returns 不是 return。
-  // 对于流，使用 stream 关键字修饰。
-  rpc CreateLaptop(CreateLaptopRequest) returns (CreateLaptopResponse) {};
-  rpc SearchLaptop (SearchLaptopRequest) returns (stream SearchLaptopResponse) {};
-  rpc UploadImage (stream UploadImageRequest) returns (UploadImageResponse) {};
-  rpc RateLaptop (stream RateLaptopRequest) returns (stream RateLaptopResponse) {};
-}
-```
-
-## gRPC
-
-### 引入 gRPC
+## 引入 gRPC
 
 `go get google.golang.org/grpc`。
 
-### 一元 RPC
+## 一元 RPC
 
 在 proto 文件编译后生成的代码中可以找到 proto 中 service 关键字定义的接口 interface：
 
@@ -261,7 +137,7 @@ func main() {
 }
 ```
 
-### 服务端流式 RPC
+## 服务端流式 RPC
 
 生成的接口：
 
@@ -300,7 +176,7 @@ func (server *LaptopServer) SearchLaptop(request *pb.SearchLaptopRequest, stream
 
 服务端、客户端启动函数不需要变化。
 
-### 客户端流式 RPC
+## 客户端流式 RPC
 
 生成的接口：
 
@@ -383,7 +259,7 @@ func (server *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServe
 
 服务端、客户端启动函数无变化。
 
-### 双向流式 RPC
+## 双向流式 RPC
 
 生成的接口：
 
@@ -454,7 +330,7 @@ func (server *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer)
 
 客户端、服务端启动函数没有变化。
 
-### metadata、interceptor、JWT
+## metadata、interceptor、JWT
 
 设计思想：设计一个登录接口，登录成功后返回 token，客户端使用拦截器在出站请求的 metadata 中添加 token，服务端通过拦截器判断是否需要拦截或者需要的角色，并对 token 进行合法校验和权限判断。
 
@@ -661,7 +537,7 @@ func (authInterceptor *AuthInterceptor) scheduleRefreshToken(refreshDuration tim
 conn, err := grpc.Dial(*serverAddress, grpc.WithUnaryInterceptor(interceptor.Unary()), grpc.WithStreamInterceptor(interceptor.Stream()))
 ```
 
-### SSL TLS
+## SSL TLS
 
 流程：服务端具有一个公钥和一个私钥，首先服务端创建证书签名 CSR，其中包含服务端的公钥和一些身份信息，然后服务端使用私钥签署了 CSR 并发送给 CA，CA 使用服务端的公钥验证 CSR 签名，这样就验证了一对对应的私钥和公钥，之后（此时证书应该不是被服务单私钥加密的状态） CA 使用自己的私钥在证书上签名然后返回给服务端，服务端与客户端共享这个证书，客户端可以使用 CA 的公钥对证书进行验证并获取到服务端的公钥。
 
@@ -684,7 +560,7 @@ openssl req -newkey rsa:4096 -nodes -keyout client-key.pem -out client-req.pem -
 openssl x509 -req -in client-req.pem -days 60 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -extfile client-ext.cnf
 ```
 
-#### 服务端认证
+### 服务端认证
 
 修改服务端启动函数：
 
@@ -736,7 +612,7 @@ if err != nil {
 conn, err := grpc.Dial(*serverAddress, grpc.WithTransportCredentials(tlsCredentials))
 ```
 
-#### 双端认证
+### 双端认证
 
 修改服务端启动函数：
 
@@ -791,8 +667,10 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 }
 ```
 
-### Load Balance
+## Load Balance
 
-TODO [video](https://www.bilibili.com/video/BV1Xv411t7h5)
+TODO
 
-### gRPC gate
+[video](https://www.bilibili.com/video/BV1Xv411t7h5)
+
+## gRPC Gateway
