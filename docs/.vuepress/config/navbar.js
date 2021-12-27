@@ -41,7 +41,7 @@ const Navbar = [
     children: [
       {
         text: 'Java IO',
-        link: '/JavaIO.html',
+        link: '/javaio',
       },
       {
         text: 'Java 知识点',
@@ -53,7 +53,7 @@ const Navbar = [
       },
       {
         text: 'ActiveMQ',
-        link: '/ActiveMQ.html',
+        link: '/activemq',
       },
       {
         text: 'Mybatis',
@@ -125,7 +125,7 @@ const Navbar = [
     children: [
       {
         text: 'Coding Style',
-        link: '/CodingStyle.html',
+        link: '/codingstyle',
       },
       {
         text: 'Clean Code',
@@ -138,11 +138,15 @@ const Navbar = [
     children: [
       {
         text: 'Markdown',
-        link: '/Markdown.html',
+        link: '/markdown',
       },
       {
         text: 'VsCode',
         link: '/vscode',
+      },
+      {
+        text: 'Restful API',
+        link: '/restful',
       }
     ],
   },

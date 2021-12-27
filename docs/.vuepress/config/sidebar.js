@@ -15,6 +15,11 @@ const vscode = require('../../vscode/index.js')
 const spring = require('../../spring/index.js')
 const springmvc = require('../../SpringMVC/index.js')
 const springboot = require('../../SpringBoot/index.js')
+const activemq = require('../../activemq/index.js')
+const codingstyle = require('../../codingstyle/index.js')
+const markdown = require('../../markdown/index.js')
+const restful = require('../../restful/index.js')
+const javaio = require('../../javaio/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -34,6 +39,11 @@ const Sidebar = {
   ...spring.SpringSidebar,
   ...springmvc.SpringMVCSidebar,
   ...springboot.SpringBootSidebar,
+  ...activemq.AvtiveMQSidebar,
+  ...codingstyle.CodingStyleSidebar,
+  ...markdown.MarkdownSidebar,
+  ...restful.RestfulSidebar,
+  ...javaio.JavaIOSidebar,
 }
 
 module.exports.Sidebar = Sidebar
