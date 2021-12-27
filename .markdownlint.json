@@ -3,5 +3,6 @@
   "no-hard-tabs": { "code_blocks": false },
   "no-duplicate-header": { "siblings_only": true },
   "ul-indent": { "indent": 4 },
-  "no-inline-html": false
+  "no-inline-html": false,
+  "MD026": false
 }

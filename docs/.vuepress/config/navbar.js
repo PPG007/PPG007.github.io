@@ -77,7 +77,7 @@ const Navbar = [
       },
       {
         text: 'Dubbo',
-        link: '/Dubbo.html',
+        link: '/dubbo',
       },
       {
         text: 'Docker',
@@ -147,6 +147,10 @@ const Navbar = [
       {
         text: 'Restful API',
         link: '/restful',
+      },
+      {
+        text: '正则表达式',
+        link: '/regex',
       }
     ],
   },

@@ -20,6 +20,8 @@ const codingstyle = require('../../codingstyle/index.js')
 const markdown = require('../../markdown/index.js')
 const restful = require('../../restful/index.js')
 const javaio = require('../../javaio/index.js')
+const dubbo = require('../../dubbo/index.js')
+const regex = require('../../regex/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -44,6 +46,8 @@ const Sidebar = {
   ...markdown.MarkdownSidebar,
   ...restful.RestfulSidebar,
   ...javaio.JavaIOSidebar,
+  ...dubbo.DubboSidebar,
+  ...regex.RegexSidebar,
 }
 
 module.exports.Sidebar = Sidebar
