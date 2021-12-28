@@ -22,6 +22,15 @@ const restful = require('../../restful/index.js')
 const javaio = require('../../javaio/index.js')
 const dubbo = require('../../dubbo/index.js')
 const regex = require('../../regex/index.js')
+const zookeeper = require('../../zookeeper/index.js')
+const mybatis = require('../../mybatis/index.js')
+const javanet = require('../../javanet/index.js')
+const docker = require('../../docker/index.js')
+const javaknowledge = require('../../javaknowledge/index.js')
+const springcloud = require('../../SpringCloud/index.js')
+const javathread = require('../../javathread')
+const annotationAndReflection = require('../../annotation-and-reflection/index.js')
+const redis = require('../../redis/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -48,6 +57,15 @@ const Sidebar = {
   ...javaio.JavaIOSidebar,
   ...dubbo.DubboSidebar,
   ...regex.RegexSidebar,
+  ...zookeeper.ZooKeeperSidebar,
+  ...mybatis.MybatisSidebar,
+  ...javanet.JavaNetSidebar,
+  ...docker.DockerSidebar,
+  ...javaknowledge.JavaKnowledgeSidebar,
+  ...springcloud.SpringCloudSidebar,
+  ...javathread.JavaThreadSidebar,
+  ...annotationAndReflection.AnnotationReflectionSidebar,
+  ...redis.RedisSidebar,
 }
 
 module.exports.Sidebar = Sidebar

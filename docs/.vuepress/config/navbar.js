@@ -45,11 +45,19 @@ const Navbar = [
       },
       {
         text: 'Java 知识点',
-        link: '/Java知识点.html',
+        link: '/javaknowledge',
       },
       {
         text: 'Java 网络通信',
-        link: '/Java网络通信.html',
+        link: '/javanet',
+      },
+      {
+        text: 'Java 多线程',
+        link: '/javathread',
+      },
+      {
+        text: 'Java 注解和反射',
+        link: '/annotation-and-reflection',
       },
       {
         text: 'ActiveMQ',
@@ -57,7 +65,7 @@ const Navbar = [
       },
       {
         text: 'Mybatis',
-        link: '/Mybatis.html',
+        link: '/mybatis',
       },
       {
         text: 'Spring',
@@ -73,15 +81,11 @@ const Navbar = [
       },
       {
         text: 'SpringCloud',
-        link: '/SpringCloud.html',
+        link: '/SpringCloud',
       },
       {
         text: 'Dubbo',
         link: '/dubbo',
-      },
-      {
-        text: 'Docker',
-        link: '/Docker.html',
       },
     ],
   },
@@ -108,6 +112,10 @@ const Navbar = [
       {
         text: 'MongoDB',
         link: '/mongodb',
+      },
+      {
+        text: 'Redis',
+        link: '/redis',
       }
     ],
   },
@@ -151,7 +159,15 @@ const Navbar = [
       {
         text: '正则表达式',
         link: '/regex',
-      }
+      },
+      {
+        text: 'ZooKeeper',
+        link: '/zookeeper',
+      },
+      {
+        text: 'Docker',
+        link: '/docker',
+      },
     ],
   },
 ]
