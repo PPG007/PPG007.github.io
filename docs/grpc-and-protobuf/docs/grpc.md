@@ -669,9 +669,39 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 
 ## Load Balance
 
-TODO
+### NO TLS
 
-[video](https://www.bilibili.com/video/BV1Xv411t7h5)
+修改 Nginx 配置文件：
+
+```conf
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+events {
+	worker_connections 768;
+}
+
+http {
+	access_log /var/log/nginx/access.log;
+
+	upstream hello_services {
+		server 0.0.0.0:8081;
+		server 0.0.0.0:8082;
+	}
+
+	server {
+		listen	80 http2;
+		location / {
+			grpc_pass grpc://hello_services;
+		}
+	}
+}
+```
+
+将 gRPC 服务端启动在对应的端口即可，访问 Nginx 监听的 80 端口即可访问 gRPC 的接口。
+
+### TLS
+
+TODO
 
 ## gRPC Gateway
 
@@ -804,3 +834,7 @@ http:
 ```shell
 protoc -I . --go_out=pb --go-grpc_out pb --grpc-gateway_out pb --grpc-gateway_opt logtostderr=true --grpc-gateway_opt grpc_api_configuration=proto/api.yaml proto/*.proto
 ```
+
+### TLS
+
+TODO
