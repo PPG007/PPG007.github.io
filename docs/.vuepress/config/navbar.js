@@ -168,6 +168,10 @@ const Navbar = [
         text: 'Docker',
         link: '/docker',
       },
+      {
+        text: '设计模式',
+        link: '/design-pattern',
+      },
     ],
   },
 ]
