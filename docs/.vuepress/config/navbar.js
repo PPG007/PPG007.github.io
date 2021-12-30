@@ -87,6 +87,10 @@ const Navbar = [
         text: 'Dubbo',
         link: '/dubbo',
       },
+      {
+        text: 'Netty',
+        link: '/netty',
+      },
     ],
   },
   {

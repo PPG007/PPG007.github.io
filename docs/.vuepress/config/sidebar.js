@@ -32,6 +32,7 @@ const javathread = require('../../javathread')
 const annotationAndReflection = require('../../annotation-and-reflection/index.js')
 const redis = require('../../redis/index.js')
 const designPattern = require('../../design-pattern/index.js')
+const netty = require('../../netty/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -68,6 +69,7 @@ const Sidebar = {
   ...annotationAndReflection.AnnotationReflectionSidebar,
   ...redis.RedisSidebar,
   ...designPattern.DesignPatternSidebar,
+  ...netty.NettySidebar,
 }
 
 module.exports.Sidebar = Sidebar
