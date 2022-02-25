@@ -1,5 +1,17 @@
 # gRPC
 
+::: tip
+可以使用以下命令生成桩文件：
+
+```shell
+docker run --rm --name protoc --mount type=bind,source=${your protofile abs path},target=/app/proto ppg007/protoc-gen
+```
+
+此种方式下，proto 源文件夹必须是绝对路径，且最多允许两层嵌套，例：如果输入的源路径为 /home/user/proto，那么 proto 文件夹中可以直接存放 proto 文件，也可以在 proto 文件夹中创建多个子目录存放 proto 文件。
+
+如果使用的 grpc-gateway 是使用 yaml 格式描述的，这个 yaml 文件名必须是 `service.yml`。
+:::
+
 ## 引入 gRPC
 
 `go get google.golang.org/grpc`。
@@ -704,6 +716,13 @@ http {
 TODO
 
 ## gRPC Gateway
+
+## 安装工具
+
+```shell
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+```
 
 ### 在服务 proto 文件中定义
 
