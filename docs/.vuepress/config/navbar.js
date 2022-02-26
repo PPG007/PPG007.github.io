@@ -176,6 +176,10 @@ const Navbar = [
         text: '设计模式',
         link: '/design-pattern',
       },
+      {
+        text: 'Ubuntu20.04初始化清单',
+        link: '/ubuntu-20.04-init',
+      },
     ],
   },
 ]
