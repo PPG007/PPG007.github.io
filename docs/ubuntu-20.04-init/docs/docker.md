@@ -2,6 +2,8 @@
 
 ```shell
 sudo apt-get install docker.io
+# then run this command so that we can use docker without sudo
+sudo chmod 666 /var/run/docker.sock
 ```
 
 [docker-compose](https://github.com/docker/compose/releases)。
