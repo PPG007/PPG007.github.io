@@ -34,6 +34,7 @@ const redis = require('../../redis/index.js')
 const designPattern = require('../../design-pattern/index.js')
 const netty = require('../../netty/index.js')
 const ubuntu2004Init = require('../../ubuntu-20.04-init/index.js')
+const domain = require('../../domain/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -72,6 +73,7 @@ const Sidebar = {
   ...designPattern.DesignPatternSidebar,
   ...netty.NettySidebar,
   ...ubuntu2004Init.Ubuntu2004InitSidebar,
+  ...domain.DomainSidebar,
 }
 
 module.exports.Sidebar = Sidebar

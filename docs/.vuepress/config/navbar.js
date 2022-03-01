@@ -180,6 +180,10 @@ const Navbar = [
         text: 'Ubuntu20.04初始化清单',
         link: '/ubuntu-20.04-init',
       },
+      {
+        text: '域名获取及 CA 认证',
+        link: '/domain',
+      },
     ],
   },
 ]
