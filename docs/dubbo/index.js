@@ -10,7 +10,7 @@ const DubboSidebar = {
         '/dubbo/docs/finish_config.md',
         '/dubbo/docs/springboot.md',
         '/dubbo/docs/config_rule.md',
-        '/dubbo/docs/start.md',
+        '/dubbo/docs/high_availability.md',
       ],
     },
   ],
