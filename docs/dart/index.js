@@ -4,6 +4,7 @@ const DartSidebar = {
       text: 'Dart',
       children: [
         '/dart/docs/start.md',
+        '/dart/docs/importantConcept.md',
       ],
     },
   ],
