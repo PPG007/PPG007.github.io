@@ -5,6 +5,7 @@ const DartSidebar = {
       children: [
         '/dart/docs/start.md',
         '/dart/docs/importantConcept.md',
+        '/dart/docs/variables.md',
       ],
     },
   ],
