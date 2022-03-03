@@ -34,6 +34,10 @@ const Navbar = [
         text: 'Axios',
         link: '/axios',
       },
+      {
+        text: 'Dart',
+        link: '/dart',
+      },
     ],
   },
   {
