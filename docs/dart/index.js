@@ -6,7 +6,8 @@ const DartSidebar = {
         '/dart/docs/start.md',
         '/dart/docs/importantConcept.md',
         '/dart/docs/variables.md',
-        '/dart/docs/innerType.md'
+        '/dart/docs/innerType.md',
+        '/dart/docs/function.md',
       ],
     },
   ],
