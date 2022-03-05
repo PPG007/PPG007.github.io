@@ -12,9 +12,10 @@
 建议使用 root 用户执行下面的所有操作
 :::
 
-首先安装 acme.sh。
+首先安装 acme.sh 及其需要的依赖。
 
 ```shell
+sudo  apt-get install socat
 curl  https://get.acme.sh | sh -s email=my@example.com
 ```
 
