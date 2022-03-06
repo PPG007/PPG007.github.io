@@ -8,6 +8,7 @@ const DartSidebar = {
         '/dart/docs/variables.md',
         '/dart/docs/innerType.md',
         '/dart/docs/function.md',
+        '/dart/docs/operator.md',
       ],
     },
   ],
