@@ -9,6 +9,7 @@ const DartSidebar = {
         '/dart/docs/innerType.md',
         '/dart/docs/function.md',
         '/dart/docs/operator.md',
+        '/dart/docs/processControl.md',
       ],
     },
   ],
