@@ -10,6 +10,7 @@ const DartSidebar = {
         '/dart/docs/function.md',
         '/dart/docs/operator.md',
         '/dart/docs/processControl.md',
+        '/dart/docs/exception.md',
       ],
     },
   ],
