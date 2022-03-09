@@ -12,6 +12,7 @@ const DartSidebar = {
         '/dart/docs/processControl.md',
         '/dart/docs/exception.md',
         '/dart/docs/class.md',
+        '/dart/docs/generics.md',
       ],
     },
   ],
