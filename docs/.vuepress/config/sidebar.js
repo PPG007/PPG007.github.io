@@ -35,6 +35,7 @@ const designPattern = require('../../design-pattern/index.js')
 const netty = require('../../netty/index.js')
 const ubuntu2004Init = require('../../ubuntu-20.04-init/index.js')
 const domain = require('../../domain/index.js')
+const dart = require('../../dart/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -74,6 +75,7 @@ const Sidebar = {
   ...netty.NettySidebar,
   ...ubuntu2004Init.Ubuntu2004InitSidebar,
   ...domain.DomainSidebar,
+  ...dart.DartSidebar,
 }
 
 module.exports.Sidebar = Sidebar
