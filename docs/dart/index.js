@@ -13,6 +13,7 @@ const DartSidebar = {
         '/dart/docs/exception.md',
         '/dart/docs/class.md',
         '/dart/docs/generics.md',
+        '/dart/docs/async.md',
       ],
     },
   ],
