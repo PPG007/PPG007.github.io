@@ -15,6 +15,7 @@ const DartSidebar = {
         '/dart/docs/generics.md',
         '/dart/docs/async.md',
         '/dart/docs/generators.md',
+        '/dart/docs/callableClass.md',
       ],
     },
   ],
