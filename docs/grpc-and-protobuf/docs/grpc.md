@@ -186,6 +186,39 @@ func (server *LaptopServer) SearchLaptop(request *pb.SearchLaptopRequest, stream
 }
 ```
 
+客户端调用：
+
+```go
+func searchLaptop(laptopClient pb.LaptopServiceClient, filter *pb.Filter) {
+	log.Println("search filter", filter)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	req := &pb.SearchLaptopRequest{
+		Filter: filter,
+	}
+	stream, err := laptopClient.SearchLaptop(ctx, req)
+	if err != nil {
+		log.Fatalf("cannot search laptop: %v\n", err)
+	}
+	for {
+		res, err := stream.Recv()
+		if err == io.EOF {
+			return
+		}
+		if err != nil {
+			log.Fatalf("cannot receive response: %v\n", err)
+		}
+		laptop := res.GetLaptop()
+		log.Printf("- found laptop with id: %s", laptop.Id)
+		log.Printf(" + found laptop with price_usd: %f", laptop.PriceUsd)
+		log.Printf(" + found laptop with cpu_cores: %d", laptop.Cpu.NumberCores)
+		log.Printf(" + found laptop with ram: %d %v", laptop.Ram.Value, laptop.Ram.Unit)
+		log.Printf(" + found laptop with min cpu_ghz: %f", laptop.Cpu.MinGhz)
+		log.Printf(" + found laptop with max cpu_ghz: %f", laptop.Cpu.MaxGhz)
+	}
+}
+```
+
 服务端、客户端启动函数不需要变化。
 
 ## 客户端流式 RPC
@@ -269,6 +302,65 @@ func (server *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServe
 }
 ```
 
+客户端调用：
+
+```go
+func uploadImage(laptopClient pb.LaptopServiceClient, laptopID, imagePath string) {
+	file, err := os.Open(imagePath)
+	if err != nil {
+		log.Fatal("cannot open image file:", err)
+	}
+	defer file.Close()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	stream, err := laptopClient.UploadImage(ctx)
+	if err != nil {
+		log.Fatal("cannot upload image: ", err)
+	}
+
+	req := &pb.UploadImageRequest{
+		Data: &pb.UploadImageRequest_Info{
+			Info: &pb.ImageInfo{
+				LaptopId:  laptopID,
+				ImageType: filepath.Ext(imagePath),
+			},
+		},
+	}
+	err = stream.Send(req)
+	if err != nil {
+		log.Fatal("cannot send image info:", err)
+	}
+	reader := bufio.NewReader(file)
+	buffer := make([]byte, 1024)
+	for {
+		n, err := reader.Read(buffer)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal("cannot read chunk to buffer:", err)
+		}
+		req := &pb.UploadImageRequest{
+			Data: &pb.UploadImageRequest_ChunkData{
+				ChunkData: buffer[:n],
+			},
+		}
+
+		err = stream.Send(req)
+		if err != nil {
+			// 获取实际错误
+			err2 := stream.RecvMsg(nil)
+			log.Fatal("cannot send chunk to server:", err, err2)
+		}
+	}
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatal("cannot receive response:", err)
+	}
+	log.Printf("upload image with ID: %s and size: %d", res.Id, res.Size)
+}
+```
+
 服务端、客户端启动函数无变化。
 
 ## 双向流式 RPC
@@ -337,6 +429,55 @@ func (server *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer)
 		}
 	}
 	return nil
+}
+```
+
+客户端调用：
+
+```go
+func rateLaptop(laptopID []string, score []float64, laptopClient pb.LaptopServiceClient) error {
+	if len(laptopID) != len(score) {
+		return fmt.Errorf("laptopID's num dosen't eqal to the score's num")
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	stream, err := laptopClient.RateLaptop(ctx)
+	if err != nil {
+		log.Fatalf("cannot rate laptop: %v\n", err)
+	}
+	waitResponse := make(chan error)
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				log.Println("no more response")
+				waitResponse <- nil
+				return
+			}
+			if err != nil {
+				waitResponse <- err
+				return
+			}
+			log.Printf("receive response: %v\n", res)
+		}
+	}()
+	for i, laptopID := range laptopID {
+		req := &pb.RateLaptopRequest{
+			LaptopId: laptopID,
+			Score:    score[i],
+		}
+		err := stream.Send(req)
+		if err != nil {
+			return fmt.Errorf("cannot send stream request: %v - %v", err, stream.RecvMsg(nil))
+		}
+		log.Printf("send request: %v\n", req)
+	}
+	err = stream.CloseSend()
+	if err != nil {
+		return fmt.Errorf("cannot close send: %v", err)
+	}
+	err = <-waitResponse
+	return err
 }
 ```
 
