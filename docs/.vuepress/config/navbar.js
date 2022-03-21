@@ -188,6 +188,10 @@ const Navbar = [
         text: '域名获取及 CA 认证',
         link: '/domain',
       },
+      {
+        text: '搭建软路由',
+        link: '/openwrt',
+      },
     ],
   },
 ]
