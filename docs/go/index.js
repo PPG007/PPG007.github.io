@@ -22,6 +22,7 @@ const GoSidebar = {
         '/go/docs/method.md',
         '/go/docs/interface.md',
         '/go/docs/type_convert.md',
+        '/go/docs/generics.md',
         '/go/docs/io.md',
         '/go/docs/time.md',
         '/go/docs/concurrent_programming.md',
