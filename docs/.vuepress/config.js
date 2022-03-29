@@ -40,5 +40,10 @@ module.exports = {
         id: 'G-XFW9LG5M41',
       },
     ],
+    [
+      "vuepress-plugin-clipboard", {
+        // options...
+      },
+    ],
   ],
 };
