@@ -32,6 +32,7 @@ module.exports = {
             placeholder: '搜索',
           },
         },
+        maxSuggestions: 10,
       },
     ],
     [
