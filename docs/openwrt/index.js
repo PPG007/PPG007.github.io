@@ -6,6 +6,7 @@ const OpenWrtSidebar = {
         '/openwrt/docs/singleEth.md',
         '/openwrt/docs/vmware.md',
         '/openwrt/docs/doubleEth.md',
+        '/openwrt/docs/smartDNS.md',
       ],
     },
   ],
