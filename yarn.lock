@@ -4213,6 +4213,11 @@ vue@^3.2.24:
     "@vue/server-renderer" "3.2.26"
     "@vue/shared" "3.2.26"
 
+vuepress-plugin-clipboard@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmmirror.com/vuepress-plugin-clipboard/-/vuepress-plugin-clipboard-1.0.8.tgz#725c30208c52f097a309b386d96e7c0a141460ad"
+  integrity sha512-npzJpmIoU73iwuihVCYq82my9opkphp4MQR30lEDQ9upBVjbkFLetMYx/DApTX+y7SKVV+jufS33shzoGBn7Xw==
+
 vuepress-vite@2.0.0-beta.29:
   version "2.0.0-beta.29"
   resolved "https://registry.npmmirror.com/vuepress-vite/download/vuepress-vite-2.0.0-beta.29.tgz"
