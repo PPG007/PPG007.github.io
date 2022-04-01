@@ -177,6 +177,10 @@ const Navbar = [
         link: '/docker',
       },
       {
+        text: 'Kubernetes',
+        link: '/kubernetes',
+      },
+      {
         text: '设计模式',
         link: '/design-pattern',
       },
