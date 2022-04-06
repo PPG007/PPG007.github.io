@@ -9,6 +9,7 @@ const KubernetesSidebar = {
         '/kubernetes/docs/manage.md',
         '/kubernetes/docs/pod.md',
         '/kubernetes/docs/deployment.md',
+        '/kubernetes/docs/service.md',
       ],
     },
   ],
