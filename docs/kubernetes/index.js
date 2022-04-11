@@ -12,6 +12,7 @@ const KubernetesSidebar = {
         '/kubernetes/docs/service.md',
         '/kubernetes/docs/ingress.md',
         '/kubernetes/docs/secret.md',
+        '/kubernetes/docs/storage.md',
       ],
     },
   ],
