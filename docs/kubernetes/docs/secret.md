@@ -44,6 +44,37 @@ stringData 中必须都是字符串，也可以使用 data 替换 stringData，�
 
 ![types](/kubernetes/secretTypes.png)
 
+## Secret 做环境变量
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volume-demo
+  namespace: example
+spec:
+  selector:
+    matchLabels:
+      app: volume-demo
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: volume-demo
+    spec:
+      imagePullSecrets:
+        - name: myali-docker
+      containers:
+      - name: volume-demo
+        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+        imagePullPolicy: Always
+        envFrom:
+          - secretRef:
+              name: myali-docker
+        ports:
+        - containerPort: 8080
+```
+
 ## 示例：配置 Docker 私有镜像仓库
 
 首先编写下面这样的一个 json 文件：
