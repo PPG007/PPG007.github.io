@@ -15,6 +15,7 @@ const KubernetesSidebar = {
         '/kubernetes/docs/storage.md',
         '/kubernetes/docs/configMap.md',
         '/kubernetes/docs/job.md',
+        '/kubernetes/docs/statefulSet.md',
       ],
     },
   ],
