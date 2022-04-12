@@ -17,6 +17,7 @@ const KubernetesSidebar = {
         '/kubernetes/docs/job.md',
         '/kubernetes/docs/statefulSet.md',
         '/kubernetes/docs/daemonSet.md',
+        '/kubernetes/docs/kuberesolver.md',
       ],
     },
   ],
