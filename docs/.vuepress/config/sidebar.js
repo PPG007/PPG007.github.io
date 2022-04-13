@@ -37,6 +37,7 @@ const ubuntu2004Init = require('../../ubuntu-20.04-init/index.js')
 const domain = require('../../domain/index.js')
 const dart = require('../../dart/index.js')
 const openwrt = require('../../openwrt/index.js')
+const kubernetes = require('../../kubernetes/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -78,6 +79,7 @@ const Sidebar = {
   ...domain.DomainSidebar,
   ...dart.DartSidebar,
   ...openwrt.OpenWrtSidebar,
+  ...kubernetes.KubernetesSidebar
 }
 
 module.exports.Sidebar = Sidebar
