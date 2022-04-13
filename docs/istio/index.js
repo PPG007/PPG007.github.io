@@ -4,6 +4,7 @@ const IstioSidebar = {
       text: 'Istio',
       children: [
         '/istio/docs/basic.md',
+        '/istio/docs/principle.md',
         '/istio/docs/installation.md',
       ],
     },
