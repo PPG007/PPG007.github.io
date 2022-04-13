@@ -137,7 +137,24 @@ const Navbar = [
     ],
   },
   {
-    text: 'Be Professional',
+    text: '云相关',
+    children: [
+      {
+        text: 'Docker',
+        link: '/docker',
+      },
+      {
+        text: 'Kubernetes',
+        link: '/kubernetes',
+      },
+      {
+        text: '域名获取及 CA 认证',
+        link: '/domain',
+      },
+    ],
+  },
+  {
+    text: 'others',
     children: [
       {
         text: 'Coding Style',
@@ -146,12 +163,7 @@ const Navbar = [
       {
         text: 'Clean Code',
         link: '/clean-code',
-      }
-    ],
-  },
-  {
-    text: 'others',
-    children: [
+      },
       {
         text: 'Markdown',
         link: '/markdown',
@@ -173,24 +185,12 @@ const Navbar = [
         link: '/zookeeper',
       },
       {
-        text: 'Docker',
-        link: '/docker',
-      },
-      {
-        text: 'Kubernetes',
-        link: '/kubernetes',
-      },
-      {
         text: '设计模式',
         link: '/design-pattern',
       },
       {
         text: 'Ubuntu20.04初始化清单',
         link: '/ubuntu-20.04-init',
-      },
-      {
-        text: '域名获取及 CA 认证',
-        link: '/domain',
       },
       {
         text: '搭建软路由',
