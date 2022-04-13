@@ -148,6 +148,10 @@ const Navbar = [
         link: '/kubernetes',
       },
       {
+        text: 'Envoy',
+        link: '/envoy',
+      },
+      {
         text: '域名获取及 CA 认证',
         link: '/domain',
       },
