@@ -38,6 +38,7 @@ const domain = require('../../domain/index.js')
 const dart = require('../../dart/index.js')
 const openwrt = require('../../openwrt/index.js')
 const kubernetes = require('../../kubernetes/index.js')
+const istio = require('../../istio/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -79,7 +80,8 @@ const Sidebar = {
   ...domain.DomainSidebar,
   ...dart.DartSidebar,
   ...openwrt.OpenWrtSidebar,
-  ...kubernetes.KubernetesSidebar
+  ...kubernetes.KubernetesSidebar,
+  ...istio.IstioSidebar,
 }
 
 module.exports.Sidebar = Sidebar
