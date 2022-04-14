@@ -7,6 +7,7 @@ const IstioSidebar = {
         '/istio/docs/principle.md',
         '/istio/docs/trafficManagement.md',
         '/istio/docs/installation.md',
+        '/istio/docs/examples.md',
       ],
     },
   ],
