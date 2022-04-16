@@ -3,7 +3,8 @@ const OpenSSLSidebar = {
     {
       text: 'OpenSSL',
       children: [
-        '/openssl/docs/basic.md'
+        '/openssl/docs/basic.md',
+        '/openssl/docs/commands.md',
       ],
     },
   ],
