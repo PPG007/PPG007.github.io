@@ -238,3 +238,51 @@ func priEncryptPubDecryptTest(source []byte, filePrefix string) {
 ```
 
 上面这段代码分别对两个文件进行了加解密操作，分别使用公钥加密私钥解密以及私钥加密公钥解密。
+
+## openssl dgst 生成和验证数字签名
+
+数字签名的过程是计算出数字摘要，然后使用私钥对数字摘要进行签名，而摘要是使用 md5、sha512 等算法计算得出的。
+
+`openssl dgst [-md5|-sha1|...] [-hex | -binary] [-out filename] [-sign filename] [-passin arg] [-verify filename] [-prverify filename] [-signature filename] [file...]`：
+
+- `file...`：指定待签名的文件。
+- `-hex`：以 hex 格式输出数字摘要。如果不以 `-hex` 显示，签名或验证签名时很可能乱码。
+- `-binary`：以二进制格式输出数字摘要，或以二进制格式进行数字签名。这是默认格式。
+- `-out filename`：指定输出文件，若不指定则输出到标准输出。
+- `-sign filename`：使用 filename 中的私钥对 file 数字签名。签名时绝对不能加 `-hex` 等格式的选项，否则验证签名必失败。
+- `-signature filename`：指定待验证的签名文件。
+- `-verify filename`：使用 filename 中的公钥验证签名。
+- `-prverify filename`：使用 filename 中的私钥验证签名。
+- `-passin arg`：传递解密密码。若验证签名时实用的公钥或私钥文件是被加密过的，则需要传递密码来解密。
+
+支持 md4、md5、ripemd160、sha、sha1、sha224、sha256、sha384、sha512、whirlpool 这几种单向加密算法，即哈希算法。
+
+::: tip
+`openssl dgst -md5` 等价于 `openssl md5`。
+:::
+
+对 source.yaml 生成 md5 摘要信息及 sha512 摘要信息：
+
+```shell
+openssl dgst -md5 -out dgst.out source.yaml
+
+openssl dgst -sha512 -out dgst.out source.yaml
+```
+
+使用一个加密过的私钥对 source.yaml 文件签名：
+
+```shell
+# 加入 -hex 参数防止输出乱码
+openssl dgst -sha256 -sign private-secret.key -passin pass:123456 -out dgst.out -hex source.yaml
+```
+
+验证签名，注意要将签名输出到文件且不能使用 -hex 参数：
+
+```shell
+# 先生成新签名
+openssl dgst -sha256 -sign private-secret.key -passin pass:123456 -out dgst.out source.yaml
+# 私钥验证
+openssl dgst -sha256 -prverify private-secret.key -passin pass:123456 -signature dgst.out source.yaml
+# 公钥验证
+openssl dgst -sha256 -verify public-secret.key -passin pass:123456 -signature dgst.out source.yaml
+```
