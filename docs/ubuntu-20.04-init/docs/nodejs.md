@@ -7,11 +7,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
 # install latest nodejs
 nvm install node
 # config npm
-npm config set registry https://registry.npm.taobao.org
-npm config set disturl https://npm.taobao.org/dist
+npm config set registry http://registry.npmmirror.com
+npm config set disturl http://npmmirror.com/dist
 # install yarn
 npm install --global yarn
 # config yarn
-yarn config set registry https://registry.npm.taobao.org
-yarn config set disturl https://npm.taobao.org/dist
+yarn config set registry http://registry.npmmirror.com
+yarn config set disturl http://npmmirror.com/dist
 ```
