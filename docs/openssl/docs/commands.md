@@ -31,7 +31,7 @@ openssl genrsa -out private.key
 openssl genrsa -out private-secret.key -passout pass:test
 ```
 
-## rsa/pkey
+## rsa、pkey
 
 openssl rsa 和 openssl pkey 分别是 RSA 密钥的处理工具和通用非对称密钥处理工具，它们用法基本一致。
 
