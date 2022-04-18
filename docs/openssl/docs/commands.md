@@ -286,3 +286,39 @@ openssl dgst -sha256 -prverify private-secret.key -passin pass:123456 -signature
 # 公钥验证
 openssl dgst -sha256 -verify public-secret.key -passin pass:123456 -signature dgst.out source.yaml
 ```
+
+## openssl rsautl 和 pkeyutl
+
+rsautl 是 rsa 的工具，相当于 rsa、dgst 的部分功能集合，可用于生成数字签名、验证数字签名、加密和解密文件。
+
+pkeyutl 是非对称加密的通用工具。
+
+`openssl rsautl [-in file] [-out file] [-inkey file] [-pubin] [-certin] [-passin arg] [-sign] [-verify] [-encrypt] [-decrypt] [-hexdump]`
+
+`openssl pkeyutl [-in file] [-out file] [-sigfile file] [-inkey file] [-passin arg] [-pubin] [-certin] [-sign] [-verify] [-encrypt] [-decrypt] [-hexdump]`
+
+- `-in file`：指定输入文件。
+- `-out file`：指定输出文件。
+- `-inkey file`：指定密钥输入文件，默认是私钥文件，指定了 -pubin 则表示为公钥文件，使用 -certin 则表示为包含公钥的证书文件。
+- `-pubin`：指定 -inkey file 的 file 是公钥文件。
+- `-certin`：使用该选项时，表示 -inkey file 的 file 是包含公钥的证书文件。
+- `-passin arg`：传递解密密码。若验证签名时实用的公钥或私钥文件是被加密过的，则需要传递密码来解密。
+- `-sign`：签名并输出签名结果，注意，该选项需要提供RSA私钥文件。
+- `-verify`：使用验证签名文件。
+- `-encrypt`：使用公钥加密文件。
+- `-decrypt`：使用私钥解密文件。
+- `-hexdump`：以 hex 方式输出。
+- `sigfile file`：待验证的签名文件。
+
+::: warning
+rsautl 和 pkeyutl 的缺陷在于默认只能对短小的文件进行操作。
+:::
+
+公钥加密、私钥解密：
+
+```shell
+# 加密
+openssl rsautl -encrypt -inkey public.key -pubin -in source.yaml -out rsautl.yaml
+# 解密
+openssl rsautl --decrypt -inkey private.key -in rsautl.yaml -out rsautldec.yaml
+```
