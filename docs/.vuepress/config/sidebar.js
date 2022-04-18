@@ -39,6 +39,7 @@ const dart = require('../../dart/index.js')
 const openwrt = require('../../openwrt/index.js')
 const kubernetes = require('../../kubernetes/index.js')
 const istio = require('../../istio/index.js')
+const openssl = require('../../openssl/index.js')
 
 const Sidebar = {
   ...html.HTMLSidebar,
@@ -82,6 +83,7 @@ const Sidebar = {
   ...openwrt.OpenWrtSidebar,
   ...kubernetes.KubernetesSidebar,
   ...istio.IstioSidebar,
+  ...openssl.OpenSSLSidebar,
 }
 
 module.exports.Sidebar = Sidebar

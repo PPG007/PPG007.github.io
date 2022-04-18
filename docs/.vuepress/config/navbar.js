@@ -200,6 +200,10 @@ const Navbar = [
         text: '搭建软路由',
         link: '/openwrt',
       },
+      {
+        text: 'OpenSSL',
+        link: '/openssl',
+      },
     ],
   },
 ]
