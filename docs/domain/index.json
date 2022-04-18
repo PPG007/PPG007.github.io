@@ -1,0 +1,11 @@
+{
+  "/domain": [
+      {
+          "children": [
+              "/domain/docs/domain.md",
+              "/domain/docs/ca.md"
+          ],
+          "text": "域名申请及 CA 认证"
+      }
+  ]
+}
