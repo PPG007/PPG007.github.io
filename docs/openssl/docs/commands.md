@@ -322,3 +322,43 @@ openssl rsautl -encrypt -inkey public.key -pubin -in source.yaml -out rsautl.yam
 # 解密
 openssl rsautl --decrypt -inkey private.key -in rsautl.yaml -out rsautldec.yaml
 ```
+
+## openssl enc
+
+openssl enc 是对称加密工具。
+
+`openssl enc -ciphername [-in filename] [-out filename] [-pass arg] [-e] [-d] [-a/-base64] [-k password] [-S salt] [-salt] [-md] [-p/-P]`
+
+- `-ciphername`：指定对称加密算法(如 des3)，可独立于 enc 直接使用，如 openssl des3 或 openssl enc -des3。推荐在 enc 后使用，这样不依赖于硬件。
+- `-in filename`：输入文件，不指定时默认是 stdin。
+- `-out filename`：输出文件，不指定时默认是 stdout。
+- `-e`：对输入文件加密操作，不指定时默认就是该选项。
+- `-d`：对输入文件解密操作，只有显示指定该选项才是解密。
+- `-pass`：传递加、解密时的明文密码。若验证签名时实用的公钥或私钥文件是被加密过的，则需要传递密码来解密。
+- `-k`：已被 -pass 替代，现在还保留是为了兼容老版本的 openssl。
+- `-base64`：在加密后和解密前进行 base64 编码或解码，不指定时默认是二进制。
+- `-a`：等价于 -base64。
+- `-salt`：单向加密时使用 salt 复杂化单向加密的结果，此为默认选项，且使用随机 salt 值。
+- `-S salt`：不使用随机 salt 值，而是自定义 salt 值，但只能是 16 进制范围内字符的组合，即 0-9a-fA-F 的任意一个或多个组合。
+- `-p`：打印加解密时 salt 值、key 值和 IV 初始化向量值（也是复杂化加密的一种方式），解密时还输出解密结果，见后文示例。
+- `-P`：和 -p 选项作用相同，但是打印时直接退出工具，不进行加密或解密操作。
+- `-md`：指定单向加密算法，默认 md5。该算法是拿来加密 key 部分的，见后文分析。
+
+进行对称加解密时，加密和解密的密码是一致的，但是如果使用明文密码非常不安全，需要增加密码的复杂度。最简单的方法就是使用哈希函数计算出明文密码的哈希值，将这个哈希值作为对称密钥。如果还想更安全可以在加密完成后再进行 base64 等编码。
+
+::: tip 对称加密机制
+根据指定的哈希算法，对输入的明文密码进行单向加密，得到固定长度的加密密钥，即对称密钥，，再根据指定的对称加密算法进行加密，最后对加密的文件进行编码。
+:::
+
+::: tip 对称解密机制
+先解码文件，然后根据同样的哈希算法计算密钥，然后使用对应的对称算法进行解密。
+:::
+
+对一个视频文件进行加密解密：
+
+```shell
+# 加密
+openssl enc -aes256 -in source.mkv -e -pass pass:123456 -a -md sha256 -out enc.out
+# 解密
+openssl enc -aes256 -in enc.out -out enc.mkv -d -md sha256 -pass pass:zzl -a
+```
