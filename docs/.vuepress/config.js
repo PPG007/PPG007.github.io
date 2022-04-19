@@ -1,5 +1,4 @@
-const sidebar = require('./config/sidebar.js')
-const navbar = require('./config/navbar.js')
+const bars = require('./config/bars.js')
 
 module.exports = {
   // 站点配置
@@ -16,8 +15,8 @@ module.exports = {
     sidebarDepth: 3,
     contributors: true,
     lastUpdated: true,
-    navbar: navbar.Navbar,
-    sidebar: sidebar.Sidebar,
+    navbar: bars.navbar,
+    sidebar: bars.sidebar,
   },
   public: 'docs/images',
   plugins: [

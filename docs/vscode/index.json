@@ -1,11 +1,18 @@
 {
-  "/vscode": [
-      {
-          "children": [
-              "/vscode/docs/common_settings.md",
-              "/vscode/docs/common_keys.md"
-          ],
-          "text": "VsCode"
-      }
-  ]
+    "sidebar": {
+        "/vscode": [
+            {
+                "children": [
+                    "/vscode/docs/common_settings.md",
+                    "/vscode/docs/common_keys.md"
+                ],
+                "text": "VsCode"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "VsCode",
+        "link": "/vscode",
+        "group": "others"
+    }
 }

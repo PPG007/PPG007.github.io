@@ -1,13 +1,20 @@
 {
-  "/mongodb": [
-      {
-          "children": [
-              "/mongodb/docs/database.md",
-              "/mongodb/docs/collection.md",
-              "/mongodb/docs/document.md",
-              "/mongodb/docs/aggregation.md"
-          ],
-          "text": "MongoDB"
-      }
-  ]
+    "sidebar": {
+        "/mongodb": [
+            {
+                "children": [
+                    "/mongodb/docs/database.md",
+                    "/mongodb/docs/collection.md",
+                    "/mongodb/docs/document.md",
+                    "/mongodb/docs/aggregation.md"
+                ],
+                "text": "MongoDB"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "MongoDB",
+        "link": "/mongodb",
+        "group": "数据库"
+    }
 }
