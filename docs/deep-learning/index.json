@@ -1,0 +1,17 @@
+{
+  "sidebar": {
+      "/deep-learning": [
+          {
+              "children": [
+                  "/deep-learning/docs/sensor.md"
+              ],
+              "text": "深度学习"
+          }
+      ]
+  },
+  "navbar": {
+      "text": "深度学习",
+      "link": "/deep-learning",
+      "group": "others"
+  }
+}
