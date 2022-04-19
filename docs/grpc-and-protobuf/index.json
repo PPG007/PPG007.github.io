@@ -1,11 +1,18 @@
 {
-  "/grpc-and-protobuf": [
-      {
-          "children": [
-              "/grpc-and-protobuf/docs/protobuf.md",
-              "/grpc-and-protobuf/docs/grpc.md"
-          ],
-          "text": "gRPC&Protobuf"
-      }
-  ]
+    "sidebar": {
+        "/grpc-and-protobuf": [
+            {
+                "children": [
+                    "/grpc-and-protobuf/docs/protobuf.md",
+                    "/grpc-and-protobuf/docs/grpc.md"
+                ],
+                "text": "gRPC&Protobuf"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "gRPC&Protobuf",
+        "link": "/grpc-and-protobuf",
+        "group": "Go"
+    }
 }

@@ -1,15 +1,22 @@
 {
-  "/zookeeper": [
-      {
-          "children": [
-              "/zookeeper/docs/start.md",
-              "/zookeeper/docs/election.md",
-              "/zookeeper/docs/shell.md",
-              "/zookeeper/docs/api.md",
-              "/zookeeper/docs/online_offline.md",
-              "/zookeeper/docs/distributed_lock.md"
-          ],
-          "text": "ZooKeeper"
-      }
-  ]
+    "sidebar": {
+        "/zookeeper": [
+            {
+                "children": [
+                    "/zookeeper/docs/start.md",
+                    "/zookeeper/docs/election.md",
+                    "/zookeeper/docs/shell.md",
+                    "/zookeeper/docs/api.md",
+                    "/zookeeper/docs/online_offline.md",
+                    "/zookeeper/docs/distributed_lock.md"
+                ],
+                "text": "ZooKeeper"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "ZooKeeper",
+        "link": "/zookeeper",
+        "group": "others"
+    }
 }

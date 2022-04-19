@@ -1,8 +1,15 @@
 {
-  "/docker": [
+  "sidebar": {
+    "/docker": [
       {
-          "children": [],
-          "text": "Docker"
+        "children": [],
+        "text": "Docker"
       }
-  ]
+    ]
+  },
+  "navbar": {
+    "text": "Docker",
+    "link": "/docker",
+    "group": "云相关"
+  }
 }
