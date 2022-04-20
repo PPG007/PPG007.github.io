@@ -3,7 +3,9 @@
       "/deep-learning": [
           {
               "children": [
-                  "/deep-learning/docs/sensor.md"
+                  "/deep-learning/docs/sensor.md",
+                  "/deep-learning/docs/linear.md",
+                  "/deep-learning/docs/neural-networks.md"
               ],
               "text": "深度学习"
           }
