@@ -1,0 +1,17 @@
+{
+  "sidebar": {
+    "/flutter": [
+      {
+        "text": "Flutter",
+        "children": [
+          "/flutter/docs/installation.md"
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "text": "Flutter",
+    "link": "/flutter",
+    "group": "前端"
+  }
+}
