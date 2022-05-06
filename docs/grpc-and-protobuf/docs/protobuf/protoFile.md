@@ -4,29 +4,7 @@ prev:
   link: /grpc-and-protobuf
 ---
 
-# ProtoBuf
-
-## 安装和编译
-
-安装命令：
-
-```shell
-sudo apt-get install protobuf-compiler
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-```
-
-安装 Protobuf 后，如果执行 `protoc` 命令出现 `Protobuf cannot find shared libraries` 的错误，可以执行：`sudo ldconfig` 命令解决。
-
-编译命令：
-
-- 对于没有定义 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} ${要编译的文件}` 编译。
-- 对于定义了 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} --go-grpc_out=${out_dir} ${要编译的文件}` 编译。
-- 对于同时定义了普通 message 和 rpc 服务的 proto 文件，使用命令：`protoc -I ${包含 proto 文件的文件夹} --go_out=${out_dir} --go-grpc_out=${out_dir} ${要编译的文件}` 编译。
-
-示例：`protoc -I ./proto/ --go_out=pb --go-grpc_out=pb proto/*.proto`。
-
-## 编写 proto 文件
+# 编写 proto 文件
 
 示例文件：
 
@@ -132,35 +110,4 @@ service LaptopService {
   rpc UploadImage (stream UploadImageRequest) returns (UploadImageResponse) {};
   rpc RateLaptop (stream RateLaptopRequest) returns (stream RateLaptopResponse) {};
 }
-```
-
-## 添加自定义 tag
-
-首先安装 tag 插入工具：
-
-```shell
-go get github.com/favadi/protoc-go-inject-tag
-```
-
-之后修改 proto 文件：
-
-```protobuf
-message LoginRequest {
-  string username =1; // @gotags: validate:"required", test:"test"
-  string password = 2; // @gotags: validate:"required"
-}
-```
-
-::: tip
-如果想添加多个 tag，则在 @gotags 后添加多个 tag 并使用空格或逗号分隔。
-
-protoc 会默认生成 json 等 tags，如果 @gotags 后面的 tags 和 protoc 生成的 tags重名，那么将会替换 protoc 生成的 tag及其值。
-:::
-
-然后先使用 protoc 工具生成 .pb.go 文件，再执行下面的命令：
-
-```shell
-protoc-go-inject-tag -input=./test.pb.go
-# or
-protoc-go-inject-tag -input="*.pb.go"
 ```
