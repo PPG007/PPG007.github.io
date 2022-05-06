@@ -10,7 +10,8 @@
                     "/design-pattern/docs/demeter.md",
                     "/design-pattern/docs/open_close.md"
                 ],
-                "text": "六大设计原则"
+                "text": "六大设计原则",
+                "collapsible": true
             },
             {
                 "children": [
@@ -37,7 +38,8 @@
                     "/design-pattern/docs/expression.md",
                     "/design-pattern/docs/fly_weight.md"
                 ],
-                "text": "23 种设计模式"
+                "text": "23 种设计模式",
+                "collapsible": true
             }
         ]
     },
