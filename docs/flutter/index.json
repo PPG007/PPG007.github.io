@@ -20,7 +20,8 @@
                 "text": "布局构建",
                 "collapsible": true,
                 "children": [
-                  "/flutter/docs/flutterLayout.md"
+                  "/flutter/docs/flutterLayout.md",
+                  "/flutter/docs/layoutExample.md"
                 ]
               }
             ]
