@@ -26,10 +26,7 @@ module.exports = {
         locales: {
           '/': {
             placeholder: 'Search',
-          },
-          '/zh/': {
-            placeholder: '搜索',
-          },
+          }
         },
         maxSuggestions: 10,
       },
@@ -38,7 +35,7 @@ module.exports = {
       '@vuepress/plugin-google-analytics',
       {
         id: 'G-XFW9LG5M41',
-      },
+        },
     ],
     [
       "vuepress-plugin-clipboard", {
