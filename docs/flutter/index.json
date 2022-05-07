@@ -21,7 +21,8 @@
                 "collapsible": true,
                 "children": [
                   "/flutter/docs/flutterLayout.md",
-                  "/flutter/docs/layoutExample.md"
+                  "/flutter/docs/layoutExample.md",
+                  "/flutter/docs/buildAdaptive.md"
                 ]
               }
             ]
