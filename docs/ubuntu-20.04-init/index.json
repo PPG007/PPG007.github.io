@@ -24,7 +24,8 @@
                     "/ubuntu-20.04-init/docs/jetbrains.md",
                     "/ubuntu-20.04-init/docs/python.md",
                     "/ubuntu-20.04-init/docs/sogou_input.md",
-                    "/ubuntu-20.04-init/docs/qv2ray.md"
+                    "/ubuntu-20.04-init/docs/qv2ray.md",
+                    "/ubuntu-20.04-init/docs/dart-flutter.md"
                 ],
                 "text": "Ubuntu20.04Init"
             }
