@@ -1,0 +1,17 @@
+{
+    "sidebar": {
+        "/rocketmq": [
+            {
+                "children": [
+                    "/rocketmq/docs/basic.md"
+                ],
+                "text": "RocketMQ"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "RocketMQ",
+        "link": "/rocketmq",
+        "group": "云相关"
+    }
+}
