@@ -3,7 +3,8 @@
         "/rocketmq": [
             {
                 "children": [
-                    "/rocketmq/docs/basic.md"
+                    "/rocketmq/docs/basic.md",
+                    "/rocketmq/docs/features.md"
                 ],
                 "text": "RocketMQ"
             }
