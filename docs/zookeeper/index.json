@@ -17,6 +17,6 @@
     "navbar": {
         "text": "ZooKeeper",
         "link": "/zookeeper",
-        "group": "others"
+        "group": "云相关"
     }
 }
