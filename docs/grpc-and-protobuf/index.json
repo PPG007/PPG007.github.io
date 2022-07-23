@@ -7,7 +7,8 @@
                         "children": [
                             "/grpc-and-protobuf/docs/protobuf/protoFile.md",
                             "/grpc-and-protobuf/docs/protobuf/installAndComplie.md",
-                            "/grpc-and-protobuf/docs/protobuf/customTag.md"
+                            "/grpc-and-protobuf/docs/protobuf/customTag.md",
+                            "/grpc-and-protobuf/docs/protobuf/styleGuide.md"
                         ],
                         "text": "Protobuf",
                         "collapsible": true
