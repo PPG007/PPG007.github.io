@@ -9,7 +9,7 @@ var (
 )
 
 func init() {
-	cc, err = grpc.Dial("grpc-server-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	cc, err = grpc.Dial("grpc-server-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBalancerName(roundrobin.Name))
 	if err != nil {
 		panic(err)
 	}
