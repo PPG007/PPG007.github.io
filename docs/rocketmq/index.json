@@ -1,0 +1,22 @@
+{
+    "sidebar": {
+        "/rocketmq": [
+            {
+                "children": [
+                    "/rocketmq/docs/basic.md",
+                    "/rocketmq/docs/features.md",
+                    "/rocketmq/docs/start.md",
+                    "/rocketmq/docs/examples-java.md",
+                    "/rocketmq/docs/examples-go.md",
+                    "/rocketmq/docs/examples-node.md"
+                ],
+                "text": "RocketMQ"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "RocketMQ",
+        "link": "/rocketmq",
+        "group": "云相关"
+    }
+}
