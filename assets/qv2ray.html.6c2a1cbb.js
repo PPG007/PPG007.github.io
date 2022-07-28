@@ -1,0 +1,1 @@
+const t={key:"v-4a409f61",path:"/ubuntu-20.04-init/docs/qv2ray.html",title:"Qv2ray",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/qv2ray.md"};export{t as data};

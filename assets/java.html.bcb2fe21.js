@@ -1,0 +1,3 @@
+import{_ as a,e as n}from"./app.49cd7b53.js";const s={},e=n(`<h1 id="java" tabindex="-1"><a class="header-anchor" href="#java" aria-hidden="true">#</a> java</h1><div class="language-bash ext-sh line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># on ubuntu20.04, the default jdk version is 11</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> default-jdk
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div>`,2);function t(c,r){return e}var d=a(s,[["render",t],["__file","java.html.vue"]]);export{d as default};

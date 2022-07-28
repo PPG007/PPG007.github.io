@@ -1,0 +1,1 @@
+const t={key:"v-0977e60c",path:"/annotation-and-reflection/docs/class.html",title:"Class \u5BF9\u8C61",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"annotation-and-reflection/docs/class.md"};export{t as data};

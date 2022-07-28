@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a,b as s}from"./app.49cd7b53.js";const c={},_={id:"dubbo",tabindex:"-1"},r=a("a",{class:"header-anchor",href:"#dubbo","aria-hidden":"true"},"#",-1),d=s(" Dubbo"),n=[r,d];function i(h,b){return t(),o("h1",_,n)}var l=e(c,[["render",i],["__file","index.html.vue"]]);export{l as default};

@@ -1,0 +1,1 @@
+const e={key:"v-e319cdee",path:"/clean-code/docs/comment.html",title:"\u6CE8\u91CA",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"clean-code/docs/comment.md"};export{e as data};

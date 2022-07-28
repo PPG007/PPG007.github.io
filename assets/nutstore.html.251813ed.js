@@ -1,0 +1,1 @@
+const t={key:"v-3710416a",path:"/ubuntu-20.04-init/docs/nutstore.html",title:"nutstore",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/nutstore.md"};export{t as data};

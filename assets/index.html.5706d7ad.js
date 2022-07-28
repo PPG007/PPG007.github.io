@@ -1,0 +1,1 @@
+const t={key:"v-14720137",path:"/dart/",title:"Dart",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1646272427e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"dart/README.md"};export{t as data};

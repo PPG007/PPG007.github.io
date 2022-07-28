@@ -1,0 +1,1 @@
+const t={key:"v-5e39797e",path:"/ubuntu-20.04-init/docs/docker.html",title:"docker",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1649073338e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:2},{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/docker.md"};export{t as data};

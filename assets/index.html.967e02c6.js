@@ -1,0 +1,1 @@
+const t={key:"v-7ae07a2a",path:"/dubbo/",title:"Dubbo",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"dubbo/README.md"};export{t as data};

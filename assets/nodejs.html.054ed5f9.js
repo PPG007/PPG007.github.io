@@ -1,0 +1,1 @@
+const t={key:"v-5e59d7b3",path:"/ubuntu-20.04-init/docs/nodejs.html",title:"nodejs",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1650182166e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1},{name:"zzl",email:"2694617273@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/nodejs.md"};export{t as data};

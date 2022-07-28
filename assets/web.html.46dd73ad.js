@@ -1,0 +1,1 @@
+const t={key:"v-3b75376b",path:"/go/docs/web.html",title:"Golang Web",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"\u4F7F\u7528 httprouter",slug:"\u4F7F\u7528-httprouter",children:[]}],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/web.md"};export{t as data};

@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a as r,b as a}from"./app.49cd7b53.js";const c={},s={id:"grpc-protobuf",tabindex:"-1"},_=r("a",{class:"header-anchor",href:"#grpc-protobuf","aria-hidden":"true"},"#",-1),n=a(" gRPC&Protobuf"),d=[_,n];function i(h,f){return t(),o("h1",s,d)}var p=e(c,[["render",i],["__file","index.html.vue"]]);export{p as default};

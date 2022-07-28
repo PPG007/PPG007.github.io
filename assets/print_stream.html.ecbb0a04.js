@@ -1,0 +1,1 @@
+const t={key:"v-ef0d6a7e",path:"/javaio/docs/print_stream.html",title:"\u6253\u5370\u6D41",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaio/docs/print_stream.md"};export{t as data};

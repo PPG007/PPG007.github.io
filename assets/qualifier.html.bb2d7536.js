@@ -1,0 +1,1 @@
+const e={key:"v-7803f622",path:"/regex/docs/qualifier.html",title:"\u9650\u5B9A\u7B26",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"regex/docs/qualifier.md"};export{e as data};

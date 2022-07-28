@@ -1,0 +1,1 @@
+const t={key:"v-1b186fa2",path:"/ubuntu-20.04-init/docs/git.html",title:"git",lang:"zh-CN",frontmatter:{prev:{text:"\u9996\u9875",link:"/Ubuntu20.04Init"}},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/git.md"};export{t as data};

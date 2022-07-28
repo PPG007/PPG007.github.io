@@ -1,0 +1,1 @@
+const e={key:"v-dc35a5fe",path:"/regex/",title:"\u6B63\u5219\u8868\u8FBE\u5F0F",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"regex/README.md"};export{e as data};

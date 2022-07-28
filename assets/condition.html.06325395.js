@@ -1,0 +1,1 @@
+const t={key:"v-34f9bbc8",path:"/vue2/docs/condition.html",title:"\u6761\u4EF6\u6E32\u67D3",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640441337e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"vue2/docs/condition.md"};export{t as data};

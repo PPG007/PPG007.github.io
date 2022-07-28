@@ -1,0 +1,1 @@
+const t={key:"v-0697c1a1",path:"/restful/docs/others.html",title:"\u5176\u4ED6",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"restful/docs/others.md"};export{t as data};

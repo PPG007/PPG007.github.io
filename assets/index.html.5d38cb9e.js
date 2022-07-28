@@ -1,0 +1,1 @@
+const t={key:"v-0aa4d76c",path:"/activemq/",title:"ActiveMQ",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"activemq/README.md"};export{t as data};

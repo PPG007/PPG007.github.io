@@ -1,0 +1,1 @@
+const e={key:"v-21706f34",path:"/javaknowledge/docs/index_design.html",title:"\u7D22\u5F15\u8BBE\u8BA1\u539F\u5219",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaknowledge/docs/index_design.md"};export{e as data};

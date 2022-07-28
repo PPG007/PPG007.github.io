@@ -1,0 +1,1 @@
+const t={key:"v-1f5b0302",path:"/javathread/docs/rwlock.html",title:"\u8BFB\u5199\u9501",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javathread/docs/rwlock.md"};export{t as data};

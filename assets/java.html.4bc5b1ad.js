@@ -1,0 +1,1 @@
+const t={key:"v-f9534808",path:"/ubuntu-20.04-init/docs/java.html",title:"java",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/java.md"};export{t as data};

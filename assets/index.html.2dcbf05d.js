@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a as s,b as a}from"./app.49cd7b53.js";const r={},n={id:"springboot",tabindex:"-1"},c=s("a",{class:"header-anchor",href:"#springboot","aria-hidden":"true"},"#",-1),_=a(" SpringBoot"),i=[c,_];function d(h,f){return t(),o("h1",n,i)}var p=e(r,[["render",d],["__file","index.html.vue"]]);export{p as default};

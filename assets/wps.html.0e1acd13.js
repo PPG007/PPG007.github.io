@@ -1,0 +1,1 @@
+const t={key:"v-09c203ba",path:"/ubuntu-20.04-init/docs/wps.html",title:"uninstall LibreOffice and install WPS",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/wps.md"};export{t as data};

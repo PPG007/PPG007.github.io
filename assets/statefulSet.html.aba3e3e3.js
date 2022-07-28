@@ -1,0 +1,1 @@
+const t={key:"v-7bedff67",path:"/kubernetes/docs/statefulSet.html",title:"StatefulSet",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:164974987e4,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"kubernetes/docs/statefulSet.md"};export{t as data};

@@ -1,0 +1,1 @@
+const t={key:"v-2608d89f",path:"/grpc-and-protobuf/docs/grpc/unary.html",title:"\u4E00\u5143 RPC",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:165181149e4,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"grpc-and-protobuf/docs/grpc/unary.md"};export{t as data};

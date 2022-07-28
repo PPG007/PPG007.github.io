@@ -1,0 +1,1 @@
+const t={key:"v-50e7925c",path:"/domain/",title:"\u57DF\u540D\u83B7\u53D6\u53CA CA \u8BA4\u8BC1",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1646123092e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"domain/README.md"};export{t as data};

@@ -1,0 +1,1 @@
+const t={key:"v-095ba0ed",path:"/design-pattern/docs/dip.html",title:"\u4F9D\u8D56\u5012\u7F6E\u539F\u5219",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640855648e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"design-pattern/docs/dip.md"};export{t as data};

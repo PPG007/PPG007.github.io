@@ -1,0 +1,1 @@
+const t={key:"v-478354cf",path:"/javaknowledge/docs/switch_param.html",title:"switch \u53EF\u9009\u53C2\u6570",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaknowledge/docs/switch_param.md"};export{t as data};

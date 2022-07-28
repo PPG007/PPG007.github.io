@@ -1,0 +1,1 @@
+const t={key:"v-57e58330",path:"/spring/docs/spring_config.html",title:"Spring \u914D\u7F6E",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"spring/docs/spring_config.md"};export{t as data};

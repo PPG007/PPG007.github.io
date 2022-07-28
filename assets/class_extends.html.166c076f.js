@@ -1,0 +1,1 @@
+const e={key:"v-3ad4553b",path:"/es6/docs/class_extends.html",title:"Class \u7684\u7EE7\u627F",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640487228e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"es6/docs/class_extends.md"};export{e as data};

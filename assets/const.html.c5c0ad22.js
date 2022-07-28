@@ -1,0 +1,1 @@
+const t={key:"v-192e3b3c",path:"/go/docs/const.html",title:"\u5E38\u91CF",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"iota",slug:"iota",children:[]}],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/const.md"};export{t as data};

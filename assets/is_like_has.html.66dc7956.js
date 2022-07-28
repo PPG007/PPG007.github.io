@@ -1,0 +1,1 @@
+const a={key:"v-03ba325a",path:"/javaknowledge/docs/is_like_has.html",title:"is-a\u3001has-a\u3001like-a",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaknowledge/docs/is_like_has.md"};export{a as data};

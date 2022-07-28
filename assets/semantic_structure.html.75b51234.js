@@ -1,0 +1,1 @@
+const t={key:"v-0d98c9d4",path:"/html/docs/semantic_structure.html",title:"\u8BED\u4E49\u7ED3\u6784",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640441337e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"html/docs/semantic_structure.md"};export{t as data};

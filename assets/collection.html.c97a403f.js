@@ -1,0 +1,1 @@
+const t={key:"v-6742ae1d",path:"/mongodb/docs/collection.html",title:"\u96C6\u5408\u64CD\u4F5C",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640492808e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"mongodb/docs/collection.md"};export{t as data};

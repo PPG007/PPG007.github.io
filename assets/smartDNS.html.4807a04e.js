@@ -1,0 +1,1 @@
+const t={key:"v-4e0c2ebe",path:"/openwrt/docs/smartDNS.html",title:"SmartDNS",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1648546437e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"openwrt/docs/smartDNS.md"};export{t as data};

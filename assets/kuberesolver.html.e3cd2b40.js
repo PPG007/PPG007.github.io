@@ -1,0 +1,1 @@
+const e={key:"v-081b6e7c",path:"/kubernetes/docs/kuberesolver.html",title:"kuberesolver",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1658673938e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:2}]},filePathRelative:"kubernetes/docs/kuberesolver.md"};export{e as data};

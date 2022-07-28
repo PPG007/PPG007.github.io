@@ -1,0 +1,2 @@
+import{_ as a,e as s}from"./app.49cd7b53.js";const n={},e=s(`<h1 id="postman" tabindex="-1"><a class="header-anchor" href="#postman" aria-hidden="true">#</a> postman</h1><div class="language-bash ext-sh line-numbers-mode"><pre class="language-bash"><code><span class="token function">sudo</span> snap <span class="token function">install</span> postman
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br></div></div>`,2);function t(r,o){return e}var i=a(n,[["render",t],["__file","postman.html.vue"]]);export{i as default};

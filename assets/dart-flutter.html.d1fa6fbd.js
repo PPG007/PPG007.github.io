@@ -1,0 +1,8 @@
+import{_ as e,r as t,o as r,c as l,a,d as o,F as c,b as s,e as p}from"./app.49cd7b53.js";const i={},d=a("h1",{id:"dart-flutter",tabindex:"-1"},[a("a",{class:"header-anchor",href:"#dart-flutter","aria-hidden":"true"},"#"),s(" Dart&Flutter")],-1),u={href:"https://dart.cn/get-dart#install-using-apt-get",target:"_blank",rel:"noopener noreferrer"},b=s("Dart"),_=p(`<div class="language-bash ext-sh line-numbers-mode"><pre class="language-bash"><code><span class="token function">sudo</span> snap <span class="token function">install</span> flutter --classic
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">HTTP_PROXY</span><span class="token operator">=</span>http://localhost:8889
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">HTTPS_PROXY</span><span class="token operator">=</span><span class="token variable">$HTTP_PROXY</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NO_PROXY</span><span class="token operator">=</span>localhost,127.0.0.1,::1
+
+flutter doctor
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div>`,1);function m(h,f){const n=t("ExternalLinkIcon");return r(),l(c,null,[d,a("p",null,[a("a",u,[b,o(n)])]),_],64)}var g=e(i,[["render",m],["__file","dart-flutter.html.vue"]]);export{g as default};

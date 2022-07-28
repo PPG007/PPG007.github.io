@@ -1,0 +1,1 @@
+const e={key:"v-7e7ac3b0",path:"/regex/docs/char.html",title:"\u5B57\u7B26\u7C7B",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"regex/docs/char.md"};export{e as data};

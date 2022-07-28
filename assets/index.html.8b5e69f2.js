@@ -1,0 +1,1 @@
+const t={key:"v-7ad743c2",path:"/restful/",title:"Restful API",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"restful/README.md"};export{t as data};

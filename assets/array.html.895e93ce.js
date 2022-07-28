@@ -1,0 +1,1 @@
+const t={key:"v-45752bf4",path:"/go/docs/array.html",title:"\u6570\u7EC4",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/array.md"};export{t as data};
