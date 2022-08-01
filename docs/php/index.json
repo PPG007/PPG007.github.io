@@ -1,0 +1,18 @@
+{
+    "sidebar": {
+        "/php": [
+            {
+                "children": [
+                    "/php/docs/install.md",
+                    "/php/docs/basic.md"
+                ],
+                "text": "PHP"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "PHP",
+        "link": "/php",
+        "group": "PHP"
+    }
+}
