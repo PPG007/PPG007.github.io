@@ -29,6 +29,17 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
+make docker run without sudo:
+
+```shell
+# normally, this group will already exist after docker installation
+sudo groupadd docker
+# add user to this group, eg: sudo gpasswd -a PPG007 docker
+sudo gpasswd -a $USER docker
+sudo service docker restart
+# then log out and log in, this will work
+```
+
 change repository:
 
 ```shell
