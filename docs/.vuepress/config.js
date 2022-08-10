@@ -20,17 +20,17 @@ module.exports = {
   },
   public: 'docs/images',
   plugins: [
-    [
-      '@vuepress/plugin-search',
-      {
-        locales: {
-          '/': {
-            placeholder: 'Search',
-          }
-        },
-        maxSuggestions: 10,
-      },
-    ],
+    // [
+    //   '@vuepress/plugin-search',
+    //   {
+    //     locales: {
+    //       '/': {
+    //         placeholder: 'Search',
+    //       }
+    //     },
+    //     maxSuggestions: 10,
+    //   },
+    // ],
     [
       '@vuepress/plugin-google-analytics',
       {
@@ -42,5 +42,15 @@ module.exports = {
         // options...
       },
     ],
+    [
+      "@vuepress/plugin-docsearch", {
+        appId: '9XKIL2OH35',
+        apiKey: '4766eda2c8703a6185791c95a2edaf1e',
+        indexName: 'PPG007',
+        searchParameters: {
+          facetFilters: ['tags:v2'],
+        },
+      }
+    ]
   ],
 };
