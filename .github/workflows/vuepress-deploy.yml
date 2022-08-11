@@ -8,11 +8,10 @@ on:
       - "docs/**"
 
 jobs:
-  build:
-    uses: ./.github/workflows/vuepress-build.yml
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/workflows/vuepress-build.yml
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
