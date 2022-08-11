@@ -45,8 +45,8 @@ jobs:
       - name: Build VuePress site
         run: yarn docs:build
 
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: ${{inputs.artifactsName}}
-      #     path: docs/.vuepress/dist
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{inputs.artifactsName}}
+          path: docs/.vuepress/dist
