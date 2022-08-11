@@ -20,17 +20,6 @@ module.exports = {
   },
   public: 'docs/images',
   plugins: [
-    // [
-    //   '@vuepress/plugin-search',
-    //   {
-    //     locales: {
-    //       '/': {
-    //         placeholder: 'Search',
-    //       }
-    //     },
-    //     maxSuggestions: 10,
-    //   },
-    // ],
     [
       '@vuepress/plugin-google-analytics',
       {
