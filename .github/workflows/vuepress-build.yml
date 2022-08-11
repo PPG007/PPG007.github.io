@@ -1,6 +1,13 @@
 name: build
 
-on: [pull_request, workflow_call]
+on:
+  pull_request:
+  workflow_call:
+    inputs:
+      artifactsName:
+        required: false
+        type: string
+        default: Default Name
 
 jobs:
   build:
@@ -37,3 +44,9 @@ jobs:
       # 运行构建脚本
       - name: Build VuePress site
         run: yarn docs:build
+
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{inputs.artifactsName}}
+      #     path: docs/.vuepress/dist

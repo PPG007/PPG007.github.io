@@ -8,10 +8,18 @@ on:
       - "docs/**"
 
 jobs:
-  publish:
+  build:
+    uses: ./.github/workflows/vuepress-build.yml
+    # with:
+    #   artifactsName: dist
+  deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - uses: github.com/PPG007.github.io/.github/workflows/vuepress-build.yml@main
+      # - name: Download Artifacts
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: dist
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
