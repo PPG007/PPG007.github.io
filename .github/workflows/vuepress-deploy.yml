@@ -11,7 +11,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/vuepress-build.yml
+      - uses: github.com/PPG007.github.io/.github/workflows/vuepress-build.yml@main
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
