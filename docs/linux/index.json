@@ -1,0 +1,16 @@
+{
+    "sidebar": {
+        "/linux": [
+            {
+                "children": [
+                ],
+                "text": "Linux"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "Linux",
+        "link": "/linux",
+        "group": "云相关"
+    }
+}
