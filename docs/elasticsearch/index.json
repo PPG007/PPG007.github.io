@@ -2,7 +2,9 @@
     "sidebar": {
         "/elasticsearch": [
             {
-                "children": [],
+                "children": [
+                    "/elasticsearch/docs/basic.md"
+                ],
                 "text": "Elasticsearch"
             }
         ]
