@@ -1,0 +1,15 @@
+{
+    "sidebar": {
+        "/elasticsearch": [
+            {
+                "children": [],
+                "text": "Elasticsearch"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "Elasticsearch",
+        "link": "/elasticsearch",
+        "group": "数据库"
+    }
+}
