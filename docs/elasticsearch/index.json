@@ -3,7 +3,8 @@
         "/elasticsearch": [
             {
                 "children": [
-                    "/elasticsearch/docs/basic.md"
+                    "/elasticsearch/docs/basic.md",
+                    "/elasticsearch/docs/index.md"
                 ],
                 "text": "Elasticsearch"
             }
