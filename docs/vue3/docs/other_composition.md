@@ -96,7 +96,7 @@ export default {
 
 ## provide 与 inject
 
-![Provide/inject scheme](/Vue3/components_provide.png)
+![Provide/inject scheme](./images/components_provide.png)
 
 - 作用：实现组件隔代通信。
 - 使用一对 `provide` 和 `inject`。无论组件层次结构有多深，父组件都可以作为其所有子组件的依赖提供者。这个特性有两个部分：父组件有一个 `provide` 选项来提供数据，子组件有一个 `inject` 选项来开始使用这些数据。

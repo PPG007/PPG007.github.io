@@ -193,7 +193,7 @@ private int age;
 ```
 
 其余各限制类型如下：
-![JSR-303校验](/SpringBoot/JSR-303校验.jpg)
+![JSR-303校验](./images/JSR-303校验.jpg)
 
 ## 多环境配置及配置文件位置
 
@@ -207,25 +207,25 @@ private int age;
 
     此位置就是在项目根目录下创建一个 config 文件夹(文件夹名字必须为 config )，在 config 文件夹中创建配置文件(config 文件夹与 src 同级)。
 
-    ![配置文件路径一](/SpringBoot/配置文件路径一.jpg)
+    ![配置文件路径一](./images/配置文件路径一.jpg)
 
 - `file:./`：
 
     此位置就是在根目录下直接创建配置文件，配置文件与 src 文件夹同级。
 
-    ![配置文件路径一](/SpringBoot/配置文件路径二.jpg)
+    ![配置文件路径一](./images/配置文件路径二.jpg)
 
 - `classpath:/config/`：
 
     此位置就是在 resources 目录下创建 config 文件夹并在其中创建配置文件。
 
-    ![配置文件路径一](/SpringBoot/配置文件路径三.jpg)
+    ![配置文件路径一](./images/配置文件路径三.jpg)
 
 - `classpath:/`：
 
     此位置就是 resources 目录。
 
-    ![配置文件路径一](/SpringBoot/配置文件路径四.jpg)
+    ![配置文件路径一](./images/配置文件路径四.jpg)
 
 ::: tip 各位置配置文件的优先级顺序
 `file:./config` > `file:./` > `classpath:/config/` > `classpath:/`。

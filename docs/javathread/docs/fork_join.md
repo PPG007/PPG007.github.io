@@ -12,7 +12,7 @@ ForkJoinPool 实现了 ExecutorService 接口，提供非 ForkJoinTask 客户 Fo
 
 在 ForkJoinPool 内运行的任务的抽象基类。ForkJoinTask 是一个线程实体，其重量比普通线程轻得多。
 
-![ForkJoin继承体系](/多线程/ForkJoinPool继承体系.png)
+![ForkJoin继承体系](./images/ForkJoinPool继承体系.png)
 
 直接子类：
 

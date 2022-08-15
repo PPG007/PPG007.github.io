@@ -11,7 +11,7 @@
 - API、XML、注解等编程接口采集的配置可以被理解成配置来源的一种，是直接面向用户编程的配置采集方式。
 - 从 classpath 读取配置文件：dubbo.properties。
 
-![覆盖关系](/Dubbo/configuration.jpg)
+![覆盖关系](./images/configuration.jpg)
 
 从虚拟机参数到本地文件优先级依次降低
 
@@ -22,11 +22,11 @@
 
 ## 不同粒度配置的覆盖关系
 
-![dubbo-config-override](/Dubbo/dubbo-config-override.jpg)
+![dubbo-config-override](./images/dubbo-config-override.jpg)
 
 - 方法级优先，接口级次之，全局配置再次之。
 - 如果级别一样，则消费方优先，提供方次之。
 
 ## 配置加载流程
 
-![配置加载流程](/Dubbo/config-load.svg)
+![配置加载流程](./images/config-load.svg)

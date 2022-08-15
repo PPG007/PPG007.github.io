@@ -112,8 +112,8 @@ public class LockServer {
 
 ## 测试结果
 
-![image-20210824141808191](/ZooKeeper/image-20210824141808191.png)
+![image-20210824141808191](./images/image-20210824141808191.png)
 
-![image-20210824141821848](/ZooKeeper/image-20210824141821848.png)
+![image-20210824141821848](./images/image-20210824141821848.png)
 
 通过结果发现，获取锁的顺序确实是按照创建节点的序号大小进行的。

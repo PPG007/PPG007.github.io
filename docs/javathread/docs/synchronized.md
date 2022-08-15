@@ -144,11 +144,11 @@ class Consumer implements Runnable{
 
 使用 Java bin 文件夹中的 jps 工具：`jps -l` 命令定位进程号。
 
-![jps-l](/多线程/jps-l.jpg)
+![jps-l](./images/jps-l.jpg)
 
 使用 `jstack [进程号]` 查看进程堆栈找到死锁问题。
 
-![jps-l](/多线程/jstack.jpg)
+![jps-l](./images/jstack.jpg)
 
 ## 生产者消费者问题
 

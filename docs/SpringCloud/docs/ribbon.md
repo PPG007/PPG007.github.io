@@ -196,4 +196,4 @@ public class TestConfiguration {
 :::
 
 Ribbon 的所有可选 Bean：
-![RibbonBean](/SpringCloud/RibbonBean.jpg)
+![RibbonBean](./images/RibbonBean.jpg)

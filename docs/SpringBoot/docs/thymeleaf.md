@@ -118,7 +118,7 @@ thymeleaf 中，HTML 标签的所有元素都由 thymeleaf 接管，要使用 th
 
 - 内置对象：
 
-    ![thymeleaf内置对象](/SpringBoot/thymeleaf内置对象.jpg)
+    ![thymeleaf内置对象](./images/thymeleaf内置对象.jpg)
 
     示例：
 

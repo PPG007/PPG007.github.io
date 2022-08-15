@@ -8,7 +8,7 @@ prev:
 
 网络拓扑图：
 
-![network](/openwrt/network.png)
+![network](./images/network.png)
 
 首先制作一个 Windows PE 启动盘，这里使用[老毛桃](https://www.laomaotao.net/)。
 
@@ -16,11 +16,11 @@ OpenWrt 固件有很多，这里我们使用[骷髅头固件](https://github.com
 
 骷髅头固件的 Releases 中有很多版本，根据需求选择即可。
 
-![Releases](/openwrt/releases.png)
+![Releases](./images/releases.png)
 
 这里我们选择正式版。
 
-![assets](/openwrt/assets.png)
+![assets](./images/assets.png)
 
 下载上图中的第四个 .img.gz 文件，下载到本地后进行解压获得一个 .img 文件。
 
@@ -32,11 +32,11 @@ OpenWrt 固件有很多，这里我们使用[骷髅头固件](https://github.com
 
 寻找一根网线将这台旧电脑和一台现有的能用的电脑连接，修改电脑的 IP 为 192.168.2.2，默认网关及 DNS 为 192.168.2.1，打开浏览器，访问 192.168.2.1，用户名 root，密码 password 进入系统，首先进入网络-接口选项，如果接口中没有 WAN 口，那么点击添加接口，设置协议为 DHCP 客户端（因为我们是做旁路由，主路由拨号及 DHCP），点击提交，再点击保存应用。
 
-![createWan](/openwrt/createWan.png)
+![createWan](./images/createWan.png)
 
 接下来修改 LAN 口配置，协议选择静态地址，修改 IPv4 地址为你的主路由器的网段下的一个不冲突的 IP，例如主路由为 192.168.3.1，那么这里可以修改为 192.168.3.5，然后 IPv4 网关和使用自定义的 DNS 服务器都填入路由器的 IP，IPv6 分配长度选择禁用，物理设置中**不要**勾选桥接接口，然后基本设置中选中忽略此接口，IPv6 设置也全部禁用，最后保存应用即可（这个时候由于经过修改两台电脑可能已经不在同一个网段了，所以会看不到修改成功提示，稍等一会即可断开连接），然后将两个电脑断开，都连接到主路由器上，之前修改 IP 的电脑重新修改为自动获取 IP 地址及 DNS，然后访问刚刚为 LAN 口设置的 IP 即可进入系统，之后进行设置即可。然后在希望使用此电脑做路由的设备中将网络设置为手动 IP，默认网关及 DNS 都选择刚刚为 LAN 口设置的静态 IP，此时即可通过此路由上网。
 
-![LanSetting1](/openwrt/lanSetting1.png)
-![LanSetting2](/openwrt/lanSetting2.png)
-![LanSetting3](/openwrt/lanSetting3.png)
-![LanSetting4](/openwrt/lanSetting4.png)
+![LanSetting1](./images/lanSetting1.png)
+![LanSetting2](./images/lanSetting2.png)
+![LanSetting3](./images/lanSetting3.png)
+![LanSetting4](./images/lanSetting4.png)

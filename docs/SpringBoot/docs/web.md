@@ -47,7 +47,7 @@ spring:
 
 进入 webjars 官网即可获取对应的依赖。
 
-![webjars](/SpringBoot/webjars.jpg)
+![webjars](./images/webjars.jpg)
 
 webjars 实现了使用 jar 包依赖引入 web 资源。
 
@@ -61,7 +61,7 @@ webjars 实现了使用 jar 包依赖引入 web 资源。
 </dependency>
 ```
 
-![webjars在项目中的位置](/SpringBoot/webjars在项目中的位置.jpg)
+![webjars在项目中的位置](./images/webjars在项目中的位置.jpg)
 
 根据对源代码的分析，要想访问 jQuery，只需要在浏览器输入 `localhost:8080/webjars/jquery/3.5.1/jquery.js`。
 

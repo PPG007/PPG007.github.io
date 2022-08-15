@@ -2,7 +2,7 @@
 
 包含其他配置文件：
 
-![include](/Redis/RedisConfig-include.jpg)
+![include](./images/RedisConfig-include.jpg)
 
 网络：
 
@@ -124,7 +124,7 @@ requirepass 123456
 
 客户端限制：
 
-![限制客户端数量](/Redis/RedisConfig-maxclients.jpg)
+![限制客户端数量](./images/RedisConfig-maxclients.jpg)
 
 内存限制：
 

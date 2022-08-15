@@ -22,7 +22,7 @@ prev:
 
 用来抑制编译时的警告信息。与前两个注释有所不同，你需要添加一个参数才能正确使用，这些参数值都是已经定义好了的，我们选择性的使用就好了
 
-![@SuppressWarings的可选参数](/注解和反射/@SuppressWarings的可选参数.jpg)
+![@SuppressWarings的可选参数](./images/@SuppressWarings的可选参数.jpg)
 
 例如：
 

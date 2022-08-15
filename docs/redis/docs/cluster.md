@@ -24,7 +24,7 @@ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6379 127.0.0.1:6380 12
 
 成功后输出结果：
 
-![image-20210822183640441](/Redis/image-20210822183640441.png)
+![image-20210822183640441](./images/image-20210822183640441.png)
 
 使用 redis-cli 添加 -c 参数，然后连接任意端口进程都能连接到进程中：
 

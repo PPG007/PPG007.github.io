@@ -6,7 +6,7 @@ prev:
 
 # Spring 组成
 
-![Spring组成](/Spring/spring模块.jpg)
+![Spring组成](./images/spring模块.jpg)
 
 ::: tip
 Spring 核心是控制反转 IOC 和面向切面 AOP。

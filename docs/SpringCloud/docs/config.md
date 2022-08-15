@@ -43,7 +43,7 @@ spring:
 
 ### 查看仓库中配置文件内容的可选路径
 
-![查看路径](/SpringCloud/SpringCloudConfig路径.jpg)
+![查看路径](./images/SpringCloudConfig路径.jpg)
 
 application 是 yaml 中定义的 `spring.application.name` 的值，profile 是 yaml 中定义的 `spring.config.active.on-profile`，label 为分支名。
 

@@ -57,7 +57,7 @@ GET student/_search
 
 查询结果如下图：
 
-![query result](/elasticsearch/query_result.png)
+![query result](./images/query_result.png)
 
 - `took`：Elasticsearch 运行查询所花费的时间（以毫秒为单位）。
 - `timed_out`：搜索请求是否超时。

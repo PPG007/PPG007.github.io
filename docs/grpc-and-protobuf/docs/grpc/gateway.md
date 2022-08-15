@@ -56,7 +56,7 @@ protoc -I . --go_out=pb --go-grpc_out=pb --grpc-gateway_out pb --grpc-gateway_op
 
 实现所有的接口，最终项目文件结构：
 
-![项目文件结构](/grpc-and-protobuf/项目文件结构.png)
+![项目文件结构](../images/项目文件结构.png)
 
 其中的 `api.yaml` 是另一种 grpc-gateway 的使用方式，这里先不考虑。
 
