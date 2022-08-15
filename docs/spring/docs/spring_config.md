@@ -17,7 +17,7 @@
 
 - scope 作用域：
 
-    ![bean的作用域](/Spring/bean的作用域.jpg)
+    ![bean的作用域](./images/bean的作用域.jpg)
 
 - import：
 

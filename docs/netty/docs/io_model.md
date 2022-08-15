@@ -102,7 +102,7 @@ NIO 是*面向缓冲区*、或者*面向块*编程的。数据读取到一个它
     - ServerSocketChannel。
     - SocketChannel。
 
-![image-20210811174516051](/Netty/image-20210811174516051.png)
+![image-20210811174516051](./images/image-20210811174516051.png)
 
 读写Buffer：
 
@@ -530,7 +530,7 @@ public class Client {
 
 传统文件传输：数据读取和写入是从用户空间到内核空间来回复制，而内核空间的数据是通过操作系统层面的 I/O 接口从磁盘读取或写入。
 
-![img](/Netty/v2-e3b554661358b18b3f36cc17f0b0c8c1_1440w.jpg)
+![img](./images/v2-e3b554661358b18b3f36cc17f0b0c8c1_1440w.jpg)
 
 发生了 4 次用户态与内核态的上下文切换。
 
@@ -547,7 +547,7 @@ public class Client {
 
     `mmap()` 系统调用函数会直接把内核缓冲区里的数据「**映射**」到用户空间，这样，操作系统内核与用户空间就不需要再进行任何的数据拷贝操作。
 
-    ![img](/Netty/v2-16ff9ac786b16508711083ed44a8ff79_1440w.jpg)
+    ![img](./images/v2-16ff9ac786b16508711083ed44a8ff79_1440w.jpg)
 
     - 应用进程调用了 `mmap()` 后，DMA 会把磁盘的数据拷贝到内核的缓冲区里。接着，应用进程跟操作系统内核「共享」这个缓冲区；
     - 应用进程再调用 `write()`，操作系统直接将内核缓冲区的数据拷贝到 socket 缓冲区中，这一切都发生在内核态，由 CPU 来搬运数据；
@@ -559,14 +559,14 @@ public class Client {
 
     该系统调用，可以直接把内核缓冲区里的数据拷贝到 socket 缓冲区里，不再拷贝到用户态，这样就只有 2 次上下文切换，和 3 次数据拷贝。
 
-    ![img](/Netty/v2-557b255dbca2fdd3a5a213cbee7df513_1440w.jpg)
+    ![img](./images/v2-557b255dbca2fdd3a5a213cbee7df513_1440w.jpg)
 
     从 Linux 内核 `2.4` 版本开始起，对于支持网卡支持 SG-DMA 技术的情况下， `sendfile()` 系统调用的过程发生了点变化，具体过程如下：
 
     - 第一步，通过 DMA 将磁盘上的数据拷贝到内核缓冲区里。
     - 第二步，缓冲区描述符和数据长度传到 socket 缓冲区，这样网卡的 SG-DMA 控制器就可以直接将内核缓存中的数据拷贝到网卡的缓冲区里，此过程不需要将数据从操作系统内核缓冲区拷贝到 socket 缓冲区中，这样就减少了一次数据拷贝。
 
-![img](/Netty/v2-dc405f1eb057217aee8820b6d3e340fd_1440w.jpg)
+![img](./images/v2-dc405f1eb057217aee8820b6d3e340fd_1440w.jpg)
 
 这就是所谓的**零拷贝（\*Zero-copy\*）技术，因为我们没有在内存层面去拷贝数据，也就是说全程没有通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的。**。
 
@@ -626,7 +626,7 @@ public class BIOClient {
 
 耗时情况：
 
-![image-20210813141228051](/Netty/image-20210813141228051.png)
+![image-20210813141228051](./images/image-20210813141228051.png)
 
 #### NIO 实现拷贝(文件大小 35.4MB)
 
@@ -686,7 +686,7 @@ public class NIOClient {
 
 耗时情况：
 
-![image-20210813141315951](/Netty/image-20210813141315951.png)
+![image-20210813141315951](./images/image-20210813141315951.png)
 
 ::: warning 注意
 Windows 环境中，调用一次 transfer 方法最大传输 8MB，需要分段，Linux 则不需要。

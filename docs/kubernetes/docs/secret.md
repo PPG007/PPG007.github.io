@@ -42,7 +42,7 @@ stringData 中必须都是字符串，也可以使用 data 替换 stringData，�
 
 配置文件中的 type 具有以下可选值：
 
-![types](/kubernetes/secretTypes.png)
+![types](./images/secretTypes.png)
 
 ## Secret 做环境变量
 

@@ -114,7 +114,7 @@ public static void main(String[] args) throws JMSException {
 
 查看 ActiveMQ 控制台：
 
-![image-20210819143010106](/ActiveMQ/image-20210819143010106.png)
+![image-20210819143010106](./images/image-20210819143010106.png)
 
 点击上方 Queues 进入 queue 队列的监控界面，name 表示 queue 的名字，此后紧跟着待消费的消息数量、已连接的消费者数量、消息入队数量、消息出队数量。
 

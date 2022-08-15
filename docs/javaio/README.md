@@ -1,3 +1,3 @@
 # Java IO
 
-![JavaIO表](/JavaIO/IO.jpg)
+![JavaIO表](./docs/images/IO.jpg)

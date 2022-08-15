@@ -2,7 +2,7 @@
 
 ## 传统阻塞 I/O 服务模型
 
-![image-20210813163713373](/Netty/image-20210813163713373.png)
+![image-20210813163713373](./images/image-20210813163713373.png)
 
 每个连接都需要一个线程完成业务处理、输入输出，如果线程没有数据可读，会阻塞在 read，浪费资源，并发量很大时，创建大量线程，占用很大系统资源。
 
@@ -13,13 +13,13 @@
 
 ### 单Reactor单线程
 
-![image-20210813164539857](/Netty/image-20210813164539857.png)
+![image-20210813164539857](./images/image-20210813164539857.png)
 
 服务端用一个线程多路复用实现了所有的处理任务，例如 NIO 群聊系统，性能不强，适合客户端数量少且业务处理很快的场景。
 
 ### 单 Reactor 多线程
 
-![image-20210813165428693](/Netty/image-20210813165428693.png)
+![image-20210813165428693](./images/image-20210813165428693.png)
 
 - Reactor 通过 select 监控客户端请求事件，收到事件后，通过 dispatch 分发。
 - 如果是建立连接请求，则由 acceptor处理并创建一个 handler 对象处理连接后的各种事件。
@@ -32,7 +32,7 @@
 
 ### 主从 Reactor 多线程
 
-![主从Reactor](/Netty/主从Reactor.png)
+![主从Reactor](./images/主从Reactor.png)
 
 - Reactor 监听连接事件，通过 Acceptor 处理连接事件。
 - 处理连接事件后，将连接分配到 SubReactor。
@@ -45,7 +45,7 @@
 
 ## Netty 工作原理
 
-![netty工作原理图](/Netty/netty工作原理图.png)
+![netty工作原理图](./images/netty工作原理图.png)
 
 - Netty 抽象出两组线程池，BossGroup 负责接收客户端的连接，WorkerGroup 负责网络的读写。
 - BossGroup 和 WorkerGroup 类型都是 NioEventLoopGroup。

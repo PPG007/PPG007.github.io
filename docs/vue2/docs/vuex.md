@@ -2,7 +2,7 @@
 
 ## Vuex 工作原理
 
-![Vuex工作原理图](/vue/Vuex工作原理图.png)
+![Vuex工作原理图](./images/Vuex工作原理图.png)
 
 ## 配置 Vuex 环境
 

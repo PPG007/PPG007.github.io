@@ -2,7 +2,7 @@
 
 ## SpringMVC 工作流程
 
-![s](/SpringMVC/SpringMVC工作流程.png)
+![s](./images/SpringMVC工作流程.png)
 
 核心：DispatcherServlet。
 

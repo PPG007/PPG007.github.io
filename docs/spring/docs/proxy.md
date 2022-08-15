@@ -53,7 +53,7 @@ Foo f = (Foo) Proxy.newProxyInstance(Foo.class.getClassLoader(),new Class<?>[] {
 ```
 
 方法：
-![Proxy](/Spring/Proxy.jpg)
+![Proxy](./images/Proxy.jpg)
 
 ### 示例代码（中介租房）
 

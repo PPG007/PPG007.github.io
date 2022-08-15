@@ -224,7 +224,7 @@ Vue使用组件三大步骤：
 
 ## 一个重要的内置关系
 
-![Vue一个重要关系](/vue/Vue一个重要关系.png)
+![Vue一个重要关系](./images/Vue一个重要关系.png)
 
 `VueComponent.prototype.__proto__===Vue.prototype`。
 

@@ -120,7 +120,7 @@ activeMQConnectionFactory.setRedeliveryPolicy(redeliveryPolicy);
 
 Spring中的配置：
 
-![image-20210821182852630](/ActiveMQ/image-20210821182852630.png)
+![image-20210821182852630](./images/image-20210821182852630.png)
 
 ## 死信队列
 

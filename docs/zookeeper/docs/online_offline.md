@@ -137,4 +137,4 @@ public class Client {
 
 ## 测试结果
 
-![image-20210823183243214](/ZooKeeper/image-20210823183243214.png)
+![image-20210823183243214](./images/image-20210823183243214.png)

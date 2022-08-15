@@ -32,7 +32,7 @@ Istio 是一个完全开源的服务网格，作为透明的一层接入到现�
 
 服务网格架构图：
 
-![服务网格架构图](/istio/serviceMesh.jpg)
+![服务网格架构图](./images/serviceMesh.jpg)
 
 服务网格作为 sidecar 运行，对应用程序来说是透明，所有应用程序间的流量都会通过它，所以对应用程序流量的控制都可以在 serivce mesh 中实现。
 

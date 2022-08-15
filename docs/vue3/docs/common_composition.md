@@ -429,7 +429,7 @@ watchEffect(()=>{
 
 ## 生命周期
 
-![实例的生命周期](/Vue3/lifecycle.svg)
+![实例的生命周期](./images/lifecycle.svg)
 
 Vue3 中生命周期与 Vue2 基本相同，只是将*销毁*修改为了*卸载*。
 

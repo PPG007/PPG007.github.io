@@ -73,11 +73,11 @@ message Student{
 
 执行 Maven 插件的 compile 命令：
 
-![image-20210815203257869](/Netty/image-20210815203257869.png)
+![image-20210815203257869](./images/image-20210815203257869.png)
 
 在指定的包下生成三个文件：
 
-![image-20210815203337639](/Netty/image-20210815203337639.png)
+![image-20210815203337639](./images/image-20210815203337639.png)
 
 Netty 客户端设置编码器，注意添加 handler 的先后顺序，发送放在自定义 handler 中，所以编码要放在自定义 handler 之前。
 

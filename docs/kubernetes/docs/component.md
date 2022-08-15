@@ -1,6 +1,6 @@
 # Kubernetes 组件
 
-![components-of-kubernetes](/kubernetes/components-of-kubernetes.svg)
+![components-of-kubernetes](./images/components-of-kubernetes.svg)
 
 一个 Kubernetes 集群由一组被称作节点的机器组成。这些节点上运行 Kubernetes 所管理的容器化应用。集群具有至少一个工作节点。
 

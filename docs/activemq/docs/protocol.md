@@ -1,6 +1,6 @@
 # ActiveMQ 传输协议
 
-![image-20210821130437502](/ActiveMQ/image-20210821130437502.png)
+![image-20210821130437502](./images/image-20210821130437502.png)
 
 ## TCP 协议 （默认）
 

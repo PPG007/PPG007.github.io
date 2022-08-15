@@ -40,11 +40,11 @@
 
 当两个分支共同前进时可能会出现下面的情况。
 
-![合并前](/Git/合并前.png)
+![合并前](./images/合并前.png)
 
 这种情况下，Git 无法执行快速合并只能尝试把各自的修改合并起来，但这样可能Hi出现冲突，Git 会告诉我们在哪个文件中出现了冲突，必须由我们手动修改解决冲突后再提交，提交后分支变成了下面这样：
 
-![合并后](/Git/合并后.png)
+![合并后](./images/合并后.png)
 
 ## 分支管理策略
 
@@ -56,11 +56,11 @@
 
 不使用 Fast forward 模式合并后就像下面这样：
 
-![--no-ff](/Git/--no-ff.png)
+![--no-ff](./images/--no-ff.png)
 
 反之像这样：
 
-![ff](/Git/ff.png)
+![ff](./images/ff.png)
 
 ## Bug 分支
 
@@ -91,8 +91,8 @@
 
 在进行分支合并时，有 `merge` 和 `rebase` 两种选择，merge 会再次创建一次提交作为合并后的起点，rebase 不会创建提交，而是将要合并的分支直接移动到要并入的分支的顶端。
 
-![merge](/Git/merge.svg)
+![merge](./images/merge.svg)
 
-![rebase](/Git/rebase.svg)
+![rebase](./images/rebase.svg)
 
 使用 `git rebase <branch>` 命令将当前分支变基到指定分支，如果发生了冲突，就先解决冲突，然后使用 `git rebase --continue` 完成后续操作。还可以添加 `-i` 参数使用交互式 rebase。

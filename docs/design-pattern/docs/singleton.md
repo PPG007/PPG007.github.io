@@ -157,7 +157,7 @@ public class NoSuchTypeBeanException extends Exception{
 
 异常结构如下：
 
-![image-20210901094844452](/设计模式/image-20210901094844452.png)
+![image-20210901094844452](./images/image-20210901094844452.png)
 
 ### 编写容器初始化类
 
@@ -315,7 +315,7 @@ public synchronized <T> T autowiredInit(Class<T> clazz) throws Exception{
 
 编写实体类、配置类、服务类：
 
-![image-20210901095526026](/设计模式/image-20210901095526026.png)
+![image-20210901095526026](./images/image-20210901095526026.png)
 
 编写启动类：
 

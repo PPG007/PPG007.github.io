@@ -8,7 +8,7 @@ prev:
 
 ## Kubernetes 是什么
 
-![container_evolution](/kubernetes/container_evolution.svg)
+![container_evolution](./images/container_evolution.svg)
 
 - 传统部署时代：
 

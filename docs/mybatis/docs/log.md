@@ -2,7 +2,7 @@
 
 ## 日志工厂
 
-![Mybatis 日志](/MyBatis/Mybatis日志.jpg)
+![Mybatis 日志](./images/Mybatis日志.jpg)
 
 Mybatis 通过使用内置的日志工厂提供日志功能。内置日志工厂将会把日志工作委托给下面的实现之一：
 

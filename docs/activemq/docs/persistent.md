@@ -104,7 +104,7 @@ MSG：消息本体的 Java 序列化对象的二进制数据。
 
 PRIORITY：优先级，从 0-9，数值越大优先级越高。
 
-![image-20210821161810221](/ActiveMQ/image-20210821161810221.png)
+![image-20210821161810221](./images/image-20210821161810221.png)
 
 队列模式中，如果 DeliveryMode 设置为 NON_PERSISTENT，发送的消息只会存储在内存中，如果设置为 PERSISTENT 则会存储在数据库表中，消费完成后会从表中删除。
 
@@ -134,7 +134,7 @@ ACTIVEMQ_ACKS 用于存储订阅关系。如果是持久化 Topic,订阅者和�
 - SELECTOR：选择器,可以选择只消费满足条件的消息。条件可以用自定义属性实现,可支持多属性 AND 和 OR 操作。
 - LAST_ACKED_ID：记录消费过的消息的 ID。
 
-![image-20210821161323939](/ActiveMQ/image-20210821161323939.png)
+![image-20210821161323939](./images/image-20210821161323939.png)
 
 - ACTIVEMQ_LOCK：
 
@@ -173,7 +173,7 @@ ActiveMQ Journal,使用高速缓存写入技术,大大提高了性能。
 
 参数分别为文件个数、数据文件目录、数据源、文件大小、是否使用 journal 与是否使用快速 journal。
 
-![image-20210821165450592](/ActiveMQ/image-20210821165450592.png)
+![image-20210821165450592](./images/image-20210821165450592.png)
 
 ::: tip
 发送消息后，一段时间后，没有消费的消息才会被写入 MySQL。

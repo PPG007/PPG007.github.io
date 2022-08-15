@@ -65,7 +65,7 @@ set /sanguo "xishi"
 
 监听客户端收到消息：
 
-![image-20210823162822036](/ZooKeeper/image-20210823162822036.png)
+![image-20210823162822036](./images/image-20210823162822036.png)
 
 ::: warning 注意
 注册一次只能监听一次变化，如果要再次监听，就要再次注册。
@@ -85,7 +85,7 @@ ls -w /sanguo
 create /sanguo/zhugeliang "zhugeliang"
 ```
 
-![image-20210823163448114](/ZooKeeper/image-20210823163448114.png)
+![image-20210823163448114](./images/image-20210823163448114.png)
 
 ::: warning 注意
 只有监听节点的直接子节点才会被监听，如果是子节点的子节点变化是监听不到的。

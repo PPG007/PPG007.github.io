@@ -10,4 +10,4 @@
 如果做主路由，将其他路由器改为桥接模式后，LAN 口设置中的强制 DHCP 最好选中，否则在断电重启过程中会出现桥接路由器被视为路由器而不被分配 IP，导致连接到这个桥接路由器的设备网关获取错误无法上网。
 :::
 
-![lanDHCPSetting](/openwrt/lanDHCPSetting.png)
+![lanDHCPSetting](./images/lanDHCPSetting.png)
