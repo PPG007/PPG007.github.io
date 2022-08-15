@@ -1,0 +1,20 @@
+{
+    "sidebar": {
+        "/elasticsearch": [
+            {
+                "children": [
+                    "/elasticsearch/docs/basic.md",
+                    "/elasticsearch/docs/index.md",
+                    "/elasticsearch/docs/dsl.md",
+                    "/elasticsearch/docs/aggregation.md"
+                ],
+                "text": "Elasticsearch"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "Elasticsearch",
+        "link": "/elasticsearch",
+        "group": "数据库"
+    }
+}
