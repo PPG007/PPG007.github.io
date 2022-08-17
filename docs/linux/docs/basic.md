@@ -1,0 +1,612 @@
+# Basic
+
+## 链接
+
+创建链接：
+
+```shell
+# 硬链接
+ln file link
+# 符号链接
+ln -s item link
+```
+
+硬链接：
+
+- 以文件副本的形式存在，但不占用实际空间。
+- 一个硬链接不能关联它所在文件系统之外的文件，也就是不能关联与链接自身不在同一个磁盘分区上的文件。
+- 不允许给目录创建硬链接。
+
+软链接：
+
+- 产生一个特殊文档，其中内容是真是文件的位置。
+- 软链接以路径形式存在。
+- 软链接可以跨文件系统。
+- 软链接可以对目录进行链接。
+- 被软链接的文件、目录被删除后，软链接仍然存在，变为坏链接。
+
+## 重定向
+
+文件描述符：
+
+- 0：标准输入。
+- 1：标准输出。
+- 2：标准错误输出。
+
+- 文件描述符应当紧贴在重定向符号前。
+- 标准错误输出的重定向必须出现在标准输出重定向之后，否则将不起作用。
+- 重定向使用 `>` 符号完成，但是会覆盖原有内容，追加应使用 `>>`。
+- 将输出重定向到 `/dev/null` 丢掉不需要的输出。
+
+由于重定向符号的覆盖特点，可以使用下面的方法来清空一个文件：
+
+```shell
+> target
+```
+
+```shell
+# 错误输出重定向到标准输出同目标
+nohup java -jar test.jar > out.log 2>&1 &
+```
+
+管道线：
+
+使用管道操作符 `|`（竖杠），一个命令的标准输出可以通过管道送至另一个命令的标准输入：
+
+```shell
+ls ~ | sort | less
+```
+
+被管道线组合在一起的多个命令被称为过滤器。
+
+cat 命令：
+
+cat 命令可以将多个文件连接在一起，结合重定向就能再输出到一个文件中：
+
+```shell
+cat *.txt > result
+```
+
+因为通配符展开总是有序的，所以这些文件将有序地输出到指定文件。
+
+如果 cat 命令没有输入参数，则会读取标准输入，按 Ctrl+D(EOF) 结束。
+
+sort 命令：
+
+针对文本文件的内容，按行为单位进行排序，使用 `-k` 参数指明排序的参考列，使用 `-f` 将小写字母视为大写字母。
+
+```shell
+cat package.json | sort
+```
+
+uniq 命令：
+
+删除重复行，使用 `-d` 参数可以查看重复的内容。
+
+```shell
+uniq Makefile
+```
+
+grep 命令：
+
+打印匹配行，可以找到输入中的匹配内容，通过 `-i` 参数忽略大小写。
+
+```shell
+docker ps | grep -i REDIS
+```
+
+wc 命令：
+
+打印行数、字数和字节数，`-l` 只打印行数，`-w` 只打印字数，`-c` 只显示字节数。
+
+```shell
+wc -lwc yarn.lock
+```
+
+head 命令：
+
+打印文件开头部分，可以通过 `-n` 参数指定打印的行数。
+
+```shell
+head yarn.lock -n 100
+```
+
+tail 命令：
+
+打印文件的结尾部分，默认打印 10 行，通过 `-n` 参数可以指定行数，如果指定的数字前带有正好，则会从第 n 行开始打印直到末尾。通过 `-f` 参数可以持续监测文件或输入流，当出现新内容后会立即输出，直到输入 Ctrl+C。
+
+```shell
+tail -f /var/log/syslog
+```
+
+tee 命令：
+
+从标准输入读取并同时输出到标准输出和文件，使用 `-a` 参数附加到指定文件而不是覆盖。
+
+```shell
+tee test -a
+```
+
+## 展开
+
+通配符：
+
+![通配符](./images/wildcard.jpg)
+
+波浪线展开：
+
+当用在一个单词开头时，它会展开为指定用户的家目录名，如果没有指定用户名，则展开成当前用户的家目录。
+
+```shell
+cd ~user
+```
+
+算术表达式展开：
+
+![expression](./images/expression.jpg)
+
+```shell
+echo $((5**2-11%6))
+```
+
+花括号展开：
+
+```shell
+# 从一个包含花括号的模式中 创建多个文本字符串
+echo PPG00{1,2,3,4,5,6,7} # PPG001 PPG002 PPG003 PPG004 PPG005 PPG006 PPG007
+# 可以进行嵌套或指定区间
+echo PPG00{1..7} # PPG001 PPG002 PPG003 PPG004 PPG005 PPG006 PPG007
+echo a{A{1,2},B{3,4}}b # aA1b aA2b aB3b aB4b
+```
+
+参数展开：
+
+```shell
+# 查看有效的变量列表：
+printenv
+# 查看指定变量的值
+echo $GOPATH
+# 如果变量名输入有误则会输出空行
+```
+
+命令替换：
+
+把一个命令的输出作为另一个命令的一部分来使用 `$(command)`。
+
+```shell
+docker stop $(docker ps -q)
+```
+
+引用：
+
+shell 提供了一种 叫做引用的机制，来有选择地禁止不需要的展开。
+
+```shell
+# 下面的命令不会输出$100
+echo price is $100
+# 下面的会
+echo price is '$100'
+echo price is \$100
+```
+
+如果你把文本放在双引号中， shell 使用的特殊字符，都失去它们的特殊含义，被当作普通字符来看待。 有几个例外： $，\ (反斜杠），和 `（倒引号）。使用双引号可以操作文件名包含空格的文件。
+
+单引号引用程度增强，$ 也被禁止展开。
+
+转义字符也可以用来消除特殊符号的特殊含义。
+
+## 键盘技巧
+
+自动补全：
+
+- 使用 tab 按键。
+- 通过 `Alt+?` 显示可能的自动补全列表。
+
+查看历史命令：
+
+- 使用 `history` 命令查看历史记录，默认情况下最多存在 500 条历史记录。
+- 按下 `Ctrl+r` 开始检索历史记录，输入要找的文本，如果已经找到，按下回车就能执行。
+
+![移动光标](./images/move-mouse.jpg)
+
+![修改文本](./images/change-text.jpg)
+
+![剪切和粘贴](./images/cut-paste.jpg)
+
+![历史命令1](./images/histories-1.jpg)
+
+![历史命令2](./images/histories-2.jpg)
+
+## 权限
+
+账户信息：
+
+用户帐户 定义在 /etc/passwd 文件里面，用户组定义在 /etc/group 文件里面。当用户帐户和用户组创建以后， 这些文件随着文件 /etc/shadow 的变动而修改，文件 /etc/shadow 包含了关于用户密码的信息。 对于每个用户帐号，文件 /etc/passwd 定义了用户（登录）名、uid、gid、帐号的真实姓名、家目录 和登录 shell。
+
+读取、写入和执行：
+
+执行 `ls -l` 的结果的前十个字符是文件的属性，其中第一个字符表示文件的类型。
+
+![file type](./images/file-type.jpg)
+
+剩余九个字符称为文件模式，代表着文件所有者、文件组所有者和其他人的读、写、可执行权限：
+
+![rwx](./images/rwx.jpg)
+
+更改文件模式：
+
+使用 `chmod` 命令可以修改文件模式，只有文件的所有者或者超级用户才能更改文件或目录的模式。
+
+八进制、二进制数字表示法及对应模式：
+
+![octal binary](./images/oct-binary-filemod.jpg)
+
+符号表示：
+
+![user](./images/user.jpg)
+
+通过 `${用户符号} ${运算符 +-=} ${权限符号 rwx}` 为指定用户增加、移除、修改指定权限，如果不填用户符号则相当于 all。
+
+更换身份：
+
+- su：以其他用户身份和组运行一个 shell。
+
+    `su [options] [user]`，`-m` 不改变环境变量，`-c [commond]` 切换到指定用户执行指定命令后再切换回来，`-s [shell]` 指定要使用的 shell，`-l` 切换到指定用户并使用指定用户的环境配置，如果不指定用户名，默认为 root，输入 exit 可以切换回原来的用户。
+
+- sudo：以另一个用户身份执行命令。
+
+    使用权限：在 /etc/sudoers 中有出现的使用者。查看自己的可用权限 `sudo -l`。
+
+更改文件所有者和用户组命令：`chown`（change owner）。
+
+此命令需要 root 权限。
+
+语法：`chown [commond] user[:group] file...`。`-c` 显示修改的信息，`-f` 忽略错误信息，`-R` 处理指定目录及其中的所有文件。
+
+更改文件或目录的所属组 `chgrp`。
+
+语法：`chgrp [commond][所属群组][文件或目录...]`。`-f` 不显示错误信息，`-R` 递归处理，`-v` 显示指令执行过程。
+
+## 进程
+
+ps 命令：
+
+- `-A`：列出所有的进程。
+- `-w`：显示加宽可以显示较多的资讯。
+- `-au`：显示较详细的资讯。
+- `-aux`：显示所有包含其他使用者的进程。
+
+STAT 字段含义：
+
+![stat](./images/ps-stat.jpg)
+
+top 命令：
+
+![top](./images/top.jpg)
+
+讲一个进程放置到后台：
+
+在进程启动命令后添加 `&`。使用 `jobs` 命令可以看到正在运行的进程。
+
+进程返回前台：
+
+使用 `fg` 命令，后面接一个百分号和任务号，`fg %1`。
+
+进程移动到后台： `bg` 命令。
+
+停止进程 `Ctrl+z`。
+
+向进程发送信号：`kill [signal] PID`。
+
+常用信号：
+
+![signal](./images/signal.jpg)
+
+查看所有信号 `kill -l`，信号既可以用数字，也可以用名字。
+
+其他命令：
+
+![other command](./images/other-process.jpg)
+
+## shell 环境
+
+登录 shell 会话启动内容：
+
+![shell startup](./images/shell-startup.jpg)
+
+非登录会话启动内容：
+
+![shell no startup](./images/shell-no-startup.jpg)
+
+## vi basic
+
+常用命令：
+
+![vi basic](./images/vi-basic.jpg)
+
+部分命令前加数字可以指定数目，例如右移位数。
+
+基本编辑命令：
+
+- `u` 命令：撤销所做的最后一次更改。
+- `i` 命令：插入。
+- `a` 命令：光标移到行尾时，使用 a 命令越过行尾并进入插入模式。
+- `A` 命令：越过行尾并进入插入模式。
+- `o` 命令：在当前行下方另起一行。
+- `O` 命令：在当前行上方另起一行。
+- `J` 命令：连接当前行和下面一行。
+- `f` 命令：将光标移动到当前行的下一个匹配的字符上。
+- `/` 命令：查找与指定字符串匹配的内容，重复使用 n 命令会定位到其他匹配的位置。
+
+删除命令：
+
+![vi delete](./images/vi-delete.jpg)
+
+复制命令：
+
+![vi copy](./images/vi-copy.jpg)
+
+粘贴命令：
+
+- `p` （小写）命令：粘贴到当前行的下面。
+- `P` （大写）命令：粘贴到当前行的上面。
+
+替换命令：
+
+`:%s/Line/line/g` 将 Line 替换为 line。
+
+各项含义：
+
+- `%`：指定要操作的行数，表示第一行到最后一行；也可以用形如 1,5 指定范围，或者 1,$ 表示第一行到最后一行，如果不指定范围，默认就在当前行。
+- `g`：意为“全局”，对文本行中所匹配的字符串执行查找和替换操作。如果省略 g，则 只替换每个文本行中第一个匹配的字符串。
+- 可以在命令末尾增加一个 c 字符，在替换时要求逐个确认。
+
+替换确认按键：
+
+![vi confirm](./images/vi-confirm.jpg)
+
+编辑多个文件：
+
+- 文件间切换：
+    - `:n` 切换到下一个文件。
+    - `:N` 切换到先前的文件。
+- 打开另一个文件并编辑：
+
+    在已经打开的 vi 中使用 `:e foo.txt` 切换到另一个文件并关闭当前文件，但是可以使用 `:buffer` 来切换。
+
+- 插入整个文件到另一个文件：
+    - 整体复制、切换、粘贴。
+    - 在被插入的文件中使用:`r [要插入的文件]`。
+
+保存：
+
+- `:w` [filename]：如果有 filename 就等价于另存为。
+- `:wq`。
+- `ZZ`。
+
+## 软件包管理
+
+这里包含 apt 软件管理器和 yum 软件管理器。
+
+```shell
+# 通过软件包安装
+rpm -i package_file
+dpkg --install package_file
+# 卸载
+apt-get remove package_name
+yum erase package_name
+# 更新
+apt-get update; apt-get upgrade
+yum update
+dpkg --install package_file
+rpm -U package_file
+# 列出所安装的软件包
+dpkg --list
+rpm -qa
+# 确定一个软件包是否已安装
+dpkg --status package_name
+rpm -q package_name
+# 显示所安装软件包的信息
+apt-cache show package_name
+yum info package_name
+# 查找安装了某个文件的软件包
+dpkg --search file_name
+rpm -qf file_name
+```
+
+## 网络系统
+
+- ping：发送 ICMP 报文测试网络是否连通。
+- traceroute：显示从本地到目的地走过的路由信息。
+- netstat：检查各种各样的网络设置和统计数据。
+    - `-l`：列出监听中的端口。
+    - `-i`：显示网卡列表。
+    - `-p`：显示是什么程序。
+    - `-n`：不使用别名直接使用IP和数字。
+- wget：下载单个、多个文件。
+
+## DNS
+
+- 使用 dig 工具可以看到域名解析过程，使用 @ 参数指定要去询问的 DNS 解析服务器 dig @8.8.8.8 www.google.com。
+- 域名的层级结构：主机名.次级域名.顶级域名.根域名，其中次级域名用户可以注册，主机名用户可以随意分配。
+
+## curl
+
+- 不使用任何参数就是发起 get 请求。
+- `-A` 参数：设置 User-Agent，`curl -A 'PPG007' localhost:8081/`。
+- `-b` 参数：向服务器发送 Cookie，`curl -A 'PPG007' -b 'name=ppg' localhost:8081/`，也可以读取本地文件中的 Cookie。
+- `-c` 参数：将服务器返回的 Cookie 写入指定文件，`curl -A 'PPG007' -b 'name=ppg;password=123' -c /home/user/playground/cookie.txt localhost:8081/demo`。
+- `-d` 参数：发送 POST 请求的数据体，`curl -d "login-emma&password=123" localhost:8081/postParam`，`curl -d "login-emma" -d "password=123" localhost:8081/postParam`。
+    - 使用 `-d` 参数以后，HTTP 请求会自动加上标头 Content-Type : application/x-www-form-urlencoded。并且会自动将请求转为 POST 方法，因此可以省略 `-X POST`。
+    - 读取本地文件发送 `curl -d '@cookie.txt' localhost:8081/postParam`，必须加 @ 符。
+- `--data-urlencode` 参数：等同于 -d 但是会自动将发送的数据进行 URL 编码。
+    - 命令：`curl --data-urlencode 'comment=hello world' localhost:8081/postParam`。
+    - 服务端收到：`comment=hello+world`。
+- `-e` 参数：设置请求头中的 Referer 表示请求来源，`curl -e 'localhost' localhost:8081/headerTest`。
+- `-F` 参数：向服务器上传二进制文件，`curl -F 'file=@foo.txt' localhost:8081/fileUploadTest`，上面命令会给 HTTP 请求加上标头 Content-Type: multipart/form-data，也可以指定 MIME 类型，还可以通过 filename 指定服务器收到的文件名。
+- `-G` 参数：构造 URL 查询字符串，`curl -G -d 'username=ppg007' -d 'password=123' localhost:8081/getParams`，如果省略 -G 则会发送 POST 请求。
+- `-H` 参数：设置请求头
+    - `curl -H 'Content-Type:application/json' -d '{"name":"PPG007","password":"wuhu"}' localhost:8081/postParam`。
+    - `curl -H 'Accept-Language:en-US' -H 'Content-Type:application/json' localhost:8081/headerTest`。
+- `-i` 参数：打印服务器响应头，先输出响应头，空一行输出请求结果，`curl -i localhost:8081/responseHeader`。
+- `-I`、`--head` 参数：只打印响应头。
+- `-k` 参数：跳过 SSL 检测。
+- `-L` 参数：让 HTTP 请求跟随服务器的重定向。curl 默认不跟随重定向，`curl -L -d 'username=ppg' -d 'password=123456' localhost:8081/beforeRedirect`。
+- `--limit-rate` 参数：限制 HTTP 请求和回应的带宽，模拟慢网速的环境，`curl -I --limit-rate 100k localhost:8081/responseHeader` 限制每秒 100k 字节。
+- `-o` 参数：将服务器的回应保存成文件，等同于 wget 命令，`curl -o download.png localhost:8081/downloadFile`。
+- `-O` 参数：将服务器回应保存成文件，并将 URL 的最后部分当作文件名，`curl -O localhost:8081/downloadFile` 这里服务端直接输出流，那么 `downloadFile` 就是下载的文件名，不要在后面再添加，否则可能会 404。
+- `-s` 参数：不输出错误和进度信息。
+    - `curl -s https://www.example.com` 一旦发生错误，不会显示错误信息。不发生错误的话，会正常显示运行结果。
+    - `curl -s -o /dev/null https://google.com` 不会出现任何输出。
+- `-S` 参数：只输出错误信息
+- `-u` 参数：设置服务器认证的用户名和密码，`curl -u 'bob:12345' https://google.com/login`。
+- `-v` 参数：输出通信的整个过程，用于调试，`curl -L -d 'username=ppg' -d 'password=123456' -v localhost:8081/beforeRedirect`。
+- `-x` 参数：指定 HTTP 请求的代理，如果不指定代理协议，默认是 HTTP，`curl https://www.google.com -x http://localhost:8889`。
+- `-X` 参数：指定 HTTP 的请求方法，`curl -X PUT localhost:8081/putMethodTest`。
+
+## 守护进程
+
+- 把一个任务变为后台任务：
+    - 在启动命令末尾添加 & 符号。
+    - 如果要将当前运行的程序变为后台任务，按下 Ctrl+z 将任务切到后台并暂停，然后输入 bg 使得最近暂停的后台任务继续执行。
+- 后台任务的特点：
+    - 继承当前 session 会话的标准输出和标准错误输出，后台的输出依然会在命令行下显示。
+    - 不继承当前 session 的标准输入，如果程序试图读取标准输入，那么它会被暂停执行。
+- SIGHUP 信号：
+    当用户结束 session 对话时，系统向该 session 发送 SIGHUP 信号，session 再把这个信号发给所有子进程，子进程在这个信号的作用下退出（有的情况下这个信号不会发送到后台任务），后台启动一个 http server，退出 shell 则对应端口将无法访问。
+
+::: tip
+
+如果一个进程不在 jobs 命令的返回结果中，session 就肯定不会向其发送 SIGHUP 信号。
+
+:::
+
+disown 命令：
+
+disown 命令将指定的进程从 jobs 中删除：
+
+![disown](./images/disown.jpg)
+
+对后台任务进行重定向：`node server.js > stdout.txt 2> stderr.txt < /dev/null &`。
+
+nohup 命令：
+
+- nohup 命令会阻止 session 发送 SIGHUP 信号到进程。
+- nohup 命令会关闭标准输入。
+- 重定向标准输出和标准错误输出到文件 nohup.out。
+- nohup 命令不会自动把进程变为后台任务，需要使用 &。
+
+## Systemd
+
+### 系统管理
+
+systemd 不是一个命令，而是一组命令
+
+![systemctl](./images/systemctl.jpg)
+
+![systemd-analyze](./images/systemd-analyze.jpg)
+
+hostnamectl 命令用于查看当前主机的信息。
+
+![hostnamectl](./images/hostnamectl.jpg)
+
+localectl 命令用于查看本地化设置。
+
+![localectl](./images/localectl.jpg)
+
+timedatectl 命令用于查看当前时区设置。
+
+![timedatectl](./images/timedatectl.jpg)
+
+loginctl 命令用于查看当前登录的用户
+
+![loginctl](./images/loginctl.jpg)
+
+### Unit
+
+Systemd 可以管理所有系统资源。不同的资源统称为 Unit（单位）。
+
+Unit 种类：
+
+![unit types](./images/unit-types.jpg)
+
+![systemctl list units](./images/systemctl-list-units.jpg)
+
+Unit 的状态：
+
+![unit status1](./images/unit-status1.jpg)
+
+三个简单命令：
+
+![unit status2](./images/unit-status2.jpg)
+
+Unit 管理：
+
+![unit manage](./images/unit-manage.jpg)
+
+Unit 的依赖关系：
+
+如果 Unit A 依赖于 Unit B，那么启动 A 的时候会去启动 B，使用 `systemctl list-dependencies ${unit name}` 列出一个 unit 的依赖。
+
+Unit 的配置文件：
+
+- Systemd 默认从目录 /etc/systemd/system/ 读取配置文件。但是，里面存放的大部分文件都是符号链接，指向目录 /usr/lib/systemd/system/，真正的配置文件存放在那个目录。
+- systemctl enable 命令能够开启 unit 的开机启动，就是做出了软链接，与之对应的 systemctl disable 撤销开机启动。
+
+配置文件状态：
+
+systemctl list-unit-files 命令用于列出所有配置文件：
+
+![config list](./images/config-list.jpg)
+
+四种配置文件状态：
+
+![config status](./images/config-status.jpg)
+
+如果修改配置文件就需要重新加载配置文件并重启 unit：
+
+![unit reload](./images/unit-reload.jpg)
+
+配置文件的内容：
+
+使用 `systemctl cat ${unit name}` 查看某个 unit 的配置文件内容。
+
+```conf
+[Unit]
+Description=DockerHostsUpdater
+After=network.target nss-lookup.target
+[Service]
+User=root
+Type=simple
+ExecStart=/home/user/docker-hosts-updater
+ExecStop=kill -9 $(pidof docker-hosts-updater)
+ExecReload=kill -9 $(pidof docker-hosts-updater) && /home/user/docker-hosts-updater
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Unit 区块，通常是配置文件的第一个区块，用来定义 Unit 的元数据以及配置与其他 Unit 的关系：
+
+    ![config unit](./images/config-unit.jpg)
+
+- Install 区块，通常是配置文件的最后一个区块，用来定义如何启动以及是否开机启动：
+
+    ![config install](./images/config-install.jpg)
+
+- Service 区块，用来进行 Service 的配置，只有 Service 类型的 Unit 才有这个区块：
+
+    ![config service](./images/config-service.jpg)
+
+### Target
+
+需要启动很多 unit 的时候每次都要明确指出要启动哪个 unit 十分不方便，使用 Target 管理一组 unit，类似于一个目标点，多个 Target 可以同时启动。
+
+![target](./images/target.jpg)
+
+### 日志管理 journalctl
+
+![journalctl-1](./images/journalctl-1.jpg)
+
+![journalctl-2](./images/journalctl-2.jpg)

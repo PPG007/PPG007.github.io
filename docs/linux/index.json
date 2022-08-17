@@ -3,6 +3,7 @@
         "/linux": [
             {
                 "children": [
+                    "/linux/docs/basic.md"
                 ],
                 "text": "Linux"
             }
