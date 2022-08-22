@@ -4,7 +4,8 @@
             {
                 "children": [
                     "/php/docs/install.md",
-                    "/php/docs/basic.md"
+                    "/php/docs/basic.md",
+                    "/php/docs/type.md"
                 ],
                 "text": "PHP"
             }
