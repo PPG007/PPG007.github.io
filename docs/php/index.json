@@ -5,7 +5,8 @@
                 "children": [
                     "/php/docs/install.md",
                     "/php/docs/basic.md",
-                    "/php/docs/type.md"
+                    "/php/docs/type.md",
+                    "/php/docs/variable.md"
                 ],
                 "text": "PHP"
             }
