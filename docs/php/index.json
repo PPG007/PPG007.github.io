@@ -6,7 +6,8 @@
                     "/php/docs/install.md",
                     "/php/docs/basic.md",
                     "/php/docs/type.md",
-                    "/php/docs/variable.md"
+                    "/php/docs/variable.md",
+                    "/php/docs/const.md"
                 ],
                 "text": "PHP"
             }
