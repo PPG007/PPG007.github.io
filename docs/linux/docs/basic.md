@@ -265,7 +265,7 @@ echo price is \$100
 
 更改文件或目录的所属组 `chgrp`。
 
-语法：`chgrp [commond][所属群组][文件或目录...]`。`-f` 不显示错误信息，`-R` 递归处理，`-v` 显示指令执行过程。
+语法：`chgrp [commond] [所属群组] [文件或目录...]`。`-f` 不显示错误信息，`-R` 递归处理，`-v` 显示指令执行过程。
 
 ## 进程
 
@@ -610,3 +610,29 @@ WantedBy=multi-user.target
 ![journalctl-1](./images/journalctl-1.jpg)
 
 ![journalctl-2](./images/journalctl-2.jpg)
+
+## Others
+
+磁盘相关：
+
+```shell
+# 查看磁盘使用情况
+df -h
+# 查看当前目录各文件大小
+sudo apt-get update
+sudo apt-get install ncdu
+# 默认按照大小排序
+ncdu
+```
+
+ncdu 快捷键：
+
+- n：按文件名进行排序。
+- s：按文件大小进行排序。
+- r：重新统计当前文件夹大小。
+- g：用#或百分比显示各文件/目录的大小所占的百分比。
+- i：显示当前文件/目录信息。
+- C：按项目数排序（升序/降序）。
+- d：删除选定的文件或目录。
+- t：排序时将目录放在文件前面。
+- q：退出。
