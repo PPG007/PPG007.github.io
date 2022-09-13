@@ -6,8 +6,8 @@
                     "/ubuntu-20.04-init/docs/git.md",
                     "/ubuntu-20.04-init/docs/vscode.md",
                     "/ubuntu-20.04-init/docs/zsh.md",
-                    "/ubuntu-20.04-init/docs/chrome.md",
                     "/ubuntu-20.04-init/docs/go.md",
+                    "/ubuntu-20.04-init/docs/php.md",
                     "/ubuntu-20.04-init/docs/protoc.md",
                     "/ubuntu-20.04-init/docs/mongodb.md",
                     "/ubuntu-20.04-init/docs/redis.md",
@@ -17,23 +17,20 @@
                     "/ubuntu-20.04-init/docs/docker.md",
                     "/ubuntu-20.04-init/docs/nodejs.md",
                     "/ubuntu-20.04-init/docs/nginx.md",
-                    "/ubuntu-20.04-init/docs/wps.md",
-                    "/ubuntu-20.04-init/docs/dingtalk.md",
-                    "/ubuntu-20.04-init/docs/nutstore.md",
                     "/ubuntu-20.04-init/docs/mysql.md",
-                    "/ubuntu-20.04-init/docs/jetbrains.md",
                     "/ubuntu-20.04-init/docs/python.md",
                     "/ubuntu-20.04-init/docs/sogou_input.md",
-                    "/ubuntu-20.04-init/docs/qv2ray.md",
                     "/ubuntu-20.04-init/docs/dart-flutter.md",
-                    "/ubuntu-20.04-init/docs/debian-wifi.md"
+                    "/ubuntu-20.04-init/docs/debian-wifi.md",
+                    "/ubuntu-20.04-init/docs/others.md",
+                    "/ubuntu-20.04-init/docs/rtc.md"
                 ],
-                "text": "Ubuntu20.04Init"
+                "text": "Ubuntu20.04 Init"
             }
         ]
     },
     "navbar": {
-        "text": "Ubuntu20.04初始化清单",
+        "text": "Ubuntu20.04 Init",
         "link": "/ubuntu-20.04-init",
         "group": "others"
     }

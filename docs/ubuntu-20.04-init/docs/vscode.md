@@ -24,4 +24,9 @@ one dark
 remote ssh
 docker
 proto
+github theme
+TODO Hightlight
+Material Icon Theme
+Go
+Go Interface Annotations
 ```
