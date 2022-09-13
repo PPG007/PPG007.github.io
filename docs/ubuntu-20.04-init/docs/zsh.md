@@ -20,6 +20,8 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 install terminator:
 
 ```shell
+# if use aliyun repository, just only run the first command
+sudo apt install terminator
 # install terminator
 sudo add-apt-repository ppa:mattrose/terminator
 sudo apt-get update
@@ -44,4 +46,16 @@ git clone https://github.com/paulirish/git-open.git $ZSH_CUSTOM/plugins/git-open
 plugins=(git sudo zsh-syntax-highlighting zsh-autosuggestions colored-man-pages safe-paste git-open)
 # then
 source ~/.zshrc
+```
+
+install powerlevel10k:
+
+first install the recommend [fonts](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k), then set system setting and vscode, idea and other editors.
+
+```shell
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+# then set ZSH_THEME="powerlevel10k/powerlevel10k" in ~/.zshrc.
+# then open terminal run
+p10k configure
+# then edit ~/.p10k.zsh, if use vscode to config p10k, this file maybe exist in /tmp, check the last line in ~/.zshrc, uncomment that you want to show
 ```

@@ -1,8 +1,10 @@
 # sogou input
 
-[sogou input](https://pinyin.sogou.com/linux/help.php)。
+[sogou input](https://shurufa.sogou.com/)。
 
 Ubuntu20.04 should download the version higher than 2.3
+
+If your system has already installed fcitx, just install sogou deb package and config.
 
 ```shell
 # update apt

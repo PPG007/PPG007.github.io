@@ -1,7 +1,7 @@
 ---
 prev:
   text: 首页
-  link: /Ubuntu20.04Init
+  link: /ubuntu-20.04-init
 ---
 
 # git
