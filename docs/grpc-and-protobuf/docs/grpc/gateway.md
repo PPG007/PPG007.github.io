@@ -136,3 +136,166 @@ http:
 ```shell
 protoc -I . --go_out=pb --go-grpc_out pb --grpc-gateway_out pb --grpc-gateway_opt logtostderr=true --grpc-gateway_opt grpc_api_configuration=proto/api.yaml proto/*.proto
 ```
+
+## 设置 grpc-gateway
+
+### http request header and grpc metadata
+
+默认情况下，grpc gateway 只会将请求中的带有 `Grpc-Metadata-` 前缀的 http header转换为 grpc metadata，且去掉此前缀。对于下面的 header 则会拼接上 `grpcgateway-` 前缀传递给 grpc metadata。
+
+![permanent http header](../images/PermanentHTTPHeader.png)
+
+使用自定义 header 转换：
+
+header to metadata:
+
+```go
+func myMatcher(key string) (string, bool) {
+	return key, true
+}
+
+func startGateway() {
+	mux := runtime.NewServeMux(
+		runtime.WithIncomingHeaderMatcher(myMatcher),
+		runtime.WithOutgoingHeaderMatcher(myMatcher),
+	)
+	proto.RegisterHelloServiceHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:8080", []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	})
+	http.ListenAndServe("0.0.0.0:8081", mux)
+}
+```
+
+metadata to header:
+
+```go
+func (HelloService) Hello(ctx context.Context, req *proto.HelloRequest) (*proto.HelloResponse, error) {
+	incomingContext, ok := metadata.FromIncomingContext(ctx)
+	grpc.SendHeader(ctx, metadata.New(map[string]string{
+		"REQID": "123",
+	}))
+	if ok {
+		return &proto.HelloResponse{
+			Message: strings.Join(incomingContext.Get("x-account-id"), " "),
+		}, nil
+	}
+	return &proto.HelloResponse{
+		Message: req.Message,
+	}, nil
+}
+```
+
+::: warning
+
+grpc-gateway 进行 header 转换时，key 会先执行一次处理，中划线后第一个字母将被大写，其他字母将被小写，如果包含空格和非 ASCII 字符则将返回自身，不进行处理，例如："accept-encoding" -> "Accept-Encoding"。
+
+:::
+
+### 自定义序列化
+
+- 编写 Marshaler 的实现。
+- 使用 WithMarshalerOption 注册自定义序列化方法。
+
+TODO:
+
+### 响应拦截器
+
+```go
+func (HelloService) Hello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		grpc.SetHeader(ctx, metadata.Join(md, metadata.New(map[string]string{
+			"reqId": primitive.NewObjectID().Hex(),
+		})))
+	}
+	return &pb.HelloResponse{
+		Message: req.Message,
+	}, nil
+}
+
+func MyFilter(ctx context.Context, w http.ResponseWriter, msg proto.Message) error {
+	m, ok := runtime.ServerMetadataFromContext(ctx)
+	if !ok {
+		return nil
+	}
+	s := m.HeaderMD.Get("reqId")
+	w.Header().Set("Req-Id", s[0])
+	return nil
+}
+
+func startGateway() {
+	mux := runtime.NewServeMux(
+	runtime.WithForwardResponseOption(MyFilter),
+	)
+	pb.RegisterHelloServiceHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:8080", []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	})
+	http.ListenAndServe("0.0.0.0:8081", mux)
+}
+```
+
+### 错误处理
+
+例如我们可以强制所有的请求返回都是 200。
+
+```go
+func (HelloService) Hello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
+	return nil, fmt.Errorf("1!5!")
+}
+
+func myMatcher(key string) (string, bool) {
+	return key, true
+}
+
+type MyMashaler struct {
+}
+
+func MyFilter(ctx context.Context, w http.ResponseWriter, msg proto.Message) error {
+	m, ok := runtime.ServerMetadataFromContext(ctx)
+	if !ok {
+		return nil
+	}
+	s := m.HeaderMD.Get("reqId")
+	w.Header().Set("Req-Id", s[0])
+	return nil
+}
+
+func startGateway() {
+	mux := runtime.NewServeMux(
+		runtime.WithErrorHandler(func(ctx context.Context, sm *runtime.ServeMux, m runtime.Marshaler, w http.ResponseWriter, r *http.Request, err error) {
+			if err == nil {
+				return
+			}
+			w.Write([]byte(err.Error()))
+			w.WriteHeader(http.StatusOK)
+		}),
+	)
+	pb.RegisterHelloServiceHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:8080", []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	})
+	http.ListenAndServe("0.0.0.0:8081", mux)
+}
+```
+
+路由错误处理：
+
+默认情况下，405 Method Not Allowed 会被转换 grpc 12 UNIMPLEMENTED 进而变为 501 Not Implement 错误，如果希望保留 405 响应，可以进行下面的处理：
+
+```go
+func startGateway() {
+	mux := runtime.NewServeMux(
+		runtime.WithRoutingErrorHandler(func(ctx context.Context, sm *runtime.ServeMux, m runtime.Marshaler, w http.ResponseWriter, r *http.Request, i int) {
+			if i == http.StatusMethodNotAllowed {
+				w.WriteHeader(http.StatusMethodNotAllowed)
+				w.Write([]byte("Method Not Allowed"))
+				return
+			}
+			runtime.DefaultRoutingErrorHandler(ctx, sm, m, w, r, i)
+		}),
+	)
+	pb.RegisterHelloServiceHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:8080", []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	})
+	http.ListenAndServe("0.0.0.0:8081", mux)
+}
+```
