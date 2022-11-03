@@ -1,0 +1,1 @@
+const t={key:"v-f9566190",path:"/istio/",title:"Istio",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1649854437e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"istio/README.md"};export{t as data};

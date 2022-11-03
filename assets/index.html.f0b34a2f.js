@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as a,a as o,b as s}from"./app.b1e8d3cf.js";const c={},_={id:"vue-2-x",tabindex:"-1"},r=o("a",{class:"header-anchor",href:"#vue-2-x","aria-hidden":"true"},"#",-1),n=s(" Vue 2.X \u{1F93A}"),d=[r,n];function i(h,x){return t(),a("h1",_,d)}var l=e(c,[["render",i],["__file","index.html.vue"]]);export{l as default};

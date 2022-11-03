@@ -1,0 +1,1 @@
+const t={key:"v-72881372",path:"/markdown/",title:"Markdown \u8BED\u6CD5\u53CA\u8981\u6C42",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"markdown/README.md"};export{t as data};

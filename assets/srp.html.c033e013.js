@@ -1,0 +1,1 @@
+const t={key:"v-08b55172",path:"/design-pattern/docs/srp.html",title:"\u5355\u4E00\u804C\u8D23\u539F\u5219",lang:"zh-CN",frontmatter:{prev:{text:"\u9996\u9875",link:"/design-pattern"}},excerpt:"",headers:[],git:{updatedTime:1640855648e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"design-pattern/docs/srp.md"};export{t as data};

@@ -1,0 +1,1 @@
+const i={key:"v-0b58a227",path:"/ubuntu-20.04-init/docs/debian-wifi.html",title:"Fix Debian wifi",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1654525254e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/debian-wifi.md"};export{i as data};

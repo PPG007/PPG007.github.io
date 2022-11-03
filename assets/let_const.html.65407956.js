@@ -1,0 +1,1 @@
+const t={key:"v-8cbae824",path:"/es6/docs/let_const.html",title:"let \u548C const \u547D\u4EE4",lang:"zh-CN",frontmatter:{prev:{text:"\u9996\u9875",link:"/es6"}},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:2}]},filePathRelative:"es6/docs/let_const.md"};export{t as data};

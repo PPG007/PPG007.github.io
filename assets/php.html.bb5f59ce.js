@@ -1,0 +1,1 @@
+const t={key:"v-f36d3488",path:"/ubuntu-20.04-init/docs/php.html",title:"PHP",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663034121e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/php.md"};export{t as data};

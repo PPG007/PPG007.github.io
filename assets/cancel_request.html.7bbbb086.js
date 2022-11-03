@@ -1,0 +1,1 @@
+const e={key:"v-57a657a6",path:"/axios/docs/cancel_request.html",title:"\u53D6\u6D88\u8BF7\u6C42",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640487228e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"axios/docs/cancel_request.md"};export{e as data};

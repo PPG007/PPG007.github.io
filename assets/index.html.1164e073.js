@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t,a as o,b as n}from"./app.b1e8d3cf.js";const s={},c={id:"java-knowledge-points",tabindex:"-1"},_=o("a",{class:"header-anchor",href:"#java-knowledge-points","aria-hidden":"true"},"#",-1),d=n(" Java Knowledge Points"),r=[_,d];function i(h,l){return a(),t("h1",c,r)}var x=e(s,[["render",i],["__file","index.html.vue"]]);export{x as default};

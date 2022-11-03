@@ -1,0 +1,1 @@
+const t={key:"v-9f3cbc1e",path:"/javanet/docs/url.html",title:"URL \u901A\u4FE1",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javanet/docs/url.md"};export{t as data};

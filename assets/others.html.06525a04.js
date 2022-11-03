@@ -1,0 +1,1 @@
+const t={key:"v-9e1d53ca",path:"/ubuntu-20.04-init/docs/others.html",title:"Others",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663034121e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/others.md"};export{t as data};

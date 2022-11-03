@@ -1,0 +1,1 @@
+const e={key:"v-39a9a73d",path:"/css/docs/pseudo-element.html",title:"CSS \u4F2A\u5143\u7D20",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640441337e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"css/docs/pseudo-element.md"};export{e as data};

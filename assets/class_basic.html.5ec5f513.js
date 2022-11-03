@@ -1,0 +1,1 @@
+const t={key:"v-4a2cb586",path:"/es6/docs/class_basic.html",title:"Class \u7684\u57FA\u672C\u8BED\u6CD5",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640487228e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"es6/docs/class_basic.md"};export{t as data};

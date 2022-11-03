@@ -1,0 +1,1 @@
+const t={key:"v-112d3898",path:"/markdown/docs/basic.html",title:"\u57FA\u672C\u8BED\u6CD5",lang:"zh-CN",frontmatter:{prev:{text:"\u9996\u9875",link:"/markdown"}},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"markdown/docs/basic.md"};export{t as data};

@@ -1,0 +1,1 @@
+const t={key:"v-16f8d599",path:"/mybatis/docs/resultmap.html",title:"ResultMap \u7ED3\u679C\u96C6\u6620\u5C04",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"mybatis/docs/resultmap.md"};export{t as data};

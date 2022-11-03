@@ -1,0 +1,1 @@
+const e={key:"v-ab11e9bc",path:"/go/docs/pointer.html",title:"\u6307\u9488",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"new \u548C make",slug:"new-\u548C-make",children:[]}],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/pointer.md"};export{e as data};

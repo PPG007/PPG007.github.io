@@ -1,0 +1,1 @@
+const t={key:"v-01e9dec9",path:"/ubuntu-20.04-init/docs/maven.html",title:"maven",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1645882012e3,contributors:[{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/maven.md"};export{t as data};

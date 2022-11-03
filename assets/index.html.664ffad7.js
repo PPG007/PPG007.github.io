@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a as s,b as a}from"./app.b1e8d3cf.js";const c={},n={id:"coding-style",tabindex:"-1"},_=s("a",{class:"header-anchor",href:"#coding-style","aria-hidden":"true"},"#",-1),d=a(" Coding Style"),r=[_,d];function i(h,l){return t(),o("h1",n,r)}var x=e(c,[["render",i],["__file","index.html.vue"]]);export{x as default};

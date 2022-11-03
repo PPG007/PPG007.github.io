@@ -1,0 +1,1 @@
+const e={key:"v-685bc646",path:"/javaknowledge/docs/transfer.html",title:"\u5F15\u7528\u4F20\u9012\u4E0E\u503C\u4F20\u9012",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaknowledge/docs/transfer.md"};export{e as data};

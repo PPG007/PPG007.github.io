@@ -1,0 +1,1 @@
+const e={key:"v-374c9765",path:"/regex/docs/greed_laziness.html",title:"\u8D2A\u5A6A\u4E0E\u61D2\u60F0",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"regex/docs/greed_laziness.md"};export{e as data};

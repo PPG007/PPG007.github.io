@@ -1,0 +1,1 @@
+const t={key:"v-61f6841c",path:"/regex/docs/antonym.html",title:"\u53CD\u4E49",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640616004e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"regex/docs/antonym.md"};export{t as data};

@@ -1,0 +1,1 @@
+const t={key:"v-19bd5276",path:"/dart/docs/callableClass.html",title:"\u53EF\u8C03\u7528\u7C7B",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1647258721e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"dart/docs/callableClass.md"};export{t as data};

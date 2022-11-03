@@ -1,0 +1,1 @@
+const a={key:"v-04e6d564",path:"/javaio/",title:"Java IO",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1660555959e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1},{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javaio/README.md"};export{a as data};

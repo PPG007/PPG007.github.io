@@ -1,0 +1,1 @@
+const t={key:"v-c0c9abfe",path:"/codingstyle/",title:"Coding Style",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"codingstyle/README.md"};export{t as data};

@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as a,a as o,b as s}from"./app.b1e8d3cf.js";const c={},n={id:"netty",tabindex:"-1"},_=o("a",{class:"header-anchor",href:"#netty","aria-hidden":"true"},"#",-1),r=s(" Netty"),d=[_,r];function i(h,f){return t(),a("h1",n,d)}var x=e(c,[["render",i],["__file","index.html.vue"]]);export{x as default};

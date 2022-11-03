@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,a,b as n}from"./app.b1e8d3cf.js";const s={},c={id:"mongodb",tabindex:"-1"},_=a("a",{class:"header-anchor",href:"#mongodb","aria-hidden":"true"},"#",-1),r=n(" MongoDB"),d=[_,r];function i(h,f){return o(),t("h1",c,d)}var m=e(s,[["render",i],["__file","index.html.vue"]]);export{m as default};

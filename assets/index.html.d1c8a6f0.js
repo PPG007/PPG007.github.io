@@ -1,0 +1,1 @@
+const e={key:"v-825e3276",path:"/clean-code/",title:"\u4EE3\u7801\u6574\u6D01\u4E4B\u9053",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"clean-code/README.md"};export{e as data};

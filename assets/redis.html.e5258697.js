@@ -1,0 +1,1 @@
+const e={key:"v-7d509c24",path:"/go/docs/redis.html",title:"\u64CD\u4F5C Redis",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/redis.md"};export{e as data};

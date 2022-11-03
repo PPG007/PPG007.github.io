@@ -1,0 +1,14 @@
+import{_ as e,r as t,o,c as l,a as n,d as p,F as c,b as s,e as r}from"./app.b1e8d3cf.js";const i={},u=n("h1",{id:"go",tabindex:"-1"},[n("a",{class:"header-anchor",href:"#go","aria-hidden":"true"},"#"),s(" Go")],-1),m={href:"https://github.com/moovweb/gvm",target:"_blank",rel:"noopener noreferrer"},b=s("gvm"),g=r(`<p>install gvm:</p><div class="language-bash ext-sh line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># install requirements</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">curl</span> <span class="token function">git</span> mercurial <span class="token function">make</span> binutils bison gcc build-essential
+<span class="token comment"># install gvm</span>
+<span class="token function">zsh</span> <span class="token operator">&lt;</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token function">curl</span> -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer<span class="token punctuation">)</span>
+<span class="token comment"># to install high version go, you must install go1.4 first</span>
+gvm <span class="token function">install</span> go1.4 -B
+gvm use go1.4
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">GOROOT_BOOTSTRAP</span><span class="token operator">=</span><span class="token variable">$GOROOT</span>
+<span class="token comment"># install go 1.17.6</span>
+gvm <span class="token function">install</span> go1.17.6
+gvm use go1.17.6 --default
+<span class="token comment"># then run</span>
+go <span class="token function">env</span> -w <span class="token assign-left variable">GOPROXY</span><span class="token operator">=</span><span class="token string">&quot;https://goproxy.cn,direct&quot;</span> <span class="token operator">&amp;&amp;</span> go <span class="token function">env</span> -w <span class="token assign-left variable">GO111MODULE</span><span class="token operator">=</span><span class="token string">&quot;on&quot;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div>`,2);function k(d,f){const a=t("ExternalLinkIcon");return o(),l(c,null,[u,n("p",null,[n("a",m,[b,p(a)])]),g],64)}var v=e(i,[["render",k],["__file","go.html.vue"]]);export{v as default};

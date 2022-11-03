@@ -1,0 +1,1 @@
+const e={key:"v-15ca6a79",path:"/es6/docs/module.html",title:"Module \u7684\u8BED\u6CD5",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"export \u547D\u4EE4",slug:"export-\u547D\u4EE4",children:[]}],git:{updatedTime:1640487228e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"es6/docs/module.md"};export{e as data};

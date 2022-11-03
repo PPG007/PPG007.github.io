@@ -1,0 +1,1 @@
+const t={key:"v-744ea398",path:"/wsl/",title:"WSL",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663123376e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"wsl/README.md"};export{t as data};

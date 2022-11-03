@@ -1,0 +1,1 @@
+const t={key:"v-3c8f7e60",path:"/ubuntu-20.04-init/docs/dart-flutter.html",title:"Dart&Flutter",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1654398618e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/dart-flutter.md"};export{t as data};

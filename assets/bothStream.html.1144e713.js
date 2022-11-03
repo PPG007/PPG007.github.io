@@ -1,0 +1,1 @@
+const t={key:"v-daa1e6ba",path:"/grpc-and-protobuf/docs/grpc/bothStream.html",title:"\u53CC\u5411\u6D41\u5F0F RPC",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:165181149e4,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"grpc-and-protobuf/docs/grpc/bothStream.md"};export{t as data};

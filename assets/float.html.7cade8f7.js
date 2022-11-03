@@ -1,0 +1,1 @@
+const t={key:"v-2e23783a",path:"/go/docs/float.html",title:"\u6D6E\u70B9\u6570",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640490874e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"go/docs/float.md"};export{t as data};

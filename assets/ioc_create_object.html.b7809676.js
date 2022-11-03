@@ -1,0 +1,1 @@
+const e={key:"v-5e77f7c4",path:"/spring/docs/ioc_create_object.html",title:"IOC \u521B\u5EFA\u5BF9\u8C61\u7684\u65B9\u5F0F",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"spring/docs/ioc_create_object.md"};export{e as data};

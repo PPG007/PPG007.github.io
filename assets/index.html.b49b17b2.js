@@ -1,0 +1,1 @@
+const t={key:"v-37cf036a",path:"/elasticsearch/",title:"Elasticsearch",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1660392395e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:2}]},filePathRelative:"elasticsearch/README.md"};export{t as data};

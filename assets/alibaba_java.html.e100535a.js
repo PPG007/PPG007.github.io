@@ -1,0 +1,1 @@
+const a={key:"v-3ce8f97e",path:"/codingstyle/docs/alibaba_java.html",title:"Java \u5F00\u53D1\u624B\u518C\u6458\u8981",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640575858e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"codingstyle/docs/alibaba_java.md"};export{a as data};

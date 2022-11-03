@@ -1,0 +1,1 @@
+const t={key:"v-f274eaa6",path:"/annotation-and-reflection/docs/annotation_nature.html",title:"\u6CE8\u89E3\u7684\u672C\u8D28",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640699484e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"annotation-and-reflection/docs/annotation_nature.md"};export{t as data};

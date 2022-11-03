@@ -1,0 +1,1 @@
+const t={key:"v-0d776519",path:"/axios/docs/start.html",title:"\u5B89\u88C5 Axios",lang:"zh-CN",frontmatter:{prev:{text:"\u9996\u9875",link:"/axios"}},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:2}]},filePathRelative:"axios/docs/start.md"};export{t as data};

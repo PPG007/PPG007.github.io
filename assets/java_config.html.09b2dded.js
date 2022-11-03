@@ -1,0 +1,1 @@
+const a={key:"v-54341a85",path:"/spring/docs/java_config.html",title:"\u4F7F\u7528 Java \u65B9\u5F0F\u914D\u7F6E Spring",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640525939e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"spring/docs/java_config.md"};export{a as data};

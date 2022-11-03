@@ -1,0 +1,1 @@
+const t={key:"v-0f9f0236",path:"/ubuntu-20.04-init/docs/go.html",title:"Go",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663034121e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1},{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/go.md"};export{t as data};

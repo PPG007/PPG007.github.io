@@ -1,0 +1,1 @@
+const t={key:"v-655a2576",path:"/ubuntu-20.04-init/docs/zsh.html",title:"zsh&oh-my-zsh&terminator",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663034121e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1},{name:"ppg007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/zsh.md"};export{t as data};

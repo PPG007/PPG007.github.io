@@ -1,0 +1,1 @@
+const t={key:"v-8ab0f31a",path:"/ubuntu-20.04-init/docs/rtc.html",title:"RTC",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1663034121e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"ubuntu-20.04-init/docs/rtc.md"};export{t as data};

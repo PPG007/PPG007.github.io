@@ -1,0 +1,1 @@
+const t={key:"v-4c5a0cb2",path:"/dart/docs/exception.html",title:"\u5F02\u5E38",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1646638607e3,contributors:[{name:"Koston Zhuang",email:"koston.zhuang@maiscrm.com",commits:1}]},filePathRelative:"dart/docs/exception.md"};export{t as data};

@@ -1,0 +1,1 @@
+const e={key:"v-4b4d9010",path:"/kubernetes/docs/pod.html",title:"Pod",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"\u521B\u5EFA Pod",slug:"\u521B\u5EFA-pod",children:[]}],git:{updatedTime:1648908246e3,contributors:[{name:"PPG007",email:"1658272229@qq.com",commits:1}]},filePathRelative:"kubernetes/docs/pod.md"};export{e as data};

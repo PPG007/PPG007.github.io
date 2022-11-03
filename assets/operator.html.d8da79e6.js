@@ -1,0 +1,1 @@
+const t={key:"v-6c3e052c",path:"/javascript/docs/operator.html",title:"\u8FD0\u7B97\u7B26",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640441337e3,contributors:[{name:"PPG007",email:"1658272229@com\u8BF7\u6C42",commits:1}]},filePathRelative:"javascript/docs/operator.md"};export{t as data};
