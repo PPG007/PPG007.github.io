@@ -1,4 +1,6 @@
-# [拦截器](https://github.com/axios/axios#interceptors)
+# 拦截器
+
+[Interceptor](https://github.com/axios/axios#interceptors)
 
 ## 请求拦截器
 

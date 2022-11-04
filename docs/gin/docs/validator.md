@@ -26,4 +26,6 @@ func main() {
 }
 ```
 
-## [自定义验证](https://gin-gonic.com/zh-cn/docs/examples/custom-validators/)
+## 自定义验证
+
+[文档](https://gin-gonic.com/zh-cn/docs/examples/custom-validators/)
