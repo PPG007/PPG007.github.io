@@ -1,0 +1,42 @@
+{
+    "sidebar": {
+        "/grpc-and-protobuf": [
+            {
+                "children": [
+                    {
+                        "children": [
+                            "/grpc-and-protobuf/docs/protobuf/protoFile.md",
+                            "/grpc-and-protobuf/docs/protobuf/installAndComplie.md",
+                            "/grpc-and-protobuf/docs/protobuf/customTag.md",
+                            "/grpc-and-protobuf/docs/protobuf/styleGuide.md"
+                        ],
+                        "text": "Protobuf",
+                        "collapsible": true
+                    },
+                    {
+                        "children": [
+                            "/grpc-and-protobuf/docs/grpc/start.md",
+                            "/grpc-and-protobuf/docs/grpc/unary.md",
+                            "/grpc-and-protobuf/docs/grpc/serverStream.md",
+                            "/grpc-and-protobuf/docs/grpc/clientStream.md",
+                            "/grpc-and-protobuf/docs/grpc/bothStream.md",
+                            "/grpc-and-protobuf/docs/grpc/metadataAndInterceptor.md",
+                            "/grpc-and-protobuf/docs/grpc/tls.md",
+                            "/grpc-and-protobuf/docs/grpc/loadBalance.md",
+                            "/grpc-and-protobuf/docs/grpc/gateway.md",
+                            "/grpc-and-protobuf/docs/grpc/validate.md"
+                        ],
+                        "text": "gRPC",
+                        "collapsible": true
+                    }
+                ],
+                "text": "gRPC&Protobuf"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "gRPC&Protobuf",
+        "link": "/grpc-and-protobuf",
+        "group": "Go"
+    }
+}

@@ -4,7 +4,7 @@
             {
                 "children": [
                     "/elasticsearch/docs/basic.md",
-                    "/elasticsearch/docs/index.md",
+                    "/elasticsearch/docs/esindex.md",
                     "/elasticsearch/docs/dsl.md",
                     "/elasticsearch/docs/aggregation.md"
                 ],
