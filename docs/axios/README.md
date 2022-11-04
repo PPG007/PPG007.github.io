@@ -1,3 +1,1 @@
-# Axios
-
-[文档](https://github.com/axios/axios)
+# [Axios](https://github.com/axios/axios)

@@ -380,9 +380,9 @@ GET test-dsl-match/_search
 }
 ```
 
-### Interval
+### [Interval](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-intervals-query.html)
 
-[TODO:](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-intervals-query.html)
+TODO:
 
 ## Term
 
