@@ -1,0 +1,11 @@
+name: scraper
+
+on:
+  pull_request
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 
+          ls ${{ github.workspace }}
