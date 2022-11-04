@@ -7,5 +7,7 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
     steps:
-      - run: 
+      - uses: actions/checkout@v2
+      - name: List files in the repository
+        run: |
           ls ${{ github.workspace }}
