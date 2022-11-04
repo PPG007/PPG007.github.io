@@ -6,7 +6,9 @@
 
 除此之外，还可以使用 acme.sh 自动化脚本实现获取 CA 证书。
 
-## [acme.sh](https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E)
+## acme.sh
+
+[文档](https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E)
 
 ::: tip
 建议使用 root 用户执行下面的所有操作
