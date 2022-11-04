@@ -1,3 +1,1 @@
-# Redis
-
-[文档](https://www.redis.io/)
+# [Redis](https://www.redis.io/)
