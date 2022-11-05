@@ -1,11 +1,11 @@
 name: docs
 
-on: pull_request
+on:
   # 每当 push 到 main 分支时触发部署
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - "docs/**"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
 
 jobs:
   build:
@@ -30,9 +30,3 @@ jobs:
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  push:
-    uses: ./.github/workflows/deploy-to-pages.yml
-    needs: deploy
-  scraper:
-    uses: ./.github/workflows/meilesearch-scraper.yml
-    needs: push

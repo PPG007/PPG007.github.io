@@ -1,14 +1,6 @@
 name: scraper
 
-on:
-  workflow_call:
-    # inputs:
-    #   host:
-    #     required: true
-    #     type: string
-    #   key:
-    #     required: true
-    #     type: string
+on: [workflow_dispatch, page_build]
 
 env:
   HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
@@ -21,8 +13,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: main
-    - name: echo
-      run: echo $HOST_URL
     - name: Run scraper
       run: |
         docker run -t --rm \
