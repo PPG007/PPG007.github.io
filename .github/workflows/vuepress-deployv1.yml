@@ -2,13 +2,10 @@ name: docs
 
 on:
   # 每当 push 到 main 分支时触发部署
-  pull_request:
-  paths:
-    - "docs/**"
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - "docs/**"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
 env:
   HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
   API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
