@@ -1,6 +1,6 @@
 name: scraper
 
-on: [page_build]
+on: [deployment]
 
 
 
