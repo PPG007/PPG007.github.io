@@ -4,8 +4,6 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 on:
   push:
     branches: [v1]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -48,3 +46,4 @@ jobs:
         uses: actions/deploy-pages@v1
   scraper:
     uses: ./.github/workflows/meilesearch-scraper.yml
+    needs: deploy
