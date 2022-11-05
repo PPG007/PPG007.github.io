@@ -1,6 +1,6 @@
 name: scraper
 
-on: [deployment]
+on: [workflow_call]
 
 
 
