@@ -49,6 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-  scraper:
-    uses: ./.github/workflows/meilesearch-scraper.yml
-    needs: deploy
