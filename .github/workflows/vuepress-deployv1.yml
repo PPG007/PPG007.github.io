@@ -6,7 +6,9 @@ on:
     branches: [main]
     paths:
       - "docs/**"
-
+env:
+  HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+  API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
 jobs:
   build:
     uses: ./.github/workflows/vuepress-buildv1.yml
