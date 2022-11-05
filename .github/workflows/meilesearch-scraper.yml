@@ -2,7 +2,9 @@ name: scraper
 
 on: [workflow_call]
 
-
+env:
+  HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+  API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
 
 jobs:
   run-scraper:
@@ -12,9 +14,6 @@ jobs:
       with:
         ref: main
     - name: Run scraper
-      env:
-        HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-        API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
       run: |
         docker run -t --rm \
           -e MEILISEARCH_HOST_URL=$HOST_URL \
