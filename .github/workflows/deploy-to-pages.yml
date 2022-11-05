@@ -16,6 +16,10 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   # Build job
   build:
