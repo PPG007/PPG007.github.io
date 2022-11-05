@@ -1,14 +1,12 @@
 name: docs
 
-on:
+on: pull_request
   # 每当 push 到 main 分支时触发部署
-  push:
-    branches: [main]
-    paths:
-      - "docs/**"
-env:
-  HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-  API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "docs/**"
+
 jobs:
   build:
     uses: ./.github/workflows/vuepress-buildv1.yml
@@ -38,6 +36,3 @@ jobs:
   scraper:
     uses: ./.github/workflows/meilesearch-scraper.yml
     needs: push
-    with:
-      host: $HOST_URL
-      key: $API_KEY

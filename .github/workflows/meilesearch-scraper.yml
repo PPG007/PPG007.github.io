@@ -2,13 +2,17 @@ name: scraper
 
 on:
   workflow_call:
-    inputs:
-      host:
-        required: true
-        type: string
-      key:
-        required: true
-        type: string
+    # inputs:
+    #   host:
+    #     required: true
+    #     type: string
+    #   key:
+    #     required: true
+    #     type: string
+
+env:
+  HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+  API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
 
 jobs:
   run-scraper:
@@ -17,10 +21,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: main
+    - name: echo
+      run: echo $HOST_URL
     - name: Run scraper
       run: |
         docker run -t --rm \
-          -e MEILISEARCH_HOST_URL=${{ inputs.host }} \
-          -e MEILISEARCH_API_KEY=${{ inputs.key }} \
+          -e MEILISEARCH_HOST_URL=$HOST_URL \
+          -e MEILISEARCH_API_KEY=$API_KEY \
           -v ${{ github.workspace }}/meilisearch.json:/docs-scraper/meilisearch.json \
           getmeili/docs-scraper:v0.12.4 pipenv run ./docs_scraper meilisearch.json
