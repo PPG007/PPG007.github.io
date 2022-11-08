@@ -5,9 +5,10 @@
   "author": "PPG007 <1658272229@qq.com>",
   "license": "MIT",
   "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.9.7",
     "vuepress": "^1.9.7",
-    "vuepress-theme-hope": "^1.30.0",
-    "vuepress-plugin-meilisearch": "^0.13.0"
+    "vuepress-plugin-meilisearch": "^0.13.0",
+    "vuepress-theme-hope": "^1.30.0"
   },
   "scripts": {
     "docs:dev": "vuepress dev docs",

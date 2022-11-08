@@ -34,5 +34,11 @@ module.exports.config = hope.config({
                 maxSuggestions: 20
             }
         ],
+        [
+            '@vuepress/google-analytics',
+            {
+              'ga': 'G-XFW9LG5M41'
+            }
+          ]
     ]
 })
