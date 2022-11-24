@@ -9,7 +9,8 @@
                     "/php/docs/variable.md",
                     "/php/docs/const.md",
                     "/php/docs/expression.md",
-                    "/php/docs/operator.md"
+                    "/php/docs/operator.md",
+                    "/php/docs/control.md"
                 ],
                 "text": "PHP"
             }
