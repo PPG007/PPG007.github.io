@@ -10,7 +10,8 @@
                     "/php/docs/const.md",
                     "/php/docs/expression.md",
                     "/php/docs/operator.md",
-                    "/php/docs/control.md"
+                    "/php/docs/control.md",
+                    "/php/docs/function.md"
                 ],
                 "text": "PHP"
             }
