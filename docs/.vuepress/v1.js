@@ -11,7 +11,7 @@ module.exports.config = hope.config({
         hostname: 'ppg007.github.io',
         repo: 'https://github.com/PPG007/PPG007.github.io',
         displayAllHeaders: true,
-        logo: 'indexImage',
+        logo: '/indexImage',
         docsDir: 'docs',
         editLinks: true,
         editLinkText: '编辑此页',
