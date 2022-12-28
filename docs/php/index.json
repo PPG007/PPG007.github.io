@@ -12,7 +12,8 @@
                     "/php/docs/operator.md",
                     "/php/docs/control.md",
                     "/php/docs/function.md",
-                    "/php/docs/class.md"
+                    "/php/docs/class.md",
+                    "/php/docs/namespace.md"
                 ],
                 "text": "PHP"
             }
