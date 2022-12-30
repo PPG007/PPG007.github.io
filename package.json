@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "PPG007 <1658272229@qq.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@vuepress/plugin-google-analytics": "^1.9.7",
     "vuepress": "^1.9.7",
