@@ -16,7 +16,8 @@
                     "/php/docs/namespace.md",
                     "/php/docs/enum.md",
                     "/php/docs/exception.md",
-                    "/php/docs/fiber.md"
+                    "/php/docs/fiber.md",
+                    "/php/docs/generator.md"
                 ],
                 "text": "PHP"
             }
