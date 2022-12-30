@@ -14,7 +14,8 @@
                     "/php/docs/function.md",
                     "/php/docs/class.md",
                     "/php/docs/namespace.md",
-                    "/php/docs/enum.md"
+                    "/php/docs/enum.md",
+                    "/php/docs/exception.md"
                 ],
                 "text": "PHP"
             }
