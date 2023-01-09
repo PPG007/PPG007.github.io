@@ -31,7 +31,7 @@ module.exports.config = hope.config({
                 apiKey: '941543d947a75506fb223af0d3f04847330f2199e790438c8f63bd0705a41add',
                 indexUid: 'docs',
                 placeholder: 'press s to start search',
-                maxSuggestions: 20
+                maxSuggestions: 100,
             }
         ],
         [
