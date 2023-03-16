@@ -15,7 +15,8 @@ git config --global user.email "<your email>"
 git config --global core.editor "vim"
 # generate ssh key
 ssh-keygen -t ed25519 -C "<your email>"
-# get the ssh key
+# get the ssh key, then copy ssh key to github
 cat .ssh/id_ed25519.pub
-# copy ssh key to github
+# add public key to a server
+ssh-copy-id -i ${path to your public key} ${username}@${host}
 ```
