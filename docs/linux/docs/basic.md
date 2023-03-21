@@ -485,7 +485,23 @@ disown 命令：
 
 disown 命令将指定的进程从 jobs 中删除：
 
-![disown](./images/disown.jpg)
+```shell
+# 移出最近一个正在执行的后台任务
+disown
+
+# 移出所有正在执行的后台任务
+disown -r
+
+# 移出所有后台任务
+disown -a
+
+# 不移出后台任务，但是让它们不会收到 SIGHUP 信号
+disown -h
+
+# 根据 jobId 移出指定的后台任务
+disown %2
+disown -h %2
+```
 
 对后台任务进行重定向：`node server.js > stdout.txt 2> stderr.txt < /dev/null &`。
 
@@ -502,25 +518,83 @@ nohup 命令：
 
 systemd 不是一个命令，而是一组命令
 
-![systemctl](./images/systemctl.jpg)
+```shell
+# 重启系统
+sudo systemctl reboot
 
-![systemd-analyze](./images/systemd-analyze.jpg)
+# 关闭系统，切断电源
+sudo systemctl poweroff
 
-hostnamectl 命令用于查看当前主机的信息。
+# CPU 停止工作
+sudo systemctl halt
 
-![hostnamectl](./images/hostnamectl.jpg)
+# 暂停系统
+sudo systemctl suspend
 
-localectl 命令用于查看本地化设置。
+#让系统进入冬眠状态
+sudo systemctl hibernate
 
-![localectl](./images/localectl.jpg)
+# 让系统进入交互式休眠状态
+sudo systemctl hybrid-sleep
 
-timedatectl 命令用于查看当前时区设置。
+# 启动进入救援状态（单用户状态）
+sudo systemctl rescue
+```
 
-![timedatectl](./images/timedatectl.jpg)
+```shell
+# 查看启动耗时
+systemd-analyze
 
-loginctl 命令用于查看当前登录的用户
+# 查看每个服务的启动耗时
+systemd-analyze blame
 
-![loginctl](./images/loginctl.jpg)
+# 显示瀑布状的启动过程流
+systemd-analyza critical-chain
+
+# 显示指定服务的启动流
+systemd-analyza critical-chain atd.service
+```
+
+```shell
+# 显示当前主机的信息
+hostnamectl
+
+# 设置主机名
+sudo hostnamectl set-hostname user
+```
+
+```shell
+# 查看本地化设置
+localectl
+
+# 设置本地化参数
+sudo localectl set-locale LANG=en_GB.utf8
+sudo localectl set-keymap en_GB
+```
+
+```shell
+# 查看当前时区设置
+timedatectl
+
+# 显示所有可用的时区
+timedatectl list-timezones
+
+# 设置当前时区
+sudo timedatectl set-timezone America/New_York
+sudo timedatectl set-time YYYY-MM-DD
+sudo timedatectl set-time HH:MM:SS
+```
+
+```shell
+# 列出当前 session
+loginctl list-sessions
+
+# 列出当前登录用户
+loginctl list-users
+
+# 列出显示指定用户的信息
+loginctl show-user user
+```
 
 ### Unit
 
@@ -530,19 +604,77 @@ Unit 种类：
 
 ![unit types](./images/unit-types.jpg)
 
-![systemctl list units](./images/systemctl-list-units.jpg)
+```shell
+# 列出正在运行的 Unit
+systemctl list-units
+
+# 列出所有的 Unit，包括没有找到配置文件或者启动失败的
+systemctl list-units --all
+
+# 列出所有没有运行的 Unit
+systemctl list-units --all --state=inactive
+
+# 列出所有加载失败的 Unit
+systemctl list-units --failed
+
+# 列出所有正在运行的、类型为 service 的 Unit
+systemctl list-units --type=service
+```
 
 Unit 的状态：
 
-![unit status1](./images/unit-status1.jpg)
+```shell
+# 显示系统状态
+systemctl status
+# 显示单个 Unit 的状态
+systemctl status ssh
+# 显示远程主机某个 Unit 的状态
+systemctl -H root@host status httpd
+```
 
 三个简单命令：
 
-![unit status2](./images/unit-status2.jpg)
+```shell
+# 显示某个 Unit 是否正在运行
+systemctl is-active ssh
+
+# 显示某个 Unit 是否处于启动失败状态
+systemctl is-failed ssh
+
+# 显示某个 Unit 服务是否建立了启动链接
+systemctl is-enabled ssh
+```
 
 Unit 管理：
 
-![unit manage](./images/unit-manage.jpg)
+```shell
+# 立即启动一个服务
+sudo systemctl start ssh
+
+# 立即停止一个服务
+sudo systemctl stop ssh
+
+# 重启一个服务
+sudo systemctl restart ssh
+
+# 杀死一个服务的所有子进程
+sudo systemctl kill ssh
+
+# 重新加载一个服务的配置文件
+sudo systemctl reload ssh
+
+# 重载所有修改过的配置文件
+sudo systemctl daemon-reload
+
+# 显示某个 Unit 的所有底层参数
+systemctl show httpd
+
+# 显示某个 Unit 的指定属性的值
+systemctl show -p CPUShares httpd
+
+# 设置某个 Unit 的指定属性
+sudo systemctl set-property httpd CPUShares=500
+```
 
 Unit 的依赖关系：
 
@@ -557,7 +689,13 @@ Unit 的配置文件：
 
 systemctl list-unit-files 命令用于列出所有配置文件：
 
-![config list](./images/config-list.jpg)
+```shell
+# 列出所有配置文件
+systemctl list-unit-files
+
+# 列出指定类型配置文件
+systemctl list-unit-files --type=service
+```
 
 四种配置文件状态：
 
@@ -565,7 +703,10 @@ systemctl list-unit-files 命令用于列出所有配置文件：
 
 如果修改配置文件就需要重新加载配置文件并重启 unit：
 
-![unit reload](./images/unit-reload.jpg)
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart httpd
+```
 
 配置文件的内容：
 
@@ -603,13 +744,110 @@ WantedBy=multi-user.target
 
 需要启动很多 unit 的时候每次都要明确指出要启动哪个 unit 十分不方便，使用 Target 管理一组 unit，类似于一个目标点，多个 Target 可以同时启动。
 
-![target](./images/target.jpg)
+```shell
+# 查看当前系统所有的 Target
+systemctl list-unit-files --type=target
+
+# 查看一个 Target 包含的所有 Unit
+systemctl list-dependencies multi-user.target
+
+# 查看启动时的默认 Target
+systemctl get-default
+
+# 设置启动时的默认 Target
+sudo systemctl set-default multi-user.target
+
+# 切换 Target 时，默认不关闭前一个 Target 启动的进程，
+# systemctl isolate 命令可以改变这种行为
+# 关闭前一个 Target 里面所有不属于后一个 Target 的进程
+sudo systemctl isolate multi-user.target
+```
 
 ### 日志管理 journalctl
 
-![journalctl-1](./images/journalctl-1.jpg)
+```shell
+# 查看所有日志（默认情况下只保存本次启动的日志）
+sudo journalctl
 
-![journalctl-2](./images/journalctl-2.jpg)
+# 查看内核日志（不显示应用日志）
+sudo journalctl  -k
+
+# 查看系统本次启动的日志
+sudo journalctl -b
+sudo journalctl -b -0
+
+# 查看上一次启动的日志（需要更改设置）
+sudo journalctl -b -1
+
+# 查看指定时间的日志
+sudo journalctl --since="2012-10-30 18:17:16"
+sudo journalctl --since "20 min ago"
+sudo journalctl --since yesterday
+sudo journalctl --since "2015-01-10" --until "2015-01-11 03:00"
+sudo journalctl --since 09:00 --until "1 hour ago"
+
+# 显示尾部的最新 10 行日志
+sudo journalctl -n
+
+# 显示尾部指定行数的日志
+sudo journalctl -n 20
+
+# 实时滚动显示最新日志
+sudo journalctl -f
+
+# 查看指定服务的日志
+sudo journalctl /usr/lib/systemd/systemd
+
+# 查看指定进程的日志
+sudo journalctl _PID=1
+
+# 查看某个路径的脚本的日志
+sudo journalctl /usr/bin/bash
+
+# 查看指定用户的日志
+sudo journalctl _UID=33 --since today
+
+# 查看某个 Unit 的日志
+sudo journalctl -u nginx.service
+sudo journalctl -u nginx.service --since today
+
+# 实时滚动某个 Unit 的最新日志
+sudo journalctl -u nginx.service -f
+```
+
+```shell
+# 合并显示多个 Unit 的日志
+journalctl -u nginx.service -u php-fpm.service --since today
+
+# 查看指定优先级（及其以上级别）的日志，共有 8 级
+# 0: emerg
+# 1: alert
+# 2: crit
+# 3: err
+# 4: warning
+# 5: notice
+# 6: info
+# 7: debug
+sudo journalctl -p err -b
+
+# 日志默认分页输出，--no-pager 改为正常的标准输出
+sudo journalctl --no-pager
+
+# 以 JSON 格式（单行）输出
+sudo journalctl -b -u nginx.service -o json
+
+# 以 JSON 格式（多行）输出
+sudo journalctl -b -u nginx.service -o json-pretty
+
+# 显示日志占据的硬盘空间
+sudo journalctl --disk-usage
+
+# 指定日志文件占据的最大空间
+sudo journalctl --vacuum-size=1G
+
+# 指定日志文件保存多久
+sudo journalctl --vacuum-time=1years
+```
 
 ## ssh
 
