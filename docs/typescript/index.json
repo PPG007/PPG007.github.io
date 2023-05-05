@@ -1,0 +1,18 @@
+{
+    "sidebar": {
+        "/typescript": [
+            {
+                "children": [
+                    "/typescript/docs/start.md",
+                    "/typescript/docs/basic.md"
+                ],
+                "text": "TypeScript"
+            }
+        ]
+    },
+    "navbar": {
+        "text": "TypeScript",
+        "link": "/typescript",
+        "group": "前端"
+    }
+}
