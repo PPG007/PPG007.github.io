@@ -195,7 +195,7 @@ let list: any[] = [1, '2', false, {user: '123'}];
 
 ## 函数的类型
 
-函数声明：
+### 函数声明
 
 ```ts
 function sum(a: number, b:number) :number {
@@ -211,7 +211,7 @@ sum(1, 2);
 
 :::
 
-函数表达式：
+### 函数表达式
 
 ```ts
 let sum: (a: number, b: number) => number = function (a, b){
@@ -226,7 +226,7 @@ console.log(sum(2, 4));
 
 :::
 
-用接口定义函数：
+### 用接口定义函数
 
 ```ts
 interface Sum {
@@ -247,7 +247,7 @@ console.log(sumImpl.sumNumber(1, 2));
 console.log(sumImpl.sumString('1', '2'));
 ```
 
-可选参数：
+### 可选参数
 
 ```ts
 function sub(a: number, b: number, abs?:boolean) :number {
@@ -266,7 +266,7 @@ console.log(sub(1, 2, true));
 
 :::
 
-参数默认值：
+### 参数默认值
 
 ```ts
 function sub(a: number, b: number = 100, abs?:boolean) :number {
@@ -279,7 +279,7 @@ console.log(sub(1));
 console.log(sub(1, 10, true));
 ```
 
-剩余参数：
+### 剩余参数
 
 ```ts
 function sum(...nums :number[]):number {
@@ -299,7 +299,7 @@ console.log(sum());
 
 :::
 
-重载：
+### 重载
 
 ```ts
 function sum(a: number, b: number): number;

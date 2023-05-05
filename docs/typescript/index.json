@@ -4,7 +4,8 @@
             {
                 "children": [
                     "/typescript/docs/start.md",
-                    "/typescript/docs/basic.md"
+                    "/typescript/docs/basic.md",
+                    "/typescript/docs/advance.md"
                 ],
                 "text": "TypeScript"
             }
