@@ -5,9 +5,9 @@
     ],
     "selectors": {
         "lvl0": {
-            "selector": ".sidebar-heading.open",
+            "selector": "li a.router-link-active span",
             "global": true,
-            "default_value": "Documentation"
+            "default_value": "PPG007的文档"
         },
         "lvl1": ".theme-default-content h1",
         "lvl2": ".theme-default-content h2",
