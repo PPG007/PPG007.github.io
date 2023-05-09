@@ -32,6 +32,8 @@ module.exports.config = hope.config({
                 indexUid: 'docs',
                 placeholder: 'press s to start search',
                 maxSuggestions: 100,
+                cropLength: 50,
+                layout: 'simple',
             }
         ],
         [
