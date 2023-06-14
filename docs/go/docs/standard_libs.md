@@ -264,3 +264,110 @@ Context 注意事项：
 - 给一个函数方法传递 Context 的时候不要传递 nil，如果不知道要传递什么，就用 context.TODO()。
 - Context 的 Value 相关方法应该传递请求域的必要数据，不应该用于传递可选参数。
 - Context 是线程安全的。
+
+## TCP & UDP
+
+### TCP
+
+```go
+func main() {
+	go startTCPServer()
+	time.Sleep(time.Second * 3)
+	startClient()
+}
+
+func startTCPServer() {
+	listen, err := net.Listen("tcp", "0.0.0.0:8080")
+	if err != nil {
+		panic(err)
+	}
+	for {
+		conn, err := listen.Accept()
+		if err != nil {
+			panic(err)
+		}
+		go handleConnectionInServer(conn)
+	}
+}
+
+func startClient() {
+	conn, err := net.Dial("tcp", "127.0.0.1:8080")
+	if err != nil {
+		panic(err)
+	}
+	_, err = conn.Write([]byte("Hello World\n"))
+	if err != nil {
+		panic(err)
+	}
+	reader := bufio.NewReader(conn)
+	str, err := reader.ReadString('\n')
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("client received: %s\n", str)
+	conn.Close()
+}
+
+func handleConnectionInServer(conn net.Conn) {
+	reader := bufio.NewReader(conn)
+	str, err := reader.ReadString('\n')
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("server received: %s\n", str)
+	_, err = conn.Write([]byte(str))
+	if err != nil {
+		panic(err)
+	}
+	conn.Close()
+}
+```
+
+### UDP
+
+```go
+func main() {
+	go startUDPServer()
+	time.Sleep(time.Second)
+	startUDPClient()
+}
+
+func startUDPServer() {
+	conn, err := net.ListenUDP("udp", &net.UDPAddr{
+		IP:   net.ParseIP("0.0.0.0"),
+		Port: 8080,
+	})
+	if err != nil {
+		panic(err)
+	}
+	buffer := make([]byte, 1024)
+	for {
+		n, remote, err := conn.ReadFromUDP(buffer)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("server received: %s\n", string(buffer[:n]))
+		conn.WriteToUDP([]byte(strings.ToUpper(string(buffer[:n]))), remote)
+	}
+}
+
+func startUDPClient() {
+	conn, err := net.DialUDP("udp", nil, &net.UDPAddr{
+		IP:   net.ParseIP("127.0.0.1"),
+		Port: 8080,
+	})
+	if err != nil {
+		panic(err)
+	}
+	_, err = conn.Write([]byte("Hello World"))
+	if err != nil {
+		panic(err)
+	}
+	buffer := make([]byte, 1024)
+	n, err := conn.Read(buffer)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("client received: %s\n", string(buffer[:n]))
+}
+```
