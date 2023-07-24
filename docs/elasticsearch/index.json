@@ -8,8 +8,8 @@
           "/elasticsearch/docs/mapping.md",
           "/elasticsearch/docs/dsl.md",
           "/elasticsearch/docs/aggregation.md",
-          "/elasticsearch/docs/monstache.md"
-
+          "/elasticsearch/docs/monstache.md",
+          "/elasticsearch/docs/others.md"
         ],
         "text": "Elasticsearch"
       }
