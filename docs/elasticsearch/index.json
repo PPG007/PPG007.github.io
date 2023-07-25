@@ -9,7 +9,8 @@
           "/elasticsearch/docs/dsl.md",
           "/elasticsearch/docs/aggregation.md",
           "/elasticsearch/docs/monstache.md",
-          "/elasticsearch/docs/others.md"
+          "/elasticsearch/docs/others.md",
+          "/elasticsearch/docs/go-client.md"
         ],
         "text": "Elasticsearch"
       }
