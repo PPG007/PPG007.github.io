@@ -1,0 +1,47 @@
+{
+  "sidebar": {
+    "/golang": [
+      {
+        "children": [
+          "/golang/docs/init_main.md",
+          "/golang/docs/variable.md",
+          "/golang/docs/const.md",
+          "/golang/docs/under_line.md",
+          "/golang/docs/int.md",
+          "/golang/docs/float.md",
+          "/golang/docs/complex.md",
+          "/golang/docs/bool.md",
+          "/golang/docs/string.md",
+          "/golang/docs/array.md",
+          "/golang/docs/slice.md",
+          "/golang/docs/pointer.md",
+          "/golang/docs/map.md",
+          "/golang/docs/process_control.md",
+          "/golang/docs/function.md",
+          "/golang/docs/struct.md",
+          "/golang/docs/method.md",
+          "/golang/docs/interface.md",
+          "/golang/docs/type_convert.md",
+          "/golang/docs/generics.md",
+          "/golang/docs/io.md",
+          "/golang/docs/time.md",
+          "/golang/docs/concurrent_programming.md",
+          "/golang/docs/standard_libs.md",
+          "/golang/docs/reflect.md",
+          "/golang/docs/redis.md",
+          "/golang/docs/mongodb.md",
+          "/golang/docs/module.md",
+          "/golang/docs/traps.md",
+          "/golang/docs/web.md",
+          "/golang/docs/pprof.md"
+        ],
+        "text": "Go"
+      }
+    ]
+  },
+  "navbar": {
+    "text": "Go",
+    "link": "/golang",
+    "group": "Go"
+  }
+}

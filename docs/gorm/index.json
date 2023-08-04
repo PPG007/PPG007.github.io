@@ -1,0 +1,18 @@
+{
+  "sidebar": {
+    "/gorm": [
+      {
+        "children": [
+          "/gorm/docs/prepare.md",
+          "/gorm/docs/crud.md"
+        ],
+        "text": "GORM"
+      }
+    ]
+  },
+  "navbar": {
+    "text": "GORM",
+    "link": "/gorm",
+    "group": "Go"
+  }
+}
