@@ -1,0 +1,17 @@
+{
+  "sidebar": {
+    "/yii": [
+      {
+        "children": [
+          "/yii/docs/start.md"
+        ],
+        "text": "Yii"
+      }
+    ]
+  },
+  "navbar": {
+    "text": "Yii",
+    "link": "/yii",
+    "group": "PHP"
+  }
+}
