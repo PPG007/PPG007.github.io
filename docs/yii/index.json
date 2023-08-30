@@ -3,7 +3,8 @@
     "/yii": [
       {
         "children": [
-          "/yii/docs/start.md"
+          "/yii/docs/start.md",
+          "/yii/docs/structure.md"
         ],
         "text": "Yii"
       }
