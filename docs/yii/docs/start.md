@@ -103,3 +103,11 @@ public function actionGetToken()
     return Yii::$app->request->getCsrfToken();
 }
 ```
+
+也可以配置 request 组件关闭 csrf 校验：
+
+```php
+'request' => [
+    'enableCsrfValidation' => false,
+],
+```
