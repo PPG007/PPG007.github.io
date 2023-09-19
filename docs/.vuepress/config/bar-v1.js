@@ -82,6 +82,7 @@ function readSubConfig(dirName) {
     return;
   }
   const files = fs.readdirSync(dirName);
+  let hasRead = false;
   for (let i = 0; i < files.length; i++) {
     const tempPath = path.join(dirName, files[i]);
     if (files[i].startsWith('.')) {
@@ -89,10 +90,15 @@ function readSubConfig(dirName) {
     }
     if (fs.lstatSync(tempPath).isDirectory()) {
       readSubConfig(tempPath);
-    } else if (files[i] == 'index.json') {
+    } else if (files[i] == 'index.json' && !hasRead) {
       const data = fs.readFileSync(tempPath, 'utf-8');
       temp = JSON.parse(data);
       subConfigs.push(temp);
+      hasRead = true;
+    } else if (files[i] == 'index.js' && !hasRead) {
+      const module = require(path.join(__dirname, '../../../', tempPath));
+      subConfigs.push(module.default);
+      hasRead = true;
     }
   }
 }
