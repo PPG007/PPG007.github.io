@@ -5,7 +5,8 @@ module.exports.default = {
         children: [
           '/yii/docs/start.md',
           '/yii/docs/structure.md',
-          '/yii/docs/request.md'
+          '/yii/docs/request.md',
+          '/yii/docs/concepts.md',
         ],
         text: 'Yii'
       }
