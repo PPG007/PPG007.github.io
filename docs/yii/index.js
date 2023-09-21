@@ -8,6 +8,7 @@ module.exports.default = {
           '/yii/docs/request.md',
           '/yii/docs/concepts.md',
           '/yii/docs/database.md',
+          '/yii/docs/formatting.md',
         ],
         text: 'Yii'
       }
