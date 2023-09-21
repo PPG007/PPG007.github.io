@@ -7,6 +7,7 @@ module.exports.default = {
           '/yii/docs/structure.md',
           '/yii/docs/request.md',
           '/yii/docs/concepts.md',
+          '/yii/docs/database.md',
         ],
         text: 'Yii'
       }
