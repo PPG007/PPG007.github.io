@@ -96,6 +96,40 @@ class Focus extends React.Component {
 }
 ```
 
+对于类组件，ref 可以使用字符串形式，但是此形式已过时：
+
+```jsx
+class Demo extends React.Component {
+  render() {
+    return (
+      <div>
+        <input ref="input"/>
+        <button onClick={() => {
+          console.log(this.refs.input.value)
+        }}>click</button>
+      </div>
+    );
+  }
+}
+```
+
+标签的 ref 的值也可以是一个纯函数，此函数的入参就是这个标签，可以将这个标签赋值给一个变量，通过此变量就能操作 DOM：
+
+```jsx
+class Demo extends React.Component {
+  render() {
+    return (
+      <div>
+        <input ref={(ref) => {this.inputRef = ref}}/>
+        <button onClick={() => {
+          console.log(this.inputRef.value)
+        }}>click</button>
+      </div>
+    );
+  }
+}
+```
+
 ### ref 访问其他组件的 DOM
 
 react 禁止一个组件通过 ref 访问其他组件，即使是自己的子组件，但是允许一个组件选择接收父组件的 ref，可以通过 `forwardRef` 方法将父组件传来的 ref 交给组件内的其他组件或者标签，例如有以下例子，点击按钮聚焦到封装的 input 上：
@@ -148,3 +182,49 @@ function MyForm() {
 ```
 
 useImperativeHandle 第一个参数是一个 ref，第二个参数是一个函数，返回一个对象，这样第一个参数 ref 身上只会带有返回对象上的内容。
+
+## 受控组件和非受控组件
+
+受控组件：
+
+- 元素的值或者状态由 state 控制。
+- 当元素发生交互，会触发一个事件处理函数，该函数更新 state。
+- 受控组件总是显示 state 中的值。
+
+非受控组件：
+
+- 元素的值或者状态直接由 DOM 管理。
+- 通过 ref 操作。
+
+大多数情况下，推荐使用受控组件，这可以使数据流更加清晰可预测。
+
+例如，以下是将 input 作受控组件使用：
+
+```jsx
+function Demo() {
+  const [value, setValue] = React.useState('');
+  return (
+    <div>
+      <input value={value} onChange={(event) => {setValue(event.target.value)}}/>
+      <br/>
+      <span>{value}</span>
+    </div>
+  )
+}
+```
+
+以下是将 input 作非受控组件使用：
+
+```jsx
+function Demo() {
+  const inputRef = React.useRef(null);
+  const [value, setValue] = React.useState('');
+  return (
+    <div>
+      <input ref={inputRef} onChange={() => {setValue(inputRef.current.value)}}/>
+      <br/>
+      <span>{value}</span>
+    </div>
+  )
+}
+```

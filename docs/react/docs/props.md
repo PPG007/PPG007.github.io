@@ -40,6 +40,12 @@ function PersonInfo({person, print}) {
 }
 ```
 
+::: warning
+
+props 是只读的，在组件内不能修改。
+
+:::
+
 类组件的构造函数的入参是 props 对象，用法同函数式组件。
 
 ## 使用 JSX 展开语法传递 props

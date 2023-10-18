@@ -162,3 +162,86 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
     ReactDOM.render(dom, document.getElementById('test'));
 </script>
 ```
+
+### 函数柯里化
+
+柯里化是将一个接收多个参数的函数转为一个接收单一参数但是返回值是一个函数，且这个返回的函数接收下一个参数并再次返回函数，一直向下，例如：
+
+```js
+// 普通函数
+fn(1, 2, 3, 4)
+// 柯里化后
+fn(1)(2)(3)(4)
+```
+
+下面的函数可以将一个函数柯里化：
+
+```js
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args)
+    } else {
+      return function (...args2) {
+        return curried.apply(this, args.concat(args2))
+      }
+    }
+  }
+}
+```
+
+然后可以用如下方式调用：
+
+```js
+function sum(a, b) {
+  return a+b;
+}
+
+const ss = curry(sum)
+console.log(ss(1)(2))
+```
+
+当然也可以反柯里化：
+
+```js
+function uncurry(fn) {
+  return (...args) => {
+    let result = fn
+    args.forEach((arg) => {
+      result = result(arg)
+    })
+    return result
+  }
+}
+
+console.log(uncurry(curry(sum))(1, 2))
+```
+
+react 中，事件处理函数应当传入一个函数，但是默认情况下这个回调函数只会收到一个 event 对象作为入参，如果希望传递自定义参数，那么可以使用函数柯里化。
+
+```jsx
+function Demo() {
+  const languages = ['Java', 'JavaScript', 'Go'];
+  const clickHandler = (language, event) => {
+    console.log(language)
+    console.log(event.target)
+  }
+  return (
+    <ul>
+      {languages.map((language) => {
+        return (
+          <li key={language}>
+            <button
+              onClick={curry(clickHandler)(language)}
+            >
+              {language}
+            </button>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+```
+
+在上面的例子中，有一个按钮列表，每个按钮都有点击事件处理函数，点击每个按钮要输出不同的内容，将普通函数柯里化之后传入 onClick 属性，原函数接收两个参数，由于 onClick 里只传了一个入参，所以函数不会发生调用，而是实际发生事件时才会调用。
