@@ -10,6 +10,7 @@ module.exports.default = {
                     '/react/docs/props.md',
                     '/react/docs/ref.md',
                     '/react/docs/lifecycle.md',
+                    '/react/docs/effect.md',
                 ],
                 text: 'React'
             }

@@ -125,6 +125,44 @@ class Foo extends React.Component {
 
 例如，如果希望在更新后网页滚动的位置保持不变，可以在此方法中获取之前滚动的位置。
 
+```jsx
+class Foo extends React.Component {
+  state = {
+    arr: []
+  }
+  ulRef = React.createRef();
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({arr: [`item${this.state.arr.length}`, ...this.state.arr]});
+    }, 1000)
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return this.ulRef.current.scrollHeight;
+  }
+
+  componentDidUpdate(props, state, prevHeight) {
+    this.ulRef.current.scrollTop += this.ulRef.current.scrollHeight - prevHeight;
+  }
+
+  render() {
+    return (
+      <div>
+        <ul style={{height: '200px', width: '400px', overflowY: 'auto', border: '1px solid #ccc'}} ref={this.ulRef}>
+          {
+            this.state.arr.map((item, index) => {
+              return <li key={index} style={{height: '50px'}}>{item}</li>
+            })
+          }
+        </ul>
+      </div>
+    );
+  }
+}
+```
+
+scrollHeight 是只读属性，表示元素内容的整体高度，包括由于溢出导致在视线外的部分；scrollTop 是元素中被隐藏在滚动视图上方的元素高度。在 getSnapshotBeforeUpdate 中获取到的 scrollHeight 表示重新渲染之前的 ul 的高度，并将这个值返回给 componentDidUpdate 方法，此方法中再次获取到的 scrollHeight 的值为重新渲染之后的值，两者的差值就是新插入元素的高度，将 scrollTop 不断累加这个差值即可实现滚动条保持不变。
+
 ## `componentDidUpdate(nextProps, nextState, snapshot)`
 
 此方法将会在每次重新渲染后触发。
