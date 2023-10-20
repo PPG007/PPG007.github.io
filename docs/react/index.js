@@ -11,6 +11,7 @@ module.exports.default = {
                     '/react/docs/ref.md',
                     '/react/docs/lifecycle.md',
                     '/react/docs/effect.md',
+                    '/react/docs/cli.md',
                 ],
                 text: 'React'
             }
