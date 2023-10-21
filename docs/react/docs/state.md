@@ -478,3 +478,167 @@ setState 更新数组时可以不必构造新数组，可以直接通过下标�
 ## 状态提升
 
 有时候希望两个组件的状态始终同步更改，可以将相关 state 从这两个组件上移动到它们的公共父级，再通过 props 将 state 传递给两个组件，这被称为状态提升。
+
+现在假设有以下场景：页面有两个组件，Search 组件和 List 组件，在 Search 组建中输入内容按下回车后，List 组件请求相关数据并展示，这里 state 的维护就要提升到他们的共同父组件中。
+
+首先编写搜索组件，此组件接收三个属性：搜索关键字、搜索关键字设置回调、执行搜索回调：
+
+```tsx
+import {FC, Fragment} from "react";
+
+interface SearchProps {
+    searchKey: string
+    onSearchKeyChange: (value: string) => void
+    onSearch: () => void
+}
+
+const Search: FC<SearchProps> = ({searchKey, onSearchKeyChange, onSearch}) => {
+    return (
+        <Fragment>
+            <input
+                value={searchKey}
+                onChange={(e) => {onSearchKeyChange(e.target.value)}}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        onSearch()
+                    }
+                }}
+            />
+        </Fragment>
+    )
+}
+
+export {Search}
+```
+
+然后编写 List 组件，这里为了简单，List 组件只接收搜索关键字并展示：
+
+```tsx
+import {FC, Fragment} from "react";
+
+const List: FC<{searchKey: string}> = ({searchKey}) => {
+    return (
+        <Fragment>
+            {
+                searchKey ? <h2>searching {searchKey}...</h2> : undefined
+            }
+        </Fragment>
+    )
+}
+
+export {List};
+```
+
+最后在它们的共同父组件中管理 state：
+
+```tsx
+import {FC, Fragment, useState} from "react";
+import {Search} from "./Search";
+import {List} from "./List";
+
+const App: FC = () => {
+  const [searchKey, setSearchKey] = useState('');
+  const [editingSearchKey, setEditingSearchKey] = useState('');
+  return (
+    <Fragment>
+      <Search
+          searchKey={editingSearchKey}
+          onSearchKeyChange={setEditingSearchKey}
+          onSearch={() => {
+            setSearchKey(editingSearchKey);
+          }}
+      />
+      <List searchKey={searchKey}/>
+    </Fragment>
+  )
+}
+
+export default App;
+```
+
+## 订阅发布
+
+使用父组件管理 state 会导致代码冗余，既要将 state 作为 props 传递给子组件，又要传递回调给子组件调用，父组件中可能需要管理很多的状态，为了简化开发，可以使用消息订阅发布模型来实现兄弟组件之间的通信。
+
+实现了订阅发布模型的库有很多，这里使用[mitt](https://github.com/developit/mitt)。
+
+安装 mitt：
+
+```shell
+yarn add mitt
+```
+
+订阅发布的实现需要基于同一个 mitt 实例，使用下面的代码获取一个实例：
+
+```ts
+// utils/index.ts
+import mitt, {Emitter} from "mitt";
+
+
+type Events = {
+    search: {
+        searchKey: string,
+    }
+}
+
+let emitter: Emitter<Events>;
+
+const getEmitter = (): Emitter<Events> => {
+    if (!emitter) {
+        emitter = mitt<Events>();
+    }
+    return emitter;
+}
+
+export {getEmitter}
+```
+
+然后修改 Search 和 List 两个组件，并移除 App 组件中管理的 state：
+
+```tsx
+// Search.tsx
+const Search: FC = () => {
+    const [searchKey, setSearchKey] = useState('');
+    const onSearch = () => {
+        const emitter = getEmitter();
+        emitter.emit('search', {
+            searchKey: searchKey,
+        });
+    }
+    return (
+        <Fragment>
+            <input
+                value={searchKey}
+                onChange={(e) => {setSearchKey(e.target.value)}}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        onSearch();
+                    }
+                }}
+            />
+        </Fragment>
+    )
+}
+//List.tsx
+const List: FC = () => {
+    const [searchKey, setSearchKey] = useState('');
+    useEffect(() => {
+        const emitter = getEmitter();
+        emitter.on('search', ({searchKey}) => {
+            setSearchKey(searchKey);
+        })
+        return () => {
+            emitter.off('search');
+        }
+    }, []);
+    return (
+        <Fragment>
+            {
+                searchKey ? <h2>searching {searchKey}...</h2> : undefined
+            }
+        </Fragment>
+    )
+}
+```
+
+注意上面的 List 组件中订阅事件的地方需要在 useEffect hook 中进行，并且依赖空数组，限制订阅动作只在组件挂载时执行，同时要返回一个清理函数，此函数中取消订阅。
