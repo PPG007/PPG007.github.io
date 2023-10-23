@@ -14,6 +14,8 @@ module.exports.default = {
                     '/react/docs/cli.md',
                     '/react/docs/reducer.md',
                     '/react/docs/context.md',
+                    '/react/docs/hooks.md',
+                    '/react/docs/router.md',
                 ],
                 text: 'React'
             }
