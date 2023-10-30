@@ -65,7 +65,7 @@ const incrAction = {
 
 Reducer：
 
-reduce人 是一个函数，接收当前的 state 和一个 action 对象，必要时决定如何更新状态并返回新状态。`(state, action) => newState`。可以将 reducer 视为一个事件监听器，它根据接收到的 action 类型处理事件。
+reducer 是一个函数，接收当前的 state 和一个 action 对象，必要时决定如何更新状态并返回新状态。`(state, action) => newState`。可以将 reducer 视为一个事件监听器，它根据接收到的 action 类型处理事件。
 
 Reducer 必须符合以下规则：
 
@@ -86,3 +86,254 @@ Selector：
 下面是结合 Redux 后组件状态的维护流程：
 
 ![workflow](./images/redux-data-flow.gif)
+
+### Redux Toolkit
+
+Redux Toolkit 是一个开箱即用的 Redux 开发工具集，封装了配置 store、定义 reducer、不可变的更新逻辑、立即创建整个状态的切片，不需要手动编写任何 action creator 或者 action type，还自带了一些常用的 Redux 插件。
+
+Redux 过于精简，需要很多的配置，使用 Redux Toolkit 可以简化代码。
+
+## 示例：计数器
+
+下面编写一个计数器示例，首先是不使用 Redux 的情况：
+
+```tsx
+const Count: FC = () => {
+  const [value, setValue] = useState(0);
+  const [step, setStep] = useState(1);
+  return (
+    <div>
+      <button onClick={() => setValue(value+1)}>+</button>
+      <span>{value}</span>
+      <button onClick={() => setValue(value-1)}>-</button>
+      <br/>
+      <input value={step} onChange={(e) => {setStep(parseInt(e.target.value))}}/>
+      <button onClick={() => {setValue(value+step)}}>add by step</button>
+      <button onClick={() => {setTimeout(() => {setValue(value+step)}, 1000)}}>add async</button>
+    </div>
+  )
+}
+```
+
+接下来将这个例子改造成使用 Redux，首先安装依赖：
+
+```shell
+yarn add redux @reduxjs/toolkit react-redux
+yarn add -D @types/react-redux @types/redux
+```
+
+### 编写 Redux Store
+
+Redux Toolkit 提供了 Redux Slice，这是单个 Reducer 逻辑和 action 的集合，用来将根 Redux 对象拆分成多个部分。下面定义一个 CounterSlice 用来完成计数器的功能：
+
+```ts
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dispatch } from "react";
+
+export type counterState = {
+  value: number;
+}
+
+export type counterIncByStepAction = PayloadAction<{step: number}>;
+
+type counterReducer = {
+  incr: (state: counterState) => void;
+  desc: (state: counterState) => void;
+  incrByStep: (state: counterState, action: counterIncByStepAction) => void;
+}
+
+export const counterSlice = createSlice<counterState, counterReducer, 'counter'>({
+  initialState: {
+    value: 0,
+  },
+  name: "counter",
+  reducers: {
+    incr: (state) => {
+      state.value ++;
+    },
+    desc: state => {
+      state.value--;
+    },
+    incrByStep: (state, action) => {
+      state.value += action.payload.step;
+    }
+  }
+})
+
+export default counterSlice.reducer;
+
+export const {incr, incrByStep, desc} = counterSlice.actions;
+
+export const incrAsync = (step: number) => (dispatch: Dispatch<counterIncByStepAction>) => {
+  setTimeout(() => {
+    dispatch(incrByStep({step: step}));
+  }, 1000);
+}
+
+export const selectCount = ({counter}: {counter: counterState}) => {
+  return counter.value;
+};
+```
+
+使用 createSlice 方法创建一个 Redux Slice，首先需要指定一个 state 的初始值，这里将 state 初始值置为一个包含 value 字段的对象，然后需要一个 name，因为 action 是一个带有 type 字符串字段的对象，createSlice 方法会根据 name 值和 reducers 中方法的名字来自动生成 action，例如：
+
+```ts
+export const {incr, incrByStep, desc} = counterSlice.actions;
+// {type: 'counter/incr', payload: undefined}
+console.log(incr())
+```
+
+上面的 reducers 中并没有对 state 进行不可变式更新，而是直接操作的字段，这是因为 Redux Toolkit 使用了 [immer](https://github.com/immerjs/immer) 这个库，immer 检测到 draft state 改变时会基于这个改变去创建一个新的不可变的 state。
+
+selectCount 就是之前提到的 Selector，这个函数接收一个参数，这个参数就是根 state，由于这里我们使用了 Redux Slice 将根 state 切分为多个部分，所以 counterState 将会作为这个参数的其中一个字段，这个字段的字段名取决于在组装 Redux Store 时为当前 Slice 指定的名字。
+
+通过之前的内容我们知道，如果向改变 state，那么需要通过 dispatch 并传入 action 来完成，所以上面的 incrAsync 方法中有一个 dispatch 入参，这个dispatch 类型声明如下：`type Dispatch<A> = (value: A) => void;`。
+
+接下来将这个 Slice 组装为 Redux Store：
+
+```ts
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer, { counterState } from './count.ts';
+
+const store = configureStore<{x: counterState}>({
+  reducer: {
+    x: counterReducer,
+  }
+})
+
+export default store;
+```
+
+这里使用 Redux Toolkit 中的 configureStore 方法来完成，这个方法接收一个配置对象，这里我们将之前定义的 counterSlice 赋值给 x 字段，这样的话在状态树中的 x 字段上就有了 counterSlice 对象了，这也是在 Slice 中 Selector 入参的字段名的依据。
+
+之前在介绍 reducer 时我们说 reducer 不能包含任何的异步逻辑，如果需要异步的话，我们需要使用 thunk。thunk 是一种特定类型的 Redux 函数，可以包含异步逻辑，Thunk 由两个函数编写：
+
+- 一个内部 thunk 函数，以 dispatch 和 getState 作为参数。
+- 外部创建者函数，创建并返回 thunk 函数。
+
+使用 thunk 需要在创建 Redux Store 时使用 redux-thunk 中间件，Redux Toolkit 封装了这个过程。然后我们就可以将 thunk 传给 dispatch 方法了。
+
+### 编写计数器组件
+
+接下来修改 Count 组件：
+
+```tsx
+const Count: FC = () => {
+  const count = useSelector<{x: counterState}, number>(selectCount);
+  const dispatch = useDispatch<Dispatch<counterIncByStepAction | PayloadAction>>();
+  const [step, setStep] = useState(1);
+  return (
+    <div>
+      <button onClick={() => {dispatch(incr())}}>+</button>
+      <span>{count}</span>
+      <button onClick={() => {dispatch(desc())}}>-</button>
+      <br/>
+      <input value={step} onChange={(e) => setStep(parseInt(e.target.value))}/>
+      <br/>
+      <button onClick={() => {dispatch(incrByStep({step}))}}>add by step</button>
+      <button onClick={() => {incrAsync(step)(dispatch)}}>add async</button>
+    </div>
+  )
+}
+```
+
+上面的组件中，展示用的 count 值我们使用 useSelector 方法并传入在 counterSlice 中定义的 Selector，useSelector 会将 state 作为入参调用我们的 Selector 并返回 Selector 的返回值。
+
+接下来，所有对 count 的修改都通过 dispatch 来进行，这里通过 `useDispatch` 方法获取 dispatch，这里有两种 action：带有 step 字段的 action 和空 action。
+
+最后，在事件处理函数中使用 dispatch 并传入由 action creator 构造的响应 action 即可实现对状态的修改。
+
+### provide store
+
+在完成上面的内容之后，还需要在用到 Store 状态管理的地方像 React Router 来提供一个 store provider：
+
+```tsx
+function App() {
+  return (
+    <Provider store={store}>
+      <Count/>
+    </Provider>
+  )
+}
+```
+
+## 示例：文章管理
+
+接下来，我们来制作一个小型文章管理应用，这个应用能够展示、修改、添加文章，首先我们来编写一个首页，这里直接使用 antd：
+
+```tsx
+const App:FC = () => {
+  return (
+    <Card
+      title={"Articles"}
+    >
+      <h1>body</h1>
+    </Card>
+  )
+}
+```
+
+然后创建路由：
+
+```tsx
+const routes = createHashRouter([
+  {
+    path: '/',
+    element: <App/>
+  }
+])
+```
+
+然后修改 main.tsx：
+
+```tsx
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <RouterProvider router={routes}/>
+  </React.StrictMode>,
+)
+```
+
+接下来编写创建文章组件和文章列表组件，暂时使用非响应式数据，后面引入 Redux 后再改为响应式数据：
+
+```tsx
+// List.tsx
+
+// Creator.tsx
+type formType = {
+  title: string;
+  content: string;
+}
+
+const Creator: FC = () => {
+  return (
+    <Form<formType> onFinish={(data) => {console.log(data)}}>
+      <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
+        <Input/>
+      </Form.Item>
+      <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
+        <Input/>
+      </Form.Item>
+      <Form.Item>
+        <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+      </Form.Item>
+    </Form>
+  )
+}
+```
+
+然后修改一下 App.tsx 和路由配置：
+
+```tsx
+
+```
+
+## 数据流
+
+## 使用数据
+
+## 异步逻辑与数据请求
+
+## 性能与数据范式化
+
+## RTK 查询
