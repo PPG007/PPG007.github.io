@@ -259,80 +259,515 @@ function App() {
 
 ## 示例：文章管理
 
-接下来，我们来制作一个小型文章管理应用，这个应用能够展示、修改、添加文章，首先我们来编写一个首页，这里直接使用 antd：
+接下来，我们来制作一个小型文章管理应用，这个应用能够展示、修改、添加文章，页面直接使用 Antd，首先我们来编写一个 Redux Slice 并组装一个 store：
 
-```tsx
-const App:FC = () => {
-  return (
-    <Card
-      title={"Articles"}
-    >
-      <h1>body</h1>
-    </Card>
-  )
+```ts
+// slice
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+
+export type Article = {
+  id: string;
+  title: string;
+  content: string;
 }
-```
 
-然后创建路由：
+type ArticleState = Array<Article>
 
-```tsx
-const routes = createHashRouter([
+const initialArticles: Array<Article> = [
   {
-    path: '/',
-    element: <App/>
+    id: '1',
+    title: 'First Post!',
+    content: 'Hello!',
+  },
+  {
+    id: '2',
+    title: 'Second Post',
+    content: 'More text',
   }
-])
+];
+
+interface upsertPayload {
+  id?: string;
+  title: string;
+  content: string;
+}
+
+type ArticleReducer =  {
+  create: (state: ArticleState, action: PayloadAction<upsertPayload>) => void;
+  update: (state: ArticleState, action: PayloadAction<upsertPayload>) => void;
+}
+
+const articleSlice = createSlice<ArticleState, ArticleReducer, 'article'>({
+  name: 'article',
+  initialState: initialArticles,
+  reducers: {
+    create(state, action) {
+      state.push({
+        id: `${state.length+1}`,
+        content: action.payload.content,
+        title: action.payload.title,
+      });
+    },
+    update(state, action) {
+      if (!action.payload.id) {
+        return;
+      }
+      state = state.map((a) => {
+        if (a.id === action.payload.id) {
+          a.title = action.payload.title
+          a.content = action.payload.content
+        }
+        return a;
+      })
+    }
+  }
+})
+
+export default articleSlice.reducer;
+
+export const {
+  create,
+  update,
+} = articleSlice.actions;
+
+export const selectArticles = ({article}: {article: ArticleState}) => {
+  return article
+}
+
+export const selectArticle = (id: string) => ({article}: {article: ArticleState}) =>{
+  return article.find((a) => {return a.id === id})
+}
+// store
+const store = configureStore({
+  reducer: {
+    article: article,
+  }
+})
+export default store;
+export type ArticleDispatch = typeof store.dispatch;
 ```
 
-然后修改 main.tsx：
+接着，来编写创建文章的页面：
 
 ```tsx
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={routes}/>
-  </React.StrictMode>,
-)
-```
-
-接下来编写创建文章组件和文章列表组件，暂时使用非响应式数据，后面引入 Redux 后再改为响应式数据：
-
-```tsx
-// List.tsx
-
-// Creator.tsx
+// Create.tsx
 type formType = {
   title: string;
   content: string;
 }
 
-const Creator: FC = () => {
+const Create: FC = () => {
+  const dispatch = useDispatch();
+  const [form] = Form.useForm<formType>();
+  const [sender, holder] = message.useMessage();
+  const onSubmit = ({title, content}: formType) => {
+    dispatch(create({
+      title,
+      content
+    }));
+    form.resetFields();
+    sender.success('ok')
+  };
   return (
-    <Form<formType> onFinish={(data) => {console.log(data)}}>
-      <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
-        <Input/>
-      </Form.Item>
-      <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
-        <Input/>
-      </Form.Item>
-      <Form.Item>
-        <Button type={'primary'} htmlType={'submit'}>Submit</Button>
-      </Form.Item>
-    </Form>
+    <>
+      {holder}
+      <Form onFinish={onSubmit} form={form}>
+        <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
+          <Input/>
+        </Form.Item>
+        <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
+          <Input/>
+        </Form.Item>
+        <Form.Item>
+          <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+        </Form.Item>
+      </Form>
+    </>
   )
 }
 ```
 
-然后修改一下 App.tsx 和路由配置：
+上面是一个简单的表单，输入标题和内容后点击提交，调用 dispatch 发出 action，然后触发 Redux 的 state 更新。
+
+然后是文章列表页面：
 
 ```tsx
+// List.tsx
+const List: FC = () => {
+  const articles = useSelector(selectArticles);
+  return (
+    <AList dataSource={articles} renderItem={renderItem} rowKey={(item) => item.id}/>
+  )
+}
 
+const renderItem = (article: Article) => {
+  return (
+    <AList.Item>
+      <AList.Item.Meta
+        title={<Link to={`view/${article.id}`}>{article.title}</Link>}
+        description={article.content}
+      />
+    </AList.Item>
+  )
+}
 ```
 
-## 数据流
+这里使用了 selector 来获取当前 Redux 中的文章列表，每个文章的标题是一个 Link 组件，跳转至下面的文章详情页面：
 
-## 使用数据
+```tsx
+const View: FC = () => {
+  const params = useParams<{id: string}>();
+  const article = useSelector(selectArticle(params.id ? params.id : ''));
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(article ? article.title : '');
+  const [content, setContent] = useState(article? article.content : '');
+  const dispatch = useDispatch();
+  if (!article){
+    return (
+      <Empty/>
+    )
+  }
+  return (
+    <Card
+      title={
+      isEditing ? (
+        <Input value={title} onChange={(e) => setTitle(e.target.value)}/>
+      ) : article.title
+      }
+      extra={(
+        <Space>
+          <Button type={'link'} onClick={() => {
+            setIsEditing(!isEditing);
+          }}>{
+            isEditing ? 'cancel' : 'edit'
+          }</Button>
+          <Link to={'..'}>back</Link>
+        </Space>
+      )}
+    >
+      {
+        isEditing ? (
+          <Input.TextArea
+            showCount
+            maxLength={100}
+            value={content}
+            onChange={(e) => {setContent(e.target.value)}}
+          />
+        ) : article.content
+      }
+      {
+        isEditing ? <Button onClick={() => {
+          dispatch(update({
+            id: article?.id,
+            title,
+            content,
+          }));
+          setIsEditing(false);
+        }}>Submit</Button> : undefined
+      }
+    </Card>
+  )
+}
+```
+
+View 组件复杂一些，这个组件首先获取路由参数中的 id 并调用 useSelector 获取 Redux 中对应的文章，如果文章获取不到就返回一个空页面。同时这个详情页面允许编辑，编辑和查看的状态通过 isEditing 这个布尔值来区分，点击按钮来回切换这个值，并使用两个局部 state 来保存编辑过程中的文章标题和内容，最后，使用 dispatch 来创建一个文章。
+
+最后是路由配置和应用入口的内容：
+
+```tsx
+// router/index.tsx
+const router = createHashRouter([{
+  path: '/',
+  element: <App/>,
+  children: [
+    {
+      path: 'create',
+      element: <Create/>,
+    },
+    {
+      element: <List/>,
+      index: true,
+    },
+    {
+      element: <View/>,
+      path: 'view/:id'
+    }
+  ]
+}])
+// App.tsx
+const Extra: FC = () => {
+  const isCreate = useLocation().pathname === '/create';
+  let to = 'create';
+  if (isCreate) {
+    to = '/';
+  }
+  return (
+    <Space>
+      <Link to={to}>{isCreate ? 'list' : 'create'}</Link>
+    </Space>
+  )
+}
+
+const App:FC = () => {
+
+  return (
+    <Card
+      title={'Articles'}
+      extra={<Extra/>}
+    >
+      <Outlet/>
+    </Card>
+  )
+}
+// main.tsx
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
+  </React.StrictMode>,
+)
+```
+
+::: tip 总结
+
+到这里，这个文章应用包含了以下内容：
+
+- 通过 reducer 来更新 state。
+- 通过 dispatch 来在组件中触发 state 的更新。
+- 通过 selector 来获取数据，如果 selector 需要自定义参数，那么在定义 selector 时要使用函数柯里化。
+- 应用内的任意组件都能访问 Redux 管理的 state。
+
+:::
 
 ## 异步逻辑与数据请求
+
+上面的例子中，数据仍然是只在这个应用中流转，现在我们来编写一个 http server，通过 api 调用的方式来获取数据。
+
+这里使用 koa 来编写 http 服务，主要逻辑如下：
+
+```ts
+import ObjectID from "bson-objectid";
+import * as Koa from 'koa';
+import * as Router from 'koa-router';
+import * as bodyParser from 'koa-bodyparser';
+
+type Article = {
+  id: string;
+  title: string;
+  content: string;
+}
+
+const app = new Koa();
+app.use(bodyParser());
+app.use(async (ctx, next) => {
+  try {
+    await next();
+    if (!ctx.body) {
+      ctx.body = {};
+    }
+  } catch (e) {
+    ctx.response.status = 400;
+    ctx.response.body = (e as Error).message;
+  }
+})
+
+const router = new Router({
+  prefix: '/articles',
+});
+
+type UpsertRequest = {
+  title: string;
+  content: string;
+}
+let articles: Array<Article> = [];
+router.get('/', (ctx) => {
+  ctx.body = articles;
+});
+
+router.post('/', (ctx) => {
+  if (!ctx.request.body) {
+    throw new Error('missing body');
+  }
+  const req: UpsertRequest = ctx.request.body as UpsertRequest;
+  const newArticle: Article = {
+    title: req.title,
+    content: req.content,
+    id: ObjectID().toHexString(),
+  };
+  articles.push(newArticle);
+});
+
+router.put('/:id', (ctx) => {
+  const id = ctx.params['id'];
+  if (!ctx.request.body) {
+    throw new Error('missing body');
+  }
+  const req: UpsertRequest = ctx.request.body as UpsertRequest;
+  let articleFound = false;
+  articles = articles.map((a) => {
+    if (a.id === id) {
+      articleFound = true;
+      a.title = req.title;
+      a.content = req.content;
+    }
+    return a
+  });
+  if (!articleFound) {
+    throw new Error('article not found')
+  }
+})
+app.use(router.routes()).use(router.allowedMethods());
+app.listen(8080, '0.0.0.0');
+```
+
+通过上面的内容可知，reducer 不能包含异步逻辑，但是在 reducer 被调用之前，要先调用 dispatch，可以扩展 dispatch，也就是在调用 dispatch 之前发起异步逻辑，Redux 中的中间件为此提供了支持，最常用的异步中间件是 redux-thunk，Redux Toolkit 中的 configureStore 方法会默认开启此中间件，在加入 thunk 中间件之后，数据的流转就像下面这样：
+
+![async](./images/thunk.gif)
+
+现在，将之前的创建、修改、获取文章改为使用 thunk 异步执行 Redux Toolkit 提供了 createAsyncThunk 方法来创建 asyncThunk，下面是对三个接口调用的封装：
+
+```ts
+const axiosInstance = axios.create({
+  baseURL: '/v1/articles/'
+})
+
+export const update = createAsyncThunk<void, upsertPayload>('articles/update', async ({id, content, title}, {dispatch}) => {
+  if (!id) {
+    throw new Error('empty id')
+  }
+  await axiosInstance.put<void, AxiosResponse<void>, upsertPayload>(`${id}`, {
+    content,
+    title,
+  });
+  dispatch(list())
+});
+
+export const create = createAsyncThunk<void, upsertPayload, {dispatch: ArticleDispatch}>('articles/create', async ({content, title}, {dispatch}) => {
+  await axiosInstance.post<void, AxiosResponse<void>, upsertPayload>('', {
+    content,
+    title,
+  })
+  dispatch(list())
+})
+
+export const list = createAsyncThunk<Array<Article>, void>('articles/list', async () => {
+  const resp = await axiosInstance.get<Array<Article>>('')
+  return resp.data;
+})
+```
+
+这个方法接收三个泛型类型，第一个类型是里面包裹的函数的返回类型，第二个类型是参数类型，这个参数可以在内部函数的入参中访问到，第三个参数是一个配置对象，这里只配置了 dispatch 的类型是 articleStore 的 dispatch 类型。
+
+为了在创建、更新文章之后能够及时更新 state，在 update 和 create 之后都再次 dispatch list，为了接收 asyncThunk 的返回值并更新到 state 中，修改 slice：
+
+```ts
+const articleSlice = createSlice<ArticleState, {}, 'article'>({
+  name: 'article',
+  initialState: initialArticles,
+  extraReducers: (builder) => {
+    builder.addCase(list.fulfilled, (_, action) => {
+      return action.payload
+    })
+  },
+  reducers: {},
+})
+```
+
+extraReducers 选项是一个接收名为 builder 的参数的函数，builder 对象提供了一些方法，可以定义额外的 reducer 来响应各种 case，可以通过下面三种方式定义 case：
+
+- `addCase(actionCreator, reducer)`：定义一个 case reducer 来响应一个 action。
+- `addMatcher(matcher, reducer)`：定义一个 case reducer，如果 matcher 返回为 true 那么 reducer 将会被执行。
+- `addDefaultCase(reducer)`：定义一个 case reducer，如果没有其他 case reducer 被执行，那么这个 reducer 会执行。
+
+::: tip
+
+如果多个 case 都匹配，那么它们将按照定义的顺序运行。
+
+:::
+
+上面的例子中使用了 addCase，下面是使用 addMatcher 的写法：
+
+```ts
+// isFulfilled 是 Redux Toolkit 提供的内置方法
+extraReducers: (builder) => {
+  builder.addMatcher(isFulfilled(list), (_, action) => {
+    return action.payload
+  })
+},
+```
+
+### vite 反向代理设置
+
+在上面的例子中，如果使用 vite 管理项目，那么需要修改 vite.config.ts 来设置反向代理：
+
+```ts
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '^/v1/.*': {
+        target: 'http://127.0.0.1:8080',
+        rewrite: path => path.replace(/^\/v1/, '')
+      }
+    }
+  }
+})
+```
+
+### 在组件中执行异步
+
+现在，修改创建文章的组件，使用异步 dispatch：
+
+```ts
+const dispatch = useDispatch<ArticleDispatch>();
+const [form] = Form.useForm<formType>();
+const [sender, holder] = message.useMessage();
+const onSubmit = async ({title, content}: formType) => {
+  await dispatch(create({
+    title,
+    content
+  }));
+  form.resetFields();
+  sender.success('ok')
+};
+```
+
+由于在 createAsyncThunk 中抛出错误时，这个错误会被内部捕获处理，所以上面的代码中即使 create 中抛出异常 await 之后的逻辑也会执行，要想处理异步结果，有以下两种方法。
+
+第一种方法是将 dispatch 的结果展开为一个 Promise，对这个 Promise 做 await 可以获得异常：
+
+```ts
+const onSubmit = async ({title, content}: formType) => {
+  try {
+    await dispatch(create({
+      title,
+      content
+    })).unwrap();
+    form.resetFields();
+    sender.success('ok');
+  } catch (e) {
+    sender.error((e as Error).message)
+  }
+}
+```
+
+第二种方法时校验 dispatch 的结果是不是 rejected 或者 fulfilled 状态：
+
+```ts
+const onSubmit = async ({title, content}: formType) => {
+  const resp = await dispatch(create({
+    title,
+    content
+  }))
+  if (create.fulfilled.match(resp)) {
+    form.resetFields();
+    sender.success('ok')
+  } else if (create.rejected.match(resp)) {
+    sender.error(resp.error.message);
+  }
+};
+```
 
 ## 性能与数据范式化
 
