@@ -771,4 +771,139 @@ const onSubmit = async ({title, content}: formType) => {
 
 ## 性能与数据范式化
 
+### 缓存 Selector
+
+修改之前的 selectArticles，加入一句日志输出：
+
+```ts
+export const selectArticles = ({article}: {article: ArticleState}) => {
+  console.log('selectArticles')
+  return article
+}
+```
+
+现在只要重新渲染使用到这个 Selector 的组件，这个日志就会被输出，这说明这个 Selector 被执行了多次。如果一个 Selector 中逻辑比较复杂、耗时，那么这样无意义的重复调用会影响性能。reselect 库提供了一个 createSelector 方法，此方法可以缓存 selector 的结果，此函数通常接受一组输入选择器和一个转换函数作为参数。输入选择器返回的数据将作为参数传递给转换函数，后者返回基于这些输入的派生数据。例如：
+
+```ts
+export const selectArticlesWithDep = createSelector(
+  [selectArticles],
+  (articles) => {
+    console.log('selectArticlesWithDep')
+    return articles;
+  },
+)
+```
+
+替换用到 selectArticles 的地方，然后来回切换页面，selector 将不会在依赖值不改变的情况下发生调用。
+
+### 范式化数据
+
+在上面的例子中，selector 中主要是获取全部和根据 id 获取数据，如果数组很长，那么根据 id 查找的速度可能会受到影响，可能需要遍历大量元素才能找到对应的内容，因此最好有一种根据 id 直接查找单个元素的方法而不需要检查所有其他项，这个过程被称为“范式化”。
+
+范式化 state 是指：
+
+- state 中每个特定数据只有一个副本，没有重复。
+- 已范式化的数据保存在查找表中，项目 id 是键，项目本身是值。
+- 也可能有一个特定项用于保存所有的 id 数组。
+
+Redux Toolkit 提供了 `createEntityAdapter` 方法来创建范式化 state，现在将之前的 ArticleSlice 替换为使用范式化 state，首先创建范式化 state：
+
+```ts
+const articleAdapter = createEntityAdapter<Article>({
+  selectId: (a) => a.id,
+})
+```
+
+`createEntityAdapter` 接收一个配置项，可以配置使用那个字段作为 id，还有一个 sortComparer 字段，这个字段是一个函数，工作方式与 `array.sort()` 相同，接收两个参数，用来排序，例如按照标题长度排序：
+
+```ts
+const articleAdapter = createEntityAdapter<Article>({
+  selectId: (a) => a.id,
+  sortComparer: (a, b) => a.title.length - b.title.length
+})
+```
+
+接着来替换初始 state，adapter 的 `getInitialState()` 方法返回一个空的范式化 state。：
+
+```ts
+const articleSlice = createSlice({
+  name: 'article',
+  initialState: articleAdapter.getInitialState(),
+  // ......
+})
+```
+
+然后来替换 extraReducers，将 listArticles 的结果更新到 state 中：
+
+```ts
+extraReducers: (builder) => {
+  builder.addMatcher(isFulfilled(list), (state, action) => {
+    articleAdapter.setMany(state, action.payload);
+  })
+},
+```
+
+articleAdapter 上有增加、删除和更新方法，这里使用 set 是完全替换，也可以使用 updateMany 部分更新，更新时需要使用 change 来匹配需要更新的项目，就像下面这样：
+
+```ts
+extraReducers: (builder) => {
+  builder.addMatcher(isFulfilled(list), (state, action) => {
+    articleAdapter.setMany(state, action.payload);
+    const updater: ReadonlyArray<Update<Article>> = action.payload.map((a) => ({
+      id: a.id,
+      changes: {
+        title: a.title,
+        content: a.content,
+      }
+    }))
+    articleAdapter.updateMany(state, updater)
+  })
+},
+```
+
+adapter 中也有封装好的 Selector 方法，通过调用 `getSelectors()` 方法可以获取内置的 Selectors，这个函数接收一个参数，此参数是一个函数，返回当前 Slice 在 Redux 状态树中的 state，下面的代码导出了 Selector：
+
+```ts
+export const {
+  selectIds,
+  selectAll,
+  selectTotal,
+  selectById,
+} = articleAdapter.getSelectors<StateType>(({article}) => {
+  console.log(article)
+  return article
+})
+```
+
+如果使用 TypeScript，那么 `getSelectors` 的泛型可以通过导出 store 的 state 获取：
+
+```ts
+const store = configureStore({
+  reducer: {
+    article: article,
+  }
+})
+store.dispatch(list());
+export default store;
+
+export type StateType = ReturnType<typeof store.getState>;
+```
+
+最后修改组件中对 Selector 的使用：
+
+```tsx
+// List.tsx
+const List: FC = () => {
+  const articles = useSelector(selectAll);
+  return (
+    <AList dataSource={articles} renderItem={renderItem} rowKey={(item) => item.id}/>
+  )
+}
+// View.tsx
+const View: FC = () => {
+  const params = useParams<{id: string}>();
+  const article = useSelector((state: StateType) => selectById(state, params.id || ''));
+  // other codes ......
+```
+
 ## RTK 查询
