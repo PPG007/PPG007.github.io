@@ -907,3 +907,597 @@ const View: FC = () => {
 ```
 
 ## RTK 查询
+
+在之前的内容中，异步更新 state 需要我们自行处理 fulfilled、rejected 等情况，并且每个方法都包含构造请求、发送请求的步骤，同时如果希望增加缓存功能也会比较复杂。为了简化与服务器的交互和状态的维护，可以使用 RTK Query（Redux Toolkit Query）来实现。
+
+使用 RTK Query 主要包含以下几个步骤：
+
+- 通过 `createApi()` 创建 API 切片。
+- 定义服务端点（endpoint）。
+- 使用自动生成的钩子。
+- 发起请求。
+
+根据上面的步骤，现在开始改造之前的文章管理中的内容，不再依赖 ArticleSlice，所有的数据都从服务端来，首先来创建一个 API 切片：
+
+```ts
+import { BaseQueryFn, createApi, FetchArgs } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
+import { Article } from "./article.ts";
+
+interface UpsertArg {
+  id?: string;
+  content: string;
+  title: string;
+}
+
+const axiosInstance = axios.create({
+  baseURL: '/v1/articles',
+})
+
+const axiosBaseQuery: BaseQueryFn<FetchArgs> = (args) => {
+  return axiosInstance.request({
+    method: args.method,
+    params: args.params,
+    data: args.body,
+    url: args.url
+  })
+}
+
+const api = createApi({
+  reducerPath: 'articlesAPI',
+  baseQuery: axiosBaseQuery,
+  endpoints: (builder) => {
+    return {
+      fetchArticles: builder.query<Array<Article>, void>({
+        query: () => ({
+          url: '/',
+        }),
+      }),
+      createArticles: builder.mutation<void, UpsertArg>({
+        query: (arg): FetchArgs => ({
+          url: '/',
+          method: 'POST',
+          body: arg,
+        }),
+      }),
+      updateArticle: builder.mutation<void, UpsertArg>({
+        query: (arg: UpsertArg): FetchArgs => ({
+          url: `/${arg.id}`,
+          method: 'PUT',
+          body: arg,
+        }),
+      }),
+      deleteArticle: builder.mutation<void, string>({
+        query: (id): FetchArgs => ({
+          url: `/${id}`,
+          method: 'DELETE',
+        }),
+      }),
+      getArticle: builder.query<Article, string>({
+        query: (id) => ({
+          url: `/${id}`,
+          method: 'GET',
+        }),
+      })
+    }
+  },
+})
+```
+
+解释一下上面的主要内容：
+
+- 通过 `createApi()` 可以创建一个 API 切片，这个方法接收一个配置对象，配置对象中 reducerPath 指的是当这个 API 切片在 `configureStore()` 配置到 Redux Store 之后对应的 Reducer 的名字。
+- baseQuery 是一个基础查询函数，这里用 axios 实现，RTK 本身也提供了 `fetchBaseQuery` 方法来创建 baseQuery 对象，这个方法是基于 Fetch API 的。自行构造 baseQuery 要注意参数类型，上面可以看到，自建的 axios baseQuery 中使用了 FetchArgs 这个泛型类型，这个类型就是 baseQuery 函数的第一个入参的类型，这个类型应该和下方 endpoints 中 query 返回的类型一致，在实际发出请求时，传入 baseQuery 的入参就是 endpoints query 的返回值。
+- endpoints 定义了与服务器交互的一组操作，可以是 query 用来获取数据并缓存，也可以是 mutations 用来更新服务器数据，endpoints 是使用回调函数构造的，该函数接收 builder 对象，要创建 query 或者 mutation 可以使用 `builder.query()` 或 `builder.mutation()`。
+- `builder.query()` 和 `builder.mutation()` 的两个泛型分别表示返回类型和入参类型，同时由于在 baseQuery 中将入参定义为 FetchArgs 类型，所以 endpoints 中所有 query 都应该是返回 FetchArgs 对象的函数。
+
+接着就可以导出自动生成的 Hooks 了：
+
+```ts
+export default api;
+
+export const {
+  useCreateArticlesMutation,
+  useUpdateArticleMutation,
+  useDeleteArticleMutation,
+  useFetchArticlesQuery,
+  useLazyFetchArticlesQuery,
+  useGetArticleQuery,
+  useLazyGetArticleQuery,
+} = api;
+```
+
+::: danger
+
+要使用 Hooks 的话 `createApi()` 要使用 `"@reduxjs/toolkit/query/react"` 包中的，如果使用 TypeScript，只有用这个包里的 `createApi()` 才会有对应 Hook 的类型提示。
+
+:::
+
+然后配置 store，这可以集中管理状态并且可以实现 RTK Query 内置的自动缓存、请求去重、生命周期管理等。将 API Slice 的 cache reducer 配置到 Store 中，同时 API Slice 还会生成需要添加到 Store 的自定义中间件，需要一并添加：
+
+```ts
+const store = configureStore({
+  reducer: {
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
+})
+export default store;
+```
+
+然后修改之前的所有组件，使用 API Slice Hooks 替换 dispatch 和 useSelector：
+
+```tsx
+// Create.tsx
+const Create: FC = () => {
+  const [form] = Form.useForm<formType>();
+  const [sender, holder] = message.useMessage();
+  const [create, {isLoading}] = useCreateArticlesMutation();
+  const onSubmit = async ({title, content}: formType) => {
+    try {
+      await create({
+        title,
+        content,
+      }).unwrap()
+      form.resetFields();
+      sender.success('ok');
+    } catch (e) {
+      sender.error((e as Error).message)
+    }
+  }
+
+  return (
+    <>
+      {holder}
+      <Spin spinning={isLoading}>
+        <Form onFinish={onSubmit} form={form}>
+          <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
+            <Input/>
+          </Form.Item>
+          <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
+            <Input/>
+          </Form.Item>
+          <Form.Item>
+            <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+          </Form.Item>
+        </Form>
+      </Spin>
+    </>
+  )
+}
+// View.tsx
+const View: FC = () => {
+  const params = useParams<{id: string}>();
+  const query = useGetArticleQuery(params.id || '');
+  const [update, {isLoading}] = useUpdateArticleMutation();
+  const article = query.currentData;
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [sender, holder] = message.useMessage();
+  useEffect(() => {
+    if (!article) {
+      return
+    }
+    setTitle(article.title);
+    setContent(article.content);
+  }, [article])
+  if (!article && query.isError){
+    return (
+      <Result
+        status={'error'}
+        title={'oop!'}
+        extra={<Link to={'..'}><Button>back</Button></Link>}
+      />
+    )
+  }
+  return (
+    <Spin spinning={isLoading || query.isFetching}>
+      {holder}
+      {
+        query.isSuccess && article ? (
+          <Card
+            title={
+              isEditing ? (
+                <Input value={title} onChange={(e) => setTitle(e.target.value)}/>
+              ) : article.title
+            }
+            extra={(
+              <Space>
+                <Button type={'link'} onClick={() => {
+                  setIsEditing(!isEditing);
+                }}>{
+                  isEditing ? 'cancel' : 'edit'
+                }</Button>
+                <Link to={'..'}>back</Link>
+              </Space>
+            )}
+          >
+            {
+              isEditing ? (
+                <Input.TextArea
+                  showCount
+                  maxLength={100}
+                  value={content}
+                  onChange={(e) => {setContent(e.target.value)}}
+                />
+              ) : article.content
+            }
+            {
+              isEditing ? <Button onClick={async () => {
+                await update({
+                  id: article.id,
+                  content,
+                  title,
+                }).unwrap();
+                setIsEditing(false);
+                sender.success('ok')
+              }}>Submit</Button> : undefined
+            }
+          </Card>
+        ) : undefined
+      }
+    </Spin>
+  )
+}
+// List.tsx
+const List: FC = () => {
+  const resp = useFetchArticlesQuery();
+  return (
+    <Spin spinning={resp.isFetching}>
+      {
+        resp.isSuccess ?
+          <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/> :
+          <Empty/>
+      }
+    </Spin>
+  )
+}
+
+const renderItem = (article: Article) => {
+  const [deleteFunc] = useDeleteArticleMutation();
+  return (
+    <AList.Item
+      extra={<Button danger onClick={() => {
+        deleteFunc(article.id);
+      }}>delete</Button>}
+    >
+      <AList.Item.Meta
+        title={<Link to={`view/${article.id}`}>{article.title}</Link>}
+        description={article.content}
+      />
+    </AList.Item>
+  )
+}
+```
+
+Query Hook 会返回一个包含多个字段的对象，包括：
+
+- data 或 currentData：响应内容，未收到响应之前是 undefined。
+- isLoading：布尔值，表示此 Hook 是不是在发出第一次请求，如果后续改变参数再请求此字段仍然为 false。
+- isFetching：布尔值，表示当前是否正在发出请求。
+- isSuccess：布尔值，表示当前 Hook 请求是否已成功并有可用的缓存数据，此字段类似 isLoading，在后续调用时保持为 true。
+- isError：布尔值，表示请求是否出错。
+- error：一个序列化后的错误对象。
+
+Mutation Hook 返回的是一个数组，第一个元素是一个函数，可以视为是一个 asyncThunk 函数，也可以使用 unwrap 来处理错误，调用此函数可以发起 mutation 请求，第二个参数是一个包含多个字段的对象，包含 isLoading 等状态。
+
+### 刷新缓存
+
+在完成后，首先创建一个文章，然后返回 List，可以发现页面并没有显示刚刚创建的内容，如果重复这个过程可以在控制台看到，在切换回 List 的时候并没有发生网络请求，也就是说创建后切换回 List 使用的是缓存的数据，为了让 RTK Query 刷新数据，可以在 List 中增加一个按钮，点击按钮刷新数据：
+
+```tsx
+const List: FC = () => {
+  const resp = useFetchArticlesQuery();
+  return (
+    <Spin spinning={resp.isFetching}>
+      {
+        resp.isSuccess ?
+          (
+            <Card title={<Button onClick={() => {resp.refetch()}}>refresh</Button>}>
+              <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/>
+            </Card>
+          ) :
+          <Empty/>
+      }
+    </Spin>
+  )
+}
+const renderItem = (article: Article) => {
+  const [deleteFunc] = useDeleteArticleMutation();
+  return (
+    <AList.Item
+      extra={<Button danger onClick={() => {
+        deleteFunc(article.id);
+      }}>delete</Button>}
+    >
+      <AList.Item.Meta
+        title={<Link to={`view/${article.id}`}>{article.title}</Link>}
+        description={article.content}
+      />
+    </AList.Item>
+  )
+}
+```
+
+Query Hook 提供了一个 `refetch()` 方法来强制重新获取数据，现在点击此按钮会抛出一个错误：`React has detected a change in the order of Hooks called by List. This will lead to bugs and errors if not fixed`，这是因为 Query Hook 的 isSuccess 在第一次请求成功之后就一直是 true 了，在调用 `refetch()` 重新发起请求之后此字段仍然是 true，所以会渲染 List 组件，但是此时请求还没结束，List 中内容为空，没有 List Item，所以 renderItem 中的 `useDeleteArticleMutation` 这个 Hook 不会有任何执行，当请求就绪后再次渲染组件，此时 List 中存在内容，所以会调用 `useDeleteArticleMutation`，React 中不允许条件调用 Hooks，每次渲染组件时调用的 Hooks 数量应该相同，所以上面的代码会报错，为了解决这个问题，使用 `!isFetching` 来替代 `isSuccess`：
+
+```tsx
+const List: FC = () => {
+  const resp = useFetchArticlesQuery();
+  return (
+    <Spin spinning={resp.isFetching}>
+      {
+        !resp.isFetching ?
+          (
+            <Card title={<Button onClick={() => {resp.refetch()}}>refresh</Button>}>
+              <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/>
+            </Card>
+          ) :
+          <Empty/>
+      }
+    </Spin>
+  )
+}
+```
+
+当然这种手动刷新的机制在很多时候不太合适，而且对使用者来说也很繁琐，RTK Query 提供了基于标签的自动刷新机制，在 `createApi()` 中使用 tagTypes字段定义一系列标签，然后在 Query 中的 providesTags 定义需要重新刷新这个 Query 的一系列标签，在 Mutation 中的 invalidatesTags 定义这个 Mutation 会触发哪些标签导致的刷新，这样，在 Mutation 执行之后，providesTags 中包含这个 Mutation 的 invalidatesTags 中定义的标签的 Query 会被自动刷新，下面改造上面的手动刷新例子：
+
+```ts
+const api = createApi({
+  // ... other codes
+  tagTypes: ['Create', 'Update', 'Delete'],
+  endpoints: (builder) => {
+    return {
+      fetchArticles: builder.query<Array<Article>, void>({
+        // ... other codes
+        providesTags: ['Create', 'Update', 'Delete'],
+      }),
+      createArticles: builder.mutation<void, UpsertArg>({
+        // ... other codes
+        invalidatesTags: ['Create'],
+      }),
+      updateArticle: builder.mutation<void, UpsertArg>({
+        // ... other codes
+        invalidatesTags: ['Update'],
+      }),
+      deleteArticle: builder.mutation<void, string>({
+        // ... other codes
+        invalidatesTags: ['Delete'],
+      }),
+      getArticle: builder.query<Article, string>({
+        // ... other codes
+        providesTags: ['Create', 'Update', 'Delete'],
+      })
+    }
+  },
+})
+```
+
+这样，再次创建、修改、删除文章时就会触发对应 Query 的重新加载，页面会被及时更新。
+
+### 定时失效缓存
+
+在上面的例子中，从文章列表中点击任意一个文章进入详情页后，控制台可以看到一次接口调用，然后回到列表页，重复进入同一个详情页面时会因为数据缓存不再去调用接口，在文章列表等待 60 秒后再次进入则会有接口调用，这是因为默认情况下数据的缓存时间是 60 秒，这个数值可以通过 keepUnusedDataFor 来设置，例如将超时时间改为 10 秒：
+
+```ts
+const api = createApi({
+  reducerPath: 'articlesAPI',
+  // ... other codes
+  keepUnusedDataFor: 10,
+})
+```
+
+### 失效特定的项目
+
+在最初实现编辑功能时，编辑完成后点击提交，页面的内容仍然是编辑之前的，这是因为数据缓存导致的，现在我们使用了 `providesTags` 和 `invalidatesTags` 两个字段来实现调用更新接口后失效查询接口，但是现在仍然存在一个问题：更新某个文章的内容后会导致所有的查询丢弃缓存，但是没有被更新到的文章实际上不需要重新请求，仍然使用缓存即可，为了解决这个问题，`providesTags` 和 `invalidatesTags` 可以是一个对象数组，每个对象包含 type 字段和 id 字段，type 字段就是之前数组中的字符串，id 是数字或者字符串，二者的 id 和 type 匹配后就会失效特定的项目。
+
+```ts
+tagTypes: ['Create', 'Update', 'Delete'],
+endpoints: (builder) => {
+  return {
+    fetchArticles: builder.query<Array<Article>, void>({
+      providesTags: ['Create', 'Update', 'Delete'],
+    }),
+    createArticles: builder.mutation<void, UpsertArg>({
+      invalidatesTags: ['Create'],
+    }),
+    updateArticle: builder.mutation<void, UpsertArg>({
+      invalidatesTags: (_result, _error, arg) => {
+        return [{
+          type: 'Update',
+          id: arg.id,
+        }]
+      }
+    }),
+    deleteArticle: builder.mutation<void, string>({
+      invalidatesTags: (_result, _error, arg) => {
+        return [
+          {
+            type: 'Delete',
+            id: arg,
+          }
+        ]
+      }
+    }),
+    getArticle: builder.query<Article, string>({
+      providesTags: (result) => {
+        if (result) {
+          return [
+            {
+              type: 'Update',
+              id: result.id,
+            },
+            {
+              type: 'Delete',
+              id: result.id,
+            }
+          ]
+        }
+        return [];
+      }
+    })
+  }
+},
+```
+
+现在，更新或者删除文章时只会使得特定的数据失效。
+
+### 在非 React 应用中使用 RTK Query
+
+在 React 应用中使用 RTK Query 会因为 Hooks 的存在变得简单，但是 Redux 是独立设计的，不依赖于 UI，因此应该在任意位置可用，API 切片中有一个 endpoints 字段，其中包含我们定义的查询，这些查询上有一个 `initiate()` 方法，执行此方法可以得到一个 ThunkAction，将这个 action 传给 dispatch 即可：
+
+```ts
+store.dispatch(api.endpoints.fetchArticles.initiate())
+```
+
+为了能够读取当前 state 的数据，同样可以使用 Selector，只不过这里的 Selector 是从 RTK Query 的缓存中读取的，也就是说下面的方法并不会发出请求，需要 dispatch endpoint：
+
+```ts
+// api.ts
+export const selectArticlesResult = api.endpoints?.fetchArticles.select();
+
+export const selectArticles = createSelector(
+  [selectArticlesResult],
+  (result) => result ? result.data : [],
+)
+// List.ts
+const articles = useSelector(selectArticles);
+```
+
+### 注入 Endpoints
+
+大型项目中接口的管理可能是分布在多个文件中的，为了将多个文件统一到一起，可以使用 API 切片上的 `injectEndpoints()` 方法：
+
+```ts
+export const {useExtendQueryQuery} = api.injectEndpoints({
+  endpoints: (builder) => {
+    return {
+      extendQuery: builder.query<Article, string>({
+        query: (id) => ({
+          method: 'GET',
+          url: `/${id}`
+        })
+      })
+    }
+  }
+})
+```
+
+::: warning
+
+`injectEndpoints` 会改变原来的 API 切片并返回新的切片，但是建议使用返回的新切片而不是旧切片，尽管它们是同一个对象。在使用 TypeScript 的情况下，返回的切片中才会有新的 Hooks 类型提示。
+
+:::
+
+### 处理响应
+
+如果接口返回的数据格式和组件中需要的格式不同，这时就需要进行响应数据的转换，请求接口可以定义一个 `transformResponse` 方法来转换返回的数据，例如：
+
+```ts
+getArticle: builder.query<Article, string>({
+  // ... other codes
+  transformResponse: (baseQueryReturnValue: Article, _meta, _arg) => {
+    return {
+      id: baseQueryReturnValue.id,
+      title: `${baseQueryReturnValue.title}_trans`,
+      content: `${baseQueryReturnValue.content}_trans`
+    }
+  }
+})
+```
+
+这里只是简单的加了一个后缀，transformResponse 的第一个参数应该是服务器返回的类型，第三个参数 arg 是当前 query 的入参，在这里可以将响应对象转换为视图对象。
+
+### 高级缓存更新
+
+现在来为文章列表中的每个元素增加一个收藏按钮，当然 Article 类型要增加相关的定义，同时 api 接口也要支持对收藏的更新：
+
+```tsx
+// API Slice
+favorite: builder.mutation<void, string>({
+  query: (id) => ({
+    url: `/${id}/favorite`,
+    method: 'POST'
+  }),
+  invalidatesTags: ['Update']
+})
+// List.tsx
+const renderItem = (article: Article) => {
+  const [deleteFunc] = useDeleteArticleMutation();
+  const [favorite] = useFavoriteMutation();
+  return (
+    <AList.Item
+      extra={<Button danger onClick={() => {
+        deleteFunc(article.id);
+      }}>delete</Button>}
+    >
+      <AList.Item.Meta
+        title={<Link to={`view/${article.id}`}>{article.title}</Link>}
+        description={article.content}
+        avatar={<Rate count={1} value={article.isFavorite ? 1 : 0} onChange={() => {
+          favorite(article.id);
+        }}/>}
+      />
+    </AList.Item>
+  )
+}
+```
+
+现在，点击任意一个文章的收藏按钮都会改变对应文章的状态，并且因为使用了 `invalidatesTags`，这会使得页面整体刷新。像更改收藏状态这样的小更新其实不需要重新获取整个帖子列表，我们甚至可以只更新 Redux 中已缓存的数据来匹配服务器上的预期改动，同时，立即更新缓存数据将使得页面更快速的更新，RTK Query 允许通过请求的生命周期函数来更新某个 query 的缓存：
+
+```ts
+favorite: builder.mutation<void, string>({
+  query: (id) => ({
+    url: `/${id}/favorite`,
+    method: 'POST'
+  }),
+  onQueryStarted: async (arg, {dispatch, queryFulfilled}) => {
+    const action = api.util?.updateQueryData('fetchArticles', undefined, data => {
+      const index = data.findIndex(a => a.id === arg);
+      if (index >= 0) {
+        data[index].isFavorite = !data[index].isFavorite;
+      }
+    })
+    const result = dispatch(action);
+    try {
+      await queryFulfilled;
+    } catch {
+      result.undo();
+    }
+  }
+})
+```
+
+RTK Query 提供了 `updateQueryData()` 方法，此方法可以直接更新缓存中的查询数据，第一个参数指定要更新哪个 endpoint 的缓存数据，第二个参数是入参筛选，例如如果要更新的 endpoint 存在入参，那么通过指定第二个参数可以更新指定的缓存数据，第三个参数是一个函数，入参就是缓存中的数据，可以直接操作，当然操作缓存仍然要已不可变的形式完成，不过 RTK Query 中使用了 Immer，因此可以直接修改。`updateQueryData()` 方法会返回一个 action，dispatch 这个方法即可实现更新 state。
+
+`onQueryStarted` 是一个查询的生命周期函数，第一个参数是当前查询的入参，第二个参数是一个对象，包含多个内容，其中 dispatch 可以分发 action 来实现对状态的更改，queryFulfilled 是当前查询的一个 Promise，上面的例子中 await 这个 Promise 就是在等待调用接口成功，如果接口报错，那么取消 action 的执行。
+
+同时，在上面的例子中我们删除了 `invalidatesTags` 字段，因为现在的目标是更新收藏状态不重新拉取文章列表。
+
+### 使用懒加载
+
+API 切片中除了普通的 Query Hooks 之外，每个 Query Hook 都有一个对应的 LazyQueryHook，这些 Hooks 可以实现懒加载而不是在组件被挂载时就执行，他们的用法类似 Mutation Hooks，例如，在 List 组件中控制挂载 3 秒后才拉取数据：
+
+```tsx
+const List: FC = () => {
+  const [query, {data, isFetching}] = useLazyFetchArticlesQuery()
+  useEffect(() => {
+    const id = setTimeout(() => {
+      query()
+    }, 3000)
+    return () => {clearTimeout(id)}
+  }, [])
+  return (
+    <Spin spinning={isFetching}>
+      {
+        !isFetching ?
+          (
+            <AList dataSource={data} renderItem={renderItem} rowKey={(item) => item.id}/>
+          ) :
+          <Empty/>
+      }
+    </Spin>
+  )
+}
+```
