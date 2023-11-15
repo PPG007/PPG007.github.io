@@ -1501,3 +1501,396 @@ const List: FC = () => {
   )
 }
 ```
+
+## 不使用 Redux Toolkit 的例子
+
+上面的文章管理中使用了 Redux Toolkit 来构建应用，下面是仅使用 Redux 的例子，不再使用 Redux Toolkit。我们同样从不使用异步接口的情况开始，首先构造一个 Article Reducer：
+
+```ts
+export type Article = {
+  id: string;
+  title: string;
+  content: string;
+  isFavorite?: boolean;
+}
+
+interface ArticlePayload {
+  id?: string;
+  title?: string;
+  content?: string;
+}
+
+interface ArticleAction extends Action {
+  type: 'articles/upsert' | 'articles/delete' | 'articles/updateFavorite',
+  payload: ArticlePayload,
+}
+
+type ArticleState = Array<Article>
+
+const articleReducer: Reducer<ArticleState, ArticleAction> = (state = [], action) => {
+  switch (action.type) {
+    case 'articles/upsert':
+      if (action.payload.id) {
+        state = state.map((a) => {
+          if (a.id === action.payload.id) {
+            a.title = action.payload.title || '';
+            a.content = action.payload.content || '';
+          }
+          return a;
+        })
+      } else {
+        const temp: Article = {
+          id: new ObjectID().toHexString(),
+          title: action.payload.title || '',
+          content: action.payload.content || '',
+        };
+        state = [...state, temp];
+      }
+      break;
+    case 'articles/delete':
+      state = state.filter(a => a.id !== action.payload.id);
+      break;
+    case 'articles/updateFavorite':
+      state = state.map(a => {
+        if (a.id === action.payload.id) {
+          a.isFavorite = !a.isFavorite;
+        }
+        return a;
+      })
+      break;
+  }
+  return state;
+}
+
+const selectAllArticles: Selector<NativeState, Array<Article>> = (state) => state.article;
+
+const selectArticleById: (id: string) => Selector<NativeState, Article | undefined> = (id) => {
+  return (state) => {
+    return state.article.find((a) => a.id === id);
+  }
+}
+
+export {
+  selectAllArticles,
+  selectArticleById,
+}
+
+export default articleReducer;
+```
+
+由于直接使用原生 Redux，因此 action type 的判断需要自行处理，同时由于原生 Redux 没有使用 Immer，因此不可变更新需要自行完成。同时定义了两个 Selector 用来获取数据。
+
+接下来构造 Store 对象，为了将各个 Reducer 组合起来，需要使用 `combineReducers` 方法：
+
+```ts
+import {createStore, combineReducers} from 'redux';
+import articleReducer from "./article.ts";
+
+const rootReducer = combineReducers({
+  article: articleReducer,
+})
+
+const nativeStore = createStore(rootReducer);
+
+export type NativeDispatch = typeof nativeStore.dispatch;
+
+export type NativeState =  ReturnType<typeof nativeStore.getState>;
+
+export default nativeStore;
+```
+
+现在 Redux 已经配置好了，应用可以正常使用，但是 Redux DevTools 没有内容，我们需要将 DevTools 添加到 Enhancers 中：
+
+```ts
+import {createStore, combineReducers} from 'redux';
+import { composeWithDevTools } from "redux-devtools-extension";
+import articleReducer from "./article.ts";
+
+const rootReducer = combineReducers({
+  article: articleReducer,
+})
+
+const nativeStore = createStore(rootReducer, composeWithDevTools());
+```
+
+### subscribe
+
+Redux 中 Store 的 `subscribe()` 方法可以添加一个变化监听器，每当 dispatch action 的时候就会被执行。subscribe 回调中可以执行 `dispatch()`。
+
+现在来注册一个监听器，当 state 发生变化时打印日志：
+
+```ts
+const unsubscribeFn= nativeStore.subscribe(() => {
+  const nowState = nativeStore.getState();
+  if (!Object.is(nowState, prevState)) {
+    console.log(`state changed from ${JSON.stringify(prevState)} to ${JSON.stringify(nowState)}`);
+  }
+  prevState = nowState;
+})
+
+export {unsubscribeFn};
+```
+
+现在改变 state 都会打印日志，`subscribe()` 方法会返回一个退订函数，调用这个函数可以取消一个订阅，例如：
+
+```tsx
+<Button onClick={unsubscribeFn}>unsubscribe</Button>
+```
+
+### Enhancers
+
+StoreEnhancer 是一个函数，此函数接收一个 Store Creator 的入参，返回一个新的 Creator，例如现在要使得每次调用 dispatch 的时候打印日志，可以使用下面的 StoreEnhancer 来实现：
+
+```ts
+const logEnhancer: StoreEnhancer = (creator) => {
+  return (state, action) => {
+    const store = creator(state, action);
+    const originalDispatch = store.dispatch;
+    store.dispatch = (action) => {
+      console.log('Dispatching:', action);
+      const result = originalDispatch(action);
+      console.log('Dispatched, next state:', store.getState())
+      return result
+    }
+    return store;
+  }
+}
+```
+
+同时，我们又希望能够继续使用 Redux DevTools，由于 `createStore()` 方法只接收一个 Enhancer，因此我们需要将多个 Enhancer 组合起来，需要使用 redux 中的 `compose()` 方法：
+
+```ts
+const enhancers = compose(composeWithDevTools(), logEnhancer);
+
+const nativeStore = createStore(rootReducer, enhancers);
+```
+
+现在再发生 dispatch 后控制台会有对应的输出。
+
+### Middleware
+
+Enhancer 非常强大，因为它可以覆盖或者替换 Store 上的任何内容，包括 dispatch、getState 和 subscribe，但是很多时候我们只需要定制 dispatch 即可，Redux middleware 可以实现仅对 dispatch 进行自定义。
+
+现在使用 middleware 来实现 dispatch 的日志功能，首先定义一个 middleware：
+
+```ts
+const logMiddleware: Middleware = api => next => action => {
+  console.log('dispatching', action)
+  const result =  next(action);
+  console.log('Dispatched, next state:', api.getState())
+  return result;
+}
+```
+
+middleware 是一个函数，返回另一个函数，此函数入参是 dispatch，然后返回下一个函数，这个函数入参是 action，通过这样包装实现 middleware 的功能。
+
+middleware 需要变为 Enhancer 并注入到 Store 中才会生效，使用 `applyMiddleware()` 方法可以将多个 middleware 连接为一个 Enhancer，然后可以加入到 Store 中：
+
+```ts
+const middleEnhancer = applyMiddleware(logMiddleware);
+
+const enhancers = compose(composeWithDevTools(), middleEnhancer);
+
+const nativeStore = createStore(rootReducer, enhancers);
+```
+
+### 异步
+
+#### 自定义异步 middleware
+
+Redux Reducer 不能包含副作用，例如异步请求、保存文件等，但是程序中总是要有处理异步的地方，Redux middleware 就是存放这些副作用逻辑的地方，接下来开始改造上面的内容，使用自定义 middleware 支持异步并从服务器获取数据。
+
+首先来修改一下之前 action 的类型定义：
+
+```ts
+export type ArticleAsyncFn = (dispatch: Dispatch<ArticleAction>, state: ArticleState) => Promise<void>
+
+export interface ArticleAction extends Action {
+  // ......
+  payload?: ArticlePayload | ArticleAsyncFn;
+}
+```
+
+现在，ArticleAction 的 payload 字段可以是一个函数了，在 middleware 中只要判断这一点就可以实现发出异步请求了，例如：
+
+```ts
+const asyncMiddleware: Middleware = ({dispatch, getState}) => next => async (action) => {
+  if (typeof action.payload === 'function') {
+    const fn = action.payload as ArticleAsyncFn;
+    try {
+      dispatch({type: 'articles/pending'})
+      await fn(dispatch, getState());
+    } catch (e) {
+      let message = JSON.stringify(e);
+      if (e instanceof Error) {
+        message = e.message;
+      }
+      dispatch({type: 'articles/rejected', payload: {message: message}})
+      throw e;
+    }
+  }
+  return next(action)
+}
+```
+
+这个 middleware 中首先判断 payload 是不是函数，如果是的话就调用这个函数，并且根据结果 dispatch 相关的 action。
+
+接下来就需要定义发起异步请求的相关方法：
+
+```ts
+const fetchArticlesFn: ArticleAsyncFn = async (dispatch) => {
+  const resp = await axiosInstance.get<Array<Article>>('/');
+  dispatch({
+    type: 'articles/resolved',
+    payload: {
+      articles: resp.data,
+    }
+  });
+}
+
+const deleteArticleFn = (id: string): ArticleAsyncFn => {
+  return async (dispatch) => {
+    await axiosInstance.delete<void>(`/${id}`);
+    dispatch(fetchArticles())
+  }
+}
+
+const upsertArticleFn = (params: UpsertRequest): ArticleAsyncFn => {
+  return async (dispatch) => {
+    if (params.id) {
+      await axiosInstance.put(`/${params.id}`, params);
+    } else {
+      await axiosInstance.post<void>('/', params);
+    }
+    dispatch(fetchArticles())
+  }
+}
+
+const updateFavoriteFn = (id: string): ArticleAsyncFn => {
+  return async (dispatch) => {
+    await axiosInstance.post<void>(`/${id}/favorite`);
+    dispatch(fetchArticles())
+  }
+}
+```
+
+然后 dispatch 时传入这些函数作为 payload 即可，当然这样的方式要不断构造 action 对象，所以可以定义对应的 ActionCreator：
+
+```ts
+const fetchArticles = (): ArticleAction =>({
+  type: 'articles/fetch',
+  payload: fetchArticlesFn,
+})
+
+const deleteArticle = (id: string): ArticleAction =>({
+  type: 'articles/delete',
+  payload: deleteArticleFn(id),
+})
+
+const upsertArticle = (params: UpsertRequest): ArticleAction =>({
+  type: 'articles/fetch',
+  payload: upsertArticleFn(params),
+})
+
+const updateFavorite = (id: string): ArticleAction =>({
+  type: 'articles/updateFavorite',
+  payload: updateFavoriteFn(id),
+})
+```
+
+这样在组件中就可以像下面这样使用了：
+
+```ts
+const onSubmit = async ({title, content}: formType) => {
+  try {
+    await dispatch(upsertArticle({title, content}));
+  } catch (e) {
+    if (e instanceof Error) {
+      sender.error(e.message);
+    } else {
+      sender.error(JSON.stringify(e));
+    }
+    return;
+  }
+  sender.success('ok');
+}
+```
+
+#### 使用 thunk middleware
+
+除了自定义异步 middleware 之外，还可以直接使用 thunk middleware。
+
+安装：
+
+```bash
+yarn add redux-thunk
+```
+
+然后引入这个中间件：
+
+```ts
+import thunk from "redux-thunk";
+const middleEnhancer = applyMiddleware(thunk);
+```
+
+引入此中间件后，dispatch 可以接受函数作为参数了，所以现在来修改之前发出请求的异步函数：
+
+```ts
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+const fetchArticles: ThunkAction<Promise<void>, NativeState, void, ArticleAction> = async (dispatch) => {
+  const resp = await axiosInstance.get<Array<Article>>('/');
+  dispatch({
+    type: 'articles/resolved',
+    payload: {
+      articles: resp.data,
+    }
+  });
+}
+
+const deleteArticle = (id: string): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async (dispatch) => {
+    await axiosInstance.delete<void>(`/${id}`);
+    await dispatch(fetchArticles)
+  }
+}
+
+const upsertArticle = (params: UpsertRequest): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async (dispatch) => {
+    if (params.id) {
+      await axiosInstance.put(`/${params.id}`, params);
+    } else {
+      await axiosInstance.post<void>('/', params);
+    }
+    await dispatch(fetchArticles)
+  }
+}
+
+const updateFavorite = (id: string): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async (dispatch) => {
+    await axiosInstance.post<void>(`/${id}/favorite`);
+    await dispatch(fetchArticles)
+  }
+}
+```
+
+这里将函数或者函数的返回值声明为 ThunkAction 类型，这个类型接收四个泛型，第一个泛型是返回类型，这里都是返回 `Promise<void>`，第二个泛型是 Store 中状态树的类型，第三个泛型是额外参数，这里设置为 void，第四个泛型是当前 reducer 正常的 Action 类型。
+
+接下来，为了在 dispatch 传入函数的情况下仍然有 TypeScript 类型标注，因此需要定义一个新的 Dispatch 类型：
+
+```ts
+export type ArticleDispatch = ThunkDispatch<NativeState, void, ArticleAction>
+```
+
+最后，在组件中使用这些 action：
+
+```tsx
+{/* other codes */}
+{
+  isEditing ? <Button onClick={async () => {
+    await dispatch(upsertArticle({title, content, id: article?.id}))
+    setIsEditing(false);
+    sender.success('ok')
+  }}>Submit</Button> : undefined
+}
+{/* other codes */}
+```
