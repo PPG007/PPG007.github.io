@@ -27,8 +27,8 @@ module.exports.config = hope.config({
         [
             'vuepress-plugin-meilisearch',
             {
-                hostUrl: 'https://ppg007.asia:7000',
-                apiKey: '941543d947a75506fb223af0d3f04847330f2199e790438c8f63bd0705a41add',
+                hostUrl: 'https://ppg007.icu:7000',
+                apiKey: 'e96df0280f3356913533e81e086329bb7915c3f8cb6a78a08546eadb5e89f50e',
                 indexUid: 'docs',
                 placeholder: 'press s to start search',
                 maxSuggestions: 100,
