@@ -24,16 +24,22 @@ module.exports.config = hope.config({
         pageInfo: false
     },
     plugins: [
+        // [
+        //     'vuepress-plugin-meilisearch',
+        //     {
+        //         hostUrl: 'https://ppg007.icu:7000',
+        //         apiKey: 'e96df0280f3356913533e81e086329bb7915c3f8cb6a78a08546eadb5e89f50e',
+        //         indexUid: 'docs',
+        //         placeholder: 'press s to start search',
+        //         maxSuggestions: 100,
+        //         cropLength: 50,
+        //         layout: 'simple',
+        //     }
+        // ],
         [
-            'vuepress-plugin-meilisearch',
+            'plugin-search',
             {
-                hostUrl: 'https://ppg007.icu:7000',
-                apiKey: 'e96df0280f3356913533e81e086329bb7915c3f8cb6a78a08546eadb5e89f50e',
-                indexUid: 'docs',
-                placeholder: 'press s to start search',
-                maxSuggestions: 100,
-                cropLength: 50,
-                layout: 'simple',
+                searchMaxSuggestions: 10
             }
         ],
         [
