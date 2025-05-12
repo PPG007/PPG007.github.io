@@ -1,10 +1,8 @@
-module.exports.default = {
+export default {
   sidebar: {
     '/i18next': [
       {
-        children: [
-          '/i18next/docs/basic.md',
-        ],
+        children: ['/i18next/docs/basic.md'],
         text: 'i18next',
       },
     ],

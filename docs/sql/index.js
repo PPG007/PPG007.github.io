@@ -1,4 +1,4 @@
-module.exports.default = {
+export default {
   sidebar: {
     '/sql': [
       {
@@ -9,13 +9,13 @@ module.exports.default = {
           '/sql/docs/delete.md',
           '/sql/docs/database.md',
         ],
-        text: 'SQL'
-      }
-    ]
+        text: 'SQL',
+      },
+    ],
   },
   navbar: {
     text: 'SQL',
     link: '/sql',
-    group: '数据库'
-  }
-}
+    group: '数据库',
+  },
+};
