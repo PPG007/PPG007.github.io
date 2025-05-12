@@ -4,6 +4,7 @@ module.exports.default = {
       {
         children: [
             '/laravel/docs/start.md',
+            '/laravel/docs/concepts.md',
             '/laravel/docs/deploy.md',
         ],
         text: 'Laravel',
