@@ -7,8 +7,10 @@ interface SidebarConfig {
   [key: string]: Array<SidebarChildren>;
 }
 
+type NavbarGroupName = '前端' | 'Java' | 'Go' | 'Node' | 'PHP' | '云相关' | '数据库' | '在线工具' | 'others';
+
 interface NavbarConfig {
-  group: string;
+  group: NavbarGroupName;
   text: string;
   link: string;
   icon?: string;
@@ -19,4 +21,9 @@ interface BarConfig {
   navbar: NavbarConfig;
 }
 
-export { SidebarChildren, SidebarConfig, NavbarConfig, BarConfig };
+interface NavbarGroup {
+  text: NavbarGroupName;
+  icon?: string;
+}
+
+export { SidebarChildren, SidebarConfig, NavbarConfig, BarConfig, NavbarGroup };
