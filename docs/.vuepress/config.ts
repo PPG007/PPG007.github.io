@@ -5,8 +5,6 @@ import { hopeTheme } from 'vuepress-theme-hope';
 
 const { navbar, sidebar } = await init();
 
-console.log(JSON.stringify(navbar));
-
 export default defineUserConfig({
   lang: 'zh-CN',
   title: 'PPG007 的文档',
