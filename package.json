@@ -23,6 +23,5 @@
     "docs:dev": "tsc && vuepress dev docs",
     "docs:update-package": "pnpm dlx vp-update",
     "compile": "tsc"
-  },
-  "packageManager": "pnpm@10.10.0"
+  }
 }
