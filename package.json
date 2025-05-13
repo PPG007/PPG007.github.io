@@ -19,7 +19,7 @@
   },
   "scripts": {
     "docs:build": "tsc && vuepress build docs",
-    "docs:clean-dev": "vuepress dev docs --clean-cache",
+    "docs:clean-dev": "tsc && vuepress dev docs --clean-cache",
     "docs:dev": "tsc && vuepress dev docs",
     "docs:update-package": "pnpm dlx vp-update",
     "compile": "tsc"

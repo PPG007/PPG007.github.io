@@ -23,6 +23,7 @@ const config: BarConfig = {
     text: 'JavaScript',
     link: '/javascript',
     group: '前端',
+    icon: 'skill-icons:javascript',
   },
 };
 

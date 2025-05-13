@@ -40,6 +40,7 @@ const config: BarConfig = {
     text: 'Vue 2.X',
     link: '/vue2',
     group: '前端',
+    icon: 'logos:vue',
   },
 };
 

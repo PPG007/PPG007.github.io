@@ -24,6 +24,7 @@ const config: BarConfig = {
     text: 'Mybatis',
     link: '/mybatis',
     group: 'Java',
+    icon: 'material-symbols:database',
   },
 };
 

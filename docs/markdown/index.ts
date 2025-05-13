@@ -4,11 +4,7 @@ const config: BarConfig = {
   sidebar: {
     '/markdown': [
       {
-        children: [
-          '/markdown/docs/basic.md',
-          '/markdown/docs/expand.md',
-          '/markdown/docs/standard.md',
-        ],
+        children: ['/markdown/docs/basic.md', '/markdown/docs/expand.md', '/markdown/docs/standard.md'],
         text: 'Markdown',
       },
     ],
@@ -17,6 +13,7 @@ const config: BarConfig = {
     text: 'Markdown',
     link: '/markdown',
     group: 'others',
+    icon: 'skill-icons:markdown-light',
   },
 };
 

@@ -4,11 +4,7 @@ const config: BarConfig = {
   sidebar: {
     '/restful': [
       {
-        children: [
-          '/restful/docs/three_level.md',
-          '/restful/docs/design.md',
-          '/restful/docs/others.md',
-        ],
+        children: ['/restful/docs/three_level.md', '/restful/docs/design.md', '/restful/docs/others.md'],
         text: 'Restful API',
       },
     ],
@@ -17,6 +13,7 @@ const config: BarConfig = {
     text: 'Restful API',
     link: '/restful',
     group: 'others',
+    icon: 'material-symbols:http',
   },
 };
 

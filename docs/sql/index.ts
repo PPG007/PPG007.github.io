@@ -19,6 +19,7 @@ const config: BarConfig = {
     text: 'SQL',
     link: '/sql',
     group: '数据库',
+    icon: 'hugeicons:sql',
   },
 };
 

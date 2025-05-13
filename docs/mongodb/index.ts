@@ -18,6 +18,7 @@ const config: BarConfig = {
     text: 'MongoDB',
     link: '/mongodb',
     group: '数据库',
+    icon: 'skill-icons:mongodb',
   },
 };
 

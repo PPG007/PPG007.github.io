@@ -19,6 +19,7 @@ const config: BarConfig = {
     text: 'Coding Style',
     link: '/codingstyle',
     group: 'others',
+    icon: 'vscode-icons:file-type-style',
   },
 };
 

@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'OpenSSL',
     link: '/openssl',
     group: '云相关',
+    icon: 'fa-brands:expeditedssl',
   },
 };
 

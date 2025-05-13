@@ -29,6 +29,7 @@ const config: BarConfig = {
     text: 'Kubernetes',
     link: '/kubernetes',
     group: '云相关',
+    icon: 'logos:kubernetes',
   },
 };
 

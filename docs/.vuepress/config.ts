@@ -5,6 +5,8 @@ import { hopeTheme } from 'vuepress-theme-hope';
 
 const { navbar, sidebar } = await init();
 
+console.log(JSON.stringify(navbar));
+
 export default defineUserConfig({
   lang: 'zh-CN',
   title: 'PPG007 的文档',
@@ -45,7 +47,7 @@ export default defineUserConfig({
         repoId: 'R_kgDOGk5u3g',
         category: 'General',
         categoryId: 'DIC_kwDOGk5u3s4COgEc',
-      }
+      },
     },
   }),
   bundler: viteBundler(),

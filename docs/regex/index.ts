@@ -24,6 +24,7 @@ const config: BarConfig = {
     text: '正则表达式',
     link: '/regex',
     group: 'others',
+    icon: 'skill-icons:regex-light',
   },
 };
 

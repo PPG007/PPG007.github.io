@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'Linux',
     link: '/linux',
     group: '云相关',
+    icon: 'logos:linux-tux',
   },
 };
 

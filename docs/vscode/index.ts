@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'VsCode',
     link: '/vscode',
     group: 'others',
+    icon: 'material-icon-theme:vscode',
   },
 };
 

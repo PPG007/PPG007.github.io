@@ -18,6 +18,7 @@ const config: BarConfig = {
     text: '搭建软路由',
     link: '/openwrt',
     group: 'others',
+    icon: 'cbi:openwrt-logo',
   },
 };
 

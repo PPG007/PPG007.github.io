@@ -27,6 +27,7 @@ const config: BarConfig = {
     text: 'CSS',
     link: '/css',
     group: '前端',
+    icon: 'skill-icons:css',
   },
 };
 

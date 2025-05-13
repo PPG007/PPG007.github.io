@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'i18next',
     link: '/i18next',
     group: '前端',
+    icon: 'material-icon-theme:folder-i18n-open',
   },
 };
 

@@ -29,6 +29,7 @@ const config: BarConfig = {
     text: 'SpringCloud',
     link: '/SpringCloud',
     group: 'Java',
+    icon: 'line-md:cloud-up-twotone',
   },
 };
 

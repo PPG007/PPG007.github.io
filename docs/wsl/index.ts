@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'WSL',
     link: '/wsl',
     group: 'others',
+    icon: 'skill-icons:windows-light',
   },
 };
 

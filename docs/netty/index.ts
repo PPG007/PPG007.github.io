@@ -25,6 +25,7 @@ const config: BarConfig = {
     text: 'Netty',
     link: '/netty',
     group: 'Java',
+    icon: 'carbon:server-dns',
   },
 };
 

@@ -19,6 +19,7 @@ const config: BarConfig = {
     text: 'Vue 3',
     link: '/vue3',
     group: '前端',
+    icon: 'logos:vue',
   },
 };
 

@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: '域名获取及 CA 认证',
     link: '/domain',
     group: '云相关',
+    icon: 'stash:domain',
   },
 };
 

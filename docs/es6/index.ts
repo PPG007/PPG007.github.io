@@ -28,6 +28,7 @@ const config: BarConfig = {
     text: 'ES6',
     link: '/es6',
     group: '前端',
+    icon: 'arcticons:es-de-frontend',
   },
 };
 

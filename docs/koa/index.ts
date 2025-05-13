@@ -21,6 +21,7 @@ const config: BarConfig = {
     text: 'Koa',
     link: '/koa',
     group: 'Node',
+    icon: 'simple-icons:koa',
   },
 };
 

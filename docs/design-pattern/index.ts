@@ -47,6 +47,7 @@ const config: BarConfig = {
     text: '设计模式',
     link: '/design-pattern',
     group: 'others',
+    icon: 'icon-park-outline:bydesign',
   },
 };
 

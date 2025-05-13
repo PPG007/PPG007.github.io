@@ -27,6 +27,7 @@ const config: BarConfig = {
     text: 'Spring',
     link: '/spring',
     group: 'Java',
+    icon: 'devicon:spring-wordmark',
   },
 };
 
