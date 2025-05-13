@@ -7,7 +7,7 @@
 
 ## 配置 ZooKeeper+LevelDB 集群
 
-首先要有一个 ZooKeeper 集群，配置方法参考：[ZooKeeper](/ZooKeeper.md)
+首先要有一个 ZooKeeper 集群，配置方法参考：[ZooKeeper](/zookeeper/)
 
 - 使用 ZooKeeper 集群注册所有的 ActiveMQ Broker 但只有其中的一个 Broker 可以提供服务它将被视为 Master,其他的 Broker 处于待机状态被视为 Slave。如果 Master 因故障而不能提供服务 ZooKeeper 会从 Slave 中选举出一个 Broker 充当 Master。
 - Slave 连接 Master 并同步他们的存储状态, _Slave不接受客户端连接_。所有的存储操作都将被复制到连接至 Master 的 Slaves。如果 Master 宕机得到了最新更新的 Slave 会成为 Master。故障节点在恢复后会重新加入到集群中并接 Master 进入 Slave 模式。所有需要同步的消息操作都将等待存储状态被复制到其他法定节点的操作完成才能完成。所以,如果你配置了 replicas=3,那么法定大小是(3/2)+1=2。 Master 将会存储并更新然后等待(2-1)=1 个 Save 存储和更新完成才汇报 success。

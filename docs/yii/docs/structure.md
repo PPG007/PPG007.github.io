@@ -239,7 +239,7 @@ class RPC
 
 ::: tip
 
-控制器类必须能够被[自动加载](./contepts.md##类自动加载)。
+控制器类必须能够被[自动加载](/yii/docs/concepts.html#类自动加载)。
 
 :::
 

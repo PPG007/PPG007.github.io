@@ -14,7 +14,7 @@ vim ~/.pip/pip.conf
 
 add this to pip.conf:
 
-```conf
+```toml
 [global]
 index-url=http://mirrors.aliyun.com/pypi/simple/
 [install]

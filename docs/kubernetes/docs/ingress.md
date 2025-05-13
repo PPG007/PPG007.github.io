@@ -100,7 +100,7 @@ Nginx Ingress Controller 的高级功能都可以通过添加 annotations 实现
 
 首先请确保系统中已安装 OpenSSL，然后创建下面的 /tmp/openssl.cnf 文件：
 
-```cnf
+```toml
 [ req ]
 #default_bits           = 2048
 #default_md             = sha256

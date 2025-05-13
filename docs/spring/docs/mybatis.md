@@ -1,6 +1,6 @@
 # Mybatis
 
-[Mybatis](/MyBatis.md)
+[Mybatis](/mybatis/)
 
 ## 相关依赖
 

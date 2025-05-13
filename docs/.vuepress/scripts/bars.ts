@@ -4,7 +4,7 @@ import {
   NavbarLinkOptions,
   SidebarOptions,
   SidebarObjectOptions,
-} from '@vuepress/theme-default';
+} from 'vuepress-theme-hope';
 import { BarConfig } from '../types';
 import fs from 'fs';
 import path from 'path';

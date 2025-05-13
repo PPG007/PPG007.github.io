@@ -1,1 +1,4 @@
-# Vue 2.X :person_fencing:
+---
+icon: logos:vue
+---
+# Vue 2.X

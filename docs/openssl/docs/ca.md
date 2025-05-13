@@ -127,7 +127,7 @@ openssl req -new -key pri_key.pem -out localhost.crt
 ::: warning
 注意生成请求时，根据配置文件中的 [policy_match] 模块中的配置，match 表示请求中的这个字段和 CA 的这个字段必须相同，supplied 表示必须要提供的项，optional 表示可选项，所以可以留空。
 
-```cnf
+```toml
 [ policy_match ]
 countryName		= match
 stateOrProvinceName	= match
