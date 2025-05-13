@@ -26,6 +26,7 @@ export default defineUserConfig({
         },
         whitespace: 'all',
       },
+      codeTabs: true,
     },
     plugins: {
       watermark: {

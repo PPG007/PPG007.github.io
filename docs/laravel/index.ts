@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'Laravel',
     link: '/laravel',
     group: 'PHP',
+    icon: 'skill-icons:laravel-light',
   },
 };
 export default config;

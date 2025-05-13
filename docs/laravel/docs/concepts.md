@@ -111,6 +111,10 @@ abstract class AnimalService
 
 接下来在 `Services/Impl` 里分别创建 DogService 和 CatService：
 
+::: code-tabs#animal
+
+@tab DogService
+
 ```php
 <?php
 
@@ -129,6 +133,8 @@ class DogService extends AnimalService
 }
 ```
 
+@tab CatService
+
 ```php
 <?php
 
@@ -146,6 +152,8 @@ class CatService extends AnimalService
     }
 }
 ```
+
+:::
 
 修改 `DemoController`：
 

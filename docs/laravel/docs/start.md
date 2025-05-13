@@ -66,7 +66,7 @@ php artisan serve --env=staging
 
 在代码中使用 `env()` 函数读取环境变量时，根据 `.env` 文件中定义的环境变量，可以读取到不同的值。如果配置的值为 true 或者 false，那么此函数返回一个布尔类型的变量；如果是保持为空，那么此函数返回一个空字符串；如果配置为 null，那么此函数返回 null，考虑如下的配置：
 
-```env
+```dotenv
 BOOL_TEST1=true
 BOOL_TEST2=false
 BOOL_TEST3=(true)
@@ -188,7 +188,7 @@ php artisan down --secret="1630542a-246b-4b66-afa1-dd72a4c43515"
 
 在集群部署的情况下，如果要将所有的应用都开启维护模式，那么需要在每个实例内都执行上面的命令，或者修改 .env 文件，选择将维护模式的状态保存到所有实例都能访问的地方：
 
-```env
+```dotenv
 APP_MAINTENANCE_DRIVER=cache
 APP_MAINTENANCE_STORE=database
 ```
