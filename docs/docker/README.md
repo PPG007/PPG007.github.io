@@ -129,7 +129,7 @@ services:
 
 MySQL 配置文件：
 
-```cnf
+```toml
 [mysqld]
 default_authentication_plugin= mysql_native_password
 ```
@@ -180,6 +180,6 @@ http {
 
 PHP-FPM 配置文件，只修改 listen 属性值即可，要和 Nginx 的与 PHP 连接的配置相同：
 
-```conf
+```nginx
 listen = 9000
 ```

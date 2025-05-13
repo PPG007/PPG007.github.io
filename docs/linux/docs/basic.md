@@ -712,7 +712,7 @@ sudo systemctl restart httpd
 
 使用 `systemctl cat ${unit name}` 查看某个 unit 的配置文件内容。
 
-```conf
+```systemd
 [Unit]
 Description=DockerHostsUpdater
 After=network.target nss-lookup.target
