@@ -13,6 +13,9 @@ export default defineUserConfig({
   theme: defaultTheme({
     navbar,
     sidebar,
+    hostname: 'https://ppg007.github.io',
+    docsRepo: 'https://github.com/PPG007/PPG007.github.io',
+    docsBranch: 'main',
   }),
   bundler: viteBundler(),
 });
