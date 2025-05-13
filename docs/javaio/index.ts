@@ -22,6 +22,7 @@ const config: BarConfig = {
     text: 'Java IO',
     link: '/javaio',
     group: 'Java',
+    icon: 'oui:input-output',
   },
 };
 

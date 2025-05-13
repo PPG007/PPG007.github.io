@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'Docker',
     link: '/docker',
     group: '云相关',
+    icon: 'logos:docker-icon',
   },
 };
 

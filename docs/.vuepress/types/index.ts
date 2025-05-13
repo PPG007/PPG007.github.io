@@ -11,6 +11,7 @@ interface NavbarConfig {
   group: string;
   text: string;
   link: string;
+  icon?: string;
 }
 
 interface BarConfig {

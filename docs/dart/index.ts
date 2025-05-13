@@ -27,6 +27,7 @@ const config: BarConfig = {
     text: 'Dart',
     link: '/dart',
     group: '前端',
+    icon: 'logos:dart',
   },
 };
 

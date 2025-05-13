@@ -26,6 +26,7 @@ const config: BarConfig = {
     text: 'Java 知识点',
     link: '/javaknowledge',
     group: 'Java',
+    icon: 'hugeicons:knowledge-02',
   },
 };
 

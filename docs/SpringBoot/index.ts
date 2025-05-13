@@ -28,6 +28,7 @@ const config: BarConfig = {
     text: 'SpringBoot',
     link: '/SpringBoot',
     group: 'Java',
+    icon: 'simple-icons:springboot',
   },
 };
 

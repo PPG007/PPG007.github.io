@@ -22,6 +22,7 @@ const config: BarConfig = {
     text: 'Elasticsearch',
     link: '/elasticsearch',
     group: '数据库',
+    icon: 'skill-icons:elasticsearch-light',
   },
 };
 

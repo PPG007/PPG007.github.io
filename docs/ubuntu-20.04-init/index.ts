@@ -35,6 +35,7 @@ const config: BarConfig = {
     text: 'Ubuntu20.04 Init',
     link: '/ubuntu-20.04-init',
     group: 'others',
+    icon: 'logos:ubuntu',
   },
 };
 

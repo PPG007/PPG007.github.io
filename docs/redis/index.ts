@@ -24,6 +24,7 @@ const config: BarConfig = {
     text: 'Redis',
     link: '/redis',
     group: '数据库',
+    icon: 'skill-icons:redis-light',
   },
 };
 

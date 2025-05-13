@@ -20,6 +20,7 @@ const config: BarConfig = {
     text: 'Axios',
     link: '/axios',
     group: '前端',
+    icon: 'material-icon-theme:http',
   },
 };
 

@@ -28,6 +28,7 @@ const config: BarConfig = {
     text: 'React',
     link: '/react',
     group: '前端',
+    icon: 'material-icon-theme:react',
   },
 };
 

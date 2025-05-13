@@ -33,6 +33,7 @@ const config: BarConfig = {
     text: 'gRPC&Protobuf',
     link: '/grpc-and-protobuf',
     group: 'Go',
+    icon: 'vscode-icons:file-type-protobuf',
   },
 };
 

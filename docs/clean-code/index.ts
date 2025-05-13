@@ -26,6 +26,7 @@ const config: BarConfig = {
     text: 'Clean Code',
     link: '/clean-code',
     group: 'others',
+    icon: 'carbon:clean',
   },
 };
 

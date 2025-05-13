@@ -27,6 +27,7 @@ const config: BarConfig = {
     text: 'ActiveMQ',
     link: '/activemq',
     group: '云相关',
+    icon: 'mdi:mq',
   },
 };
 

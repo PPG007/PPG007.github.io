@@ -20,6 +20,7 @@ const config: BarConfig = {
     text: 'ZooKeeper',
     link: '/zookeeper',
     group: '云相关',
+    icon: 'logos:apache',
   },
 };
 

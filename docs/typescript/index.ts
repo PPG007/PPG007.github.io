@@ -4,11 +4,7 @@ const config: BarConfig = {
   sidebar: {
     '/typescript': [
       {
-        children: [
-          '/typescript/docs/start.md',
-          '/typescript/docs/basic.md',
-          '/typescript/docs/advance.md',
-        ],
+        children: ['/typescript/docs/start.md', '/typescript/docs/basic.md', '/typescript/docs/advance.md'],
         text: 'TypeScript',
       },
     ],
@@ -17,6 +13,7 @@ const config: BarConfig = {
     text: 'TypeScript',
     link: '/typescript',
     group: 'Node',
+    icon: 'skill-icons:typescript',
   },
 };
 

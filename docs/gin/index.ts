@@ -23,6 +23,7 @@ const config: BarConfig = {
     text: 'Gin',
     link: '/gin',
     group: 'Go',
+    icon: 'logos:gin',
   },
 };
 

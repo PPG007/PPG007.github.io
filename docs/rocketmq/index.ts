@@ -18,6 +18,7 @@ const config: BarConfig = {
     text: 'RocketMQ',
     link: '/rocketmq',
     group: '云相关',
+    icon: 'simple-icons:apacherocketmq',
   },
 };
 

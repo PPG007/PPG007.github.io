@@ -26,6 +26,7 @@ const config: BarConfig = {
     text: 'HTML',
     link: '/html',
     group: '前端',
+    icon: 'devicon:html5',
   },
 };
 

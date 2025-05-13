@@ -32,6 +32,7 @@ const config: BarConfig = {
     text: 'Java 多线程',
     link: '/javathread',
     group: 'Java',
+    icon: 'flat-color-icons:parallel-tasks',
   },
 };
 

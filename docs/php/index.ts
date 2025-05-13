@@ -29,6 +29,7 @@ const config: BarConfig = {
     text: 'PHP',
     link: '/php',
     group: 'PHP',
+    icon: 'material-icon-theme:php-elephant',
   },
 };
 

@@ -45,6 +45,7 @@ const config: BarConfig = {
     text: 'Go',
     link: '/go',
     group: 'Go',
+    icon: 'devicon:go',
   },
 };
 

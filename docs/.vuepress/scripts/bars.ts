@@ -12,7 +12,9 @@ import navbarList from './navbarList';
 
 const configPath = 'docs/.vuepress/config';
 
-const defaultNavbar: Array<NavbarGroupOptions> = [{ text: '首页', link: '/', children: [] }];
+const defaultNavbar: Array<NavbarGroupOptions> = [
+  { text: '首页', link: '/', icon: 'material-symbols:home', children: [] },
+];
 
 const formatLink = (link: string): string => {
   if (link.endsWith('/')) {
@@ -39,24 +41,21 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
   } = {};
   configs.forEach((config) => {
     const {
-      navbar: { group, text, link },
+      navbar: { group, text, link, icon },
     } = config;
+    const child: NavbarLinkOptions = {
+      text: text,
+      link: formatLink(link),
+      icon: icon,
+    };
     if (!Object.keys(uniqueMap).includes(group)) {
       uniqueMap[group] = {
         text: group,
-        children: [
-          {
-            text: text,
-            link: formatLink(link),
-          },
-        ],
+        children: [child],
       };
     } else {
       const currentChildren = uniqueMap[group].children;
-      currentChildren.push({
-        text: text,
-        link: formatLink(link),
-      });
+      currentChildren.push(child);
       uniqueMap[group].children = currentChildren;
     }
   });
@@ -65,10 +64,13 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
   });
 
   return sortNavbar(navbar).map((item) => {
+    const group = navbarList.find((navbar) => navbar.text === item.text);
+    item.icon = group ? group.icon : item.icon;
     if (!item.children.length) {
       const temp: NavbarLinkOptions = {
         text: item.text,
         link: item.link || '/',
+        icon: item.icon,
       };
       return temp;
     }
@@ -79,8 +81,8 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
 // 根据 navbar 顺序文件进行排序
 const sortNavbar = (navbar: Array<NavbarGroupOptions>) => {
   navbar.sort((a, b) => {
-    const orderA = navbarList.indexOf(a.text);
-    const orderB = navbarList.indexOf(b.text);
+    const orderA = navbarList.findIndex((item) => item.text === a.text);
+    const orderB = navbarList.findIndex((item) => item.text === b.text);
     if (orderA === undefined) {
       return 1;
     } else if (orderB === undefined) {

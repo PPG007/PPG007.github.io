@@ -23,6 +23,7 @@ const config: BarConfig = {
     text: 'SpringMVC',
     link: '/SpringMVC',
     group: 'Java',
+    icon: 'logos:spring-icon',
   },
 };
 

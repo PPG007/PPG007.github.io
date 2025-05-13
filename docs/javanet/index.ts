@@ -13,6 +13,7 @@ const config: BarConfig = {
     text: 'Java 网络通信',
     link: '/javanet',
     group: 'Java',
+    icon: 'tabler:network',
   },
 };
 

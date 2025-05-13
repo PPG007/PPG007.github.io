@@ -21,6 +21,7 @@ const config: BarConfig = {
     text: 'Yii',
     link: '/yii',
     group: 'PHP',
+    icon: 'logos:yii',
   },
 };
 

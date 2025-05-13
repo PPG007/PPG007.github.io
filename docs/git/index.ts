@@ -21,6 +21,7 @@ const config: BarConfig = {
     text: 'Git',
     link: '/git',
     group: 'others',
+    icon: 'devicon:git',
   },
 };
 

@@ -19,6 +19,7 @@ const config: BarConfig = {
     text: 'Istio',
     link: '/istio',
     group: '云相关',
+    icon: 'simple-icons:istio',
   },
 };
 

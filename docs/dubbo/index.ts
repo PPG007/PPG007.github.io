@@ -22,6 +22,7 @@ const config: BarConfig = {
     text: 'Dubbo',
     link: '/dubbo',
     group: 'Java',
+    icon: 'streamline:interface-arrows-data-transfer-diagonal-arrows-arrow-server-data-diagonal-internet-transfer-network',
   },
 };
 

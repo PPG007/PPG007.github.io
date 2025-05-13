@@ -25,6 +25,7 @@ const config: BarConfig = {
     text: 'Java 注解和反射',
     link: '/annotation-and-reflection',
     group: 'Java',
+    icon: 'devicon:java',
   },
 };
 
