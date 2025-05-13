@@ -1,7 +1,5 @@
-interface NavbarGroup {
-  text: string;
-  icon?: string;
-}
+import { NavbarGroup } from '../types';
+
 const groups: Array<NavbarGroup> = [
   {
     text: '前端',
@@ -30,6 +28,10 @@ const groups: Array<NavbarGroup> = [
   {
     text: '数据库',
     icon: 'iconoir:database-tag-solid',
+  },
+  {
+    text: '在线工具',
+    icon: 'fa-solid:tools',
   },
   {
     text: 'others',
