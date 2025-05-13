@@ -3,9 +3,6 @@ home: true
 heroImage: /indexImage
 tagline: null
 actions:
-  - text: Started
-    link: /html
-    type: primary
   - text: GitHub
     link: https://github.com/PPG007/PPG007.github.io
     type: secondary
