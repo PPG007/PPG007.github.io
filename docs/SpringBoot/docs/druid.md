@@ -48,7 +48,7 @@ public class DruidConfig {
 
 ```yaml
 druid:
-#初始化大小
+  #初始化大小
   initialSize: 5
   #最小值
   minIdle: 5

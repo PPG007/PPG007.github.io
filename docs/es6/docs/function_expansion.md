@@ -4,17 +4,17 @@
 
 ```javascript
 function add(x, inc = 1) {
-  return x + inc
+  return x + inc;
 }
 ```
 
 与解构赋值默认值结合：
 
 ```javascript
-function add({x, y = 1}) {
-  return x + y
+function add({ x, y = 1 }) {
+  return x + y;
 }
-console.log(add({x:1}));
+console.log(add({ x: 1 }));
 ```
 
 指定了默认值以后，函数的 length 属性将返回没有指定默认值的参数个数。
@@ -25,13 +25,18 @@ console.log(add({x:1}));
 
 ```javascript
 let x = 1;
-function foo(x, y = function () { x = 2;}) {
+function foo(
+  x,
+  y = function () {
+    x = 2;
+  }
+) {
   var x = 3;
-  y()
+  y();
   console.log(x);
 }
-foo()// 3
-console.log(x);// 1
+foo(); // 3
+console.log(x); // 1
 ```
 
 在上面的代码中，如果函数中的 x 变量使用 var 声明，那么 foo 参数列表中的 x 变量和方法体内部的 x 变量不是一个变量，而 y 所指向的函数中操作的变量和参数列表中的 x 是一个变量，所以最后输出 3。如果不使用 var 声明，则这两个 x 是一个变量，输出 2。
@@ -48,7 +53,7 @@ function sum(...number) {
   }
   return sum;
 }
-console.log(sum(1,2,3,4,5,6,7,8));
+console.log(sum(1, 2, 3, 4, 5, 6, 7, 8));
 ```
 
 rest 参数必须在参数列表最后，函数的 length 属性不包含 rest 参数。
@@ -58,7 +63,7 @@ rest 参数必须在参数列表最后，函数的 length 属性不包含 rest �
 由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上大括号：
 
 ```javascript
-let getUser = (account = 'ppg', password = '123456')=>({account, password})
+let getUser = (account = 'ppg', password = '123456') => ({ account, password });
 console.log(getUser());
 ```
 

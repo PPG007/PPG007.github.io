@@ -117,29 +117,29 @@
 
 - 关于语言版本不停回溯到默认值问题：
 
-    需要在 pom.xml 中指定：
+  需要在 pom.xml 中指定：
 
-    ```xml
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    ```
+  ```xml
+  <properties>
+      <java.version>1.8</java.version>
+  </properties>
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.1</version>
+              <configuration>
+                  <source>1.8</source>
+                  <target>1.8</target>
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
+  ```
 
 - 代码没有问题但是运行 404、ClassNotFound 或者其他问题：
 
-    在 Project Structure 的 Artifacts 中，在 WEB-INF 文件夹中创建 lib 文件夹并添加全部依赖。
+  在 Project Structure 的 Artifacts 中，在 WEB-INF 文件夹中创建 lib 文件夹并添加全部依赖。
 
 - 配置了 default handler 后静态资源依然 404：检查 out 文件夹。

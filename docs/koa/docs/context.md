@@ -32,15 +32,15 @@ Koa 的 Response 对象。
 推荐的命名空间，用于通过中间件传递信息，例如：
 
 ```ts
-import koa =  require('koa');
+import koa = require('koa');
 const app = new koa();
 
 app.use(async (ctx, next) => {
-    ctx.state.userId = '123';
-    await next();
-})
-app.use((ctx) => {
-    ctx.body = ctx.state.userId;
+  ctx.state.userId = '123';
+  await next();
+});
+app.use(ctx => {
+  ctx.body = ctx.state.userId;
 });
 app.listen(8080, '0.0.0.0');
 ```
@@ -50,18 +50,18 @@ app.listen(8080, '0.0.0.0');
 应用程序的实例引用：
 
 ```ts
-import koa =  require('koa');
+import koa = require('koa');
 const app = new koa();
 
 app.use(async (ctx, next) => {
-    ctx.app.emit('wuhu', new Date(), 1, '2');
-    await next();
-})
-app.use((ctx) => {
-    ctx.body = ctx.state.userId;
+  ctx.app.emit('wuhu', new Date(), 1, '2');
+  await next();
+});
+app.use(ctx => {
+  ctx.body = ctx.state.userId;
 });
 app.addListener('wuhu', (a, b, c) => {
-   console.log(a, b, c);
+  console.log(a, b, c);
 });
 app.listen(8080, '0.0.0.0');
 ```
@@ -69,26 +69,26 @@ app.listen(8080, '0.0.0.0');
 `ctx.cookie`：
 
 ```ts
-import koa =  require('koa');
+import koa = require('koa');
 const app = new koa();
 
 app.use(async (ctx, next) => {
-    console.log(ctx.cookies.get('token', {signed: true}));
-    await next();
-    ctx.cookies.set('user', 'PPG007', {
-        maxAge: Date.now(),
-        expires: new Date(),
-        path: '/',
-        domain: 'github.io',
-        secure: true,
-        httpOnly: true,
-        sameSite: true,
-        signed: true,
-        overwrite: true,
-    });
-})
-app.use((ctx) => {
-    ctx.body = ctx.state.userId;
+  console.log(ctx.cookies.get('token', { signed: true }));
+  await next();
+  ctx.cookies.set('user', 'PPG007', {
+    maxAge: Date.now(),
+    expires: new Date(),
+    path: '/',
+    domain: 'github.io',
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+    signed: true,
+    overwrite: true,
+  });
+});
+app.use(ctx => {
+  ctx.body = ctx.state.userId;
 });
 ```
 
@@ -107,15 +107,15 @@ app.use((ctx) => {
 `ctx.throw`：
 
 ```ts
-import koa =  require('koa');
+import koa = require('koa');
 const app = new koa();
 
 app.use(async (ctx, next) => {
-    ctx.throw(400, new Error('Invalid token'))
-    await next();
-})
-app.use((ctx) => {
-    ctx.body = ctx.state.userId;
+  ctx.throw(400, new Error('Invalid token'));
+  await next();
+});
+app.use(ctx => {
+  ctx.body = ctx.state.userId;
 });
 
 app.listen(8080, '0.0.0.0');

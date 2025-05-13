@@ -5,39 +5,39 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        let person={
-            name:'PPG',
-            sex:'male'
-        }
-        let number=21;
-        //默认：不可枚举，不可修改，不可删除
-        Object.defineProperty(person,'age',{
-            // value:number,
-            enumerable:true,//控制属性可枚举
-            // writable:true,//控制属性是否能被修改
-            configurable:true,//控制属性是否能被删除
-            //get、set方法代理了修改、获取属性值，不能和value、writable属性共存
-            // 任何获取age属性值的尝试都会走向get方法
-            get(){
-                return number;
-            },
-            // 任何修改age属性值的尝试都会走向set
-            set(value){
-                // 这里也不要添加this关键字
-                number=value;
-            },
-        })
-        console.log(person)
+      let person = {
+        name: 'PPG',
+        sex: 'male',
+      };
+      let number = 21;
+      //默认：不可枚举，不可修改，不可删除
+      Object.defineProperty(person, 'age', {
+        // value:number,
+        enumerable: true, //控制属性可枚举
+        // writable:true,//控制属性是否能被修改
+        configurable: true, //控制属性是否能被删除
+        //get、set方法代理了修改、获取属性值，不能和value、writable属性共存
+        // 任何获取age属性值的尝试都会走向get方法
+        get() {
+          return number;
+        },
+        // 任何修改age属性值的尝试都会走向set
+        set(value) {
+          // 这里也不要添加this关键字
+          number = value;
+        },
+      });
+      console.log(person);
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -50,30 +50,30 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        let obj={
-            x:100
-        };
-        let obj2={
-            y:200
-        };
-        //这样，通过obj2就可以获取、修改obj的x属性值了
-        Object.defineProperty(obj2,'x',{
-            get(){
-                return obj.x;
-            },
-            set(x){
-                obj.x=x;
-            }
-        })
+      let obj = {
+        x: 100,
+      };
+      let obj2 = {
+        y: 200,
+      };
+      //这样，通过obj2就可以获取、修改obj的x属性值了
+      Object.defineProperty(obj2, 'x', {
+        get() {
+          return obj.x;
+        },
+        set(x) {
+          obj.x = x;
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -81,21 +81,21 @@
 
 - Vue 中的数据代理：
 
-    通过 Vue 实例代理 data 对象中属性的操作。
+  通过 Vue 实例代理 data 对象中属性的操作。
 
 - 数据代理的作用：
 
-    更加方便的操作 data 中的数据。
+  更加方便的操作 data 中的数据。
 
 - 基本原理：
 
-    - 通过 `Object.defineProperty()` 把 data 对象中的所有属性添加到 Vue 实例上(其实是先将 Vue 实例的 `_data` 属性赋值成data，`_data` 中也有相应的 getter、setter，只做到这一步(`_data`)只是完成了收集数据(数据劫持)，并没有进行数据代理，将 `_data` 中的内容再代理到实例上，这样在访问 data 中的内容时就可以直接 `Vue实例.属性名`，而不需要 `Vue实例._data.属性名`)。
-    - 为每一个添加到 Vue 实例的属性创建 getter、setter。
-    - 在 getter、setter 中操作 data 中对应的属性。
+  - 通过 `Object.defineProperty()` 把 data 对象中的所有属性添加到 Vue 实例上(其实是先将 Vue 实例的 `_data` 属性赋值成data，`_data` 中也有相应的 getter、setter，只做到这一步(`_data`)只是完成了收集数据(数据劫持)，并没有进行数据代理，将 `_data` 中的内容再代理到实例上，这样在访问 data 中的内容时就可以直接 `Vue实例.属性名`，而不需要 `Vue实例._data.属性名`)。
+  - 为每一个添加到 Vue 实例的属性创建 getter、setter。
+  - 在 getter、setter 中操作 data 中对应的属性。
 
 - 数据劫持：
 
-    修改对象属性时调用 setter 进行修改并重新渲染模板。
+  修改对象属性时调用 setter 进行修改并重新渲染模板。
 
 ## 实现一个简单的数据双向绑定
 
@@ -104,32 +104,32 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test</title>
-</head>
-<body>
-  <div id="root">
-    <span>姓名：{{ name }}</span>
-    <input type="text" v-model="name">
-    <span>更多：{{ more.like }}</span>
-    <input type="text" v-model="more.like">
-  </div>
-  <script src="./myvue.js"></script>
-  <script>
-    const vm = new Vue({
-      el: '#root',
-      data: {
-        name: "ppg007",
-        more: {
-          like: "test"
-        }
-      }
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body>
+    <div id="root">
+      <span>姓名：{{ name }}</span>
+      <input type="text" v-model="name" />
+      <span>更多：{{ more.like }}</span>
+      <input type="text" v-model="more.like" />
+    </div>
+    <script src="./myvue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#root',
+        data: {
+          name: 'ppg007',
+          more: {
+            like: 'test',
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -151,11 +151,11 @@ class Vue {
 
 ```javascript
 function observer(dataInstance) {
-  if(!dataInstance || typeof dataInstance !== "object") return;
+  if (!dataInstance || typeof dataInstance !== 'object') return;
   Object.keys(dataInstance).forEach(key => {
     let temp = dataInstance[key];
     // 对于嵌套的对象，递归监听内部属性
-    observer(temp)
+    observer(temp);
     Object.defineProperty(dataInstance, key, {
       get() {
         return temp;
@@ -166,9 +166,9 @@ function observer(dataInstance) {
         observer(newValue);
         // 这里 notifier 是一个全局变量，负责通知所有对应的节点更新视图，在下面会见到
         notifier.notifyAllSubscribers();
-      }
-    })
-  })
+      },
+    });
+  });
 }
 ```
 
@@ -189,7 +189,7 @@ class Notifier {
   notifyAllSubscribers() {
     this.subscribers.forEach(subscriber => {
       subscriber.update();
-    })
+    });
   }
 }
 
@@ -221,9 +221,9 @@ function compile(element, vm) {
   vm.$el = document.querySelector(element);
   // 创建一个新的空白的文档片段
   const fragment = document.createDocumentFragment();
-//   下面将指定容器内的所有元素添加到 fragment 中
+  //   下面将指定容器内的所有元素添加到 fragment 中
   let child;
-  while (child = vm.$el.firstChild) {
+  while ((child = vm.$el.firstChild)) {
     fragment.append(child);
   }
   //   然后调用下面的函数进行编译
@@ -246,40 +246,57 @@ function fragmentCompile(node, vm) {
       // 同样使用 reduce 方法获取深层属性值
       const array = result[1].split('.');
       const value = array.reduce((total, current) => total[current], vm.$data);
-    //   这里是初始化时首先进行一次数据替换。
+      //   这里是初始化时首先进行一次数据替换。
       node.nodeValue = sourceNodeValue.replace(pattern, value);
-    //   创建订阅者，并在 callback 中传入一个更新函数，这里就是一个闭包
-      new Subscriber(vm, result[1], newValue => {
-        node.nodeValue = sourceNodeValue.replace(pattern, newValue);
-      }, notifier);
+      //   创建订阅者，并在 callback 中传入一个更新函数，这里就是一个闭包
+      new Subscriber(
+        vm,
+        result[1],
+        newValue => {
+          node.nodeValue = sourceNodeValue.replace(pattern, newValue);
+        },
+        notifier
+      );
     }
     // 对于 input 表单：
-  } else if (node.nodeType === 1 && node.nodeName === "INPUT") {
+  } else if (node.nodeType === 1 && node.nodeName === 'INPUT') {
     // 首先获取标签的属性
     const attributes = Array.from(node.attributes);
     // 遍历属性
     attributes.forEach(attribute => {
-        // 如果属性名是 v-model 就进行绑定
+      // 如果属性名是 v-model 就进行绑定
       if (attribute.nodeName === 'v-model') {
         // 首先将对应的属性值渲染到表单中
-        const value = attribute.nodeValue.split('.').reduce((total, current) => total[current], vm.$data);
+        const value = attribute.nodeValue
+          .split('.')
+          .reduce((total, current) => total[current], vm.$data);
         node.value = value;
         // 然后需要为这个表单增加订阅者
-        new Subscriber(vm, attribute.nodeValue, newValue => {
-          node.value = newValue;
-        }, notifier);
+        new Subscriber(
+          vm,
+          attribute.nodeValue,
+          newValue => {
+            node.value = newValue;
+          },
+          notifier
+        );
         // 然后为 input 表单添加 input 事件监听器
         node.addEventListener('input', e => {
           // 下面使用 reduce 方法获取到属性链最后一个元素之前的属性，例如 more.like 在这里首先获取 more 属性值，是一个对
           // 象，然后再通过中括号访问 like 属性进行赋值操作。
           const sourcePropertiesArray = attribute.nodeValue.split('.');
-          const propertiesArrayWithoutLast = sourcePropertiesArray.slice(0, sourcePropertiesArray.length - 1);
-          propertiesArrayWithoutLast.reduce((total, current) => total[current], vm.$data)[sourcePropertiesArray[sourcePropertiesArray.length - 1]] = e.target.value;
+          const propertiesArrayWithoutLast = sourcePropertiesArray.slice(
+            0,
+            sourcePropertiesArray.length - 1
+          );
+          propertiesArrayWithoutLast.reduce((total, current) => total[current], vm.$data)[
+            sourcePropertiesArray[sourcePropertiesArray.length - 1]
+          ] = e.target.value;
         });
       }
-    })
+    });
   }
-//   对于参数节点的子节点递归渲染
+  //   对于参数节点的子节点递归渲染
   node.childNodes.forEach(child => {
     fragmentCompile(child, vm);
   });

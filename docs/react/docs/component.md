@@ -5,24 +5,22 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>hello</title>
-</head>
-<body>
-<div id="test">
-
-</div>
-</body>
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
-<script type="text/javascript" src="../js/babel.min.js"></script>
-<script type="text/babel">
+  </head>
+  <body>
+    <div id="test"></div>
+  </body>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
     function Demo() {
-        return <h2>component</h2>
+      return <h2>component</h2>;
     }
-    ReactDOM.render(<Demo/>, document.getElementById('test'));
-</script>
+    ReactDOM.render(<Demo />, document.getElementById('test'));
+  </script>
 </html>
 ```
 
@@ -32,14 +30,14 @@
 
 ```html
 <script type="text/babel">
-    const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
-    function ReaderLi(languages = []) {
-        return languages.map((language, index) => <li key={index}>{language}</li>)
-    }
-    function Demo() {
-        return <ul>{ReaderLi(languages)}</ul>
-    }
-    ReactDOM.render(<Demo/>, document.getElementById('test'));
+  const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
+  function ReaderLi(languages = []) {
+    return languages.map((language, index) => <li key={index}>{language}</li>);
+  }
+  function Demo() {
+    return <ul>{ReaderLi(languages)}</ul>;
+  }
+  ReactDOM.render(<Demo />, document.getElementById('test'));
 </script>
 ```
 
@@ -49,18 +47,16 @@
 
 ```html
 <script type="text/babel">
-    const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
-    class ListComponent extends React.Component {
-        render() {
-            return (
-                <ul>{this.getListItems()}</ul>
-            );
-        }
-        getListItems() {
-            return this.props.data.map((d, index) => <li key={index}>{d}</li>)
-        }
+  const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
+  class ListComponent extends React.Component {
+    render() {
+      return <ul>{this.getListItems()}</ul>;
     }
-    ReactDOM.render(<ListComponent data={languages}/>, document.getElementById('test'));
+    getListItems() {
+      return this.props.data.map((d, index) => <li key={index}>{d}</li>);
+    }
+  }
+  ReactDOM.render(<ListComponent data={languages} />, document.getElementById('test'));
 </script>
 ```
 
@@ -70,13 +66,13 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```html
 <script type="text/babel">
-    function MyButton() {
-        return <button onClick={clickHandler}>click</button>
-    }
-    function clickHandler() {
-        console.log('click')
-    }
-    ReactDOM.render(<MyButton/>, document.getElementById('test'));
+  function MyButton() {
+    return <button onClick={clickHandler}>click</button>;
+  }
+  function clickHandler() {
+    console.log('click');
+  }
+  ReactDOM.render(<MyButton />, document.getElementById('test'));
 </script>
 ```
 
@@ -84,10 +80,18 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```html
 <script type="text/babel">
-    function MyButton() {
-        return <button onClick={() => {console.log('click')}}>click</button>
-    }
-    ReactDOM.render(<MyButton/>, document.getElementById('test'));
+  function MyButton() {
+    return (
+      <button
+        onClick={() => {
+          console.log('click');
+        }}
+      >
+        click
+      </button>
+    );
+  }
+  ReactDOM.render(<MyButton />, document.getElementById('test'));
 </script>
 ```
 
@@ -95,22 +99,25 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```html
 <script type="text/babel">
-    const dom = (
-        <>
-            <div style={{width: '600px', height: '600px', backgroundColor: 'blue'}} onClick={() => {console.log('click out div')}}>
-                <div
-                    style={{width: '300px', height: '300px', backgroundColor: 'yellow'}}
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        console.log('click inner div')
-                    }}
-                >
-
-                </div>
-            </div>
-        </>
-    );
-    ReactDOM.render(dom, document.getElementById('test'));
+  const dom = (
+    <>
+      <div
+        style={{ width: '600px', height: '600px', backgroundColor: 'blue' }}
+        onClick={() => {
+          console.log('click out div');
+        }}
+      >
+        <div
+          style={{ width: '300px', height: '300px', backgroundColor: 'yellow' }}
+          onClick={event => {
+            event.stopPropagation();
+            console.log('click inner div');
+          }}
+        ></div>
+      </div>
+    </>
+  );
+  ReactDOM.render(dom, document.getElementById('test'));
 </script>
 ```
 
@@ -118,22 +125,25 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```html
 <script type="text/babel">
-    const dom = (
-        <>
-            <div style={{width: '600px', height: '600px', backgroundColor: 'blue'}} onClickCapture={() => {console.log('click out div')}}>
-                <div
-                    style={{width: '300px', height: '300px', backgroundColor: 'yellow'}}
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        console.log('click inner div')
-                    }}
-                >
-
-                </div>
-            </div>
-        </>
-    );
-    ReactDOM.render(dom, document.getElementById('test'));
+  const dom = (
+    <>
+      <div
+        style={{ width: '600px', height: '600px', backgroundColor: 'blue' }}
+        onClickCapture={() => {
+          console.log('click out div');
+        }}
+      >
+        <div
+          style={{ width: '300px', height: '300px', backgroundColor: 'yellow' }}
+          onClick={event => {
+            event.stopPropagation();
+            console.log('click inner div');
+          }}
+        ></div>
+      </div>
+    </>
+  );
+  ReactDOM.render(dom, document.getElementById('test'));
 </script>
 ```
 
@@ -149,17 +159,19 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```html
 <script type="text/babel">
-    const dom = (
-        <>
-            <form onSubmit={(event) => {
-                event.preventDefault();
-                console.log('submit');
-            }}>
-                <button>submit</button>
-            </form>
-        </>
-    );
-    ReactDOM.render(dom, document.getElementById('test'));
+  const dom = (
+    <>
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          console.log('submit');
+        }}
+      >
+        <button>submit</button>
+      </form>
+    </>
+  );
+  ReactDOM.render(dom, document.getElementById('test'));
 </script>
 ```
 
@@ -169,9 +181,9 @@ React 中标签属性都使用驼峰命名，事件处理同样如此。
 
 ```js
 // 普通函数
-fn(1, 2, 3, 4)
+fn(1, 2, 3, 4);
 // 柯里化后
-fn(1)(2)(3)(4)
+fn(1)(2)(3)(4);
 ```
 
 下面的函数可以将一个函数柯里化：
@@ -180,13 +192,13 @@ fn(1)(2)(3)(4)
 function curry(fn) {
   return function curried(...args) {
     if (args.length >= fn.length) {
-      return fn.apply(this, args)
+      return fn.apply(this, args);
     } else {
       return function (...args2) {
-        return curried.apply(this, args.concat(args2))
-      }
+        return curried.apply(this, args.concat(args2));
+      };
     }
-  }
+  };
 }
 ```
 
@@ -194,11 +206,11 @@ function curry(fn) {
 
 ```js
 function sum(a, b) {
-  return a+b;
+  return a + b;
 }
 
-const ss = curry(sum)
-console.log(ss(1)(2))
+const ss = curry(sum);
+console.log(ss(1)(2));
 ```
 
 当然也可以反柯里化：
@@ -206,15 +218,15 @@ console.log(ss(1)(2))
 ```js
 function uncurry(fn) {
   return (...args) => {
-    let result = fn
-    args.forEach((arg) => {
-      result = result(arg)
-    })
-    return result
-  }
+    let result = fn;
+    args.forEach(arg => {
+      result = result(arg);
+    });
+    return result;
+  };
 }
 
-console.log(uncurry(curry(sum))(1, 2))
+console.log(uncurry(curry(sum))(1, 2));
 ```
 
 react 中，事件处理函数应当传入一个函数，但是默认情况下这个回调函数只会收到一个 event 对象作为入参，如果希望传递自定义参数，那么可以使用函数柯里化。
@@ -223,24 +235,20 @@ react 中，事件处理函数应当传入一个函数，但是默认情况下�
 function Demo() {
   const languages = ['Java', 'JavaScript', 'Go'];
   const clickHandler = (language, event) => {
-    console.log(language)
-    console.log(event.target)
-  }
+    console.log(language);
+    console.log(event.target);
+  };
   return (
     <ul>
-      {languages.map((language) => {
+      {languages.map(language => {
         return (
           <li key={language}>
-            <button
-              onClick={curry(clickHandler)(language)}
-            >
-              {language}
-            </button>
+            <button onClick={curry(clickHandler)(language)}>{language}</button>
           </li>
-        )
+        );
       })}
     </ul>
-  )
+  );
 }
 ```
 

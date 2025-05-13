@@ -86,48 +86,48 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
     <script>
-        let socket;
-        if (window.WebSocket){
-            socket=new WebSocket('ws://localhost:8848/ppg')
-            socket.onmessage=function (ev) {
-                let res = document.getElementById('res');
-                res.value=res.value+'\n'+ev.data
-            }
-            socket.onopen=function () {
-                let res = document.getElementById('res');
-                res.value='连接开启了'
-            }
-            socket.onclose=function () {
-                let res = document.getElementById('res');
-                res.value=res.value+'\n连接关闭了'
-            }
-        }else {
-            alert("浏览器不支持WebSocket")
+      let socket;
+      if (window.WebSocket) {
+        socket = new WebSocket('ws://localhost:8848/ppg');
+        socket.onmessage = function (ev) {
+          let res = document.getElementById('res');
+          res.value = res.value + '\n' + ev.data;
+        };
+        socket.onopen = function () {
+          let res = document.getElementById('res');
+          res.value = '连接开启了';
+        };
+        socket.onclose = function () {
+          let res = document.getElementById('res');
+          res.value = res.value + '\n连接关闭了';
+        };
+      } else {
+        alert('浏览器不支持WebSocket');
+      }
+      function send(msg) {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(msg);
+        } else {
+          alert('未连接');
         }
-        function send(msg) {
-            if (socket.readyState===WebSocket.OPEN){
-                socket.send(msg)
-            }else {
-                alert('未连接')
-            }
-        }
+      }
     </script>
-</head>
-<body>
-<form onsubmit="return false">
-    <label>
+  </head>
+  <body>
+    <form onsubmit="return false">
+      <label>
         <textarea style="height: 300px;width: 300px" name="message"></textarea>
-    </label>
-    <input type="button" value="发送" onclick="send(this.form.message.value)">
-    <label>
+      </label>
+      <input type="button" value="发送" onclick="send(this.form.message.value)" />
+      <label>
         <textarea style="height: 300px;width: 300px" name="res" id="res"></textarea>
-    </label>
-    <input type="button" value="清空" onclick="document.getElementById('res').value=''">
-</form>
-</body>
+      </label>
+      <input type="button" value="清空" onclick="document.getElementById('res').value=''" />
+    </form>
+  </body>
 </html>
 ```

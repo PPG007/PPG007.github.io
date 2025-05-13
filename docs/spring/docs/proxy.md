@@ -30,9 +30,9 @@
 
 - 动态代理的代理类是动态生成的。
 - 动态代理分类：
-    - 基于接口的动态代理：JDK动态代理。[InvocationHandler](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/InvocationHandler.html)
-    - 基于类的动态代理：[CGLIB](https://www.runoob.com/w3cnote/cglibcode-generation-library-intro.html)。
-    - Java字节码实现：[Javassist](https://www.javassist.org/)。
+  - 基于接口的动态代理：JDK动态代理。[InvocationHandler](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/InvocationHandler.html)
+  - 基于类的动态代理：[CGLIB](https://www.runoob.com/w3cnote/cglibcode-generation-library-intro.html)。
+  - Java字节码实现：[Javassist](https://www.javassist.org/)。
 
 InvocationHandler 是由代理实例的调用处理程序实现的接口。
 

@@ -3,14 +3,14 @@
 ## 原始数据类型
 
 ```ts
-let isEnabled:boolean = true;
-let user:string = 'PPG007';
-let age:number = 23;
-function voidFunc(message:string):void {
-    console.log(message);
+let isEnabled: boolean = true;
+let user: string = 'PPG007';
+let age: number = 23;
+function voidFunc(message: string): void {
+  console.log(message);
 }
-let u:undefined = undefined;
-let n:null = null;
+let u: undefined = undefined;
+let n: null = null;
 ```
 
 ::: tip
@@ -19,9 +19,9 @@ let n:null = null;
 
 ```json
 {
-    "compilerOptions": {
-        "strict": false
-    }
+  "compilerOptions": {
+    "strict": false
+  }
 }
 ```
 
@@ -32,7 +32,7 @@ let n:null = null;
 如果是一个普通类型，在赋值过程中改变类型是不被允许的，但是对于 any 类型是可以的。
 
 ```ts
-let x:any = 123;
+let x: any = 123;
 x = '123';
 ```
 
@@ -44,7 +44,7 @@ x = '123';
 
 ```ts
 let x = 1;
-x = "7"; // error
+x = '7'; // error
 ```
 
 ::: tip
@@ -54,7 +54,7 @@ x = "7"; // error
 ```ts
 let x;
 x = 1;
-x = "7";
+x = '7';
 ```
 
 :::
@@ -64,8 +64,8 @@ x = "7";
 联合类型表示取值可以是多种类型中的一种。
 
 ```ts
-let x:string|number;
-x = "123";
+let x: string | number;
+x = '123';
 x = 123;
 ```
 
@@ -73,20 +73,20 @@ x = 123;
 
 ```ts
 // error
-function demo(x:string|number):void{
-    console.log(x.length);
+function demo(x: string | number): void {
+  console.log(x.length);
 }
 // ok
-function demo(x:string|number):void{
-    console.log(x.toString());
+function demo(x: string | number): void {
+  console.log(x.toString());
 }
 ```
 
 联合类型的变量在被赋值的时候，会根据类型推论的规则推断出一个类型。
 
 ```ts
-let x:string|number;
-x = "123";
+let x: string | number;
+x = '123';
 console.log(x.length);
 x = 123;
 // error， 此时推断 x 为 number
@@ -98,60 +98,60 @@ console.log(x.length);
 TypeScript 使用接口来定义对象的类型。TypeScript 除了用于对类的一部分进行抽象，还可以对对象的形状进行描述。
 
 ```ts
-interface Person{
-    name: string;
-    age: number;
+interface Person {
+  name: string;
+  age: number;
 }
 
 // 定义的变量必须和接口里的一样
 let me: Person = {
-    name: 'PPG007',
-    age: 23,
+  name: 'PPG007',
+  age: 23,
 };
 ```
 
 如果希望某些字段是可选的，那么可以使用可选属性：
 
 ```ts
-interface Person{
-    name: string;
-    age: number;
-    city?: string;
+interface Person {
+  name: string;
+  age: number;
+  city?: string;
 }
 
 let me: Person = {
-    name: 'PPG007',
-    age: 23,
+  name: 'PPG007',
+  age: 23,
 };
 ```
 
 如果希望某些字段只能在创建的时候赋值，那么可以使用只读属性：
 
 ```ts
-interface Person{
-    readonly name: string;
-    age: number;
-    city?: string;
+interface Person {
+  readonly name: string;
+  age: number;
+  city?: string;
 }
 
 let me: Person = {
-    name: 'PPG007',
-    age: 23,
+  name: 'PPG007',
+  age: 23,
 };
 // error
-me.name = "123";
+me.name = '123';
 ```
 
 如果希望一个接口允许任意的属性：
 
 ```ts
-interface Person{
-    [propName: string]: string|number
+interface Person {
+  [propName: string]: string | number;
 }
 
 let me: Person = {
-    name: 'PPG007',
-    age: 23,
+  name: 'PPG007',
+  age: 23,
 };
 ```
 
@@ -180,8 +180,8 @@ arr.push(123);
 用接口表示数组：
 
 ```ts
-interface StringArray{
-    [index: number]: string;
+interface StringArray {
+  [index: number]: string;
 }
 
 let arr: StringArray = ['1', '2'];
@@ -190,7 +190,7 @@ let arr: StringArray = ['1', '2'];
 any 数组：
 
 ```ts
-let list: any[] = [1, '2', false, {user: '123'}];
+let list: any[] = [1, '2', false, { user: '123' }];
 ```
 
 ## 函数的类型
@@ -198,8 +198,8 @@ let list: any[] = [1, '2', false, {user: '123'}];
 ### 函数声明
 
 ```ts
-function sum(a: number, b:number) :number {
-    return a+b;
+function sum(a: number, b: number): number {
+  return a + b;
 }
 
 sum(1, 2);
@@ -214,9 +214,9 @@ sum(1, 2);
 ### 函数表达式
 
 ```ts
-let sum: (a: number, b: number) => number = function (a, b){
-    return a+b;
-}
+let sum: (a: number, b: number) => number = function (a, b) {
+  return a + b;
+};
 console.log(sum(2, 4));
 ```
 
@@ -230,18 +230,18 @@ console.log(sum(2, 4));
 
 ```ts
 interface Sum {
-    sumNumber: (a: number, b: number) => number;
-    sumString: (a: string, b: string) => string;
+  sumNumber: (a: number, b: number) => number;
+  sumString: (a: string, b: string) => string;
 }
 
 let sumImpl: Sum = {
-    sumNumber(a, b) {
-        return a+b;
-    },
-    sumString(a, b) {
-        return `${a}${b}`;
-    }
-}
+  sumNumber(a, b) {
+    return a + b;
+  },
+  sumString(a, b) {
+    return `${a}${b}`;
+  },
+};
 
 console.log(sumImpl.sumNumber(1, 2));
 console.log(sumImpl.sumString('1', '2'));
@@ -250,11 +250,11 @@ console.log(sumImpl.sumString('1', '2'));
 ### 可选参数
 
 ```ts
-function sub(a: number, b: number, abs?:boolean) :number {
-    if (!abs) {
-        return a - b;
-    }
-    return Math.abs(a-b);
+function sub(a: number, b: number, abs?: boolean): number {
+  if (!abs) {
+    return a - b;
+  }
+  return Math.abs(a - b);
 }
 console.log(sub(1, 2));
 console.log(sub(1, 2, true));
@@ -269,11 +269,11 @@ console.log(sub(1, 2, true));
 ### 参数默认值
 
 ```ts
-function sub(a: number, b: number = 100, abs?:boolean) :number {
-    if (!abs) {
-        return a - b;
-    }
-    return Math.abs(a-b);
+function sub(a: number, b: number = 100, abs?: boolean): number {
+  if (!abs) {
+    return a - b;
+  }
+  return Math.abs(a - b);
 }
 console.log(sub(1));
 console.log(sub(1, 10, true));
@@ -282,12 +282,12 @@ console.log(sub(1, 10, true));
 ### 剩余参数
 
 ```ts
-function sum(...nums :number[]):number {
-    let total: number = 0;
-    nums.forEach(num => {
-        total += num;
-    });
-    return total;
+function sum(...nums: number[]): number {
+  let total: number = 0;
+  nums.forEach(num => {
+    total += num;
+  });
+  return total;
 }
 console.log(sum(1, 2, 3, 4));
 console.log(sum());
@@ -304,11 +304,11 @@ console.log(sum());
 ```ts
 function sum(a: number, b: number): number;
 function sum(a: string, b: string): string;
-function sum(a: number|string, b: number|string) :number|string {
-    if (typeof a == 'number') {
-        return Number(a) + Number(b);
-    }
-    return a.concat(String(b));
+function sum(a: number | string, b: number | string): number | string {
+  if (typeof a == 'number') {
+    return Number(a) + Number(b);
+  }
+  return a.concat(String(b));
 }
 console.log(sum(1, 2));
 console.log(sum('1', '2'));
@@ -326,10 +326,10 @@ console.log(sum('1', '2'));
 function sum(a: number, b: number): number;
 function sum(a: string, b: string): string;
 function sum(a: number | string, b: number | string): number | string {
-    if (typeof a == 'number') {
-        return <number>a + <number>b;
-    }
-    return a.concat(String(b));
+  if (typeof a == 'number') {
+    return <number>a + <number>b;
+  }
+  return a.concat(String(b));
 }
 ```
 
@@ -337,16 +337,16 @@ function sum(a: number | string, b: number | string): number | string {
 
 ```ts
 class HttpError extends Error {
-    code: number = 200;
+  code: number = 200;
 }
 
 function isHttpError(err: Error): boolean {
-    if (typeof (err as HttpError).code == 'number') {
-        return true;
-    }
-    return false;
+  if (typeof (err as HttpError).code == 'number') {
+    return true;
+  }
+  return false;
 }
-console.log(isHttpError(new(HttpError)));
+console.log(isHttpError(new HttpError()));
 ```
 
 将任何一个类型断言为 any：
@@ -383,14 +383,14 @@ any 可以断言为任意类型，任意类型可以断言为 any，所以任意
 
 ```ts
 interface Cat {
-    run(): void;
+  run(): void;
 }
 interface Fish {
-    swim(): void;
+  swim(): void;
 }
 
 function testCat(cat: Cat) {
-    return (cat as any as Fish).swim();
+  return (cat as any as Fish).swim();
 }
 ```
 
@@ -408,15 +408,15 @@ function testCat(cat: Cat) {
 
 ```ts
 interface Animal {
-    name: string;
+  name: string;
 }
 interface Cat {
-    name: string;
-    run(): void;
+  name: string;
+  run(): void;
 }
 
 const animal: Animal = {
-    name: 'tom'
+  name: 'tom',
 };
 // ok
 let tom1: Cat = animal as Cat;
@@ -503,19 +503,19 @@ declare function jQuery(domReadyCallback: () => any): any;
 ```ts
 // user.d.ts
 declare class User {
-    constructor(name: string);
-    name: string;
-    getName(): string;
+  constructor(name: string);
+  name: string;
+  getName(): string;
 }
 // user.ts
 class User {
-    constructor(name: string){
-        this.name = name;
-    }
-    name: string;
-    getName(): string {
-        return this.name;
-    }
+  constructor(name: string) {
+    this.name = name;
+  }
+  name: string;
+  getName(): string {
+    return this.name;
+  }
 }
 // main.ts
 const user: User = new User('PPG007');
@@ -528,9 +528,9 @@ console.log(user.getName());
 ```ts
 // httpCode.d.ts
 declare enum HttpCode {
-    OK,
-    BadRequest,
-    InternalServerError
+  OK,
+  BadRequest,
+  InternalServerError,
 }
 // main.ts
 const code: HttpCode = HttpCode.BadRequest;
@@ -547,15 +547,15 @@ namespace 被淘汰了，但是在声明文件中，declare namespace 还是比�
 ```ts
 // axios.d.ts
 declare namespace Axios {
-    const version: number;
-    enum HttpCode {
-        OK,
-    }
-    class Response {
-        code: HttpCode;
-        Data: any;
-    }
-    function get(url: string): Response;
+  const version: number;
+  enum HttpCode {
+    OK,
+  }
+  class Response {
+    code: HttpCode;
+    Data: any;
+  }
+  function get(url: string): Response;
 }
 // main.ts
 const resp = Axios.get('url');
@@ -572,18 +572,18 @@ namespace 中可以直接使用 function 声明函数而不是 `declare function
 
 ```ts
 declare namespace Axios {
-    const version: number;
-    enum HttpCode {
-        OK,
-    }
-    class Response {
-        code: HttpCode;
-        Data: any;
-    }
-    function get(url: string): Response;
-    namespace interceptor {
-        function run():void;
-    }
+  const version: number;
+  enum HttpCode {
+    OK,
+  }
+  class Response {
+    code: HttpCode;
+    Data: any;
+  }
+  function get(url: string): Response;
+  namespace interceptor {
+    function run(): void;
+  }
 }
 // main.ts
 Axios.interceptor.run();
@@ -593,7 +593,7 @@ Axios.interceptor.run();
 
 ```ts
 declare namespace Axios.interceptor {
-    function run():void;
+  function run(): void;
 }
 ```
 
@@ -601,27 +601,27 @@ declare namespace Axios.interceptor {
 
 ```ts
 declare namespace Axios {
-    const version: number;
-    enum HttpCode {
-        OK,
-    }
-    class Response {
-        code: HttpCode;
-        Data: any;
-    }
-    function get(url: string, setting: AxiosSetting): Response;
+  const version: number;
+  enum HttpCode {
+    OK,
+  }
+  class Response {
+    code: HttpCode;
+    Data: any;
+  }
+  function get(url: string, setting: AxiosSetting): Response;
 }
 interface AxiosSetting {
-    headers?: Object,
+  headers?: Object;
 }
 type AxiosSettingType = {
-    headers?: Object,
-}
+  headers?: Object;
+};
 // main.ts
 let setting: AxiosSetting = {
-    headers: {
-        'x-user-name': 'PPG007',
-    },
+  headers: {
+    'x-user-name': 'PPG007',
+  },
 };
 Axios.get('url', setting);
 ```
@@ -630,24 +630,24 @@ Axios.get('url', setting);
 
 ```ts
 declare namespace Axios {
-    const version: number;
-    enum HttpCode {
-        OK,
-    }
-    class Response {
-        code: HttpCode;
-        Data: any;
-    }
-    interface AxiosSetting {
-        headers?: Object,
-    }
-    function get(url: string, setting: AxiosSetting): Response;
+  const version: number;
+  enum HttpCode {
+    OK,
+  }
+  class Response {
+    code: HttpCode;
+    Data: any;
+  }
+  interface AxiosSetting {
+    headers?: Object;
+  }
+  function get(url: string, setting: AxiosSetting): Response;
 }
 // main.ts
 let setting: Axios.AxiosSetting = {
-    headers: {
-        'x-user-name': 'PPG007',
-    },
+  headers: {
+    'x-user-name': 'PPG007',
+  },
 };
 Axios.get('url', setting);
 ```
@@ -657,7 +657,7 @@ Axios.get('url', setting);
 ```ts
 declare function jQuery(selector: string): any;
 declare namespace jQuery {
-    function ajax(url: string, settings?: any): void;
+  function ajax(url: string, settings?: any): void;
 }
 // main.ts
 jQuery('#id');
@@ -679,21 +679,21 @@ jQuery.ajax('url');
 
 ```js
 export class StrUtil {
-    static lower = (source) => {
-        return source.toLowerCase();
-    }
+  static lower = source => {
+    return source.toLowerCase();
+  };
 
-    static upper = (source) => {
-        return source.toUpperCase();
-    }
+  static upper = source => {
+    return source.toUpperCase();
+  };
 
-    static reverse = (source) => {
-        return source.split('').reverse().join('');
-    }
+  static reverse = source => {
+    return source.split('').reverse().join('');
+  };
 
-    static concat = (...source) => {
-        return ''.concat(...source);
-    }
+  static concat = (...source) => {
+    return ''.concat(...source);
+  };
 }
 ```
 
@@ -701,7 +701,7 @@ export class StrUtil {
 
 ```json
 {
-    "presets": ["@babel/preset-env"]
+  "presets": ["@babel/preset-env"]
 }
 ```
 
@@ -721,14 +721,14 @@ export class StrUtil {
 
 ```json
 {
-    "compilerOptions": {
-        "strict": false,
-        "module": "CommonJS",
-        "baseUrl": "./",
-        "paths": {
-            "*": ["types/*"]
-        }
+  "compilerOptions": {
+    "strict": false,
+    "module": "CommonJS",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["types/*"]
     }
+  }
 }
 ```
 
@@ -736,13 +736,13 @@ export 导出：
 
 ```ts
 export class StrUtil {
-    static lower(source: string): string;
+  static lower(source: string): string;
 
-    static upper(source: string): string;
+  static upper(source: string): string;
 
-    static reverse(source: string): string;
+  static reverse(source: string): string;
 
-    static concat(...source: string[]): string;
+  static concat(...source: string[]): string;
 }
 ```
 
@@ -764,13 +764,13 @@ console.log(StrUtil.reverse('PPG007'));
 
 ```ts
 declare class StrUtil {
-    static lower(source: string): string;
+  static lower(source: string): string;
 
-    static upper(source: string): string;
+  static upper(source: string): string;
 
-    static reverse(source: string): string;
+  static reverse(source: string): string;
 
-    static concat(...source: string[]): string;
+  static concat(...source: string[]): string;
 }
 
 export { StrUtil };
@@ -790,17 +790,17 @@ static inner = {
 
 ```ts
 export namespace StrUtil {
-    function lower(source: string): string;
+  function lower(source: string): string;
 
-    function upper(source: string): string;
+  function upper(source: string): string;
 
-    function reverse(source: string): string;
+  function reverse(source: string): string;
 
-    function concat(...source: string[]): string;
+  function concat(...source: string[]): string;
 
-    namespace inner {
-        const author: string;
-    }
+  namespace inner {
+    const author: string;
+  }
 }
 ```
 
@@ -817,8 +817,8 @@ console.log(StrUtil.inner.author);
 ```js
 // 在 StrUtil index.js 里增加一个枚举：
 export default Object.freeze({
-    UPPER: 'UPPER',
-    LOWER: 'LOWER',
+  UPPER: 'UPPER',
+  LOWER: 'LOWER',
 });
 ```
 
@@ -826,8 +826,8 @@ export default Object.freeze({
 
 ```ts
 declare enum Case {
-    UPPER,
-    LOWER,
+  UPPER,
+  LOWER,
 }
 
 export default Case;
@@ -853,21 +853,21 @@ console.log(Case.LOWER);
 
 ```js
 class StrUtil {
-    static lower = (source) => {
-        return source.toLowerCase();
-    }
+  static lower = source => {
+    return source.toLowerCase();
+  };
 
-    static upper = (source) => {
-        return source.toUpperCase();
-    }
+  static upper = source => {
+    return source.toUpperCase();
+  };
 
-    static reverse = (source) => {
-        return source.split('').reverse().join('');
-    }
+  static reverse = source => {
+    return source.split('').reverse().join('');
+  };
 
-    static concat = (...source) => {
-        return ''.concat(...source);
-    }
+  static concat = (...source) => {
+    return ''.concat(...source);
+  };
 }
 
 module.exports = StrUtil;
@@ -877,13 +877,13 @@ module.exports = StrUtil;
 
 ```ts
 declare class StrUtil {
-    static lower(source: string): string;
+  static lower(source: string): string;
 
-    static upper(source: string): string;
+  static upper(source: string): string;
 
-    static reverse(source: string): string;
+  static reverse(source: string): string;
 
-    static concat(...source: string[]): string;
+  static concat(...source: string[]): string;
 }
 export = StrUtil;
 ```
@@ -891,7 +891,7 @@ export = StrUtil;
 main.ts 引用：
 
 ```ts
-import StrUtil = require("strutil");
+import StrUtil = require('strutil');
 console.log(StrUtil.lower('QWE'));
 ```
 
@@ -909,28 +909,28 @@ UMD 是一种模块规范,使库可以同时支持多种模块加载方案,比�
 
 ```js
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define([], factory);
-    } else if (typeof exports === 'object') {
-        module.exports = factory();
-    } else {
-        root.StrUtil = factory();
-    }
-}(this, function () {
-    function StrUtil() { }
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.StrUtil = factory();
+  }
+})(this, function () {
+  function StrUtil() {}
 
-    StrUtil.lower = function (source) {
-        return source.toLowerCase();
-    }
+  StrUtil.lower = function (source) {
+    return source.toLowerCase();
+  };
 
-    StrUtil.upper = function (source) {
-        return source.toUpperCase();
-    }
+  StrUtil.upper = function (source) {
+    return source.toUpperCase();
+  };
 
-    // 其他方法...
+  // 其他方法...
 
-    return StrUtil;
-}));
+  return StrUtil;
+});
 ```
 
 然后书写声明文件：
@@ -941,9 +941,9 @@ export = su;
 
 declare function su(): string;
 declare namespace su {
-    function lower(source: string): string;
+  function lower(source: string): string;
 
-    function upper(source: string): string;
+  function upper(source: string): string;
 }
 ```
 
@@ -952,7 +952,7 @@ declare namespace su {
 ```ts
 import * as su from 'strutil';
 
-console.log(su.upper('ppg007'))
+console.log(su.upper('ppg007'));
 ```
 
 #### 直接扩展全局变量
@@ -962,9 +962,9 @@ console.log(su.upper('ppg007'))
 修改 strutil：
 
 ```js
-String.prototype.reverse = function() {
-    return this.split('').reverse().join('');
-}
+String.prototype.reverse = function () {
+  return this.split('').reverse().join('');
+};
 ```
 
 编写声明文件：
@@ -972,19 +972,19 @@ String.prototype.reverse = function() {
 ```ts
 export as namespace su;
 export class StrUtil {
-    static lower(source: string): string;
+  static lower(source: string): string;
 
-    static upper(source: string): string;
+  static upper(source: string): string;
 
-    static reverse(source: string): string;
+  static reverse(source: string): string;
 
-    static concat(...source: string[]): string;
+  static concat(...source: string[]): string;
 }
 
 declare global {
-    interface String {
-        reverse(): string;
-    }
+  interface String {
+    reverse(): string;
+  }
 }
 ```
 
@@ -1006,21 +1006,21 @@ console.log(su.StrUtil.upper('ppg').reverse());
 
 ```js
 export class StrUtil {
-    static lower = (source) => {
-        return source.toLowerCase();
-    }
+  static lower = source => {
+    return source.toLowerCase();
+  };
 
-    static upper = (source) => {
-        return source.toUpperCase();
-    }
+  static upper = source => {
+    return source.toUpperCase();
+  };
 
-    static reverse = (source) => {
-        return source.split('').reverse().join('');
-    }
+  static reverse = source => {
+    return source.split('').reverse().join('');
+  };
 
-    static concat = (...source) => {
-        return ''.concat(...source);
-    }
+  static concat = (...source) => {
+    return ''.concat(...source);
+  };
 }
 
 globalThis.author = 'PPG007';
@@ -1031,17 +1031,17 @@ globalThis.author = 'PPG007';
 ```ts
 export as namespace su;
 export class StrUtil {
-    static lower(source: string): string;
+  static lower(source: string): string;
 
-    static upper(source: string): string;
+  static upper(source: string): string;
 
-    static reverse(source: string): string;
+  static reverse(source: string): string;
 
-    static concat(...source: string[]): string;
+  static concat(...source: string[]): string;
 }
 
 declare global {
-    const author: string
+  const author: string;
 }
 ```
 
@@ -1063,19 +1063,19 @@ console.log(author);
 ```js
 import moment from 'moment';
 
-moment.yesterday = function() {
-    return moment().subtract(1, 'day');
-}
+moment.yesterday = function () {
+  return moment().subtract(1, 'day');
+};
 export default moment;
 ```
 
 编写声明文件：
 
 ```ts
-import moment = require("moment");
+import moment = require('moment');
 
-declare module 'moment'{
-   function yesterday(): moment.Moment;
+declare module 'moment' {
+  function yesterday(): moment.Moment;
 }
 
 export default moment;
@@ -1086,7 +1086,7 @@ main.ts:
 ```ts
 import moment from 'strutil';
 
-console.log(moment.yesterday().toISOString())
+console.log(moment.yesterday().toISOString());
 ```
 
 #### 声明文件中的依赖
@@ -1106,7 +1106,7 @@ console.log(moment.yesterday().toISOString())
 
 ```js
 export function foo(arg) {
-    console.log(arg);
+  console.log(arg);
 }
 ```
 
@@ -1121,8 +1121,8 @@ export function foo(p: moment.Moment): void;
 main.ts：
 
 ```ts
-import moment = require("moment");
-import { foo } from "strutil";
+import moment = require('moment');
+import { foo } from 'strutil';
 foo(moment());
 ```
 
@@ -1153,7 +1153,7 @@ export function foo(p: NodeJS.Process): string;
 main.ts：
 
 ```ts
-import { foo } from "strutil";
+import { foo } from 'strutil';
 foo(process);
 ```
 
@@ -1166,8 +1166,8 @@ foo(process);
 src/bar/index.ts：
 
 ```ts
-export function bar(): string{
-    return 'bar';
+export function bar(): string {
+  return 'bar';
 }
 ```
 
@@ -1176,8 +1176,8 @@ src/index.ts：
 ```ts
 export * from './bar';
 
-export function foo(): string{
-    return 'foo';
+export function foo(): string {
+  return 'foo';
 }
 ```
 
@@ -1185,12 +1185,12 @@ tsconfig.json：
 
 ```json
 {
-    "compilerOptions": {
-        "strict": false,
-        "outDir": "lib",
-        "declaration": true,
-        "module": "CommonJS"
-    }
+  "compilerOptions": {
+    "strict": false,
+    "outDir": "lib",
+    "declaration": true,
+    "module": "CommonJS"
+  }
 }
 ```
 
@@ -1207,7 +1207,7 @@ tsconfig.json：
   "main": "lib/index.js",
   "license": "MIT",
   "private": true,
-  "types": "lib/foo.d.ts",
+  "types": "lib/foo.d.ts"
 }
 ```
 

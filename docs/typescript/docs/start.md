@@ -16,7 +16,7 @@ main.ts:
 
 ```ts
 function helloWorld(name: string) {
-    console.log(`I am ${name}, hello TypeScript!`);
+  console.log(`I am ${name}, hello TypeScript!`);
 }
 
 const me = 'PPG007';

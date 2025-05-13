@@ -286,7 +286,7 @@ server:
   port: 9001
 hystrix:
   dashboard:
-    proxy-stream-allow-list: "127.0.0.1" # 将此IP加入允许监控的列表
+    proxy-stream-allow-list: '127.0.0.1' # 将此IP加入允许监控的列表
 ```
 
 被监控配置：
@@ -296,7 +296,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: '*'
 ```
 
 ### 开启 DashBoard

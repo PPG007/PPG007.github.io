@@ -4,13 +4,13 @@
 
 ```js
 // 定义对象
-let user={
-    name:"ppg",
-    age:20,
-    sex:"boy"
+let user = {
+  name: 'ppg',
+  age: 20,
+  sex: 'boy',
 };
-let json = JSON.stringify(user);//将对象转换为JSON表示
-let object=JSON.parse(json);//从JSON解析出Object对象
+let json = JSON.stringify(user); //将对象转换为JSON表示
+let object = JSON.parse(json); //从JSON解析出Object对象
 ```
 
 ## jackson

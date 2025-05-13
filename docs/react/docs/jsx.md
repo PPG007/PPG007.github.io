@@ -3,39 +3,37 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>hello</title>
     <style>
-        .test{
-            background-color: cornflowerblue;
-        }
+      .test {
+        background-color: cornflowerblue;
+      }
     </style>
-</head>
-<body>
-<div id="test">
-
-</div>
-</body>
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
-<script type="text/javascript" src="../js/babel.min.js"></script>
-<script type="text/babel">
+  </head>
+  <body>
+    <div id="test"></div>
+  </body>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
     const id = '123';
     const content = 'Hello World';
     const dom = (
-        <>
-            <h1 id={id} className="test">
-                <span>{content}</span>
-            </h1>
-            {/* 注释 */}
-            <h1 id={id + '1'} style={{backgroundColor: 'blue'}}>
-                <span>{content}</span>
-            </h1>
-        </>
+      <>
+        <h1 id={id} className="test">
+          <span>{content}</span>
+        </h1>
+        {/* 注释 */}
+        <h1 id={id + '1'} style={{ backgroundColor: 'blue' }}>
+          <span>{content}</span>
+        </h1>
+      </>
     );
     ReactDOM.render(dom, document.querySelector('#test'));
-</script>
+  </script>
 </html>
 ```
 
@@ -56,33 +54,29 @@ JSX 的语法规则：
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>hello</title>
-</head>
-<body>
-<div id="test">
-
-</div>
-</body>
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
-<script type="text/javascript" src="../js/babel.min.js"></script>
-<script type="text/babel">
+  </head>
+  <body>
+    <div id="test"></div>
+  </body>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
     const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
-    const languagesDom = languages.map((language) => {
-       return <li>{language}</li>
+    const languagesDom = languages.map(language => {
+      return <li>{language}</li>;
     });
     const dom = (
       <>
-          <h2>languages</h2>
-          <ul>
-              {languagesDom}
-          </ul>
+        <h2>languages</h2>
+        <ul>{languagesDom}</ul>
       </>
     );
     ReactDOM.render(dom, document.querySelector('#test'));
-</script>
+  </script>
 </html>
 ```
 
@@ -101,24 +95,22 @@ React key 值原理类似 Vue，不建议使用数组下标作为 key，这会�
 
 ```html
 <script type="text/babel">
-    const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
-    const languagesDom = languages.map((language, index) => {
-       return (
-           <React.Fragment key={index}>
-               <li>{language}</li>
-               <li>{language.toLowerCase()}</li>
-           </React.Fragment>
-       )
-    });
-    const dom = (
-      <>
-          <h2>languages</h2>
-          <ul>
-              {languagesDom}
-          </ul>
-      </>
+  const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
+  const languagesDom = languages.map((language, index) => {
+    return (
+      <React.Fragment key={index}>
+        <li>{language}</li>
+        <li>{language.toLowerCase()}</li>
+      </React.Fragment>
     );
-    ReactDOM.render(dom, document.querySelector('#test'));
+  });
+  const dom = (
+    <>
+      <h2>languages</h2>
+      <ul>{languagesDom}</ul>
+    </>
+  );
+  ReactDOM.render(dom, document.querySelector('#test'));
 </script>
 ```
 
@@ -132,19 +124,17 @@ React key 值原理类似 Vue，不建议使用数组下标作为 key，这会�
 
 ```html
 <script type="text/babel">
-    const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
-    const lower = true;
-    const languagesDom = languages.map((language) => {
-       return <li>{lower ? language.toLowerCase() : language}</li>
-    });
-    const dom = (
-      <>
-          <h2>languages</h2>
-          <ul>
-              {languagesDom}
-          </ul>
-      </>
-    );
-    ReactDOM.render(dom, document.querySelector('#test'));
+  const languages = ['Java', 'Go', 'JavaScript', 'PHP'];
+  const lower = true;
+  const languagesDom = languages.map(language => {
+    return <li>{lower ? language.toLowerCase() : language}</li>;
+  });
+  const dom = (
+    <>
+      <h2>languages</h2>
+      <ul>{languagesDom}</ul>
+    </>
+  );
+  ReactDOM.render(dom, document.querySelector('#test'));
 </script>
 ```

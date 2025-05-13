@@ -29,11 +29,11 @@ spec:
         app: grpc
     spec:
       containers:
-      - name: grpc-demo
-        image: grpc-demo:latest
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 8080
+        - name: grpc-demo
+          image: grpc-demo:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -44,9 +44,9 @@ metadata:
   namespace: example
 spec:
   ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 80
+    - port: 8000
+      protocol: TCP
+      targetPort: 80
   selector:
     app: grpc
   type: ClusterIP

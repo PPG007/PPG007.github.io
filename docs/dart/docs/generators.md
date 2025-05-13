@@ -5,7 +5,7 @@
 - 同步生成器：返回一个 Iterable 对象。
 - 异步生成器：返回一个 Stream 对象。
 
-通过在函数上加 sync* 关键字并将返回值类型设置为 Iterable 来实现一个 同步 生成器函数，在函数中使用 yield 语句来传递值：
+通过在函数上加 sync\* 关键字并将返回值类型设置为 Iterable 来实现一个 同步 生成器函数，在函数中使用 yield 语句来传递值：
 
 ```dart
 Iterable<int> naturalsTo(int n) sync* {
@@ -23,7 +23,7 @@ void main(List<String> args) {
 }
 ```
 
-实现 异步 生成器函数与同步类似，只不过关键字为 async* 并且返回值为 Stream：
+实现 异步 生成器函数与同步类似，只不过关键字为 async\* 并且返回值为 Stream：
 
 ```dart
 Stream<int> asynchronousNaturalsTo(int n) async* {
@@ -41,7 +41,7 @@ void main(List<String> args) async {
 }
 ```
 
-如果生成器是递归调用的，可是使用 yield* 语句提升执行性能：
+如果生成器是递归调用的，可是使用 yield\* 语句提升执行性能：
 
 ```dart
 Iterable<int> naturalsDownFrom(int n) sync* {

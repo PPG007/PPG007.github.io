@@ -48,7 +48,7 @@ npm run serve
 `main.js` 中有这样一行代码：
 
 ```js
-import Vue from 'vue'
+import Vue from 'vue';
 ```
 
 默认情况下引入的是 `vue.runtime.esm.js`，不包含模板解析器，所以 `main.js` 的Vue实例中不能添加 `template` 属性，会报错。
@@ -70,14 +70,14 @@ render:h=>h('h1',Hello World);
 如果使用组件直接传入组件即可，不需要第二个参数：
 
 ```js
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
 ```
 
 ## 修改默认配置
@@ -91,9 +91,7 @@ vue inspect > out.js
 在 `package.json` 同级目录下创建 `vue.config.js`，这个文件应该导出一个包含了选项的对象：
 
 ```js
-module.exports={
-
-}
+module.exports = {};
 ```
 
 可选参考项：[Vue-CLI配置项](https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE)。
@@ -101,9 +99,9 @@ module.exports={
 示例，关闭保存时语法检查：
 
 ```js
-module.exports={
-    lintOnSave:false
-}
+module.exports = {
+  lintOnSave: false,
+};
 ```
 
 如果定义了一个配置项但是没有设置配置值，那么将会报错，而且如果要使配置生效要*重新启动*：
@@ -122,39 +120,36 @@ ref 属性：
 
 ```vue
 <template>
-    <div>
-        <!-- <Student></Student> -->
-        <h2 ref="title">Hello{{msg}}</h2>
-        <button v-on:click="showDOM">点我输出上方DOM</button>
-        <School></School>
-    </div>
+  <div>
+    <!-- <Student></Student> -->
+    <h2 ref="title">Hello{{ msg }}</h2>
+    <button v-on:click="showDOM">点我输出上方DOM</button>
+    <School></School>
+  </div>
 </template>
 
 <script>
-import School from './components/School'
-import Student from './components/Student'
+import School from './components/School';
+import Student from './components/Student';
 export default {
-    name:'App',
-    components:{
-        School,
-
+  name: 'App',
+  components: {
+    School,
+  },
+  data() {
+    return {
+      msg: 'World',
+    };
+  },
+  methods: {
+    showDOM() {
+      console.log(this.$refs.title);
     },
-    data() {
-        return {
-            msg:'World'
-        }
-    },
-    methods: {
-        showDOM(){
-            console.log(this.$refs.title)
-        }
-    },
-}
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
 ```
 
 ## props 属性
@@ -167,9 +162,9 @@ export default {
 
 ```vue
 <template>
-    <div>
-        <Student name='PPG' :age='21' sex='male'></Student>
-    </div>
+  <div>
+    <Student name="PPG" :age="21" sex="male"></Student>
+  </div>
 </template>
 ```
 
@@ -178,7 +173,7 @@ export default {
 方式一：
 
 ```js
-props:['name','age','sex']
+props: ['name', 'age', 'sex'];
 ```
 
 方式二：
@@ -215,32 +210,32 @@ props 是只读的，如果进行修改会产生警告，如果确实需要修�
 :::
 
 ```javascript
-const student=Vue.extend({
-    data() {
-        return {
-            msg:'Hello Vue',
-            studentAge:this.age
-        }
+const student = Vue.extend({
+  data() {
+    return {
+      msg: 'Hello Vue',
+      studentAge: this.age,
+    };
+  },
+  props: {
+    name: {
+      type: String,
+      required: true,
     },
-    props:{
-        name:{
-            type:String,
-            required:true
-        },
-        age:{
-            type:Number,
-            default:20
-        },
-        sex:{
-            type:String,
-            required:false
-        }
+    age: {
+      type: Number,
+      default: 20,
     },
-    methods:{
-        changeAge(){
-            this.studentAge++
-        }
-    }
+    sex: {
+      type: String,
+      required: false,
+    },
+  },
+  methods: {
+    changeAge() {
+      this.studentAge++;
+    },
+  },
 });
 ```
 
@@ -251,14 +246,14 @@ const student=Vue.extend({
 ### 定义 mixin
 
 ```js
-"use strict";
-export const mixin={
-    methods: {
-        showName() {
-            alert(this.name)
-        }
-    }
-}
+'use strict';
+export const mixin = {
+  methods: {
+    showName() {
+      alert(this.name);
+    },
+  },
+};
 ```
 
 ### 引用 mixin
@@ -267,28 +262,28 @@ export const mixin={
 
 ```html
 <script>
-import Vue from 'vue'
-import {mixin} from '@/mixin'
-const student = Vue.extend({
-  data() {
-    return {
-      msg: 'Hello Vue',
-      name: 'PPG',
-      age: 21,
-      sex: 'male'
-    }
-  },
-  mixins:[mixin]
-});
-export default student
+  import Vue from 'vue';
+  import { mixin } from '@/mixin';
+  const student = Vue.extend({
+    data() {
+      return {
+        msg: 'Hello Vue',
+        name: 'PPG',
+        age: 21,
+        sex: 'male',
+      };
+    },
+    mixins: [mixin],
+  });
+  export default student;
 </script>
 ```
 
 全局引入，`Vue.mixin(xxx)`：
 
 ```js
-import {mixin} from "@/mixin";
-Vue.mixin(mixin)
+import { mixin } from '@/mixin';
+Vue.mixin(mixin);
 ```
 
 ::: tip
@@ -308,53 +303,53 @@ Vue.mixin(mixin)
 定义插件：
 
 ```js
-"use strict";
-const plugin1={
-    install(vue,a,b){
-        console.log("Plugin 1 installed");
-        vue.prototype.hello=function () {
-            console.log('Vue 全局方法');
-            console.log('另外两个参数为',a,b)
-        }
-    }
-}
-export {plugin1}
+'use strict';
+const plugin1 = {
+  install(vue, a, b) {
+    console.log('Plugin 1 installed');
+    vue.prototype.hello = function () {
+      console.log('Vue 全局方法');
+      console.log('另外两个参数为', a, b);
+    };
+  },
+};
+export { plugin1 };
 ```
 
 使用插件：
 
 ```js
-import {plugin1} from "@/plugins";
-Vue.use(plugin1,Date.now(),"hello");
+import { plugin1 } from '@/plugins';
+Vue.use(plugin1, Date.now(), 'hello');
 ```
 
 ```vue
 <template>
   <div class="demo">
     <h2 @click="showName">name:{{ name }}</h2>
-    <br>
+    <br />
     <h2>address:{{ address }}</h2>
     <button @click="helloTest()">点我控制台输出</button>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from 'vue';
 const school = Vue.extend({
   name: 'School',
   data() {
     return {
       name: 'SDUST',
-      address: 'QD'
-    }
+      address: 'QD',
+    };
   },
   methods: {
     helloTest() {
       this.hello();
-    }
-  }
+    },
+  },
 });
-export default school
+export default school;
 </script>
 ```
 
@@ -364,9 +359,9 @@ export default school
 
 ```html
 <style scoped>
-.demo {
-  background-color: orange;
-}
+  .demo {
+    background-color: orange;
+  }
 </style>
 ```
 

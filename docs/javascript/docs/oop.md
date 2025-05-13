@@ -53,18 +53,18 @@ this 的几个使用场合：
 
 - 在子类构造函数中调用父类的构造函数。
 
-    ```javascript
-    function Dog(name) {
-    Animal.call(this,name)
-    }
-    ```
+  ```javascript
+  function Dog(name) {
+    Animal.call(this, name);
+  }
+  ```
 
 - 让子类的原型指向父类的原型
 
-    ```javascript
-    Dog.prototype = Object.create(Animal.prototype)
-    Dog.prototype.constructor = Dog
-    ```
+  ```javascript
+  Dog.prototype = Object.create(Animal.prototype);
+  Dog.prototype.constructor = Dog;
+  ```
 
 或者直接将子类的原型对象指向一个父类实例。
 

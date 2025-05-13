@@ -18,15 +18,15 @@ metadata:
   namespace: example
 spec:
   containers:
-  - name: mynginx
-    image: nginx
-    resources:
-      limits:
-        memory: "200Mi"
-      requests:
-        memory: "100Mi"
-  - image: tomcat:8.5.68
-    name: tomcat
+    - name: mynginx
+      image: nginx
+      resources:
+        limits:
+          memory: '200Mi'
+        requests:
+          memory: '100Mi'
+    - image: tomcat:8.5.68
+      name: tomcat
 ```
 
 查看 Pod 的详细信息：

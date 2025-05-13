@@ -15,18 +15,18 @@ npm install vuex --save
 在 src 文件夹中创建 `store` 文件夹，并在其中创建 `index.js` 文件，编写如下内容：
 
 ```js
-"use strict";
-import Vuex from "vuex";
-import Vue from "vue";
+'use strict';
+import Vuex from 'vuex';
+import Vue from 'vue';
 Vue.use(Vuex);
-const actions={}
-const mutations={}
-const state={}
+const actions = {};
+const mutations = {};
+const state = {};
 export default new Vuex.Store({
-    actions,
-    mutations,
-    state
-})
+  actions,
+  mutations,
+  state,
+});
 ```
 
 ::: warning 注意
@@ -36,15 +36,15 @@ export default new Vuex.Store({
 main.js 引入 index.js：
 
 ```js
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
+import Vue from 'vue';
+import App from './App.vue';
+import store from './store';
 Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-  store
-}).$mount('#app')
+  store,
+}).$mount('#app');
 ```
 
 ## 求和案例
@@ -56,7 +56,7 @@ new Vue({
 ```vue
 <template>
   <div>
-    <h2>当前n为{{n}}</h2>
+    <h2>当前n为{{ n }}</h2>
     <select v-model.number="step">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -71,80 +71,78 @@ new Vue({
 
 <script>
 export default {
-  name: "Counter",
-  data(){
-    return{
-      step:1,
-
-    }
+  name: 'Counter',
+  data() {
+    return {
+      step: 1,
+    };
   },
-  methods:{
-    increment(){
-      this.$store.dispatch('add',this.step);
+  methods: {
+    increment() {
+      this.$store.dispatch('add', this.step);
     },
-    decrement(){
-      this.$store.dispatch('sub',this.step);
+    decrement() {
+      this.$store.dispatch('sub', this.step);
     },
-    incrementOdd(){
-      this.$store.dispatch('addOdd',this.step);
+    incrementOdd() {
+      this.$store.dispatch('addOdd', this.step);
     },
-    incrementWait(){
-      this.$store.dispatch('addWait',this.step);
-    }
+    incrementWait() {
+      this.$store.dispatch('addWait', this.step);
+    },
   },
-  computed:{
-    n:{
-      get(){
-        return this.$store.state.n
-      }
-    }
-  }
-}
+  computed: {
+    n: {
+      get() {
+        return this.$store.state.n;
+      },
+    },
+  },
+};
 </script>
 ```
 
 actions 和 mutations：
 
 ```js
-const actions={
-    // context与 store 实例具有相同方法和属性
-    add(context,data) {
-        context.commit('ADD',data);
-    },
-    sub(context,data) {
-        context.commit('SUB',data);
-    },
-    addOdd(context,data) {
-        //在actions中再次分发给其他action并接受返回值，返回值是promise类型
-        context.dispatch('isOdd',context.state.n).then((result)=>{
-            console.log(result);
-            if (result){
-                context.commit('ADD',data);
-            }
-        })
-    },
-    addWait(context,data) {
-        setTimeout(()=>{
-            context.commit('ADD',data);
-        },2000);
-    },
-    isOdd(context,data) {
-        return data % 2 !== 0;
-    }
-}
+const actions = {
+  // context与 store 实例具有相同方法和属性
+  add(context, data) {
+    context.commit('ADD', data);
+  },
+  sub(context, data) {
+    context.commit('SUB', data);
+  },
+  addOdd(context, data) {
+    //在actions中再次分发给其他action并接受返回值，返回值是promise类型
+    context.dispatch('isOdd', context.state.n).then(result => {
+      console.log(result);
+      if (result) {
+        context.commit('ADD', data);
+      }
+    });
+  },
+  addWait(context, data) {
+    setTimeout(() => {
+      context.commit('ADD', data);
+    }, 2000);
+  },
+  isOdd(context, data) {
+    return data % 2 !== 0;
+  },
+};
 
-
-const mutations={
-    ADD(state,data) {
-        state.n+=data
-    },
-    SUB(state,data){
-        state.n-=data;
-    }
-}
-const state={
-    n:0
-}
+const mutations = {
+  ADD(state, data) {
+    state.n += data;
+  },
+  SUB(state, data) {
+    state.n -= data;
+  },
+};
+const state = {
+  n: 0,
+};
 ```
 
 ## getters
@@ -155,32 +153,32 @@ const state={
 <h2>当前n的算术平方根为{{sqrtN}}</h2>
 <script>
 export default {
-  name: "Counter",
-  computed:{
-    sqrtN:{
+  name: 'Counter',
+  computed: {
+    sqrtN: {
       get() {
         return this.$store.getters.process;
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 </script>
 ```
 
 index.js：
 
 ```js
-const getters={
-    process(state) {
-        return Math.sqrt(state.n)
-    }
-}
+const getters = {
+  process(state) {
+    return Math.sqrt(state.n);
+  },
+};
 export default new Vuex.Store({
-    actions,
-    mutations,
-    state,
-    getters
-})
+  actions,
+  mutations,
+  state,
+  getters,
+});
 ```
 
 getters 定义与计算属性类似，但是能做到全局复用，计算属性只能组件内复用，都通过返回值获取属性值。
@@ -192,7 +190,7 @@ getters 定义与计算属性类似，但是能做到全局复用，计算属性
 首先在组件中引入 `mapState` 和 `mapGetters`：
 
 ```js
-import {mapState,mapGetters} from 'vuex'
+import { mapState, mapGetters } from 'vuex';
 ```
 
 在计算属性中使用，前面加三个点表示以对象形式加入：
@@ -227,7 +225,7 @@ computed: {
 
 `mapState` 有四种写法：
 
-- 对象写法，对象中是键值对，键为需要的计算属性名，*值必须用引号*，表示在 `state` 中对应数据的名字。
+- 对象写法，对象中是键值对，键为需要的计算属性名，_值必须用引号_，表示在 `state` 中对应数据的名字。
 - 对象写法，对象中是键值对，键为需要计算的属性名，值为箭头函数，参数为 `state`。
 - 对象写法，对象中是函数，函数参数为 `state`，可以进行复杂处理。
 - 数组写法，仅适用于*需要的计算属性与 `state` 中属性重名*的情况。
@@ -244,7 +242,7 @@ computed: {
 首先在组件中引入 `mapActions` 和 `mapMutations`：
 
 ```js
-import {mapActions, mapMutations} from 'vuex'
+import { mapActions, mapMutations } from 'vuex';
 ```
 
 在 methods 中应用：
@@ -281,8 +279,8 @@ methods: {
 示例：
 
 ```html
-    <button @click="incrementOdd(step)"></button>
-    <button @click="incrementWait(step)"></button>
+<button @click="incrementOdd(step)"></button>
+<button @click="incrementWait(step)"></button>
 ```
 
 ## 多组件共享数据
@@ -313,12 +311,12 @@ ADD_PERSON(state,data){
 为 state 添加一个人员数组：
 
 ```js
-const state={
-    n:0,
-    name:'PPG',
-    age:21,
-    people:[]
-}
+const state = {
+  n: 0,
+  name: 'PPG',
+  age: 21,
+  people: [],
+};
 ```
 
 在计数器组件模板中添加：
@@ -353,44 +351,47 @@ computed: {
 <template>
   <div>
     <div>
-      <input v-model="temp" type="text" placeholder="输入姓名，回车确认" @keydown.enter="addPerson(temp)">
+      <input
+        v-model="temp"
+        type="text"
+        placeholder="输入姓名，回车确认"
+        @keydown.enter="addPerson(temp)"
+      />
     </div>
     <ul>
-      <li v-for="(item,index) in people" :key="index">
-        {{item}}
+      <li v-for="(item, index) in people" :key="index">
+        {{ item }}
       </li>
     </ul>
-    <div>
-      计数器组件的当前值为:{{n}}
-    </div>
+    <div>计数器组件的当前值为:{{ n }}</div>
   </div>
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex';
 export default {
-  name: "People",
-  data(){
-    return{
-      temp:''
-    }
+  name: 'People',
+  data() {
+    return {
+      temp: '',
+    };
   },
-  methods:{
-    ...mapActions(['addPerson'])
+  methods: {
+    ...mapActions(['addPerson']),
   },
-  computed:{
-    ...mapState(['people','n'])
+  computed: {
+    ...mapState(['people', 'n']),
   },
   //通过监视people数组变化清空输入框
-  watch:{
-    people:{
-      deep:true,
-      handler(){
-        this.temp=''
-      }
-    }
-  }
-}
+  watch: {
+    people: {
+      deep: true,
+      handler() {
+        this.temp = '';
+      },
+    },
+  },
+};
 </script>
 ```
 
@@ -403,92 +404,91 @@ export default {
 people.js：
 
 ```js
-"use strict";
+'use strict';
 export default {
-    namespaced: true,
-    actions: {
-        addPerson(context, data) {
-            if (data.trim() === '') {
-                alert('请输入内容')
-            } else {
-                context.commit('ADD_PERSON', data)
-
-            }
-        }
+  namespaced: true,
+  actions: {
+    addPerson(context, data) {
+      if (data.trim() === '') {
+        alert('请输入内容');
+      } else {
+        context.commit('ADD_PERSON', data);
+      }
     },
-    mutations: {
-        ADD_PERSON(state, data) {
-            state.people.unshift(data)
-            alert('陈坤')
-        }
+  },
+  mutations: {
+    ADD_PERSON(state, data) {
+      state.people.unshift(data);
+      alert('陈坤');
     },
-    getters: {},
-    state: {
-        people: []
-    }
+  },
+  getters: {},
+  state: {
+    people: [],
+  },
 };
 ```
 
 counter.js：
 
 ```js
-"use strict";
+'use strict';
 export default {
- namespaced:true,
- actions: {
-  addOdd(context, data) {
-   context.dispatch('isOdd', context.state.n).then((result) => {
-    if (result) {
-     context.commit('ADD', data);
-    }
-   })
+  namespaced: true,
+  actions: {
+    addOdd(context, data) {
+      context.dispatch('isOdd', context.state.n).then(result => {
+        if (result) {
+          context.commit('ADD', data);
+        }
+      });
+    },
+    addWait(context, data) {
+      setTimeout(() => {
+        context.commit('ADD', data);
+      }, 2000);
+    },
+    isOdd(context, data) {
+      return data % 2 !== 0;
+    },
   },
-  addWait(context, data) {
-   setTimeout(() => {
-    context.commit('ADD', data);
-   }, 2000);
+  mutations: {
+    ADD(state, data) {
+      state.n += data;
+    },
+    SUB(state, data) {
+      state.n -= data;
+    },
   },
-  isOdd(context, data) {
-   return data % 2 !== 0;
+  getters: {
+    process(state) {
+      return Math.sqrt(state.n);
+    },
   },
- },
- mutations: {
-  ADD(state, data) {
-   state.n += data
+  state: {
+    n: 0,
+    name: 'PPG',
+    age: 21,
   },
-  SUB(state, data) {
-   state.n -= data;
-  },
- },
- getters: {
-  process(state) {
-   return Math.sqrt(state.n)
-  }
- },
- state: {
-  n: 0,
-  name: 'PPG',
-  age: 21,
- }
 };
 ```
 
 index.js：
 
 ```js
-"use strict";
-import Vuex from "vuex";
-import Vue from "vue";
-import counterOptions from "@/store/counter";
-import peopleOptions from "@/store/people";
+'use strict';
+import Vuex from 'vuex';
+import Vue from 'vue';
+import counterOptions from '@/store/counter';
+import peopleOptions from '@/store/people';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules:{
-        peopleOptions,
-        counterOptions
-    }
-})
+  modules: {
+    peopleOptions,
+    counterOptions,
+  },
+});
 ```
 
 在分模块中添加 `namespaced` 属性开启命名空间，如果不写，默认为 false，每个模块中的 actions 和 mutations 为全局可用，state 不是全局可用，要访问可以使用模块名前缀。
@@ -497,23 +497,22 @@ counter.vue：
 
 ```vue
 <script>
-import {mapState, mapGetters} from 'vuex'
-import {mapActions, mapMutations} from 'vuex'
+import { mapState, mapGetters } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
-  name: "Counter",
+  name: 'Counter',
   data() {
     return {
       step: 1,
-
-    }
+    };
   },
   methods: {
-    ...mapMutations('counterOptions',{increment:'ADD',decrement:'SUB'}),
-    ...mapActions('counterOptions',{incrementOdd:'addOdd', incrementWait:'addWait'})
+    ...mapMutations('counterOptions', { increment: 'ADD', decrement: 'SUB' }),
+    ...mapActions('counterOptions', { incrementOdd: 'addOdd', incrementWait: 'addWait' }),
   },
   computed: {
-    ...mapState('counterOptions',{
+    ...mapState('counterOptions', {
       n(state) {
         return state.n;
       },
@@ -523,16 +522,15 @@ export default {
       age(state) {
         return state.age;
       },
-
     }),
-    ...mapState('peopleOptions',{
+    ...mapState('peopleOptions', {
       number(state) {
         return state.people.length;
-      }
+      },
     }),
-    ...mapGetters('counterOptions',{sqrtN: 'process'})
-  }
-}
+    ...mapGetters('counterOptions', { sqrtN: 'process' }),
+  },
+};
 </script>
 ```
 
@@ -540,30 +538,30 @@ people.vue：
 
 ```vue
 <script>
-import {mapActions,mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex';
 export default {
-  name: "People",
-  data(){
-    return{
-      temp:''
-    }
+  name: 'People',
+  data() {
+    return {
+      temp: '',
+    };
   },
-  methods:{
-    ...mapActions('peopleOptions',['addPerson'])
+  methods: {
+    ...mapActions('peopleOptions', ['addPerson']),
   },
-  computed:{
-    ...mapState('peopleOptions',['people']),
-    ...mapState('counterOptions',['n']),
+  computed: {
+    ...mapState('peopleOptions', ['people']),
+    ...mapState('counterOptions', ['n']),
   },
-  watch:{
-    people:{
-      deep:true,
-      handler(){
-        this.temp=''
-      }
-    }
-  }
-}
+  watch: {
+    people: {
+      deep: true,
+      handler() {
+        this.temp = '';
+      },
+    },
+  },
+};
 </script>
 ```
 
@@ -575,7 +573,7 @@ export default {
 
 ```js
 //返回值就是getters对应函数的结果
-this.$store.getters["counterOptions/process"]
+this.$store.getters['counterOptions/process'];
 ```
 
 对于模块内部的 action，局部状态通过 `context.state` 暴露出来，根节点状态则为 `context.rootState`。

@@ -14,8 +14,8 @@ metadata:
     app: nginx
 spec:
   ports:
-  - port: 80
-    name: web
+    - port: 80
+      name: web
   clusterIP: None
   selector:
     app: nginx
@@ -30,8 +30,8 @@ metadata:
     app: nginx
 spec:
   ports:
-  - port: 80
-    name: web
+    - port: 80
+      name: web
   selector:
     app: nginx
 ---
@@ -44,7 +44,7 @@ spec:
   selector:
     matchLabels:
       app: nginx # has to match .spec.template.metadata.labels
-  serviceName: "nginx"
+  serviceName: 'nginx'
   replicas: 3 # by default is 1
   template:
     metadata:
@@ -53,23 +53,23 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - name: nginx
-        image: nginx
-        ports:
-        - containerPort: 80
-          name: web
-        volumeMounts:
-        - name: www
-          mountPath: /usr/share/nginx/html
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
   volumeClaimTemplates:
-  - metadata:
-      name: www
-    spec:
-      accessModes: [ "ReadWriteMany" ]
-      storageClassName: "nfs-client"
-      resources:
-        requests:
-          storage: 10Mi
+    - metadata:
+        name: www
+      spec:
+        accessModes: ['ReadWriteMany']
+        storageClassName: 'nfs-client'
+        resources:
+          requests:
+            storage: 10Mi
 ---
 # 通过 Ingress 暴露服务
 apiVersion: networking.k8s.io/v1

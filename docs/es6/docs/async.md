@@ -6,7 +6,7 @@ async 函数返回一个 Promise 对象，可以使用 then 方法添加回调�
 
 ```javascript
 async function timeout(ms) {
-  await new Promise((resolve) => {
+  await new Promise(resolve => {
     setTimeout(resolve, ms);
   });
 }
@@ -27,7 +27,7 @@ async 函数内部抛出错误会导致返回的 Promise 对象变为 reject 状
 
 async 函数返回的 Promise 对象必须等到内部所有 await 命令后面的 Promise 对象执行完才会发生状态改变，除非遇到 return 语句或者抛出错误，只有 async 函数内部的异步操作执行完才会执行 then 方法指定的回调函数。
 
-await 命令后面的 Promise 对象如果变成 reject 状态，则 reject 的参数会被 catch 方法的回调函数接收到。而且只要任何一个 await  语句后面的 Promise对象变为 reject 状态，那么整个 async 函数都会中断执行。
+await 命令后面的 Promise 对象如果变成 reject 状态，则 reject 的参数会被 catch 方法的回调函数接收到。而且只要任何一个 await 语句后面的 Promise对象变为 reject 状态，那么整个 async 函数都会中断执行。
 
 如果希望即使前面的异步操作失败也不中断后面的异步操作可以将前面的 await 放在 try...catch 结构里。
 

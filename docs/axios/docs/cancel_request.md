@@ -2,16 +2,16 @@
 
 ```js
 //声明变量
-let cancel=null;
+let cancel = null;
 //配置项中添加cancelToken
 axios({
-    url:'http://localhost/delayTest',
-    cancelToken:new axios.CancelToken(function(c){
-        cancel=c
-    })
-})
+  url: 'http://localhost/delayTest',
+  cancelToken: new axios.CancelToken(function (c) {
+    cancel = c;
+  }),
+});
 //此时这个变量已经变成函数，调用即可取消请求
-cancel()
+cancel();
 ```
 
 ::: tip

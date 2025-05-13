@@ -11,31 +11,25 @@ yarn add react-router-dom
 首先构造一个 App.tsx：
 
 ```tsx
-import {FC} from "react";
+import { FC } from 'react';
 import styles from './styles/app.module.less';
 const App: FC = () => {
   return (
     <div className={styles.app}>
       <div className={styles.sideBar}>
         <a>
-          <button className={styles.button}>
-            Home
-          </button>
+          <button className={styles.button}>Home</button>
         </a>
         <a>
-          <button className={styles.button}>
-            About
-          </button>
+          <button className={styles.button}>About</button>
         </a>
       </div>
-      <div className={styles.content}>
-
-      </div>
+      <div className={styles.content}></div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 后面的内容基于此页面进行。
@@ -69,18 +63,18 @@ React Router 6.4 版本之后引入了 Data APIs，要想使用 Data APIs 就要
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
       {
-          path: 'about',
-          element: <About/>,
+        path: 'about',
+        element: <About />,
       },
       {
-          path: '/home',
-          element: <Home/>,
-      }
-    ]
-  }
+        path: '/home',
+        element: <Home />,
+      },
+    ],
+  },
 ]);
 ```
 
@@ -89,18 +83,16 @@ const router = createBrowserRouter([
 ```tsx
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>,
-)
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
 ```
 
 修改 App 组件中 a 标签：
 
 ```tsx
 <a href={'home'}>
-  <button className={styles.button}>
-    Home
-  </button>
+  <button className={styles.button}>Home</button>
 </a>
 ```
 
@@ -108,7 +100,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 ```tsx
 <div className={styles.content}>
-  <Outlet/>
+  <Outlet />
 </div>
 ```
 
@@ -131,36 +123,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 NavLink 组件的 className 属性除了可以像正常的 className 一样使用之外，还可以是一个纯函数，这个函数应该返回类名，此函数接收一个对象，对象上有三个布尔属性：isActive、isPending、isTransitioning。
 
 ```tsx
-<NavLink
-  to={'home'}
-  className={({isActive}) => isActive ? styles.active : ''}
->
-  <button className={styles.button}>
-    Home
-  </button>
+<NavLink to={'home'} className={({ isActive }) => (isActive ? styles.active : '')}>
+  <button className={styles.button}>Home</button>
 </NavLink>
 ```
 
 NavLink 组件的 children 也可以是一个接收上面这个对象的纯函数，用于控制 NavLink 中显示的子元素，例如：
 
 ```tsx
-<NavLink
-  to={'home'}
-  className={({isActive}) => isActive ? styles.active : ''}
->
-  {
-    ({isActive}) => {
-      let content = 'Home';
-      if (isActive) {
-        content = content.toUpperCase();
-      }
-      return (
-        <button className={styles.button}>
-          {content}
-        </button>
-      )
+<NavLink to={'home'} className={({ isActive }) => (isActive ? styles.active : '')}>
+  {({ isActive }) => {
+    let content = 'Home';
+    if (isActive) {
+      content = content.toUpperCase();
     }
-  }
+    return <button className={styles.button}>{content}</button>;
+  }}
 </NavLink>
 ```
 
@@ -195,14 +173,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App/>}>
-          <Route path="home" element={<Home/>}/>
-          <Route path="about" element={<About/>}/>
+        <Route path="/" element={<App />}>
+          <Route path="home" element={<Home />} />
+          <Route path="about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
 ```
 
 ## Route 配置项
@@ -244,8 +222,8 @@ const ErrorPage: FC = () => {
     <div className={styles.page}>
       <span className={styles.text}>oop! There is an error: {err.message}</span>
     </div>
-  )
-}
+  );
+};
 ```
 
 ### 参数路由
@@ -255,13 +233,11 @@ const ErrorPage: FC = () => {
 首先定义一个 HomeDetailLink 组件：
 
 ```tsx
-import { FC } from "react";
+import { FC } from 'react';
 
 const HomeLink: FC = () => {
-  return (
-    <h3>link</h3>
-  )
-}
+  return <h3>link</h3>;
+};
 
 export default HomeLink;
 ```
@@ -272,25 +248,25 @@ export default HomeLink;
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: 'about',
-        element: <About/>,
+        element: <About />,
         ErrorBoundary: ErrorPage,
       },
       {
         path: 'home',
-        element: <Home/>,
+        element: <Home />,
         children: [
           {
             path: 'links',
-            element: <HomeLink/>,
-          }
-        ]
-      }
-    ]
-  }
+            element: <HomeLink />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
 ```
 
@@ -301,29 +277,20 @@ const HomeDetail: FC = () => {
   return (
     <div className={styles.detail}>
       <div className={styles.menus}>
-        <NavLink
-          to={'links'}
-          className={({isActive}) => isActive ? styles.active : ''}
-        >
+        <NavLink to={'links'} className={({ isActive }) => (isActive ? styles.active : '')}>
           <button className={styles.menuButton}>link1</button>
         </NavLink>
-        <NavLink
-          to={'links'}
-          className={({isActive}) => isActive ? styles.active : ''}
-        >
+        <NavLink to={'links'} className={({ isActive }) => (isActive ? styles.active : '')}>
           <button className={styles.menuButton}>link2</button>
         </NavLink>
-        <NavLink
-          to={'links'}
-          className={({isActive}) => isActive ? styles.active : ''}
-        >
+        <NavLink to={'links'} className={({ isActive }) => (isActive ? styles.active : '')}>
           <button className={styles.menuButton}>link3</button>
         </NavLink>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 ```
 
 现在点击三个按钮内容所展示的内容完全一致，现在为 HomeDetailLink 组件配置参数路由，并修改上面 NavLink 的 to 属性：
@@ -353,14 +320,12 @@ const HomeDetail: FC = () => {
 ```tsx
 type HomeLinkParams = {
   id: string;
-}
+};
 
 const HomeLink: FC = () => {
   const params = useParams<HomeLinkParams>();
-  return (
-    <h3>{`showing link${params.id}`}</h3>
-  )
-}
+  return <h3>{`showing link${params.id}`}</h3>;
+};
 ```
 
 ### 可选路由
@@ -420,17 +385,17 @@ const HomeLink: FC = () => {
 type HomeLinkParams = {
   id?: string;
   '*'?: string;
-}
+};
 
 const HomeLink: FC = () => {
   const params = useParams<HomeLinkParams>();
   return (
     <>
       <h3>{`showing link${params.id ? params.id : '-'}`}</h3>
-      <h3>get params from pattern: {params["*"]}</h3>
+      <h3>get params from pattern: {params['*']}</h3>
     </>
-  )
-}
+  );
+};
 ```
 
 如果 NavLink 的 to 为 `/home/links/123/456` 那么上面 params['*'] 的值就是 123/456。
@@ -447,15 +412,17 @@ const HomeLink: FC = () => {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
       {
         index: true,
-        element: <IndexPage/>,
+        element: <IndexPage />,
       },
-      {/*...other routes...*/}
-    ]
-  }
+      {
+        /*...other routes...*/
+      },
+    ],
+  },
 ]);
 ```
 
@@ -475,35 +442,35 @@ Route 配置中可以通过 lazy 属性设置懒加载，可以懒加载 loader�
 const router = createBrowserRouter([
   {
     path: '/',
-    lazy: async () => ({Component: (await import('../App')).default}),
+    lazy: async () => ({ Component: (await import('../App')).default }),
     children: [
       {
         index: true,
-        lazy: async () => ({Component: (await import('../components')).IndexPage}),
+        lazy: async () => ({ Component: (await import('../components')).IndexPage }),
       },
       {
         path: 'about',
         async lazy() {
           const { About, ErrorPage } = await import('../components');
           return {
-            element: <About/>,
-            errorElement: <ErrorPage/>
-          }
-        }
+            element: <About />,
+            errorElement: <ErrorPage />,
+          };
+        },
       },
       {
         path: 'home',
-        lazy: async () => ({Component: (await import('../components')).Home}),
+        lazy: async () => ({ Component: (await import('../components')).Home }),
         children: [
           {
             path: 'links/*',
             caseSensitive: false,
-            lazy: async () => ({Component: (await import('../components')).HomeLink}),
-          }
+            lazy: async () => ({ Component: (await import('../components')).HomeLink }),
+          },
         ],
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 ```
 
@@ -530,32 +497,32 @@ type link = {
 // mock 数据
 const links: Array<link> = [
   {
-    id: "1",
-    content: "message of link1",
+    id: '1',
+    content: 'message of link1',
   },
   {
-    id: "2",
-    content: "message of link2",
+    id: '2',
+    content: 'message of link2',
   },
   {
-    id: "3",
-    content: "message of link3",
+    id: '3',
+    content: 'message of link3',
   },
 ];
 
 class Link {
   static getLink = async (id: string): Promise<link> => {
     await mockNetwork();
-    const index = links.findIndex((link) => link.id === id);
+    const index = links.findIndex(link => link.id === id);
     if (index >= 0) {
       return links[index];
     }
-    throw new Error("no link found");
+    throw new Error('no link found');
   };
 }
 // 模拟网络请求
 const mockNetwork = async () => {
-  return new Promise<void>((res) => {
+  return new Promise<void>(res => {
     setTimeout(res, 300);
   });
 };
@@ -564,13 +531,9 @@ const mockNetwork = async () => {
 准备就绪后定义 loader 方法，此方法应该返回一个对象：
 
 ```ts
-const homeLinkLoader: LoaderFunction = ({
-  params,
-}: {
-  params: Params<'id'>;
-}) => {
+const homeLinkLoader: LoaderFunction = ({ params }: { params: Params<'id'> }) => {
   if (!params.id) {
-    throw new Error("empty link id!");
+    throw new Error('empty link id!');
   }
   return Link.getLink(params.id);
 };
@@ -660,11 +623,7 @@ static deleteLastLink = async (): Promise<void> => {
 然后将 HomeLink 组件的路由中的 :id 参数改为可选项，并修改 loader 方法，如果不传 id 那么就返回全部 link：
 
 ```ts
-const homeLinkLoader: LoaderFunction = ({
-  params,
-}: {
-  params: Params<"id">;
-}) => {
+const homeLinkLoader: LoaderFunction = ({ params }: { params: Params<'id'> }) => {
   if (!params.id) {
     return Link.listLinks();
   }
@@ -692,7 +651,7 @@ const HomeLink: FC = () => {
         </div>
       ) : undefined}
       <ul>
-        {links.map((link) => {
+        {links.map(link => {
           return (
             <>
               <li>
@@ -815,10 +774,10 @@ action 属性如果不指定那么默认是交给当前路径对应的组件的 
 
 ```tsx
 // 添加 loader 获取 GET 方式提交的表单
-const aboutLoader: LoaderFunction = ({request}) => {
+const aboutLoader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
   return url.searchParams.get('content');
-}
+};
 // 在 loader 对应的组件中使用 useLoaderData
 const About: FC = () => {
   console.log(useLoaderData());
@@ -852,15 +811,15 @@ HomeLink 中的例子不适合表单实现，React Router 提供了 useSubmit �
 然后定义 action：
 
 ```ts
-const linkAction: ActionFunction = async ({request}) => {
-  const data = await request.json() as {method: 'create' | 'delete'};
-  if (data.method === 'create'){
+const linkAction: ActionFunction = async ({ request }) => {
+  const data = (await request.json()) as { method: 'create' | 'delete' };
+  if (data.method === 'create') {
     await Link.createLink();
   } else {
     await Link.deleteLastLink();
   }
   return null;
-}
+};
 ```
 
 现在点击添加或者删除组件同样会重新渲染而不再依赖 state。
@@ -868,26 +827,26 @@ const linkAction: ActionFunction = async ({request}) => {
 action 也可以返回数据，返回的内容可以在对应组件中使用 `useActionData` 这个 hook 来获取，例如上面的 linkAction 我们返回一个 Fetch API 的 Response 对象，并将状态设置为 200：
 
 ```ts
-const linkAction: ActionFunction = async ({request}) => {
-  const data = await request.json() as {method: 'create' | 'delete'};
-  if (data.method === 'create'){
+const linkAction: ActionFunction = async ({ request }) => {
+  const data = (await request.json()) as { method: 'create' | 'delete' };
+  if (data.method === 'create') {
     await Link.createLink();
   } else {
     await Link.deleteLastLink();
   }
   return new Response('{"status": "ok"}', {
     headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-}
+      'Content-Type': 'application/json',
+    },
+  });
+};
 ```
 
 然后我们在 HomeLink 中使用 `useActionData` 获取：
 
 ```ts
 const actionData = useActionData();
-console.log('action data', actionData, typeof actionData)
+console.log('action data', actionData, typeof actionData);
 ```
 
 ### shouldRevalidate
@@ -901,8 +860,8 @@ const homeLinkShouldRevalidate: ShouldRevalidateFunction = ({ json }) => {
   if (!json) {
     return false;
   }
-  const temp = json as { method: "create" | "delete" };
-  return temp.method !== "create";
+  const temp = json as { method: 'create' | 'delete' };
+  return temp.method !== 'create';
 };
 ```
 
@@ -965,8 +924,8 @@ const NavigatePage: FC = () => {
 
 ```ts
 export interface NavigateFunction {
-    (to: To, options?: NavigateOptions): void;
-    (delta: number): void;
+  (to: To, options?: NavigateOptions): void;
+  (delta: number): void;
 }
 ```
 
@@ -982,14 +941,14 @@ const navigate = () => {
 
 ```ts
 const navigate = () => {
-  ngv("/home/links", { state: { now: new Date() } });
+  ngv('/home/links', { state: { now: new Date() } });
 };
 ```
 
 此外，此方法支持相对路径，默认情况下，相对路径被解析为以路由为相对，举例来说，如果当前路径是 /test/nvg，之前的路径是 /home，那么这种情况下 `navigate('..')` 会向上跳转一级路由，也就是跳转到 /home，如果函数的选项中设置了 Relative 属性为 path，那么相对跳转就是相对于 URL 了，例如 /test/nvg 向上跳转会跳转到 /test。
 
 ```ts
-ngv("..", { relative: "path" });
+ngv('..', { relative: 'path' });
 ```
 
 ## 传递参数
@@ -1005,7 +964,7 @@ ngv("..", { relative: "path" });
 ```tsx
 const About: FC = () => {
   const [query] = useSearchParams();
-  console.log(query.get("a"));
+  console.log(query.get('a'));
   return (
     <Form method="get">
       <input name="content" type="text" />
@@ -1037,7 +996,7 @@ Link、NavLink 传递：
 Form 传递：
 
 ```tsx
-<Form method="get" state={{now: new Date()}}>
+<Form method="get" state={{ now: new Date() }}>
   <input name="content" type="text" />
   <button type="submit">create</button>
 </Form>
@@ -1048,7 +1007,7 @@ Form 传递：
 ```tsx
 const ngv = useNavigate();
 const navigate = () => {
-  ngv("..", { state: {now: new Date()} });
+  ngv('..', { state: { now: new Date() } });
 };
 ```
 
@@ -1056,8 +1015,8 @@ useSubmit 传递：
 
 ```tsx
 submit(
-  { method: "delete" },
-  { method: "post", encType: "application/json", state: {now: new Date()} },
+  { method: 'delete' },
+  { method: 'post', encType: 'application/json', state: { now: new Date() } }
 );
 ```
 
@@ -1085,11 +1044,7 @@ console.log(state.now);
 
 ```tsx
 <span>
-  {navigation.state === "submitting"
-    ? "saving"
-    : navigation.state === "loading"
-    ? "saved"
-    : "go"}
+  {navigation.state === 'submitting' ? 'saving' : navigation.state === 'loading' ? 'saved' : 'go'}
 </span>
 ```
 
@@ -1130,12 +1085,8 @@ navigation.formData 中保存着以 formData 传输的数据，如果是 Form �
 目前通过 loader 加载数据时，如果接口的响应很慢，那么组件的渲染会在接口响应结束后进行，这可能会导致一些体验上的问题，为了解决这个问题，React Router 提供了 defer 方法，此方法包裹的内容会异步执行，也就是说会先渲染组件再等待响应，这样就可以在页面上添加加载中的效果，defer 要配合 React Suspense 组件和 React Router Await 组件使用，例如我们现在修改 HomeLink 的 loader：
 
 ```ts
-const homeLinkLoader: LoaderFunction = ({
-  params,
-}: {
-  params: Params<"id">;
-}) => {
-  console.log("home link loader running...");
+const homeLinkLoader: LoaderFunction = ({ params }: { params: Params<'id'> }) => {
+  console.log('home link loader running...');
   if (!params.id) {
     return defer({ links: Link.listLinks() });
   }
@@ -1147,7 +1098,7 @@ const homeLinkLoader: LoaderFunction = ({
 
 ```tsx
 const HomeLink: FC = () => {
-  console.log("rendering HomeLink");
+  console.log('rendering HomeLink');
   const { links } = useLoaderData() as { links: Promise<Array<link>> };
 
   const navigation = useNavigation();
@@ -1155,11 +1106,11 @@ const HomeLink: FC = () => {
   return (
     <div>
       <span>
-        {navigation.state === "submitting"
-          ? "saving"
-          : navigation.state === "loading"
-          ? "saved"
-          : "go"}
+        {navigation.state === 'submitting'
+          ? 'saving'
+          : navigation.state === 'loading'
+            ? 'saved'
+            : 'go'}
       </span>
       <Suspense fallback={<p>loading...</p>}>
         <Await resolve={links} errorElement={<ErrorPage />}>
@@ -1171,8 +1122,8 @@ const HomeLink: FC = () => {
                     className={styles.menuButton}
                     onClick={() => {
                       submit(
-                        { method: "create", action: "/home/links" },
-                        { method: "post", encType: "application/json" },
+                        { method: 'create', action: '/home/links' },
+                        { method: 'post', encType: 'application/json' }
                       );
                     }}
                   >
@@ -1182,11 +1133,11 @@ const HomeLink: FC = () => {
                     className={styles.menuButton}
                     onClick={() => {
                       submit(
-                        { method: "delete" },
+                        { method: 'delete' },
                         {
-                          method: "post",
-                          encType: "application/json",
-                        },
+                          method: 'post',
+                          encType: 'application/json',
+                        }
                       );
                     }}
                   >
@@ -1195,7 +1146,7 @@ const HomeLink: FC = () => {
                 </div>
               ) : undefined}
               <ul>
-                {links.map((link) => {
+                {links.map(link => {
                   return (
                     <li key={link.id}>
                       {link.id} - {link.content}
@@ -1265,7 +1216,7 @@ const Links: FC<{ submit: SubmitFunction }> = ({ submit }) => {
 // 修改 Await 组件的内容
 <Await resolve={links} errorElement={<AsyncErrorPage />}>
   <Links submit={submit} />
-</Await>
+</Await>;
 ```
 
 ### 部分异步
@@ -1273,12 +1224,8 @@ const Links: FC<{ submit: SubmitFunction }> = ({ submit }) => {
 有的数据可能必须要在页面渲染前处理，因此可以在 defer 中通过 await 来限制部分异步：
 
 ```ts
-const homeLinkLoader: LoaderFunction = async ({
-  params,
-}: {
-  params: Params<"id">;
-}) => {
-  console.log("home link loader running...");
+const homeLinkLoader: LoaderFunction = async ({ params }: { params: Params<'id'> }) => {
+  console.log('home link loader running...');
   if (!params.id) {
     return defer({ links: await Link.listLinks() });
   }
@@ -1296,7 +1243,7 @@ const homeLinkLoader: LoaderFunction = async ({
 
 ```tsx
 const About: FC = () => {
-  console.log("rendering About");
+  console.log('rendering About');
   const fetcher = useFetcher();
   // ....
 };
@@ -1315,7 +1262,7 @@ return (
   <div>
     <button
       onClick={() => {
-        fetcher.load("/home/links/1");
+        fetcher.load('/home/links/1');
       }}
     >
       click
@@ -1333,14 +1280,14 @@ const About: FC = () => {
     <div>
       <button
         onClick={() => {
-          fetcher.load("/home/links/1");
+          fetcher.load('/home/links/1');
         }}
       >
         click
       </button>
       {fetcher.data ? (
         <ul>
-          {fetcher.data.links.map((link) => (
+          {fetcher.data.links.map(link => (
             <li key={link.id}>
               {link.id}-{link.content}
             </li>
@@ -1360,12 +1307,12 @@ const About: FC = () => {
 <button
   onClick={() => {
     fetcher.submit(
-      { method: "delete" },
+      { method: 'delete' },
       {
-        method: "post",
-        encType: "application/json",
-        action: "/home/links",
-      },
+        method: 'post',
+        encType: 'application/json',
+        action: '/home/links',
+      }
     );
   }}
 >
@@ -1393,7 +1340,7 @@ return (
 
     {fetcher.data ? (
       <ul>
-        {fetcher.data.links.map((link) => (
+        {fetcher.data.links.map(link => (
           <li key={link.id}>
             {link.id}-{link.content}
           </li>
@@ -1416,13 +1363,11 @@ return (
 const GuardRouter: FC<{ context?: unknown }> = ({ context }) => {
   const pathName = useLocation().pathname;
   let isAuthorized = true;
-  if (!["/"].includes(pathName)) {
+  if (!['/'].includes(pathName)) {
     isAuthorized = Link.isAuthorized();
   }
-  console.log("rendering GuardRouter");
-  return (
-    <>{!isAuthorized ? <Navigate to={"/"} /> : <Outlet context={context} />}</>
-  );
+  console.log('rendering GuardRouter');
+  return <>{!isAuthorized ? <Navigate to={'/'} /> : <Outlet context={context} />}</>;
 };
 ```
 
@@ -1432,7 +1377,7 @@ const GuardRouter: FC<{ context?: unknown }> = ({ context }) => {
 
 ```tsx
 const ProtectedRoute: FC<{ children: ReactElement }> = ({ children }) => {
-  return <>{Link.isAuthorized() ? children : <Navigate to={"/"} />}</>;
+  return <>{Link.isAuthorized() ? children : <Navigate to={'/'} />}</>;
 };
 ```
 
@@ -1468,7 +1413,7 @@ const ProtectedRoute: FC<{ children: ReactElement }> = ({ children }) => {
 export interface UIMatch<Data = unknown, Handle = unknown> {
   id: string;
   pathname: string;
-  params: AgnosticRouteMatch["params"];
+  params: AgnosticRouteMatch['params'];
   data: Data;
   handle: Handle;
 }
@@ -1480,17 +1425,17 @@ export interface UIMatch<Data = unknown, Handle = unknown> {
 - data：从 loader 中传来的数据，**如果 loader 用了 defer，那么这个字段会是 Promise 对象**。
 - handle：定义路由时设置的参数，例如：
 
-    ```tsx
-    {
-      path: "about",
-      lazy: async () => ({
-        Component: (await import("../components")).About,
-        ErrorBoundary: (await import("../components")).ErrorPage,
-        handle: { now: new Date() },
-        loader: (await import("../components")).aboutLoader,
-      }),
-    },
-    ```
+  ```tsx
+  {
+    path: "about",
+    lazy: async () => ({
+      Component: (await import("../components")).About,
+      ErrorBoundary: (await import("../components")).ErrorPage,
+      handle: { now: new Date() },
+      loader: (await import("../components")).aboutLoader,
+    }),
+  },
+  ```
 
 ### useOutletContext
 
@@ -1498,7 +1443,7 @@ export interface UIMatch<Data = unknown, Handle = unknown> {
 
 ```tsx
 // App.tsx
-<Outlet context={{ now: new Date() }} />
+<Outlet context={{ now: new Date() }} />;
 // About.tsx
 console.log(useOutletContext<{ now: Date }>().now);
 ```

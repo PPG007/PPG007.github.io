@@ -7,43 +7,43 @@
 
 - @Autowired：
 
-    自动装配注解，通过ByType实现。
+  自动装配注解，通过ByType实现。
 
 - @Resource：
 
-    自动装配注解，默认ByName，也会ByType。
+  自动装配注解，默认ByName，也会ByType。
 
 - @Nullable：
 
-    可为空注解。
+  可为空注解。
 
 - @Component：
 
-    组件注解，需要在配置文件中开启组件扫描，相当于在配置文件中注册bean，默认名字是类名的小写。
+  组件注解，需要在配置文件中开启组件扫描，相当于在配置文件中注册bean，默认名字是类名的小写。
 
-    ```xml
-    <context:component-scan base-package="pojo"/>
-    ```
+  ```xml
+  <context:component-scan base-package="pojo"/>
+  ```
 
 - @Value：
 
-    加在类属性或方法上，为简单类型的成员赋值，不适用于复杂类型如 List。
+  加在类属性或方法上，为简单类型的成员赋值，不适用于复杂类型如 List。
 
-    ```java
-    @Component
-    public class User {
-        @Value("test")
-        public String name;
-    }
-    ```
+  ```java
+  @Component
+  public class User {
+      @Value("test")
+      public String name;
+  }
+  ```
 
 - @Scope：
 
-    设置作用域（单例、原型）
+  设置作用域（单例、原型）
 
-    ```java
-    @Scope(value = "singleton")
-    ```
+  ```java
+  @Scope(value = "singleton")
+  ```
 
 ## 衍生注解
 

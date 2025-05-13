@@ -17,14 +17,14 @@ export interface user {
 }
 
 const useCurrentUser = () => {
-  const str = localStorage.getItem("user");
+  const str = localStorage.getItem('user');
   if (str) {
     return JSON.parse(str) as user;
   }
   return null;
-}
+};
 
-export default useCurrentUser
+export default useCurrentUser;
 ```
 
 然后在组件中引用：
@@ -33,11 +33,17 @@ export default useCurrentUser
 const Foo: FC = () => {
   const user = useCurrentUser();
   return (
-    <p>{
-      user ? <span>{user.id} - {user.name}</span> : 'null'
-    }</p>
-  )
-}
+    <p>
+      {user ? (
+        <span>
+          {user.id} - {user.name}
+        </span>
+      ) : (
+        'null'
+      )}
+    </p>
+  );
+};
 ```
 
 ::: tip
@@ -59,7 +65,7 @@ Hook 共享的只是状态逻辑而不是状态本身，对 Hook 的每个调用
 这个 Hook 会返回一个唯一的字符串 id：
 
 ```ts
-console.log(useId(), useId(), useId())
+console.log(useId(), useId(), useId());
 ```
 
 如果一个页面中有多个 React 实例，那么可以在 createRoot 方法中传入 identifierPrefix 来为这个 React 应用的 useId 的结果设置前缀：
@@ -70,8 +76,8 @@ ReactDOM.createRoot(document.getElementById('root')!, {
 }).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
 ```
 
 ### useMemo
@@ -80,45 +86,63 @@ ReactDOM.createRoot(document.getElementById('root')!, {
 
 ```tsx
 const memoTest = () => {
-  console.log('memo test')
-}
+  console.log('memo test');
+};
 
 function App() {
   const [a, setA] = useState(0);
   const [b, setB] = useState(0);
-  useMemo(memoTest, [b])
+  useMemo(memoTest, [b]);
   return (
     <>
       <span>{a}</span>
-      <button onClick={() => {setA(a+1)}}>add</button>
-      <br/>
+      <button
+        onClick={() => {
+          setA(a + 1);
+        }}
+      >
+        add
+      </button>
+      <br />
       <span>{b}</span>
-      <button onClick={() => {setB(b+1)}}>add</button>
+      <button
+        onClick={() => {
+          setB(b + 1);
+        }}
+      >
+        add
+      </button>
     </>
-  )
+  );
 }
 ```
 
 现在有这样一个组件，接收一个整数数组并渲染出来，但是很慢：
 
 ```tsx
-const Count: FC<{count: Array<number>}> = ({count}) => {
-  console.log('rendering count')
+const Count: FC<{ count: Array<number> }> = ({ count }) => {
+  console.log('rendering count');
   const start = performance.now();
   while (performance.now() - start < 1000) {
     continue;
   }
-  return <span>{count[0]}</span>
-}
+  return <span>{count[0]}</span>;
+};
 // App.tsx
 function App() {
   const [a, setA] = useState(0);
   return (
     <>
       <Count count={[1]} />
-      <button onClick={() => {setA(a+1)}}>add</button>
+      <button
+        onClick={() => {
+          setA(a + 1);
+        }}
+      >
+        add
+      </button>
     </>
-  )
+  );
 }
 ```
 
@@ -128,15 +152,29 @@ function App() {
 function App() {
   const [a, setA] = useState(0);
   const [b, setB] = useState(0);
-  const count = useMemo(() => {return [a]}, [a]);
+  const count = useMemo(() => {
+    return [a];
+  }, [a]);
   return (
     <>
       <Count count={count} />
-      <button onClick={() => {setA(a+1)}}>add</button>
+      <button
+        onClick={() => {
+          setA(a + 1);
+        }}
+      >
+        add
+      </button>
       <Count count={count} />
-      <button onClick={() => {setB(b+1)}}>add</button>
+      <button
+        onClick={() => {
+          setB(b + 1);
+        }}
+      >
+        add
+      </button>
     </>
-  )
+  );
 }
 ```
 
@@ -159,15 +197,14 @@ useCallback 也算是 useMemo，只不过缓存的是函数，如果要用 useMe
 此方法能够延迟加载组件，例如：
 
 ```tsx
-const Foo = lazy(() => import('./components/Foo'))
+const Foo = lazy(() => import('./components/Foo'));
 
 function App() {
-
   return (
     <div>
-      <Foo/>
+      <Foo />
     </div>
-  )
+  );
 }
 ```
 
@@ -176,6 +213,6 @@ function App() {
 ```tsx
 const Foo = lazy(async () => {
   const foo = (await import('./components')).Foo;
-  return {default: foo};
-})
+  return { default: foo };
+});
 ```

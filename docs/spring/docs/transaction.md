@@ -6,25 +6,25 @@ MyBatis-Spring 借助了 Spring 中的 DataSourceTransactionManager 来实现事
 
 - 配置对应的 Java Class为：DataSourceTransactionManager。
 
-    - xml 方式方式配置：
+  - xml 方式方式配置：
 
-        ```xml
-        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <constructor-arg ref="dataSource" />
-        </bean>
-        ```
+    ```xml
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <constructor-arg ref="dataSource" />
+    </bean>
+    ```
 
-    - Java 方式：
+  - Java 方式：
 
-        ```java
-        @Configuration
-        public class DataSourceConfig {
-            @Bean
-            public DataSourceTransactionManager transactionManager() {
-                return new DataSourceTransactionManager(dataSource());
-            }
+    ```java
+    @Configuration
+    public class DataSourceConfig {
+        @Bean
+        public DataSourceTransactionManager transactionManager() {
+            return new DataSourceTransactionManager(dataSource());
         }
-        ```
+    }
+    ```
 
 ::: warning 注意
 为事务管理器指定的 DataSource 必须和用来创建 SqlSessionFactoryBean 的是同一个数据源，否则事务管理器就无法工作了。

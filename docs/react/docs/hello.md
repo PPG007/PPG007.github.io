@@ -11,22 +11,20 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>hello</title>
-</head>
-<body>
-    <div id="test">
-
-    </div>
-</body>
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
-<script type="text/javascript" src="../js/babel.min.js"></script>
-<script type="text/babel">
+  </head>
+  <body>
+    <div id="test"></div>
+  </body>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
     const dom = <h1>Hello World</h1>;
     ReactDOM.render(dom, document.querySelector('#test'));
-</script>
+  </script>
 </html>
 ```
 
@@ -45,22 +43,24 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>hello</title>
-</head>
-<body>
-    <div id="test">
-
-    </div>
-</body>
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
-<script type="text/javascript" src="../js/babel.min.js"></script>
-<script type="text/javascript">
-    const dom = React.createElement('h1', {id: '1'}, React.createElement('span', {}, 'Hello World'))
+  </head>
+  <body>
+    <div id="test"></div>
+  </body>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/javascript">
+    const dom = React.createElement(
+      'h1',
+      { id: '1' },
+      React.createElement('span', {}, 'Hello World')
+    );
     ReactDOM.render(dom, document.querySelector('#test'));
-</script>
+  </script>
 </html>
 ```
 

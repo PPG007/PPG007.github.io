@@ -325,7 +325,7 @@ GET /test-dsl-dis-max/_search
 }
 ```
 
-评分计算：分数 = 第一个匹配条件分数 + tie_breaker * 第二个匹配的条件的分数……
+评分计算：分数 = 第一个匹配条件分数 + tie_breaker \* 第二个匹配的条件的分数……
 
 ### Function Score
 
@@ -369,21 +369,21 @@ GET test-dsl-match/_search
 - auto_generate_synonyms_phrase_query：表示在执行 match 查询时，是否自动将同义词生成为短语查询，默认值为 true，例如如果同义词中包含 tv 和 television，那么如果 query 内容为 tv stand，那么这个查询会被转换为 `(tv stand) OR (television stand)` 的短语查询，这意味着只有 tv 和 stand 紧密出现时才会被匹配，如果设置此字段为 false，那么上面的查询将被转换为 `tv OR television AND stand`，这将返回包含 tv 或 television 并且包含 stand 的文档而不需要它们紧密出现。
 - fuzziness：指定查询的模糊度，默认值为 AUTO，另外可以使用整数明确指定一个值，例如设置此值为 1，那么在查询条件的基础上，最多只需要一次编辑操作（插入、删除或者替换一个字符）就能将查询词变成某个文档的此字段才会被匹配。
 
-    现在有一个 name 为 Antelopeshag 的文档，如果查询词为 Antelopesh，即需要两次编辑的情况下，如果 fuzziness 值小于 2 则无法查到。
+  现在有一个 name 为 Antelopeshag 的文档，如果查询词为 Antelopesh，即需要两次编辑的情况下，如果 fuzziness 值小于 2 则无法查到。
 
-    ```js
-    GET member/_search
-    {
-      "query": {
-        "match": {
-          "name": {
-            "query": "Antelopesh",
-            "fuzziness": 2
-          }
+  ```js
+  GET member/_search
+  {
+    "query": {
+      "match": {
+        "name": {
+          "query": "Antelopesh",
+          "fuzziness": 2
         }
       }
     }
-    ```
+  }
+  ```
 
 - max_expansions：当开启了同义词转换时控制同义词扩展的数量。
 - prefix_length：当进行模糊搜索时，设置前多少个字符进行精确匹配。

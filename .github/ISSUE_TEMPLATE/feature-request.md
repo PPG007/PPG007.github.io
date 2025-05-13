@@ -4,7 +4,6 @@ about: When you want to add a feature request, please use this template.
 title: Feature
 labels: feature, TODO
 assignees: PPG007
-
 ---
 
 # Feature Request

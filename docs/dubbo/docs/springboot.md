@@ -91,8 +91,8 @@ public class UserServiceImpl implements IUserService {
 
 ```yaml
 spring:
-    application:
-        name: UserService-Consumer-SpringBoot
+  application:
+    name: UserService-Consumer-SpringBoot
 server:
   port: 9999
 

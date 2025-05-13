@@ -81,12 +81,12 @@ public ThreadPoolExecutor(int corePoolSize,
 
 - corePoolSize：线程池的基本大小。
 
-    当新任务在方法 execute(java.lang.Runnable) 中提交时，如果运行的线程少于 corePoolSize，则创建新线程来处理请求，即使其他辅助线程是空闲的。如果运行的线程多于 corePoolSize 而少于 maximumPoolSize，则仅当队列满时才创建新线程。如果设置的 corePoolSize 和 maximumPoolSize 相同，则创建了固定大小的线程池。如果将 maximumPoolSize 设置为基本的无界值（如 Integer.MAX_VALUE），则允许池适应任意数量的并发任务。
+  当新任务在方法 execute(java.lang.Runnable) 中提交时，如果运行的线程少于 corePoolSize，则创建新线程来处理请求，即使其他辅助线程是空闲的。如果运行的线程多于 corePoolSize 而少于 maximumPoolSize，则仅当队列满时才创建新线程。如果设置的 corePoolSize 和 maximumPoolSize 相同，则创建了固定大小的线程池。如果将 maximumPoolSize 设置为基本的无界值（如 Integer.MAX_VALUE），则允许池适应任意数量的并发任务。
 
 - maximumPoolSize：能容纳的最大线程数(池子的最大容量)，如果使用了无界的任务队列 `PriorityBlockingQueue` 这个参数就没什么效果，此值与 CPU 核心数和有关。
 - keepAliveTime：空闲线程存活时间，超时不用会释放。
 
-    如果池中当前有多于 corePoolSize 的线程，则这些多出的线程在空闲时间超过 keepAliveTime 时将会终止。
+  如果池中当前有多于 corePoolSize 的线程，则这些多出的线程在空闲时间超过 keepAliveTime 时将会终止。
 
 - unit：存活的时间单位。
 - workQueue：存放提交但未执行任务的队列，阻塞队列。

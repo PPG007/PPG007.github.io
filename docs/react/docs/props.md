@@ -6,37 +6,40 @@ props 是传递给 JSX 标签的信息，可以将任意 JavaScript 值传递给
 
 ```html
 <script type="text/babel">
-    function PersonInfo(props) {
-      return (
-        <div>
-          <span>{props.person.name}</span>
-          <br/>
-          <span>{props.person.age}</span>
-          <br/>
-          <button onClick={props.print(props.person)}>print</button>
-        </div>
-      );
-    }
-    const print = (person) => () => {
-      console.log(person)
-    }
-    ReactDOM.render(<PersonInfo person={{name: 'PPG007', age: 23}} print={print}/>, document.getElementById('test'))
+  function PersonInfo(props) {
+    return (
+      <div>
+        <span>{props.person.name}</span>
+        <br />
+        <span>{props.person.age}</span>
+        <br />
+        <button onClick={props.print(props.person)}>print</button>
+      </div>
+    );
+  }
+  const print = person => () => {
+    console.log(person);
+  };
+  ReactDOM.render(
+    <PersonInfo person={{ name: 'PPG007', age: 23 }} print={print} />,
+    document.getElementById('test')
+  );
 </script>
 ```
 
 函数式组件的参数是一个 props 对象，包含组件标签上传递的全部属性，也可以使用对象解构的写法：
 
 ```jsx
-function PersonInfo({person, print}) {
-    return (
+function PersonInfo({ person, print }) {
+  return (
     <div>
-        <span>{person.name}</span>
-        <br/>
-        <span>{person.age}</span>
-        <br/>
-        <button onClick={print(person)}>print</button>
+      <span>{person.name}</span>
+      <br />
+      <span>{person.age}</span>
+      <br />
+      <button onClick={print(person)}>print</button>
     </div>
-    );
+  );
 }
 ```
 
@@ -53,28 +56,28 @@ props 是只读的，在组件内不能修改。
 如果一个组件标签的属性过多，写起来很长，可以使用 JSX 的展开语法：
 
 ```jsx
-function PersonInfo({person, print}) {
-    return (
+function PersonInfo({ person, print }) {
+  return (
     <div>
-        <span>{person.name}</span>
-        <br/>
-        <span>{person.age}</span>
-        <br/>
-        <button onClick={print(person)}>print</button>
+      <span>{person.name}</span>
+      <br />
+      <span>{person.age}</span>
+      <br />
+      <button onClick={print(person)}>print</button>
     </div>
-    );
+  );
 }
-const print = (person) => () => {
-    console.log(person)
-}
+const print = person => () => {
+  console.log(person);
+};
 const props = {
-    person: {
+  person: {
     name: 'PPG007',
-    age: 23
-    },
-    print: print,
-}
-ReactDOM.render(<PersonInfo {...props}/>, document.getElementById('test'))
+    age: 23,
+  },
+  print: print,
+};
+ReactDOM.render(<PersonInfo {...props} />, document.getElementById('test'));
 ```
 
 ## 将 JSX 作为子组件传递
@@ -83,22 +86,22 @@ ReactDOM.render(<PersonInfo {...props}/>, document.getElementById('test'))
 
 ```js
 function Foo() {
-    return (
-    <div>
-        foo
-    </div>
-    )
+  return <div>foo</div>;
 }
-function Bar({children}) {
-    return (
+function Bar({ children }) {
+  return (
     <div>
-        bar
-        {children}
+      bar
+      {children}
     </div>
-    )
+  );
 }
-const dom = <Bar><Foo/></Bar>
-ReactDOM.render(dom, document.getElementById('test'))
+const dom = (
+  <Bar>
+    <Foo />
+  </Bar>
+);
+ReactDOM.render(dom, document.getElementById('test'));
 ```
 
 ::: warning
@@ -111,43 +114,49 @@ ReactDOM.render(dom, document.getElementById('test'))
 
 ```jsx
 class Time extends React.Component {
-    render() {
+  render() {
     const props = {
-        color: this.color,
-        time: this.state.time,
-    }
+      color: this.color,
+      time: this.state.time,
+    };
     return (
-        <div>
-        <Display {...props}/>
+      <div>
+        <Display {...props} />
         {this.children}
-        </div>
+      </div>
     );
-    }
-    constructor(props) {
+  }
+  constructor(props) {
     super(props);
     const { color, children } = props;
-    console.log(color, children)
+    console.log(color, children);
     this.color = color;
     this.children = children;
     this.state = {
-        time: (new Date()).toLocaleTimeString(),
+      time: new Date().toLocaleTimeString(),
     };
-    setInterval(() => {this.setState({time: (new Date()).toLocaleTimeString()})}, 1000)
-    }
+    setInterval(() => {
+      this.setState({ time: new Date().toLocaleTimeString() });
+    }, 1000);
+  }
 }
 
 class Display extends React.Component {
-    render() {
+  render() {
     const { color, time } = this.props;
     return (
-        <div>
-        <h2 style={{color: color}}>{time}</h2>
-        </div>
+      <div>
+        <h2 style={{ color: color }}>{time}</h2>
+      </div>
     );
-    }
+  }
 }
-const dom = <Time color={'skyblue'}><span>123</span></Time>
-ReactDOM.render(dom, document.getElementById('test'))
+const dom = (
+  <Time color={'skyblue'}>
+    <span>123</span>
+  </Time>
+);
+ReactDOM.render(dom, document.getElementById('test'));
 ```
 
 ## 使用 PropTypes 对 prop 做限制
@@ -158,20 +167,18 @@ prop-types 定义了很多限制，可以通过定义组件的 propTypes 静态�
 
 ```jsx
 function Demo(props) {
-    return (
-    <button onClick={props.onClick}>{props.text}</button>
-    )
+  return <button onClick={props.onClick}>{props.text}</button>;
 }
 Demo.defaultProps = {
-    text: 'default text',
-    onClick: () => {
-    console.log('default click')
-    }
-}
+  text: 'default text',
+  onClick: () => {
+    console.log('default click');
+  },
+};
 Demo.propTypes = {
-    text: PropTypes.string,
-}
-ReactDOM.render(<Demo text={123}/>, document.getElementById('test'));
+  text: PropTypes.string,
+};
+ReactDOM.render(<Demo text={123} />, document.getElementById('test'));
 ```
 
 上面的代码中限制了 text 是一个字符串类型，开发环境中控制台会输出报错，类组件使用方式类似，只要定义 propTypes 静态变量即可。

@@ -101,7 +101,7 @@ services:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: 123456
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - ./MySQL/conf/my.cnf:/etc/mysql/my.cnf:ro # 挂载配置文件，允许简单密码。
   php:
@@ -109,7 +109,7 @@ services:
       context: ./PHP
       dockerfile: Dockerfile
     ports:
-      - "9000:9000"
+      - '9000:9000'
     volumes:
       - ~/playground/wordpress:/var/www/html # 挂载 WordPress 静态文件
       - ./PHP/conf/www.conf:/etc/php/7.0/fpm/pool.d/www.conf:ro # 挂载 php-fpm 配置文件。
@@ -118,7 +118,7 @@ services:
       context: ./Nginx
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - ./Nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro # 挂载 Nginx 配置文件。
     volumes_from:

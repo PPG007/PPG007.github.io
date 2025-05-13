@@ -20,21 +20,27 @@ function MyVideo(props) {
   } else {
     ref.current.pause();
   }
-    return (
-      <>
-        <video src={props.src} ref={ref}/>
-      </>
-    )
+  return (
+    <>
+      <video src={props.src} ref={ref} />
+    </>
+  );
 }
 function Player(props) {
   const [isPlaying, setIsPlaying] = React.useState(false);
   return (
     <div>
-    <MyVideo isPlaying={isPlaying} src={props.src}/>
-    <br/>
-    <button onClick={() => {setIsPlaying(!isPlaying)}}>{isPlaying ? 'pause' : 'play'}</button>
+      <MyVideo isPlaying={isPlaying} src={props.src} />
+      <br />
+      <button
+        onClick={() => {
+          setIsPlaying(!isPlaying);
+        }}
+      >
+        {isPlaying ? 'pause' : 'play'}
+      </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -51,12 +57,12 @@ function MyVideo(props) {
     } else {
       ref.current.pause();
     }
-  })
-    return (
-      <>
-        <video src={props.src} ref={ref} style={{height: '900px', width: '500px'}}/>
-      </>
-    )
+  });
+  return (
+    <>
+      <video src={props.src} ref={ref} style={{ height: '900px', width: '500px' }} />
+    </>
+  );
 }
 ```
 
@@ -78,13 +84,24 @@ function Player(props) {
   const [value, setValue] = React.useState('');
   return (
     <div>
-      <MyVideo isPlaying={isPlaying} src={props.src}/>
-      <br/>
-      <button onClick={() => {setIsPlaying(!isPlaying)}}>{isPlaying ? 'pause' : 'play'}</button>
-      <br/>
-      <input value={value} onChange={(event) => {setValue(event.target.value)}}/>
+      <MyVideo isPlaying={isPlaying} src={props.src} />
+      <br />
+      <button
+        onClick={() => {
+          setIsPlaying(!isPlaying);
+        }}
+      >
+        {isPlaying ? 'pause' : 'play'}
+      </button>
+      <br />
+      <input
+        value={value}
+        onChange={event => {
+          setValue(event.target.value);
+        }}
+      />
     </div>
-  )
+  );
 }
 ```
 
@@ -94,18 +111,18 @@ function Player(props) {
 function MyVideo(props) {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    console.log('effect')
+    console.log('effect');
     if (props.isPlaying) {
       ref.current.play();
     } else {
       ref.current.pause();
     }
-  }, [props.isPlaying])
-    return (
-      <>
-        <video src={props.src} ref={ref} style={{height: '900px', width: '500px'}}/>
-      </>
-    )
+  }, [props.isPlaying]);
+  return (
+    <>
+      <video src={props.src} ref={ref} style={{ height: '900px', width: '500px' }} />
+    </>
+  );
 }
 ```
 
@@ -137,11 +154,11 @@ useEffect(() => {
 
 ```js
 React.useEffect(() => {
-  console.log('effect')
+  console.log('effect');
   return () => {
-    console.log('GG')
-  }
-})
+    console.log('GG');
+  };
+});
 ```
 
 关于如何限制清理函数只在组件卸载时被调用见后文。
@@ -158,11 +175,11 @@ TODO: 非正式特性。
 
 ```jsx
 class MockAPI {
-  isClosed = true
+  isClosed = true;
   call() {
     if (this.isClosed) {
       this.isClosed = false;
-      return
+      return;
     } else {
       throw new Error('error status');
     }
@@ -175,20 +192,20 @@ const api = new MockAPI();
 function MyVideo(props) {
   const ref = React.useRef(null);
   React.useEffect(() => {
-    console.log('effect')
+    console.log('effect');
     if (props.isPlaying) {
       ref.current.play();
     } else {
       ref.current.pause();
     }
     api.call();
-    return () => api.close()
-  }, [props.isPlaying])
-    return (
-      <>
-        <video src={props.src} ref={ref} style={{height: '900px', width: '500px'}}/>
-      </>
-    )
+    return () => api.close();
+  }, [props.isPlaying]);
+  return (
+    <>
+      <video src={props.src} ref={ref} style={{ height: '900px', width: '500px' }} />
+    </>
+  );
 }
 ```
 

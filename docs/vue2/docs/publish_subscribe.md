@@ -13,7 +13,7 @@ npm i pubsub-js
 ## 引入 `pubsub`
 
 ```js
-import pubsub from 'pubsub-js'
+import pubsub from 'pubsub-js';
 ```
 
 ## 接收数据
@@ -35,7 +35,7 @@ beforeDestroy() {
 ## 发送数据
 
 ```js
-pubsub.publish('test','发布成功')
+pubsub.publish('test', '发布成功');
 ```
 
 调用 pubsub 的 `publish()` 方法发布消息，第一个参数是消息，对应订阅中的第一个参数，第二个参数是要传递的数据。

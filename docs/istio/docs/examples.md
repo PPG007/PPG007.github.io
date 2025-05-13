@@ -16,12 +16,12 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-      - client.com
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - client.com
 ```
 
 然后创建 VirtualService，并使用这个 Gateway，注意 Gateway 和 VirtualService 的 hosts 中要有交集：
@@ -34,19 +34,19 @@ metadata:
   namespace: example
 spec:
   hosts:
-  - client.com
+    - client.com
   gateways:
     - demo-gateway
   http:
-  - match:
-    - headers:
-        token:
-          exact: wuhu # 限制请求头中的 token 字段必须等于 wuhu
-    route:
-      - destination:
-          host: grpc-client-service
-          port:
-            number: 8000
+    - match:
+        - headers:
+            token:
+              exact: wuhu # 限制请求头中的 token 字段必须等于 wuhu
+      route:
+        - destination:
+            host: grpc-client-service
+            port:
+              number: 8000
 ```
 
 之后通过 Istio Gateway 暴露出来的端口进行访问即可。
@@ -63,15 +63,15 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTPS
-    hosts:
-      - client.com
-    tls:
-      mode: SIMPLE
-      credentialName: istio-secret
+    - port:
+        number: 80
+        name: http
+        protocol: HTTPS
+      hosts:
+        - client.com
+      tls:
+        mode: SIMPLE
+        credentialName: istio-secret
 ```
 
 其中 credentialName 是当前命名空间中的一个 Kubernetes tls secret。
@@ -90,12 +90,12 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 443
-      name: grpc
-      protocol: GRPC
-    hosts:
-      - server.com
+    - port:
+        number: 443
+        name: grpc
+        protocol: GRPC
+      hosts:
+        - server.com
 ```
 
 然后同样创建 VirtualService 并绑定这个 Gateway：
@@ -108,16 +108,16 @@ metadata:
   namespace: example
 spec:
   hosts:
-  - server.com
+    - server.com
   gateways:
     - demo-gateway
   http:
-  - route:
-    - destination:
-        host: grpc-server-service
-        port:
-          number: 8000
-    name: grpc-demo
+    - route:
+        - destination:
+            host: grpc-server-service
+            port:
+              number: 8000
+      name: grpc-demo
 ```
 
 此时即可使用客户端进行访问。
@@ -134,15 +134,15 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 443
-      name: grpc
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: grpc-secret
-    hosts:
-      - server.com
+    - port:
+        number: 443
+        name: grpc
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: grpc-secret
+      hosts:
+        - server.com
 ```
 
 协议改为 HTTPS。

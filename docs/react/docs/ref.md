@@ -9,13 +9,17 @@
   function RefDemo() {
     const ref = React.useRef(0);
     return (
-      <button onClick={() => {
-        ref.current++;
-        console.log(ref.current)
-      }}>click</button>
-    )
+      <button
+        onClick={() => {
+          ref.current++;
+          console.log(ref.current);
+        }}
+      >
+        click
+      </button>
+    );
   }
-  ReactDOM.render(<RefDemo/>, document.getElementById('test'))
+  ReactDOM.render(<RefDemo />, document.getElementById('test'));
 </script>
 ```
 
@@ -37,23 +41,31 @@
     const [now, setNow] = React.useState(null);
     return (
       <div>
-        <span>{(now && start) ? (now - start.current) / 1000 : 0.0.toFixed(3)}</span>
-        <br/>
-        <button onClick={() => {
-          start.current = Date.now();
-          setNow(start.current);
-          intervalId.current = setInterval(() => {
-            setNow(Date.now())
-          }, 10)
-        }}>start</button>
-        <br/>
-        <button onClick={() => {
-          clearInterval(intervalId.current)
-        }}>stop</button>
+        <span>{now && start ? (now - start.current) / 1000 : (0.0).toFixed(3)}</span>
+        <br />
+        <button
+          onClick={() => {
+            start.current = Date.now();
+            setNow(start.current);
+            intervalId.current = setInterval(() => {
+              setNow(Date.now());
+            }, 10);
+          }}
+        >
+          start
+        </button>
+        <br />
+        <button
+          onClick={() => {
+            clearInterval(intervalId.current);
+          }}
+        >
+          stop
+        </button>
       </div>
-    )
+    );
   }
-  ReactDOM.render(<RefDemo/>, document.getElementById('test'))
+  ReactDOM.render(<RefDemo />, document.getElementById('test'));
 </script>
 ```
 
@@ -65,15 +77,19 @@
 
 ```jsx
 function Focus() {
-const ref = React.useRef(null);
-return (
+  const ref = React.useRef(null);
+  return (
     <div>
-    <input ref={ref}/>
-    <button onClick={() => {
-        ref.current.focus()
-    }}>focus</button>
+      <input ref={ref} />
+      <button
+        onClick={() => {
+          ref.current.focus();
+        }}
+      >
+        focus
+      </button>
     </div>
-)
+  );
 }
 ```
 
@@ -84,8 +100,14 @@ class Focus extends React.Component {
   render() {
     return (
       <div>
-        <input ref={this.inputRef}/>
-        <button onClick={() => {this.inputRef.current.focus()}}>focus</button>
+        <input ref={this.inputRef} />
+        <button
+          onClick={() => {
+            this.inputRef.current.focus();
+          }}
+        >
+          focus
+        </button>
       </div>
     );
   }
@@ -103,10 +125,14 @@ class Demo extends React.Component {
   render() {
     return (
       <div>
-        <input ref="input"/>
-        <button onClick={() => {
-          console.log(this.refs.input.value)
-        }}>click</button>
+        <input ref="input" />
+        <button
+          onClick={() => {
+            console.log(this.refs.input.value);
+          }}
+        >
+          click
+        </button>
       </div>
     );
   }
@@ -120,10 +146,18 @@ class Demo extends React.Component {
   render() {
     return (
       <div>
-        <input ref={(ref) => {this.inputRef = ref}}/>
-        <button onClick={() => {
-          console.log(this.inputRef.value)
-        }}>click</button>
+        <input
+          ref={ref => {
+            this.inputRef = ref;
+          }}
+        />
+        <button
+          onClick={() => {
+            console.log(this.inputRef.value);
+          }}
+        >
+          click
+        </button>
       </div>
     );
   }
@@ -136,17 +170,23 @@ react 禁止一个组件通过 ref 访问其他组件，即使是自己的子组
 
 ```jsx
 const MyInput = React.forwardRef((props, ref) => {
-  return <input ref={ref} placeholder="my input"/>
-})
+  return <input ref={ref} placeholder="my input" />;
+});
 
 function MyForm() {
   const inputRef = React.useRef(null);
   return (
     <div>
-      <MyInput ref={inputRef}/>
-      <button onClick={() => {inputRef.current.focus()}}>focus</button>
+      <MyInput ref={inputRef} />
+      <button
+        onClick={() => {
+          inputRef.current.focus();
+        }}
+      >
+        focus
+      </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -161,23 +201,33 @@ const MyInput = React.forwardRef((props, ref) => {
     return {
       ppg() {
         realRef.current.focus();
-      }
-    }
-  })
-  return <input ref={realRef} placeholder="my input"/>
-})
+      },
+    };
+  });
+  return <input ref={realRef} placeholder="my input" />;
+});
 
 function MyForm() {
   const inputRef = React.useRef(null);
   return (
     <div>
-      <MyInput ref={inputRef}/>
-      <button onClick={() => {inputRef.current.ppg()}}>focus</button>
-      <button onClick={() => {
-        inputRef.current.style.borderRadius = '10px';
-      }}>change border</button>
+      <MyInput ref={inputRef} />
+      <button
+        onClick={() => {
+          inputRef.current.ppg();
+        }}
+      >
+        focus
+      </button>
+      <button
+        onClick={() => {
+          inputRef.current.style.borderRadius = '10px';
+        }}
+      >
+        change border
+      </button>
     </div>
-  )
+  );
 }
 ```
 
@@ -205,11 +255,16 @@ function Demo() {
   const [value, setValue] = React.useState('');
   return (
     <div>
-      <input value={value} onChange={(event) => {setValue(event.target.value)}}/>
-      <br/>
+      <input
+        value={value}
+        onChange={event => {
+          setValue(event.target.value);
+        }}
+      />
+      <br />
       <span>{value}</span>
     </div>
-  )
+  );
 }
 ```
 
@@ -221,10 +276,15 @@ function Demo() {
   const [value, setValue] = React.useState('');
   return (
     <div>
-      <input ref={inputRef} onChange={() => {setValue(inputRef.current.value)}}/>
-      <br/>
+      <input
+        ref={inputRef}
+        onChange={() => {
+          setValue(inputRef.current.value);
+        }}
+      />
+      <br />
       <span>{value}</span>
     </div>
-  )
+  );
 }
 ```

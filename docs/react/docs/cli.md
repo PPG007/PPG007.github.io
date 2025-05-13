@@ -32,7 +32,7 @@ npm install @types/react @types/react-dom
     "allowJs": true,
     "noEmit": true,
     "jsx": "preserve",
-    "allowUnreachableCode": false,
+    "allowUnreachableCode": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
@@ -63,7 +63,7 @@ npm install @types/react @types/react-dom
 ```tsx
 import styles from './app.module.less';
 function Title() {
-    return <Tag className={styles.text}>123</Tag>
+  return <Tag className={styles.text}>123</Tag>;
 }
 ```
 
@@ -137,15 +137,20 @@ const lessModuleRegex = /\.module\.less$/;
 
 - importLoaders：此选项表示在处理 css `@import` 之前要应用于 `@import` 的资源的处理器数量，这里设置为 3，因为需要 less-loader 的处理同时可能还有其他的处理器（见 getStyleLoaders 方法）。
 - mode：此选项决定如何应用 CSS Modules，有以下取值：
-    - local：默认值，类名会被局部化，引用后实际的类名将会有一个随机后缀。
-    - global：所有类名都不会被局部化，但是又允许像 CSS Modules 那样引用。
-    - pure：类似 local，但是仅局部化纯类名，不会局部化使用了其他选择器的类名。
-    - globalAndLocal、localAndGlobal：允许在同一个文件中使用局部化和全局类名，使用 `:global` 和 `:local` 伪选择器来明确哪些类名被局部化，哪些保持全局化。
 
-        ```css
-        .localClassName { /* this will be localized */ }
-        :global .globalClassName { /* this will remain as "globalClassName" */ }
-        ```
+  - local：默认值，类名会被局部化，引用后实际的类名将会有一个随机后缀。
+  - global：所有类名都不会被局部化，但是又允许像 CSS Modules 那样引用。
+  - pure：类似 local，但是仅局部化纯类名，不会局部化使用了其他选择器的类名。
+  - globalAndLocal、localAndGlobal：允许在同一个文件中使用局部化和全局类名，使用 `:global` 和 `:local` 伪选择器来明确哪些类名被局部化，哪些保持全局化。
+
+    ```css
+    .localClassName {
+      /* this will be localized */
+    }
+    :global .globalClassName {
+      /* this will remain as "globalClassName" */
+    }
+    ```
 
 ## 配置代理
 

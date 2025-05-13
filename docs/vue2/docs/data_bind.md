@@ -17,28 +17,28 @@ Vue 中有两种数据绑定方式：
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        单向数据绑定:<input type="text" v-bind:value='name'>
-        <hr>
-        双向数据绑定:<input type="text" v-model:value='name'>
+      单向数据绑定:<input type="text" v-bind:value="name" />
+      <hr />
+      双向数据绑定:<input type="text" v-model:value="name" />
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data:{
-                name:'ppg'
-            }
-        })
+      const vm = new Vue({
+        el: '#root',
+        data: {
+          name: 'ppg',
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -59,24 +59,22 @@ Vue 中有两种数据绑定方式：
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>demo</title>
-		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body>
-		<div id="demo">
-			<input type="text" name="text" id="text" value="" v-model="text"/>{{text}}
-		</div>
-		<script type="text/javascript">
-			let vm=new Vue({
-				el:"#demo",
-				data:{
-					text:""
-				}
-			})
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+    <script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="demo"><input type="text" name="text" id="text" value="" v-model="text" />{{text}}</div>
+    <script type="text/javascript">
+      let vm = new Vue({
+        el: '#demo',
+        data: {
+          text: '',
+        },
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -85,26 +83,26 @@ Vue 中有两种数据绑定方式：
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>demo</title>
-		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body>
-		<div id="demo">
-			<input type="radio" name="radio" id="radio1" value="A" v-model="choice"/>A
-			<input type="radio" name="radio" id="radio2" value="B" v-model="choice"/>B
-			<p>你选择了：{{choice}}</p>
-		</div>
-		<script type="text/javascript">
-			let vm=new Vue({
-				el:"#demo",
-				data:{
-					choice:""
-				}
-			})
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+    <script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <input type="radio" name="radio" id="radio1" value="A" v-model="choice" />A
+      <input type="radio" name="radio" id="radio2" value="B" v-model="choice" />B
+      <p>你选择了：{{choice}}</p>
+    </div>
+    <script type="text/javascript">
+      let vm = new Vue({
+        el: '#demo',
+        data: {
+          choice: '',
+        },
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -113,30 +111,28 @@ Vue 中有两种数据绑定方式：
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>demo</title>
-		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body>
-		<div id="demo">
-			<input type="checkbox" name="" id="c1" value="A" v-model="choices"/>A
-			<input type="checkbox" name="" id="c2" value="B" v-model="choices"/>B
-			<input type="checkbox" name="" id="c3" value="C" v-model="choices"/>C
-			<input type="checkbox" name="" id="c4" value="D" v-model="choices"/>D
-			<li v-for="choice in choices">
-				{{choice}}
-			</li>
-		</div>
-		<script type="text/javascript">
-			let vm=new Vue({
-				el:"#demo",
-				data:{
-					choices:[]
-				}
-			})
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+    <script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <input type="checkbox" name="" id="c1" value="A" v-model="choices" />A
+      <input type="checkbox" name="" id="c2" value="B" v-model="choices" />B
+      <input type="checkbox" name="" id="c3" value="C" v-model="choices" />C
+      <input type="checkbox" name="" id="c4" value="D" v-model="choices" />D
+      <li v-for="choice in choices">{{choice}}</li>
+    </div>
+    <script type="text/javascript">
+      let vm = new Vue({
+        el: '#demo',
+        data: {
+          choices: [],
+        },
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -145,30 +141,30 @@ Vue 中有两种数据绑定方式：
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>demo</title>
-		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body>
-		<div id="demo">
-			<select v-model="choice">
-				<option value ="" disabled>请选择</option>
-				<option value="A">A</option>
-				<option value ="B">B</option>
-				<option value ="C">C</option>
-			</select>
-			<p>你选择了：{{choice}}</p>
-		</div>
-		<script type="text/javascript">
-			let vm=new Vue({
-				el:"#demo",
-				data:{
-					choice:"123"
-				}
-			})
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+    <script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <select v-model="choice">
+        <option value="" disabled>请选择</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      <p>你选择了：{{choice}}</p>
+    </div>
+    <script type="text/javascript">
+      let vm = new Vue({
+        el: '#demo',
+        data: {
+          choice: '123',
+        },
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -214,7 +210,7 @@ Vue 中有两种数据绑定方式：
 - 如果表单是 text，则 `v-model` 绑定的就是 value 值，value 值就是用户输入的值。
 - 如果表单是 radio，则 `v-model` 绑定的就是 value 值，要给标签配置 value 属性。
 - 如果是多选框：
-    - 没有配置 input 的 value 属性，那么 v-model 绑定的是 checked，是布尔值。
-    - 配置了 value 属性：
-        - 绑定的数据类型不是数组，那么收集的是 checked。
-        - 如果是数组，那么收集的就是每个 CheckBox 的 value。
+  - 没有配置 input 的 value 属性，那么 v-model 绑定的是 checked，是布尔值。
+  - 配置了 value 属性：
+    - 绑定的数据类型不是数组，那么收集的是 checked。
+    - 如果是数组，那么收集的就是每个 CheckBox 的 value。

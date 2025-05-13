@@ -160,78 +160,71 @@ public String login(HttpServletRequest request,Model model){
 命名空间：
 
 ```html
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+></html>
 ```
 
 常见标签：
 
 - guest 标签：用户没有身份验证时显示相应信息，即游客访问信息。
 
-    ```html
-    <shiro:guest>
-    </shiro:guest>
-    ```
+  ```html
+  <shiro:guest> </shiro:guest>
+  ```
 
 - user 标签：用户已经身份验证/记住我登录后显示相应的信息。
 
-    ```html
-    <shiro:user>
-    </shiro:user>
-    ```
+  ```html
+  <shiro:user> </shiro:user>
+  ```
 
 - authenticated 标签：用户已经身份验证通过，即 `Subject.login` 登录成功，不是记住我登录的。
 
-    ```html
-    <shiro:authenticated>
-    </shiro:authenticated>
-    ```
+  ```html
+  <shiro:authenticated> </shiro:authenticated>
+  ```
 
 - notAuthenticated 标签：用户已经身份验证通过，即没有调用 `Subject.login` 进行登录，包括记住我自动登录的也属于未进行身份验证。
 
-    ```html
-    <shiro:notAuthenticated>
-    </shiro:notAuthenticated>
-    ```
+  ```html
+  <shiro:notAuthenticated> </shiro:notAuthenticated>
+  ```
 
 - principal 标签：相当于 `((User)Subject.getPrincipals()).getUsername()`。
 
-    ```html
-    <shiro: principal/>
-    <shiro:principal property="username"/>
-    ```
+  ```html
+  <shiro: principal/> <shiro:principal property="username" />
+  ```
 
 - lacksPermission 标签：如果当前 Subject 没有权限将显示 body 体内容。
 
-    ```html
-    <shiro:lacksPermission name="org:create">
-    </shiro:lacksPermission>
-    ```
+  ```html
+  <shiro:lacksPermission name="org:create"> </shiro:lacksPermission>
+  ```
 
 - hasRole 标签：如果当前 Subject 有角色将显示 body 体内容。
 
-    ```html
-    <shiro:hasRole name="admin">
-    </shiro:hasRole>
-    ```
+  ```html
+  <shiro:hasRole name="admin"> </shiro:hasRole>
+  ```
 
 - hasAnyRoles 标签：如果当前 Subject 有任意一个角色（或的关系）将显示 body 体内容。
 
-    ```html
-    <shiro:hasAnyRoles name="admin,user">
-    </shiro:hasAnyRoles>
-    ```
+  ```html
+  <shiro:hasAnyRoles name="admin,user"> </shiro:hasAnyRoles>
+  ```
 
 - lacksRole 标签：如果当前 Subject 没有角色将显示 body 体内容。
 
-    ```html
-    <shiro:lacksRole name="abc">
-    </shiro:lacksRole>
-    ```
+  ```html
+  <shiro:lacksRole name="abc"> </shiro:lacksRole>
+  ```
 
 - hasPermission 标签：如果当前 Subject 有权限将显示 body 体内容。
 
-    ```html
-    <shiro:hasPermission name="user:create">
-    </shiro:hasPermission>
-    ```
+  ```html
+  <shiro:hasPermission name="user:create"> </shiro:hasPermission>
+  ```

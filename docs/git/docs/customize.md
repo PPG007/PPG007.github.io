@@ -19,9 +19,9 @@
 ## 配置文件
 
 - Git 配置文件的位置：
-    - `/etc/gitconfig` 文件，包含系统上每一个用户及他们仓库的通用配置，如果使用 `git config --system` 配置，那么 Git 会读写该文件中的配置变量，需要管理员权限。
-    - `~./gitconfig` 或者 `~/.config/git/config` 文件，只针对当前用户，使用 `git config --global` 会使 Git 读写这个文件。
-    - 每个仓库的 `.git/config` 文件，只针对该仓库，使用 `git config --local` 选项使 Git 读写这个文件，默认情况下使用的就是这个文件的配置，但是要进入某个仓库目录才能设置。
+  - `/etc/gitconfig` 文件，包含系统上每一个用户及他们仓库的通用配置，如果使用 `git config --system` 配置，那么 Git 会读写该文件中的配置变量，需要管理员权限。
+  - `~./gitconfig` 或者 `~/.config/git/config` 文件，只针对当前用户，使用 `git config --global` 会使 Git 读写这个文件。
+  - 每个仓库的 `.git/config` 文件，只针对该仓库，使用 `git config --local` 选项使 Git 读写这个文件，默认情况下使用的就是这个文件的配置，但是要进入某个仓库目录才能设置。
 - 配置文件间的优先级关系：按上边的顺序向下一次递增。
 
 ## 配置别名

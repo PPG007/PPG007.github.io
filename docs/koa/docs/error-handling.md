@@ -4,16 +4,16 @@
 
 ```ts
 app.use(async (ctx, next) => {
-    try {
-        await next();
-    } catch(e) {
-        ctx.response.body = e?.message;
-        ctx.response.status = 400;
-    }
+  try {
+    await next();
+  } catch (e) {
+    ctx.response.body = e?.message;
+    ctx.response.status = 400;
+  }
 });
-app.use((ctx) => {
-    throw new Error('test');
-})
+app.use(ctx => {
+  throw new Error('test');
+});
 ```
 
 ## 错误事件
@@ -22,12 +22,12 @@ app.use((ctx) => {
 
 ```ts
 app.use(async (ctx, next) => {
-    await next();
+  await next();
 });
-app.use((ctx) => {
-    throw new Error('test');
-})
-app.addListener('error', (arg) => {
-    console.log(`exception: ${arg}`)
-})
+app.use(ctx => {
+  throw new Error('test');
+});
+app.addListener('error', arg => {
+  console.log(`exception: ${arg}`);
+});
 ```

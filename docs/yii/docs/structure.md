@@ -319,7 +319,7 @@ public function actions()
 
 #### 动作参数
 
-内联操作和独立操作的 run 方法可以带参数，参数值从请求中获取，对于 WebApplication，每个动作参数的值从 $_GET 获得，对于 ConsoleApplication，参数从命令行参数获取。
+内联操作和独立操作的 run 方法可以带参数，参数值从请求中获取，对于 WebApplication，每个动作参数的值从 $\_GET 获得，对于 ConsoleApplication，参数从命令行参数获取。
 
 ```php
 class HelloWorldAction extends Action
@@ -378,13 +378,13 @@ class MemberController extends Controller
 
 - 在控制器创建和配置后，调用 `yii\base\Controller::init()` 方法。
 - 控制器根据请求操作 id 创建一个操作对象。
-    - 如果操作 id 没有指定，那么会使用默认动作。
-    - 如果在 actions 方法里找到独立操作，那么会创建一个独立操作。
-    - 如果操作 id 对应一个方法，那么会创建一个内联操作。
-    - 否则抛出 `yii\base\InvalidRouteException`。
+  - 如果操作 id 没有指定，那么会使用默认动作。
+  - 如果在 actions 方法里找到独立操作，那么会创建一个独立操作。
+  - 如果操作 id 对应一个方法，那么会创建一个内联操作。
+  - 否则抛出 `yii\base\InvalidRouteException`。
 - 控制器按照顺序调用应用主体、模块（如果控制器属于模块）、控制器的 beforeAction 方法。
-    - 如果任意一个调用返回 false，后面未调用的 beforeAction 会跳过并且操作执行会被取消。
-    - 默认情况下每个 beforeAction 方法会触发一个 beforeAction 事件，在事件中可以追加事件处理操作。
+  - 如果任意一个调用返回 false，后面未调用的 beforeAction 会跳过并且操作执行会被取消。
+  - 默认情况下每个 beforeAction 方法会触发一个 beforeAction 事件，在事件中可以追加事件处理操作。
 - 控制器执行操作，解析请求数据并填入到操作参数。
 - 控制器按照顺序调用控制器、模块（如果控制器属于模块）、应用主体的 afterAction 方法，默认情况下每个 afterAction 方法会触发一个 afterAction 事件。
 - 应用主体获取操作结果并赋值给响应。
@@ -749,15 +749,15 @@ public function behaviors()
 当一个动作配置了多个过滤器时，根据以下规则先后执行：
 
 - 预过滤：
-    - 按顺序执行应用主体中 behaviors 列出的过滤器。
-    - 按顺序执行模块中 behaviors 列出的过滤器。
-    - 按顺序执行控制器中 behaviors 列出的过滤器。
-    - 如果任意过滤器终止动作执行，后面的预过滤器和后过滤器都不会再执行。
+  - 按顺序执行应用主体中 behaviors 列出的过滤器。
+  - 按顺序执行模块中 behaviors 列出的过滤器。
+  - 按顺序执行控制器中 behaviors 列出的过滤器。
+  - 如果任意过滤器终止动作执行，后面的预过滤器和后过滤器都不会再执行。
 - 成功通过预过滤后执行动作。
 - 后过滤：
-    - 倒序执行控制器中 behaviors 列出的过滤器。
-    - 倒序执行模块中 behaviors 列出的过滤器。
-    - 倒序执行应用主体中 behaviors 列出的过滤器。
+  - 倒序执行控制器中 behaviors 列出的过滤器。
+  - 倒序执行模块中 behaviors 列出的过滤器。
+  - 倒序执行应用主体中 behaviors 列出的过滤器。
 
 ### 创建过滤器
 

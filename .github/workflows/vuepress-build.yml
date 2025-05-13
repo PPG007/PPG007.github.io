@@ -1,43 +1,40 @@
 name: build
 
 on:
-  # pull_request:
-  workflow_call:
-    inputs:
-      artifactsName:
-        required: false
-        type: string
-        default: Default Name
-
-
+  pull_request:
+    paths:
+      - "docs/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
           fetch-depth: 0
 
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           # 选择要使用的 node 版本
-          node-version: '16'
-          cache: 'yarn'
+          node-version: '20'
+          cache: pnpm
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
       # 运行构建脚本
       - name: Build VuePress site
-        run: yarn docs:build
+        run: pnpm docs:build
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: art-${{ inputs.artifactsName }}
+          name: build
           path: docs/.vuepress/dist
-          retention-days: 5
+          retention-days: 1

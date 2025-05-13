@@ -18,67 +18,67 @@
 
 - 抛出异常：
 
-    ```java
-    ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
-    for (int i = 0; i < 5; i++) {
-    //            队列满会报异常
-        System.out.println(objects.add(i));
-    }
-    System.out.println("=========================");
-    for (int i = 0; i < 5; i++) {
-    //            队列空会报异常
-        System.out.println(objects.remove());
-    }
-    // 获取队首元素，队空则异常
-    System.out.println(objects.element());
-    ```
+  ```java
+  ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
+  for (int i = 0; i < 5; i++) {
+  //            队列满会报异常
+      System.out.println(objects.add(i));
+  }
+  System.out.println("=========================");
+  for (int i = 0; i < 5; i++) {
+  //            队列空会报异常
+      System.out.println(objects.remove());
+  }
+  // 获取队首元素，队空则异常
+  System.out.println(objects.element());
+  ```
 
 - 有返回值，不抛异常：
 
-    ```java
-    ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
-    for (int i = 0; i < 6; i++) {
-        // 队满返回false
-        System.out.println(objects.offer(i));
-    }
-    System.out.println("=========================");
-    for (int i = 0; i < 6; i++) {
-        // 队空返回null
-        System.out.println(objects.poll());
-    }
-    // 队空返回null
-    System.out.println(objects.peek());
-    ```
+  ```java
+  ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
+  for (int i = 0; i < 6; i++) {
+      // 队满返回false
+      System.out.println(objects.offer(i));
+  }
+  System.out.println("=========================");
+  for (int i = 0; i < 6; i++) {
+      // 队空返回null
+      System.out.println(objects.poll());
+  }
+  // 队空返回null
+  System.out.println(objects.peek());
+  ```
 
 - 阻塞等待：
 
-    ```java
-    ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
-    for (int i = 0; i < 6; i++) {
-        // 队满，则一直等待
-        objects.put(i);
-    }
-    System.out.println("=========================");
-    for (int i = 0; i < 6; i++) {
-        // 队空，则一直等待
-        System.out.println(objects.take());
-    }
-    ```
+  ```java
+  ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
+  for (int i = 0; i < 6; i++) {
+      // 队满，则一直等待
+      objects.put(i);
+  }
+  System.out.println("=========================");
+  for (int i = 0; i < 6; i++) {
+      // 队空，则一直等待
+      System.out.println(objects.take());
+  }
+  ```
 
 - 超时等待：
 
-    ```java
-    ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
-    for (int i = 0; i < 6; i++) {
-        // 队满，则等待到指定时间后退出
-        System.out.println(objects.offer(i, 3, TimeUnit.SECONDS));
-    }
-    System.out.println("=========================");
-    for (int i = 0; i < 6; i++) {
-        // 队空，则等待到指定时间后退出
-        System.out.println(objects.poll(3, TimeUnit.SECONDS));
-    }
-    ```
+  ```java
+  ArrayBlockingQueue<Object> objects = new ArrayBlockingQueue<>(5);
+  for (int i = 0; i < 6; i++) {
+      // 队满，则等待到指定时间后退出
+      System.out.println(objects.offer(i, 3, TimeUnit.SECONDS));
+  }
+  System.out.println("=========================");
+  for (int i = 0; i < 6; i++) {
+      // 队空，则等待到指定时间后退出
+      System.out.println(objects.poll(3, TimeUnit.SECONDS));
+  }
+  ```
 
 ## SynchronousQueue 同步队列
 

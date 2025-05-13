@@ -114,7 +114,7 @@ spec:
     storage: 100Mi # 限制大小
   volumeMode: Filesystem
   accessModes:
-  - ReadOnlyMany # 只读
+    - ReadOnlyMany # 只读
   persistentVolumeReclaimPolicy: Delete # 回收策略
   storageClassName: local-storage
   local:
@@ -122,11 +122,11 @@ spec:
   nodeAffinity: # local 卷必须指定节点亲和性
     required:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/os
-          operator: In
-          values:
-          - linux
+        - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -135,7 +135,7 @@ metadata:
   namespace: example
 spec:
   accessModes:
-  - ReadOnlyMany
+    - ReadOnlyMany
   resources:
     requests:
       storage: 10Mi
@@ -159,14 +159,14 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo
-        imagePullPolicy: Always
-        volumeMounts:
-          - name: application
-            mountPath: /root/configuration
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: application
+              mountPath: /root/configuration
+          ports:
+            - containerPort: 8080
       volumes:
         - name: application
           persistentVolumeClaim:
@@ -181,9 +181,9 @@ metadata:
   namespace: example
 spec:
   ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 8080
+    - port: 8000
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: volume-demo
   type: ClusterIP
@@ -292,7 +292,7 @@ metadata:
   namespace: example
 provisioner: k8s-sigs.io/nfs-subdir-external-provisioner # or choose another name, must match deployment's env PROVISIONER_NAME'
 parameters:
-  archiveOnDelete: "false"
+  archiveOnDelete: 'false'
 ```
 
 然后创建测试用 PVC 及 Pod，并将 PVC 绑定给 Pod：
@@ -318,17 +318,17 @@ metadata:
   namespace: example
 spec:
   containers:
-  - name: test-pod
-    image: busybox:stable
-    command:
-      - "/bin/sh"
-    args:
-      - "-c"
-      - "touch /mnt/SUCCESS && exit 0 || exit 1"
-    volumeMounts:
-      - name: nfs-pvc
-        mountPath: "/mnt"
-  restartPolicy: "Never"
+    - name: test-pod
+      image: busybox:stable
+      command:
+        - '/bin/sh'
+      args:
+        - '-c'
+        - 'touch /mnt/SUCCESS && exit 0 || exit 1'
+      volumeMounts:
+        - name: nfs-pvc
+          mountPath: '/mnt'
+  restartPolicy: 'Never'
   volumes:
     - name: nfs-pvc
       persistentVolumeClaim:
@@ -358,14 +358,14 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo
-        imagePullPolicy: Always
-        volumeMounts:
-          - name: application
-            mountPath: /root/configuration
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: application
+              mountPath: /root/configuration
+          ports:
+            - containerPort: 8080
       volumes:
         - name: application
           nfs:
@@ -381,9 +381,9 @@ metadata:
   namespace: example
 spec:
   ports:
-  - port: 8000
-    protocol: TCP
-    targetPort: 8080
+    - port: 8000
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: volume-demo
   type: ClusterIP

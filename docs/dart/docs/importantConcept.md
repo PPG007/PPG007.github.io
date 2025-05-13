@@ -4,15 +4,15 @@
 - Dart 是强类型语言， 但是可以通过 var 自动推断。
 - 如果开启了空安全，对于不能为 null 的类型，不能赋值为 null，例如 int，但是可以在类型后面加上问号将类型声明为可以是原类型也可以是 null，例如 `int? a = null;`，如果你明确一个表达式不会为空，但是编译器不这么认为，可以在表达式后面添加叹号表示断言，例如下面这样：
 
-    ```dart
-    int? nullAbleButNotNull() {
-        return 1;
-    }
-    void main() {
-        int a = nullAbleButNotNull()!;
-        print(a);
-    }
-    ```
+  ```dart
+  int? nullAbleButNotNull() {
+      return 1;
+  }
+  void main() {
+      int a = nullAbleButNotNull()!;
+      print(a);
+  }
+  ```
 
 - 如果要显式地声明允许任意类型，使用 Object?（如果开启了空安全）、 Object 或者特殊类型 dynamic 将检查延迟到运行时进行。
 

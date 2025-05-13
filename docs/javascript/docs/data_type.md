@@ -6,14 +6,14 @@
 
 - typeof 运算符：
 
-    ```js
-    console.log(typeof '123');// string
-    console.log(typeof 123);// number
-    ```
+  ```js
+  console.log(typeof '123'); // string
+  console.log(typeof 123); // number
+  ```
 
 - instanceof 运算符：
 
-    instanceof 运算符返回一个布尔值，表示对象是否是某个构造函数的实例。运算符左边是实例对象，右边是构造函数，检查右边构造函数的原型对象是否在左边对象的原型链上，等价于 `Constructor.prototype.isPrototypeOf(instance)`。
+  instanceof 运算符返回一个布尔值，表示对象是否是某个构造函数的实例。运算符左边是实例对象，右边是构造函数，检查右边构造函数的原型对象是否在左边对象的原型链上，等价于 `Constructor.prototype.isPrototypeOf(instance)`。
 
 - Object.prototype.toString 方法：
 
@@ -47,11 +47,11 @@ JavaScript 中所有数字都是以 64 位浮点数形式储存，即使是整�
 一些与数值相关的全局方法：
 
 - parseInt：将字符串转为整数。
-    - 如果字符串头部有空格，空格会被自动去除。
-    - 如果参数不是字符串则会先转换为字符串。
-    - 转换时是一个个字符依次转换，如果遇到不能转为数字的字符，就不在进行下去，只返回已转好的部分。
-    - parseInt 的返回值要么是一个十进制整数，要么是 NaN。
-    - parseInt 可以接受第二个参数，表示被解析的值的进制，返回对应的十进制数。
+  - 如果字符串头部有空格，空格会被自动去除。
+  - 如果参数不是字符串则会先转换为字符串。
+  - 转换时是一个个字符依次转换，如果遇到不能转为数字的字符，就不在进行下去，只返回已转好的部分。
+  - parseInt 的返回值要么是一个十进制整数，要么是 NaN。
+  - parseInt 可以接受第二个参数，表示被解析的值的进制，返回对应的十进制数。
 - parseFloat：将一个字符串转为浮点数。
 - isNaN：用来判断一个值是否为 NaN。此方法只对数值有效，如果传入其他值会被先转成数值，字符串会被转为 NaN 导致结果为 true。对于对象和数组同样返回 true，但是如果是空数组或者是只有一个数值成员的数组会返回 false。
 - isFinite：返回一个布尔值，表示某个值是否为正常的数值。
@@ -86,8 +86,8 @@ Base64 转码：
 ```javascript
 for (const key in user) {
   if (user.hasOwnProperty(key)) {
-    console.log(`键：${key}`)
-    console.log(`值：${user[key]}`)
+    console.log(`键：${key}`);
+    console.log(`值：${user[key]}`);
   }
 }
 ```

@@ -4,99 +4,106 @@
 
 ```tsx
 // components/TodoList.tsx
-import {FC, Fragment, useState} from "react";
+import { FC, Fragment, useState } from 'react';
 
 interface Todo {
-    id: string;
-    content: string;
+  id: string;
+  content: string;
 }
 
 type TodoListProps = {
-    todos: Array<Todo>;
-    changeHandler: (task: Todo) => void;
-    deleteHandler: (id: string) => void;
-}
+  todos: Array<Todo>;
+  changeHandler: (task: Todo) => void;
+  deleteHandler: (id: string) => void;
+};
 
-const TodoList: FC<TodoListProps> = ({todos, changeHandler, deleteHandler}) => {
-    const [editingTodo, setEditingTodo] = useState<Todo>(() => ({id: '', content: ''}));
-    const isEditing = (todo: Todo) => editingTodo.id === todo.id;
-    return (
-        <Fragment>
-            <ul>
-                {
-                    todos ? todos.map((todo) => {
-                        return (
-                            <li key={todo.id}>
-                                {
-                                    isEditing(todo) ?
-                                      <input
-                                        value={editingTodo.content}
-                                        onChange={(e) => {
-                                            setEditingTodo({...editingTodo, content: e.target.value})
-                                        }}
-                                      /> :
-                                      todo.content
-                                }
-                                <button
-                                    onClick={
-                                        () => {
-                                            if (isEditing(todo)) {
-                                                changeHandler(editingTodo)
-                                                setEditingTodo({id: '', content: ''});
-                                                return
-                                            }
-                                            setEditingTodo(todo)
-                                        }}>
-                                    {isEditing(todo) ? 'save' : 'edit'}
-                                </button>
-                                <button onClick={() => {
-                                    deleteHandler(todo.id)
-                                }}>delete
-                                </button>
-                            </li>
-                        )
-                    }) : undefined
-                }
-            </ul>
-        </Fragment>
-    )
-}
+const TodoList: FC<TodoListProps> = ({ todos, changeHandler, deleteHandler }) => {
+  const [editingTodo, setEditingTodo] = useState<Todo>(() => ({ id: '', content: '' }));
+  const isEditing = (todo: Todo) => editingTodo.id === todo.id;
+  return (
+    <Fragment>
+      <ul>
+        {todos
+          ? todos.map(todo => {
+              return (
+                <li key={todo.id}>
+                  {isEditing(todo) ? (
+                    <input
+                      value={editingTodo.content}
+                      onChange={e => {
+                        setEditingTodo({ ...editingTodo, content: e.target.value });
+                      }}
+                    />
+                  ) : (
+                    todo.content
+                  )}
+                  <button
+                    onClick={() => {
+                      if (isEditing(todo)) {
+                        changeHandler(editingTodo);
+                        setEditingTodo({ id: '', content: '' });
+                        return;
+                      }
+                      setEditingTodo(todo);
+                    }}
+                  >
+                    {isEditing(todo) ? 'save' : 'edit'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      deleteHandler(todo.id);
+                    }}
+                  >
+                    delete
+                  </button>
+                </li>
+              );
+            })
+          : undefined}
+      </ul>
+    </Fragment>
+  );
+};
 
-export {TodoList, Todo}
+export { TodoList, Todo };
 // App.ts
-import {FC, Fragment, useState, KeyboardEvent} from "react";
-import {Todo, TodoList} from "./components";
+import { FC, Fragment, useState, KeyboardEvent } from 'react';
+import { Todo, TodoList } from './components';
 
 const App: FC = () => {
   const [todos, setTodos] = useState<Array<Todo>>([]);
   const [value, setValue] = useState('');
   const changeHandler = (todo: Todo) => {
-    setTodos(todos.map((item) => {
-      if (item.id === todo.id) {
-        return todo;
-      }
-      return item
-    }))
-  }
+    setTodos(
+      todos.map(item => {
+        if (item.id === todo.id) {
+          return todo;
+        }
+        return item;
+      })
+    );
+  };
   const deleteHandler = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id))
-  }
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
   const addHandler = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      setTodos([...todos, {id: `${todos.length+1}`, content: value}])
+      setTodos([...todos, { id: `${todos.length + 1}`, content: value }]);
     }
-  }
+  };
   return (
     <Fragment>
       <input
         value={value}
-        onChange={(e) => {setValue(e.target.value)}}
+        onChange={e => {
+          setValue(e.target.value);
+        }}
         onKeyDown={addHandler}
       />
-      <TodoList todos={todos} changeHandler={changeHandler} deleteHandler={deleteHandler}/>
+      <TodoList todos={todos} changeHandler={changeHandler} deleteHandler={deleteHandler} />
     </Fragment>
-  )
-}
+  );
+};
 
 export default App;
 ```
@@ -116,27 +123,26 @@ reducer 通过事件处理程序 dispatch 一个 action 来表明用户刚刚做
 ```ts
 interface action extends Todo {
   type: 'add' | 'change' | 'delete';
-
 }
 
 const tasksReducer = (prevState: Array<Todo>, action: action): Array<Todo> => {
-  switch (action.type){
-    case "add":
-      return [...prevState, {id: `${prevState.length+1}`, content: action.content}];
+  switch (action.type) {
+    case 'add':
+      return [...prevState, { id: `${prevState.length + 1}`, content: action.content }];
     case 'change':
-      return prevState.map((todo) => {
+      return prevState.map(todo => {
         if (todo.id === action.id) {
           return {
             id: todo.id,
             content: action.content,
-          }
+          };
         }
-        return todo
-      })
+        return todo;
+      });
     case 'delete':
-      return prevState.filter((todo) => todo.id !== action.id);
+      return prevState.filter(todo => todo.id !== action.id);
   }
-}
+};
 
 const [todos, dispatch] = useReducer<Reducer<Array<Todo>, action>>(tasksReducer, []);
 ```
@@ -150,25 +156,25 @@ const changeHandler = (todo: Todo) => {
   dispatch({
     type: 'change',
     ...todo,
-  })
-}
+  });
+};
 const deleteHandler = (id: string) => {
   dispatch({
     type: 'delete',
     id: id,
     content: '',
-  })
-}
+  });
+};
 const addHandler = (e: KeyboardEvent) => {
   if (e.key === 'Enter') {
     dispatch({
       type: 'add',
       id: '',
-      content: value
-    })
+      content: value,
+    });
     setValue('');
   }
-}
+};
 ```
 
 ## Reducer 和 State 的对比

@@ -6,10 +6,10 @@
 const message = {
   body: {
     user: {
-      firstName: 'zhuang'
-    }
-  }
-}
+      firstName: 'zhuang',
+    },
+  },
+};
 console.log(message?.body?.user?.firstName || 'null');
 console.log(message?.body?.user?.lastName || 'null');
 ```
@@ -21,7 +21,7 @@ console.log(message?.body?.user?.lastName || 'null');
 只有运算符左侧的值为 null 或 undefined 时，才会返回右侧的值。
 
 ```javascript
-console.log(message?.body?.demo??'no');
+console.log(message?.body?.demo ?? 'no');
 ```
 
 ## 逻辑赋值运算符

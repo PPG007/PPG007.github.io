@@ -251,11 +251,11 @@ echo price is \$100
 
 - su：以其他用户身份和组运行一个 shell。
 
-    `su [options] [user]`，`-m` 不改变环境变量，`-c [commond]` 切换到指定用户执行指定命令后再切换回来，`-s [shell]` 指定要使用的 shell，`-l` 切换到指定用户并使用指定用户的环境配置，如果不指定用户名，默认为 root，输入 exit 可以切换回原来的用户。
+  `su [options] [user]`，`-m` 不改变环境变量，`-c [commond]` 切换到指定用户执行指定命令后再切换回来，`-s [shell]` 指定要使用的 shell，`-l` 切换到指定用户并使用指定用户的环境配置，如果不指定用户名，默认为 root，输入 exit 可以切换回原来的用户。
 
 - sudo：以另一个用户身份执行命令。
 
-    使用权限：在 /etc/sudoers 中有出现的使用者。查看自己的可用权限 `sudo -l`。
+  使用权限：在 /etc/sudoers 中有出现的使用者。查看自己的可用权限 `sudo -l`。
 
 更改文件所有者和用户组命令：`chown`（change owner）。
 
@@ -368,15 +368,15 @@ top 命令：
 编辑多个文件：
 
 - 文件间切换：
-    - `:n` 切换到下一个文件。
-    - `:N` 切换到先前的文件。
+  - `:n` 切换到下一个文件。
+  - `:N` 切换到先前的文件。
 - 打开另一个文件并编辑：
 
-    在已经打开的 vi 中使用 `:e foo.txt` 切换到另一个文件并关闭当前文件，但是可以使用 `:buffer` 来切换。
+  在已经打开的 vi 中使用 `:e foo.txt` 切换到另一个文件并关闭当前文件，但是可以使用 `:buffer` 来切换。
 
 - 插入整个文件到另一个文件：
-    - 整体复制、切换、粘贴。
-    - 在被插入的文件中使用:`r [要插入的文件]`。
+  - 整体复制、切换、粘贴。
+  - 在被插入的文件中使用:`r [要插入的文件]`。
 
 保存：
 
@@ -419,10 +419,10 @@ rpm -qf file_name
 - ping：发送 ICMP 报文测试网络是否连通。
 - traceroute：显示从本地到目的地走过的路由信息。
 - netstat：检查各种各样的网络设置和统计数据。
-    - `-l`：列出监听中的端口。
-    - `-i`：显示网卡列表。
-    - `-p`：显示是什么程序。
-    - `-n`：不使用别名直接使用IP和数字。
+  - `-l`：列出监听中的端口。
+  - `-i`：显示网卡列表。
+  - `-p`：显示是什么程序。
+  - `-n`：不使用别名直接使用IP和数字。
 - wget：下载单个、多个文件。
 
 ## DNS
@@ -437,17 +437,17 @@ rpm -qf file_name
 - `-b` 参数：向服务器发送 Cookie，`curl -A 'PPG007' -b 'name=ppg' localhost:8081/`，也可以读取本地文件中的 Cookie。
 - `-c` 参数：将服务器返回的 Cookie 写入指定文件，`curl -A 'PPG007' -b 'name=ppg;password=123' -c /home/user/playground/cookie.txt localhost:8081/demo`。
 - `-d` 参数：发送 POST 请求的数据体，`curl -d "login-emma&password=123" localhost:8081/postParam`，`curl -d "login-emma" -d "password=123" localhost:8081/postParam`。
-    - 使用 `-d` 参数以后，HTTP 请求会自动加上标头 Content-Type : application/x-www-form-urlencoded。并且会自动将请求转为 POST 方法，因此可以省略 `-X POST`。
-    - 读取本地文件发送 `curl -d '@cookie.txt' localhost:8081/postParam`，必须加 @ 符。
+  - 使用 `-d` 参数以后，HTTP 请求会自动加上标头 Content-Type : application/x-www-form-urlencoded。并且会自动将请求转为 POST 方法，因此可以省略 `-X POST`。
+  - 读取本地文件发送 `curl -d '@cookie.txt' localhost:8081/postParam`，必须加 @ 符。
 - `--data-urlencode` 参数：等同于 -d 但是会自动将发送的数据进行 URL 编码。
-    - 命令：`curl --data-urlencode 'comment=hello world' localhost:8081/postParam`。
-    - 服务端收到：`comment=hello+world`。
+  - 命令：`curl --data-urlencode 'comment=hello world' localhost:8081/postParam`。
+  - 服务端收到：`comment=hello+world`。
 - `-e` 参数：设置请求头中的 Referer 表示请求来源，`curl -e 'localhost' localhost:8081/headerTest`。
 - `-F` 参数：向服务器上传二进制文件，`curl -F 'file=@foo.txt' localhost:8081/fileUploadTest`，上面命令会给 HTTP 请求加上标头 Content-Type: multipart/form-data，也可以指定 MIME 类型，还可以通过 filename 指定服务器收到的文件名。
 - `-G` 参数：构造 URL 查询字符串，`curl -G -d 'username=ppg007' -d 'password=123' localhost:8081/getParams`，如果省略 -G 则会发送 POST 请求。
 - `-H` 参数：设置请求头
-    - `curl -H 'Content-Type:application/json' -d '{"name":"PPG007","password":"wuhu"}' localhost:8081/postParam`。
-    - `curl -H 'Accept-Language:en-US' -H 'Content-Type:application/json' localhost:8081/headerTest`。
+  - `curl -H 'Content-Type:application/json' -d '{"name":"PPG007","password":"wuhu"}' localhost:8081/postParam`。
+  - `curl -H 'Accept-Language:en-US' -H 'Content-Type:application/json' localhost:8081/headerTest`。
 - `-i` 参数：打印服务器响应头，先输出响应头，空一行输出请求结果，`curl -i localhost:8081/responseHeader`。
 - `-I`、`--head` 参数：只打印响应头。
 - `-k` 参数：跳过 SSL 检测。
@@ -456,8 +456,8 @@ rpm -qf file_name
 - `-o` 参数：将服务器的回应保存成文件，等同于 wget 命令，`curl -o download.png localhost:8081/downloadFile`。
 - `-O` 参数：将服务器回应保存成文件，并将 URL 的最后部分当作文件名，`curl -O localhost:8081/downloadFile` 这里服务端直接输出流，那么 `downloadFile` 就是下载的文件名，不要在后面再添加，否则可能会 404。
 - `-s` 参数：不输出错误和进度信息。
-    - `curl -s https://www.example.com` 一旦发生错误，不会显示错误信息。不发生错误的话，会正常显示运行结果。
-    - `curl -s -o /dev/null https://google.com` 不会出现任何输出。
+  - `curl -s https://www.example.com` 一旦发生错误，不会显示错误信息。不发生错误的话，会正常显示运行结果。
+  - `curl -s -o /dev/null https://google.com` 不会出现任何输出。
 - `-S` 参数：只输出错误信息
 - `-u` 参数：设置服务器认证的用户名和密码，`curl -u 'bob:12345' https://google.com/login`。
 - `-v` 参数：输出通信的整个过程，用于调试，`curl -L -d 'username=ppg' -d 'password=123456' -v localhost:8081/beforeRedirect`。
@@ -467,13 +467,13 @@ rpm -qf file_name
 ## 守护进程
 
 - 把一个任务变为后台任务：
-    - 在启动命令末尾添加 & 符号。
-    - 如果要将当前运行的程序变为后台任务，按下 Ctrl+z 将任务切到后台并暂停，然后输入 bg 使得最近暂停的后台任务继续执行。
+  - 在启动命令末尾添加 & 符号。
+  - 如果要将当前运行的程序变为后台任务，按下 Ctrl+z 将任务切到后台并暂停，然后输入 bg 使得最近暂停的后台任务继续执行。
 - 后台任务的特点：
-    - 继承当前 session 会话的标准输出和标准错误输出，后台的输出依然会在命令行下显示。
-    - 不继承当前 session 的标准输入，如果程序试图读取标准输入，那么它会被暂停执行。
+  - 继承当前 session 会话的标准输出和标准错误输出，后台的输出依然会在命令行下显示。
+  - 不继承当前 session 的标准输入，如果程序试图读取标准输入，那么它会被暂停执行。
 - SIGHUP 信号：
-    当用户结束 session 对话时，系统向该 session 发送 SIGHUP 信号，session 再把这个信号发给所有子进程，子进程在这个信号的作用下退出（有的情况下这个信号不会发送到后台任务），后台启动一个 http server，退出 shell 则对应端口将无法访问。
+  当用户结束 session 对话时，系统向该 session 发送 SIGHUP 信号，session 再把这个信号发给所有子进程，子进程在这个信号的作用下退出（有的情况下这个信号不会发送到后台任务），后台启动一个 http server，退出 shell 则对应端口将无法访问。
 
 ::: tip
 
@@ -730,15 +730,15 @@ WantedBy=multi-user.target
 
 - Unit 区块，通常是配置文件的第一个区块，用来定义 Unit 的元数据以及配置与其他 Unit 的关系：
 
-    ![config unit](./images/config-unit.jpg)
+  ![config unit](./images/config-unit.jpg)
 
 - Install 区块，通常是配置文件的最后一个区块，用来定义如何启动以及是否开机启动：
 
-    ![config install](./images/config-install.jpg)
+  ![config install](./images/config-install.jpg)
 
 - Service 区块，用来进行 Service 的配置，只有 Service 类型的 Unit 才有这个区块：
 
-    ![config service](./images/config-service.jpg)
+  ![config service](./images/config-service.jpg)
 
 ### Target
 

@@ -18,23 +18,23 @@ export const MemberIdContext = createContext<string>('');
 
 ```tsx
 // Son.tsx
-import {FC, useContext} from "react";
-import {GrandSon, MemberIdContext} from "./index";
+import { FC, useContext } from 'react';
+import { GrandSon, MemberIdContext } from './index';
 
 const Son: FC = () => {
   const memberId = useContext(MemberIdContext);
   return (
     <>
       <h2>{memberId}</h2>
-      <GrandSon/>
+      <GrandSon />
     </>
-  )
-}
+  );
+};
 
-export {Son}
+export { Son };
 // GrandSon.tsx
-import {FC, Fragment, useContext} from "react";
-import {MemberIdContext} from "./index";
+import { FC, Fragment, useContext } from 'react';
+import { MemberIdContext } from './index';
 
 const GrandSon: FC = () => {
   const memberId = useContext(MemberIdContext);
@@ -42,32 +42,28 @@ const GrandSon: FC = () => {
     <Fragment>
       <h3>{memberId}</h3>
     </Fragment>
-  )
-}
+  );
+};
 
-export {GrandSon}
+export { GrandSon };
 ```
 
 除了通过 `useContext` 使用 Context 之外，也可以使用 `<Consumer>/<Consumer>` 标签将要使用 Context 的标签包裹起来：
 
 ```tsx
-import {FC} from "react";
-import {GrandSon, MemberIdContext} from "./index";
+import { FC } from 'react';
+import { GrandSon, MemberIdContext } from './index';
 
 const Son: FC = () => {
   return (
     <>
-      <MemberIdContext.Consumer>
-        {
-          value => <h2>{value}</h2>
-        }
-      </MemberIdContext.Consumer>
-      <GrandSon/>
+      <MemberIdContext.Consumer>{value => <h2>{value}</h2>}</MemberIdContext.Consumer>
+      <GrandSon />
     </>
-  )
-}
+  );
+};
 
-export {Son}
+export { Son };
 ```
 
 ::: tip
@@ -82,22 +78,28 @@ export {Son}
 
 ```tsx
 // App.tsx
-import {FC, useEffect, useState} from "react";
-import {MemberIdContext, Son} from "./components";
+import { FC, useEffect, useState } from 'react';
+import { MemberIdContext, Son } from './components';
 
 const MyApp: FC = () => {
   const [memberId, setMemberId] = useState('');
   return (
     <>
       <MemberIdContext.Provider value={memberId}>
-        <Son/>
+        <Son />
       </MemberIdContext.Provider>
-      <button onClick={() => {setMemberId(memberId + '1')}}>click</button>
+      <button
+        onClick={() => {
+          setMemberId(memberId + '1');
+        }}
+      >
+        click
+      </button>
     </>
-  )
-}
+  );
+};
 
-export {MyApp}
+export { MyApp };
 ```
 
 ## Context 的注意点
@@ -123,13 +125,12 @@ export {MyApp}
 ```ts
 export interface action extends Todo {
   type: 'add' | 'change' | 'delete';
-
 }
 
 type TodosReducer = {
   todos?: Array<Todo>;
   dispatch?: Dispatch<action>;
-}
+};
 
 export const TodosContext = createContext<TodosReducer>({});
 ```
@@ -138,61 +139,64 @@ export const TodosContext = createContext<TodosReducer>({});
 
 ```tsx
 const TodoList: FC = () => {
-    const [editingTodo, setEditingTodo] = useState<Todo>(() => ({id: '', content: ''}));
-    const ctx = useContext(TodosContext);
-    const todos = ctx.todos ? ctx.todos : [];
-    const dispatch = ctx.dispatch;
-    const isEditing = (todo: Todo) => editingTodo.id === todo.id;
-    return (
-        <Fragment>
-            <ul>
-                {
-                    todos ? todos.map((todo) => {
-                        return (
-                            <li key={todo.id}>
-                                {
-                                    isEditing(todo) ?
-                                      <input
-                                        value={editingTodo.content}
-                                        onChange={(e) => {
-                                            setEditingTodo({...editingTodo, content: e.target.value})
-                                        }}
-                                      /> :
-                                      todo.content
-                                }
-                                <button
-                                    onClick={
-                                        () => {
-                                            if (isEditing(todo) && dispatch) {
-                                                dispatch({
-                                                    type: 'change',
-                                                    ...editingTodo,
-                                                })
-                                                setEditingTodo({id: '', content: ''});
-                                                return
-                                            }
-                                            setEditingTodo(todo)
-                                        }}>
-                                    {isEditing(todo) ? 'save' : 'edit'}
-                                </button>
-                                <button onClick={() => {
-                                    if (dispatch) {
-                                        dispatch({
-                                            type: 'delete',
-                                            id: todo.id,
-                                            content: ''
-                                        })
-                                    }
-                                }}>delete
-                                </button>
-                            </li>
-                        )
-                    }) : undefined
-                }
-            </ul>
-        </Fragment>
-    )
-}
+  const [editingTodo, setEditingTodo] = useState<Todo>(() => ({ id: '', content: '' }));
+  const ctx = useContext(TodosContext);
+  const todos = ctx.todos ? ctx.todos : [];
+  const dispatch = ctx.dispatch;
+  const isEditing = (todo: Todo) => editingTodo.id === todo.id;
+  return (
+    <Fragment>
+      <ul>
+        {todos
+          ? todos.map(todo => {
+              return (
+                <li key={todo.id}>
+                  {isEditing(todo) ? (
+                    <input
+                      value={editingTodo.content}
+                      onChange={e => {
+                        setEditingTodo({ ...editingTodo, content: e.target.value });
+                      }}
+                    />
+                  ) : (
+                    todo.content
+                  )}
+                  <button
+                    onClick={() => {
+                      if (isEditing(todo) && dispatch) {
+                        dispatch({
+                          type: 'change',
+                          ...editingTodo,
+                        });
+                        setEditingTodo({ id: '', content: '' });
+                        return;
+                      }
+                      setEditingTodo(todo);
+                    }}
+                  >
+                    {isEditing(todo) ? 'save' : 'edit'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (dispatch) {
+                        dispatch({
+                          type: 'delete',
+                          id: todo.id,
+                          content: '',
+                        });
+                      }
+                    }}
+                  >
+                    delete
+                  </button>
+                </li>
+              );
+            })
+          : undefined}
+      </ul>
+    </Fragment>
+  );
+};
 ```
 
 最后从父组件中传入 Context：
@@ -206,20 +210,22 @@ const App: FC = () => {
       dispatch({
         type: 'add',
         id: '',
-        content: value
-      })
+        content: value,
+      });
       setValue('');
     }
-  }
+  };
   return (
-    <TodosContext.Provider value={{todos, dispatch}}>
+    <TodosContext.Provider value={{ todos, dispatch }}>
       <input
         value={value}
-        onChange={(e) => {setValue(e.target.value)}}
+        onChange={e => {
+          setValue(e.target.value);
+        }}
         onKeyDown={addHandler}
       />
-      <TodoList/>
+      <TodoList />
     </TodosContext.Provider>
-  )
-}
+  );
+};
 ```

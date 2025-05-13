@@ -44,11 +44,11 @@ producer.send(textMessage);
 
 - 封装具体的消息数据。
 - 5种消息体格式：
-    - TextMessage 普通字符串消息，包含一个String。
-    - MapMessage 一个 Map 类型消息 key 为 String，value 为 Java 基本类型。
-    - BytesMessage 二进制数组，包含一个 byte[]。
-    - StreamMessage Java 数据流消息，用标准流操作来顺序的填充和读取。
-    - ObjectMessage 对象消息，包含一个可序列化的 Java 对象。
+  - TextMessage 普通字符串消息，包含一个String。
+  - MapMessage 一个 Map 类型消息 key 为 String，value 为 Java 基本类型。
+  - BytesMessage 二进制数组，包含一个 byte[]。
+  - StreamMessage Java 数据流消息，用标准流操作来顺序的填充和读取。
+  - ObjectMessage 对象消息，包含一个可序列化的 Java 对象。
 - 发送和接收的消息体类型必须一致。
 
 #### 发送方

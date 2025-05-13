@@ -125,7 +125,7 @@ curl https://projectcalico.docs.tigera.io/manifests/calico.yaml -O
 
 ```yaml
 - name: CALICO_IPV4POOL_CIDR
-  value: "192.167.0.0/16"
+  value: '192.167.0.0/16'
 ```
 
 安装网络组件：
@@ -190,9 +190,9 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
+  - kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard
 ```
 
 执行下面的命令生成 token：

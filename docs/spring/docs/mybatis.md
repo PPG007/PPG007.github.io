@@ -144,43 +144,43 @@ public void test() throws Exception {
 
 - SqlSessionTemplate：
 
-    SqlSessionTemplate 是线程安全的，是 SqlSession 的一个实现，可以被多个 DAO 或映射器所共享使用。
+  SqlSessionTemplate 是线程安全的，是 SqlSession 的一个实现，可以被多个 DAO 或映射器所共享使用。
 
-    ```xml
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-    <constructor-arg index="0" ref="sqlSessionFactory" />
-    </bean>
-    ```
+  ```xml
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactory" />
+  </bean>
+  ```
 
-    在 mapper 的实现类中实现注入：
+  在 mapper 的实现类中实现注入：
 
-    ```xml
-    <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl">
-    <property name="sqlSession" ref="sqlSession" />
-    </bean>
-    ```
+  ```xml
+  <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl">
+  <property name="sqlSession" ref="sqlSession" />
+  </bean>
+  ```
 
 - SqlSessionDaoSupport：
 
-    SqlSessionDaoSupport 是一个抽象的支持类，用来为你提供 SqlSession。调用 getSqlSession() 方法你会得到一个 SqlSessionTemplate，之后可以用于执行 SQL 方法，就像下面这样:
+  SqlSessionDaoSupport 是一个抽象的支持类，用来为你提供 SqlSession。调用 getSqlSession() 方法你会得到一个 SqlSessionTemplate，之后可以用于执行 SQL 方法，就像下面这样:
 
-    ```java
-    public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
-    public User getUser(String userId) {
-        return getSqlSession().selectOne("org.mybatis.spring.sample.mapper.UserMapper.getUser", userId);
-    }
-    }
-    ```
+  ```java
+  public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
+  public User getUser(String userId) {
+      return getSqlSession().selectOne("org.mybatis.spring.sample.mapper.UserMapper.getUser", userId);
+  }
+  }
+  ```
 
-    SqlSessionDaoSupport 需要通过属性设置一个 sqlSessionFactory 或 SqlSessionTemplate。如果两个属性都被设置了，那么 SqlSessionFactory 将被忽略。
+  SqlSessionDaoSupport 需要通过属性设置一个 sqlSessionFactory 或 SqlSessionTemplate。如果两个属性都被设置了，那么 SqlSessionFactory 将被忽略。
 
-    假设类 UserMapperImpl 是 SqlSessionDaoSupport 的子类，可以编写如下的 Spring 配置来执行设置：
+  假设类 UserMapperImpl 是 SqlSessionDaoSupport 的子类，可以编写如下的 Spring 配置来执行设置：
 
-    ```xml
-    <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl">
-    <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-    ```
+  ```xml
+  <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl">
+  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  </bean>
+  ```
 
 ### 使用 Java 注解进行配置
 
@@ -248,13 +248,13 @@ public void test(){
 ### 总结
 
 1. 配置数据源
-    - 数据源对应的Java Class为：DriverManagerDataSource
-    - 通过注解配置时，要注意返回的类型是                DriverManagerDataSource
+   - 数据源对应的Java Class为：DriverManagerDataSource
+   - 通过注解配置时，要注意返回的类型是 DriverManagerDataSource
 2. 配置SqlSessionFactory
-    - 对应的Java Class为：SqlSessionFactoryBean
-    通过注解配置时同样返回SqlSessionFactoryBean的getObject()
+   - 对应的Java Class为：SqlSessionFactoryBean
+     通过注解配置时同样返回SqlSessionFactoryBean的getObject()
 3. 直接利用SqlSessionFactory配置mapper
-    - 对应的Java Class为：MapperFactoryBean
+   - 对应的Java Class为：MapperFactoryBean
 4. 或者在mapper接口的实现类中进行SqlSession的配置
-    - 直接使用SqlSession实现CRUD，mapper注入SqlSessionTemplate，在SqlSessionTemplate中注入SqlSessionFactory
-    - 通过继承SqlSessionDaoSupport，注入SqlSessionFactory
+   - 直接使用SqlSession实现CRUD，mapper注入SqlSessionTemplate，在SqlSessionTemplate中注入SqlSessionFactory
+   - 通过继承SqlSessionDaoSupport，注入SqlSessionFactory

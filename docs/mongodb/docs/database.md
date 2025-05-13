@@ -7,6 +7,6 @@ prev:
 # 库操作
 
 - 显示所有数据库：
-    `show dbs`。
+  `show dbs`。
 - 使用某个数据库：
-    `use db_name`。
+  `use db_name`。

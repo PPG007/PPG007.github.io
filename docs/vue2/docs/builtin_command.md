@@ -5,30 +5,29 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div id="root">
-        <h2>{{name}}</h2>
-        <h2 v-text='name'></h2>
+      <h2>{{name}}</h2>
+      <h2 v-text="name"></h2>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:'PPG',
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+          };
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -42,39 +41,38 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
     <style>
-        button{
-            border-radius: 10px;
-            background-color: skyblue;
-        }
-        button:hover{
-            border-radius: 10px;
-            background-color: red;
-        }
+      button {
+        border-radius: 10px;
+        background-color: skyblue;
+      }
+      button:hover {
+        border-radius: 10px;
+        background-color: red;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div id="root">
-        <div v-html="str"></div>
+      <div v-html="str"></div>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    str:'<button>按钮</button>'
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            str: '<button>按钮</button>',
+          };
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -82,44 +80,44 @@
 
 - 作用：向指定节点渲染包含 HTML 结构的内容。
 - 与插值语法的区别：
-    - `v-html` 会替换掉节点中所有的内容，插值语法则不会。
-    - `v-html` 可以识别 HTML 结构。
+  - `v-html` 会替换掉节点中所有的内容，插值语法则不会。
+  - `v-html` 可以识别 HTML 结构。
 - `v-html`存在安全问题：
-    - 在网站上动态渲染任意 HTML 是非常危险的，容易导致 XSS 攻击。
-    - 一定要在可信的内容上使用 `v-html`，永远不要用在用户提交的内容上。
+  - 在网站上动态渲染任意 HTML 是非常危险的，容易导致 XSS 攻击。
+  - 一定要在可信的内容上使用 `v-html`，永远不要用在用户提交的内容上。
 
 ## v-cloak 指令
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
     <style>
-        [v-cloak]{
-            display: none;
-        }
+      [v-cloak] {
+        display: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2 v-cloak>{{name}}</h2>
+      <h2 v-cloak>{{name}}</h2>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:'PPG'
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+          };
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -132,35 +130,35 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
     <style>
-        [v-cloak]{
-            display: none;
-        }
+      [v-cloak] {
+        display: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2 v-once>n的初值为：{{n}}</h2>
-        <h2 v-cloak>n:{{n}}</h2>
-        <button @click="n++">点我n+1</button>
+      <h2 v-once>n的初值为：{{n}}</h2>
+      <h2 v-cloak>n:{{n}}</h2>
+      <button @click="n++">点我n+1</button>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    n:1,
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            n: 1,
+          };
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -174,35 +172,35 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
     <style>
-        [v-cloak]{
-            display: none;
-        }
+      [v-cloak] {
+        display: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2 v-pre>李在干神魔</h2>
-        <h2>n:{{n}}</h2>
-        <button @click="n++">点我n+1</button>
+      <h2 v-pre>李在干神魔</h2>
+      <h2>n:{{n}}</h2>
+      <button @click="n++">点我n+1</button>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    n:1,
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            n: 1,
+          };
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
