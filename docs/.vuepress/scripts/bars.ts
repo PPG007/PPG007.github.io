@@ -23,6 +23,18 @@ const formatLink = (link: string): string => {
   return `${link}/`;
 };
 
+const convertSingleNavBar = (item: NavbarGroupOptions): NavbarLinkOptions => {
+  const result: NavbarLinkOptions = {
+    text: item.text,
+    link: item.link || '/',
+    icon: item.icon,
+  };
+  if (item.children.length && typeof item.children[0].link === 'string') {
+    result.link = item.children[0].link
+  }
+  return result;
+}
+
 // 根据各个子配置生成总的 sidebar 配置对象
 const loadSidebar = (configs: Array<BarConfig>): SidebarOptions => {
   const sidebar: SidebarObjectOptions = {};
@@ -66,13 +78,8 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
   return sortNavbar(navbar).map((item) => {
     const group = navbarList.find((navbar) => navbar.text === item.text);
     item.icon = group ? group.icon : item.icon;
-    if (!item.children.length) {
-      const temp: NavbarLinkOptions = {
-        text: item.text,
-        link: item.link || '/',
-        icon: item.icon,
-      };
-      return temp;
+    if (item.children.length <= 1) {
+      return convertSingleNavBar(item);
     }
     return item;
   });
