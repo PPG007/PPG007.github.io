@@ -23,7 +23,7 @@
 ```js
 class Foo extends React.Component {
   static getDerivedStateFromProps(props, state) {
-    return null
+    return null;
   }
 
   constructor(props) {
@@ -32,11 +32,7 @@ class Foo extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        Foo
-      </div>
-    );
+    return <div>Foo</div>;
   }
 }
 ```
@@ -51,16 +47,16 @@ class Foo extends React.Component {
 
 ```jsx
 const mockReq = () => {
-  return new Promise((res) => {
+  return new Promise(res => {
     setTimeout(() => {
-      res({value: '123'});
+      res({ value: '123' });
     }, 100);
-  })
-}
+  });
+};
 class Foo extends React.Component {
   state = {
-    value: ''
-  }
+    value: '',
+  };
   render() {
     return (
       <div>
@@ -70,10 +66,10 @@ class Foo extends React.Component {
     );
   }
   async componentDidMount() {
-    console.log('calling')
-    const {value} = await mockReq();
-    console.log(value)
-    this.setState({value})
+    console.log('calling');
+    const { value } = await mockReq();
+    console.log(value);
+    this.setState({ value });
   }
 }
 ```
@@ -95,24 +91,28 @@ class Foo extends React.Component {
 ```jsx
 class Foo extends React.Component {
   state = {
-    value: 0
-  }
+    value: 0,
+  };
   render() {
     return (
       <div>
         <span>{this.state.value}</span>
-        <button onClick={() => {
-          this.setState({
-            value: this.state.value+1,
-          })
-        }}>click</button>
+        <button
+          onClick={() => {
+            this.setState({
+              value: this.state.value + 1,
+            });
+          }}
+        >
+          click
+        </button>
       </div>
     );
   }
   shouldComponentUpdate(nextProps, nextState) {
     const { step } = nextProps;
     const { value } = nextState;
-    return value % step === 0
+    return value % step === 0;
   }
 }
 ```
@@ -128,13 +128,13 @@ class Foo extends React.Component {
 ```jsx
 class Foo extends React.Component {
   state = {
-    arr: []
-  }
+    arr: [],
+  };
   ulRef = React.createRef();
   componentDidMount() {
     setInterval(() => {
-      this.setState({arr: [`item${this.state.arr.length}`, ...this.state.arr]});
-    }, 1000)
+      this.setState({ arr: [`item${this.state.arr.length}`, ...this.state.arr] });
+    }, 1000);
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -148,12 +148,17 @@ class Foo extends React.Component {
   render() {
     return (
       <div>
-        <ul style={{height: '200px', width: '400px', overflowY: 'auto', border: '1px solid #ccc'}} ref={this.ulRef}>
-          {
-            this.state.arr.map((item, index) => {
-              return <li key={index} style={{height: '50px'}}>{item}</li>
-            })
-          }
+        <ul
+          style={{ height: '200px', width: '400px', overflowY: 'auto', border: '1px solid #ccc' }}
+          ref={this.ulRef}
+        >
+          {this.state.arr.map((item, index) => {
+            return (
+              <li key={index} style={{ height: '50px' }}>
+                {item}
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
@@ -189,14 +194,18 @@ class Foo extends React.Component {
     return (
       <div>
         <h1>title</h1>
-        <button onClick={() => {
-          ReactDOM.unmountComponentAtNode(document.getElementById('test'))
-        }}>remove</button>
+        <button
+          onClick={() => {
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'));
+          }}
+        >
+          remove
+        </button>
       </div>
     );
   }
   componentWillUnmount() {
-    console.log('GG')
+    console.log('GG');
   }
 }
 ```

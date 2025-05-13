@@ -40,10 +40,10 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: nginx:1.14.2
+          ports:
+            - containerPort: 80
 ```
 
 查看 Deployment 的详情：

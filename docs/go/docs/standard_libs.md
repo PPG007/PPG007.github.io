@@ -224,36 +224,36 @@ Context 接口中定义了四个方法：
 - Deadline 方法返回当前 Context 被取消的时间，也就是完成工作的截止时间。
 - Done 方法返回一个 Channel，这个 Channel 会在当前工作完成或者上下文被取消之后关闭，多次调用 Done 方法会返回同一个 Channel。
 - Err 方法会返回当前 Context 结束的原因，它只会在 Done 返回的 Channel 被关闭时才会返回非空的值：
-    - 如果当前 Context 被取消就会返回 Canceled 错误。
-    - 如果当前 Context 超时就会返回 DeadlineExceeded 错误。
+  - 如果当前 Context 被取消就会返回 Canceled 错误。
+  - 如果当前 Context 超时就会返回 DeadlineExceeded 错误。
 - Value 方法会从 Context 中返回键对应的值，对于同一个上下文来说，多次调用 Value 并传入相同的 Key 会返回相同的结果，该方法仅用于传递跨 API 和进程间跟请求域的数据。
 
 With 系列函数：
 
 - WithCancel()：返回一个 当前 Context 的副本和一个 cancel 函数，调用这个函数就会导致 Done 通道中有内容。
 
-    ```go
-    func main() {
-      c, cancel := context.WithCancel(context.Background())
-      wg.Add(1)
-      go worker(c)
-      time.Sleep(time.Second * 5)
-      cancel()
-      wg.Wait()
-    }
-    ```
+  ```go
+  func main() {
+    c, cancel := context.WithCancel(context.Background())
+    wg.Add(1)
+    go worker(c)
+    time.Sleep(time.Second * 5)
+    cancel()
+    wg.Wait()
+  }
+  ```
 
 - WithDeadline()：返回一个当前 Context 的副本和一个 cancel 函数。超时或者主动调用 cancel 函数都会导致 Done channel 中出现内容。
 
-    ```go
-    c, cancel := context.WithDeadline(context.Background(), time.Now().Add(2 * time.Second))
-    ```
+  ```go
+  c, cancel := context.WithDeadline(context.Background(), time.Now().Add(2 * time.Second))
+  ```
 
 - WithTimeout()：返回一个当前 Context 的副本和一个 cancel 函数，超时或者主动调用 cancel 函数会导致 Done channel 中出现内容。
 
-    ```go
-    c, cancel := context.WithTimeout(context.Background(), time.Second * 2)
-    ```
+  ```go
+  c, cancel := context.WithTimeout(context.Background(), time.Second * 2)
+  ```
 
 - WithValue()：返回当前 Context 的副本，所提供的键必须是可比较的，并且不应该是任何内置类型。
 

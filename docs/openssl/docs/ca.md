@@ -188,7 +188,7 @@ openssl x509 工具不会使用 openssl 配置文件中的设定，而是完全�
 - `-enddate`：输出证书有效期的终止日期。
 - `-dates`：输出证书有效期，等价于 startdate+enddate。
 - `-fingerprint`：输出指纹摘要信息。
- `-signkey filename`：该选项用于提供自签署时的私钥文件，自签署的输入文件 -in file 的 file 可以是证书请求文件，也可以是已签署过的证书。
+  `-signkey filename`：该选项用于提供自签署时的私钥文件，自签署的输入文件 -in file 的 file 可以是证书请求文件，也可以是已签署过的证书。
 - `-days arg`：指定证书有效期限，默认 30 天。
 - `-x509toreq`：将已签署的证书转换回证书请求文件。需要使用 -signkey 选项来传递需要的私钥。
 - `-req`：x509 工具默认以证书文件做为 inputfile(-in file)，指定该选项将使得 input file 的 file 为证书请求文件。
@@ -200,10 +200,10 @@ openssl x509 工具不会使用 openssl 配置文件中的设定，而是完全�
 - `-extfile filename` ：指定签名时包含要添加到证书中的扩展项的文件。
 - `-purpose`：选项检查证书的扩展项并决定该证书允许用于哪些方面，即证书使用目的范围。
 - `basicConstraints`：该扩展项用于决定证书是否可以当作 CA 证书。格式为 basicConstraints=CA:true。
-    - 如果 CA 的 flag 设置为 true，那么该证书允许作为一个 CA 证书，即可以颁发下级证书或进行签名。
-    - 如果 CA 的 flag 设置为 false，那么该证书就不能作为 CA，不能为下级颁发证书或签名。
-    - 所有 CA 的证书中都必须设置 CA 的 flag 为 true。
-    - 如果basicConstraints扩展项未设置，那么证书被认为可疑的CA，即"possible CA"。
+  - 如果 CA 的 flag 设置为 true，那么该证书允许作为一个 CA 证书，即可以颁发下级证书或进行签名。
+  - 如果 CA 的 flag 设置为 false，那么该证书就不能作为 CA，不能为下级颁发证书或签名。
+  - 所有 CA 的证书中都必须设置 CA 的 flag 为 true。
+  - 如果basicConstraints扩展项未设置，那么证书被认为可疑的CA，即"possible CA"。
 - `keyUsage`：该扩展项用于指定证书额外的使用限制，即也是使用目的的一种表现方式。如果 keyUsage 扩展项被指定，那么该证书将又有额外的使用限制。CA 证书文件中必须至少设置 keyUsage=keyCertSign。如果设置了 keyUsage 扩展项，那么不论是否使用了 critical，都将被限制在指定的使用目的 purpose 上。
 
 下面使用 openssl req 命令生成一个请求文件然后使用 x509 签署：

@@ -7,9 +7,13 @@
 设置 form 表单的 enctype 属性为 `multipart/form-data` 用以接收字节数据：
 
 ```html
-<form action="${pageContext.request.contextPath}/upload/doUpload2" enctype="multipart/form-data" method="post">
-    <input type="file" name="file">
-    <input type="submit" value="上传">
+<form
+  action="${pageContext.request.contextPath}/upload/doUpload2"
+  enctype="multipart/form-data"
+  method="post"
+>
+  <input type="file" name="file" />
+  <input type="submit" value="上传" />
 </form>
 ```
 

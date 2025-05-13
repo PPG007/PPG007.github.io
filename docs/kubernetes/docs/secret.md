@@ -65,14 +65,14 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
-        imagePullPolicy: Always
-        envFrom:
-          - secretRef:
-              name: myali-docker
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: myali-docker
+          ports:
+            - containerPort: 8080
 ```
 
 ## 示例：配置 Docker 私有镜像仓库
@@ -126,10 +126,10 @@ template:
     imagePullSecrets:
       - name: myali-docker # 指定使用的 docker secret
     containers:
-    - name: grpc-demo-server
-      image: registry.cn-qingdao.aliyuncs.com/ppg007/grpc-demo-server
-      ports:
-      - containerPort: 8080
+      - name: grpc-demo-server
+        image: registry.cn-qingdao.aliyuncs.com/ppg007/grpc-demo-server
+        ports:
+          - containerPort: 8080
 ```
 
 这样就会从私有仓库拉取镜像了。

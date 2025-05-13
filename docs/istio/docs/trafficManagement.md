@@ -22,20 +22,20 @@ metadata:
   name: reviews
 spec:
   hosts:
-  - reviews
+    - reviews
   http:
-  - match:
-    - headers:
-        end-user:
-          exact: jason
-    route:
-    - destination:
-        host: reviews
-        subset: v2
-  - route:
-    - destination:
-        host: reviews
-        subset: v3
+    - match:
+        - headers:
+            end-user:
+              exact: jason
+      route:
+        - destination:
+            host: reviews
+            subset: v2
+    - route:
+        - destination:
+            host: reviews
+            subset: v3
 ```
 
 所有配置项参考[VirtualService](https://istio.io/latest/zh/docs/reference/config/networking/virtual-service/#Destination)。
@@ -63,18 +63,18 @@ spec:
     loadBalancer:
       simple: RANDOM
   subsets:
-  - name: v1
-    labels:
-      version: v1
-  - name: v2
-    labels:
-      version: v2
-    trafficPolicy:
-      loadBalancer:
-        simple: ROUND_ROBIN
-  - name: v3
-    labels:
-      version: v3
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+      trafficPolicy:
+        loadBalancer:
+          simple: ROUND_ROBIN
+    - name: v3
+      labels:
+        version: v3
 ```
 
 每个子集都是基于一个或多个 labels 定义的，在 Kubernetes 中它是附加到像 Pod 这种对象上的键/值对。这些标签应用于 Kubernetes 服务的 Deployment 并作为 metadata 来识别不同的版本。
@@ -97,18 +97,18 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-      - client.com
-  - port:
-      number: 443
-      name: grpc
-      protocol: GRPC
-    hosts:
-      - server.com
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - client.com
+    - port:
+        number: 443
+        name: grpc
+        protocol: GRPC
+      hosts:
+        - server.com
 ```
 
 ## Service Entry 服务入口

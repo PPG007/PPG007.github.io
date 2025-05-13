@@ -5,56 +5,56 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2>今天天气很{{info}}</h2>
-        <hr>
-        <button @click="change">切换天气</button>
+      <h2>今天天气很{{info}}</h2>
+      <hr />
+      <button @click="change">切换天气</button>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    isHot:true,
-                }
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            isHot: true,
+          };
+        },
+        computed: {
+          info() {
+            return this.isHot ? '炎热' : '寒冷';
+          },
+        },
+        methods: {
+          change() {
+            this.isHot = !this.isHot;
+          },
+        },
+        watch: {
+          isHot: {
+            immediate: false, //设为true时，初始化时就调用
+            handler(newValue, oldValue) {
+              console.log('旧值：' + oldValue);
+              console.log('新值：' + newValue);
             },
-            computed:{
-                info(){
-                    return this.isHot?'炎热':'寒冷'
-                }
-            },
-            methods: {
-                change(){
-                    this.isHot=!this.isHot
-                }
-            },
-            watch:{
-                isHot:{
-                    immediate:false,//设为true时，初始化时就调用
-                    handler(newValue,oldValue){
-                        console.log("旧值："+oldValue)
-                        console.log("新值："+newValue)
-                    }
-                }
-            }
-        })
-        //监视属性的第二种写法
-        // vm.$watch('isHot',{
-        //         handler(newValue,oldValue){
-        //         console.log("旧值："+oldValue)
-        //         console.log("新值："+newValue)
-        //     }
-        // })
+          },
+        },
+      });
+      //监视属性的第二种写法
+      // vm.$watch('isHot',{
+      //         handler(newValue,oldValue){
+      //         console.log("旧值："+oldValue)
+      //         console.log("新值："+newValue)
+      //     }
+      // })
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -67,8 +67,8 @@ handler 方法中第一个参数是新值，第二个是旧值，不可交换顺
 - 当被监视的属性发生变化时，回调函数自动调用。
 - 监视的属性必须存在。
 - 监视的两种写法：
-    - 创建 Vue 实例时传入 watch 配置。
-    - 通过 `vm.$watch` 监视，第一个参数是要监视的属性名，**要使用引号包裹**，第二个参数与第一种写法一致。
+  - 创建 Vue 实例时传入 watch 配置。
+  - 通过 `vm.$watch` 监视，第一个参数是要监视的属性名，**要使用引号包裹**，第二个参数与第一种写法一致。
 
 ## 深度监视
 
@@ -77,25 +77,25 @@ handler 方法中第一个参数是新值，第二个是旧值，不可交换顺
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2>今天天气很{{info}}</h2>
-        <hr>
-        <button @click="change">切换天气</button>
-        <hr>
-        <h2>a:{{numbers.a}}</h2>
-        <button @click="numbers.a++">点我加一</button>
-        <hr>
-        <h2>b:{{numbers.b}}</h2>
-        <button @click="numbers.b++">点我加一</button>
+      <h2>今天天气很{{info}}</h2>
+      <hr />
+      <button @click="change">切换天气</button>
+      <hr />
+      <h2>a:{{numbers.a}}</h2>
+      <button @click="numbers.a++">点我加一</button>
+      <hr />
+      <h2>b:{{numbers.b}}</h2>
+      <button @click="numbers.b++">点我加一</button>
     </div>
-</body>
+  </body>
 </html>
 ```
 

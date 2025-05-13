@@ -9,12 +9,12 @@ genrsa 用于生成 RSA 私钥，不会生成公钥，因为公钥提取自私�
 - `-out filename`：将私钥输出到指定的文件，如果不指定此参数会输出到标准输出。
 - `passout arg`：加密私钥文件时传递密码的格式，如果要加密私钥文件时没有指定此参数则提示输入密码。
 
-    密码格式：
+  密码格式：
 
-    - 格式一：`pass:password`，password 表示传递的明文密码。
-    - 格式二：`env:var`，从环境变量 var 获取密码。
-    - 格式三：`file:filename`，filename 文件中的第一行作为密码，如果同时使用此格式传递给 passin 和 passout 选项，则第一行是 passin，第二行是 passout。
-    - 格式三：`stdin`：从标准输入中获取要传递的密码。
+  - 格式一：`pass:password`，password 表示传递的明文密码。
+  - 格式二：`env:var`，从环境变量 var 获取密码。
+  - 格式三：`file:filename`，filename 文件中的第一行作为密码，如果同时使用此格式传递给 passin 和 passout 选项，则第一行是 passin，第二行是 passout。
+  - 格式三：`stdin`：从标准输入中获取要传递的密码。
 
 - `numbits`：指定要生成的私钥的长度，默认为 1024，该项必须是命令行的最后一项参数。
 - `-des|-des3|-idea`：指定加密私钥文件用的算法，这样每次使用私钥文件都将输入密码。
@@ -42,7 +42,7 @@ openssl rsa 和 openssl pkey 分别是 RSA 密钥的处理工具和通用非对�
 - `-pubin`：指定该选项时，将显式表明从 -in filename 的 filename 中读取公钥，所以 filename 必须为公钥文件。不指定该选项时，默认是从filename中读取私钥。
 - `-pubout`：指定该选项时，将显示表明从 -in filename 的 filename 中提取公钥并输出，所以 filename 文件必须是私钥文件。不指定该选项时，默认输出私钥。当设置了 -pubin 时，默认也设置了 -pubout。
 - `-noout` ：控制不输出任何密钥信息。
-- `-text`  ：转换输入和输出的密钥文件格式为纯文本格式。
+- `-text` ：转换输入和输出的密钥文件格式为纯文本格式。
 - `-check` ：检查 RSA 密钥是否完整未被修改过，只能检测私钥，因为公钥来源于私钥。因此选项 `-in filename` 的 filename 文件只能是私钥文件。
 - `-des|-des3|-idea`：加密输出文件，使得每次读取输出文件时都需要提供密码。
 - `-passin arg` ：传递解密密钥文件的密码。密码格式见 openssl 密码格式。
@@ -365,7 +365,7 @@ openssl enc -aes256 -in enc.out -out enc.mkv -d -md sha256 -pass pass:zzl -a
 
 ## openssl dhparam
 
-此命令用于生成和管理 dh 文件，dh 是密钥交换协议，可以保证通信双方安全地交换密钥。*不是加密算法*。
+此命令用于生成和管理 dh 文件，dh 是密钥交换协议，可以保证通信双方安全地交换密钥。_不是加密算法_。
 
 `openssl dhparam [-in filename] [-out filename] [-dsaparam] [-noout] [-text] [-rand file(s)] [numbits]`
 

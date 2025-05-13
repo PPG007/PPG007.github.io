@@ -124,7 +124,7 @@ http:
   rules:
     - selector: HelloService.HelloWorld
       post: /v1/example/echo
-      body: "*"
+      body: '*'
       additional_bindings:
         - get: /v1/example/echo
 ```

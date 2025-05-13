@@ -3,13 +3,13 @@
 ## EventTarget 接口
 
 - addEventListener()：用于当前节点或对象上，添加一个事件监听器，这个函数接受三个参数：
-    - type：事件名称，大小写敏感。
-    - listener：监听函数，事件发生时会被调用。
-    - 一个监听器配置对象，该对象有以下属性：
-        - capture：布尔值，设为 true 表示监听函数在捕获阶段就会触发，默认值为 false，在冒泡阶段触发。
-        - once：布尔值，如果设置为 true，表示监听函数执行一次就会自动移除，默认为 false。
-        - passive：布尔值，设为 true 时表示禁止监听函数调用 `preventDefault()` 方法，默认为 false。
-        - signal：属性值为一个 AbortSignal 对象，为监听器设置了一个信号通道，用来在需要时发出信号，移除监听函数。
+  - type：事件名称，大小写敏感。
+  - listener：监听函数，事件发生时会被调用。
+  - 一个监听器配置对象，该对象有以下属性：
+    - capture：布尔值，设为 true 表示监听函数在捕获阶段就会触发，默认值为 false，在冒泡阶段触发。
+    - once：布尔值，如果设置为 true，表示监听函数执行一次就会自动移除，默认为 false。
+    - passive：布尔值，设为 true 时表示禁止监听函数调用 `preventDefault()` 方法，默认为 false。
+    - signal：属性值为一个 AbortSignal 对象，为监听器设置了一个信号通道，用来在需要时发出信号，移除监听函数。
 - removeEventListener()：移除添加的事件监听函数，接受的参数和 addEventListener() 一致，但是不能取消匿名函数的监听。
 - dispatchEvent()：在当前节点上触发指定事件，从而触发监听函数的执行，参数是一个 Event 对象实例。
 
@@ -27,7 +27,7 @@
 
 由父节点的监听函数同一处理多个子元素的事件称为事件的代理。
 
-如果希望事件到某个节点为止不再传播，可以使用事件对象的 `event.stopPropagation()`  方法阻止事件的传播。
+如果希望事件到某个节点为止不再传播，可以使用事件对象的 `event.stopPropagation()` 方法阻止事件的传播。
 
 如果想要彻底取消一个事件，使用 `stopImmediatePropagation()` 方法。
 
@@ -37,8 +37,8 @@ Event 构造函数接受两个参数：
 
 - 第一个参数 type 是字符串表示事件的名称。
 - 第二个参数 options 是一个对象，表示事件对象的配置：
-    - bubbles：布尔值，可选，默认 false，表示事件对象是否冒泡。
-    - cancelable：布尔值，可选，默认 false，表示事件是否可以被取消，即 `Event.preventDefault()`。
+  - bubbles：布尔值，可选，默认 false，表示事件对象是否冒泡。
+  - cancelable：布尔值，可选，默认 false，表示事件是否可以被取消，即 `Event.preventDefault()`。
 
 实例方法：
 

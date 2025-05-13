@@ -9,15 +9,15 @@
 - Shard 分片：在创建一个索引时可以指定分成多少个分片来存储。每个分片本身也是一个功能完善且独立的“索引”，可以被放置在集群的任意节点上。
 - Replication 备份: 一个分片可以有多个备份（副本）
 
-|RDBMS|Elasticsearch|
-|--|--|
-数据库|索引
-表|类型（6.0.0 废弃）
-行|文档
-列|字段
-表结构 schema|映射
-索引|反向索引
-SQL|查询 DSL
-SELECT|GET http
-UPDATE|PUT http
-DELETE|DELETE http
+| RDBMS         | Elasticsearch      |
+| ------------- | ------------------ |
+| 数据库        | 索引               |
+| 表            | 类型（6.0.0 废弃） |
+| 行            | 文档               |
+| 列            | 字段               |
+| 表结构 schema | 映射               |
+| 索引          | 反向索引           |
+| SQL           | 查询 DSL           |
+| SELECT        | GET http           |
+| UPDATE        | PUT http           |
+| DELETE        | DELETE http        |

@@ -70,17 +70,17 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
-        imagePullPolicy: Always
-        env:
-          - name: DEMO_ENV
-            valueFrom:
-              configMapKeyRef:
-                name: application-config
-                key: application.toml
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+          imagePullPolicy: Always
+          env:
+            - name: DEMO_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: application-config
+                  key: application.toml
+          ports:
+            - containerPort: 8080
 ```
 
 ### 使用多个 ConfigMap
@@ -106,30 +106,30 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
-        imagePullPolicy: Always
-        env:
-          - name: DEMO_ENV
-            valueFrom:
-              configMapKeyRef:
-                name: application-config
-                key: application.toml
-          - name: USERNAME
-            valueFrom:
-              configMapKeyRef:
-                name: cm2
-                key: username
-          - name: PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: cm2
-                key: password
-        volumeMounts:
-          - name: application
-            mountPath: /root/configuration
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+          imagePullPolicy: Always
+          env:
+            - name: DEMO_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: application-config
+                  key: application.toml
+            - name: USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cm2
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: cm2
+                  key: password
+          volumeMounts:
+            - name: application
+              mountPath: /root/configuration
+          ports:
+            - containerPort: 8080
       volumes:
         - name: application
           nfs:
@@ -158,14 +158,14 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
-        imagePullPolicy: Always
-        envFrom:
-          - configMapRef:
-              name: cm2
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: cm2
+          ports:
+            - containerPort: 8080
 ```
 
 ## 将 ConfigMap 中的数据添加到卷
@@ -189,19 +189,19 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: volume-demo
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
-        imagePullPolicy: Always
-        envFrom:
-          - configMapRef:
-              name: cm2
-        volumeMounts:
-          - name: application
-            mountPath: /root/configuration
-          - name: config-volume
-            mountPath: /etc/config
-        ports:
-        - containerPort: 8080
+        - name: volume-demo
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/volume-demo:2.0
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: cm2
+          volumeMounts:
+            - name: application
+              mountPath: /root/configuration
+            - name: config-volume
+              mountPath: /etc/config
+          ports:
+            - containerPort: 8080
       volumes:
         - name: application
           nfs:

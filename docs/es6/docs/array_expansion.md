@@ -7,15 +7,15 @@
 ```javascript
 console.log(...[1, 2, 3, 4]);
 function push(array, ...items) {
-  array.push(...items)
+  array.push(...items);
   for (const x of array) {
     console.log(x);
   }
 }
 function add(x, y) {
-  return x + y
+  return x + y;
 }
-push([], ...[1, 2, 3, 4])
+push([], ...[1, 2, 3, 4]);
 console.log(add(...[4, 3, 2, 1]));
 ```
 
@@ -24,22 +24,22 @@ console.log(add(...[4, 3, 2, 1]));
 - 复制数组：
 
 ```javascript
-let a1 = [1, 2, 3, 4]
-let a2 = [...a1]
+let a1 = [1, 2, 3, 4];
+let a2 = [...a1];
 ```
 
 - 合并数组：
 
 ```javascript
-a1 = [{foo: 1}]
-a2 = [{bar: 2}]
-a3 = [...a1, ...a2]
+a1 = [{ foo: 1 }];
+a2 = [{ bar: 2 }];
+a3 = [...a1, ...a2];
 ```
 
 - 与解构赋值结合：
 
 ```javascript
-const [first, ...rest] = [1, 2, 3, 4, 5]
+const [first, ...rest] = [1, 2, 3, 4, 5];
 ```
 
 - 字符串：扩展运算符可以将字符串转为真正的数组。
@@ -52,16 +52,16 @@ console.log([...'hello']);
 
 ```javascript
 function User(name) {
-  this.name=name
+  this.name = name;
 }
 
-User.prototype[Symbol.iterator] = function *() {
+User.prototype[Symbol.iterator] = function* () {
   let i = 0;
   while (i < 10) {
-    ++i
-    yield this.name
+    ++i;
+    yield this.name;
   }
-}
+};
 console.log([...new User('PPG')]);
 ```
 

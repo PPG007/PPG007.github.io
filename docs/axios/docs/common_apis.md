@@ -3,17 +3,17 @@
 ## axios(url[, config])
 
 ```js
-const param={
-    name:'PPG',
-    age:21,
-    sex:'male'
-}
-const url='http://localhost/paramsTest';
-axios(url,{
-    params:{
-        param
-    }
-})
+const param = {
+  name: 'PPG',
+  age: 21,
+  sex: 'male',
+};
+const url = 'http://localhost/paramsTest';
+axios(url, {
+  params: {
+    param,
+  },
+});
 ```
 
 [可选配置项](https://github.com/axios/axios#request-config)
@@ -30,76 +30,76 @@ axios(url,{
 默认请求方法为 **GET**。
 
 ```js
-const param={
-    name:'PPG',
-    age:21,
-    sex:'male'
-}
+const param = {
+  name: 'PPG',
+  age: 21,
+  sex: 'male',
+};
 //get方式
 axios.request({
-    url:url,
-    params:{
-        param
-    }
-})
+  url: url,
+  params: {
+    param,
+  },
+});
 //POST方式
 //query参数
 axios.request({
-    url:url,
-    method:'post',
-    params:{
-        param
-    }
-})
+  url: url,
+  method: 'post',
+  params: {
+    param,
+  },
+});
 //body参数
 axios.request({
-    url:url1,
-    method:'post',
-    data:{
-        param
-    }
-})
+  url: url1,
+  method: 'post',
+  data: {
+    param,
+  },
+});
 ```
 
 ## axios.get(url[, config])
 
 ```js
-const param={
-    name:'PPG',
-    age:21,
-    sex:'male'
-}
-axios.get(url1,{
-    params:{
-        param
-    }
-})
+const param = {
+  name: 'PPG',
+  age: 21,
+  sex: 'male',
+};
+axios.get(url1, {
+  params: {
+    param,
+  },
+});
 ```
 
 ## axios.post(url[, data[, config]])
 
 ```js
-const param={
-    name:'PPG',
-    age:21,
-    sex:'male'
-}
+const param = {
+  name: 'PPG',
+  age: 21,
+  sex: 'male',
+};
 // params 配置项
 axios.post({
-    url:url1,
-    method:'post',
-    params:{
-        param
-    }
-})
+  url: url1,
+  method: 'post',
+  params: {
+    param,
+  },
+});
 // data 配置项
 axios.post({
-    url:url1,
-    method:'post',
-    data:{
-        param
-    }
-})
+  url: url1,
+  method: 'post',
+  data: {
+    param,
+  },
+});
 ```
 
 ::: warning 注意

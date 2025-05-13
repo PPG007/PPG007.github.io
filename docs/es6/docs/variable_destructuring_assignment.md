@@ -9,7 +9,7 @@
 解构赋值在左边括号中可以指定默认值：
 
 ```javascript
-let [x, y = 'b'] = ['a', undefined]
+let [x, y = 'b'] = ['a', undefined];
 ```
 
 如果赋值为 undefined 则默认值仍然会生效，如果赋值为 null 则默认值失效，赋值为 null。默认值也可以引用其他变量但是这个变量必须已经声明。
@@ -19,7 +19,7 @@ let [x, y = 'b'] = ['a', undefined]
 对象解构属性没有次序，变量与属性同名就能取到正确的值。
 
 ```javascript
-let {account, password, account: username} = {account: '1658', password: '123456'}
+let { account, password, account: username } = { account: '1658', password: '123456' };
 ```
 
 如果变量名与属性名不一致要使用 `${右边已有的属性名}: ${变量名}` 的形式。
@@ -29,8 +29,8 @@ let {account, password, account: username} = {account: '1658', password: '123456
 字符串也可以解构赋值，此时字符串被转换成了一个类似数组的对象：
 
 ```javascript
-const [a, b, c, d, e] = 'hello'
-const {length: len} = 'hello'// len = 5
+const [a, b, c, d, e] = 'hello';
+const { length: len } = 'hello'; // len = 5
 ```
 
 ## 数值和布尔值的解构赋值
@@ -43,7 +43,7 @@ const {length: len} = 'hello'// len = 5
 function add([x, y]) {
   console.log(x + y);
 }
-function move({x = 0, y = 0} = {}) {
-  console.log([x ,y]);
+function move({ x = 0, y = 0 } = {}) {
+  console.log([x, y]);
 }
 ```

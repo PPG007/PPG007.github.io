@@ -10,13 +10,13 @@ use() 方法的两个参数都是函数，要返回参数类型的变量。
 
 ```js
 axios.interceptors.request.use(
-  (config) => {
+  config => {
     // 对请求做配置
     config.headers[UserInfoKeys.TOKENKEY] = sessionStorage.getItem(UserInfoKeys.TOKENKEY);
     return config;
   },
   // 错误处理
-  (error) => Promise.reject(error),
+  error => Promise.reject(error)
 );
 ```
 
@@ -25,16 +25,16 @@ axios.interceptors.request.use(
 ```js
 axios.interceptors.response.use(
   // 正常情况下直接返回响应
-  (response) => response,
+  response => response,
   // 出错后再处理
-  (error) => {
+  error => {
     if (error.response === 401) {
       message.warn('请先登录');
     } else {
       message.error('网络错误');
     }
     return Promise.reject(error);
-  },
+  }
 );
 ```
 

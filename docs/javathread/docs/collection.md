@@ -6,34 +6,34 @@
 
 - Vector：
 
-    ```java
-    Vector<String> strings = new Vector<>();
-    ```
+  ```java
+  Vector<String> strings = new Vector<>();
+  ```
 
-    Vector 的 add 方法安全的原因：
+  Vector 的 add 方法安全的原因：
 
-    使用了synchronized关键字。
+  使用了synchronized关键字。
 
-    ```java
-    public synchronized boolean add(E e) {
-        modCount++;
-        ensureCapacityHelper(elementCount + 1);
-        elementData[elementCount++] = e;
-        return true;
-    }
-    ```
+  ```java
+  public synchronized boolean add(E e) {
+      modCount++;
+      ensureCapacityHelper(elementCount + 1);
+      elementData[elementCount++] = e;
+      return true;
+  }
+  ```
 
 - Collections.synchronizedList：
 
-    ```java
-    List<Object> objects = Collections.synchronizedList(new ArrayList<>());
-    ```
+  ```java
+  List<Object> objects = Collections.synchronizedList(new ArrayList<>());
+  ```
 
 - CopyOnWriteArrayList写入时复制：
 
-    ```java
-    CopyOnWriteArrayList<String> strings = new CopyOnWriteArrayList<>();
-    ```
+  ```java
+  CopyOnWriteArrayList<String> strings = new CopyOnWriteArrayList<>();
+  ```
 
 ## Set 不安全
 
@@ -41,15 +41,15 @@
 
 - Collections.synchronizedSet：
 
-    ```java
-    Set<Object> objects = Collections.synchronizedSet(new HashSet<>());
-    ```
+  ```java
+  Set<Object> objects = Collections.synchronizedSet(new HashSet<>());
+  ```
 
 - CopyOnWriteArraySet：
 
-    ```java
-    CopyOnWriteArraySet<String> strings = new CopyOnWriteArraySet<>();
-    ```
+  ```java
+  CopyOnWriteArraySet<String> strings = new CopyOnWriteArraySet<>();
+  ```
 
 ::: tip
 HashSet 通过 HashMap 的键确保不会重复：

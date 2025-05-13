@@ -22,11 +22,11 @@ fmt.Println(reflect.ValueOf(t).Interface())
 从反射对象到 `interface{}` 的过程和 `interface{}` 到反射对象的过程的镜像过程，都需要经历两次转换：
 
 - 从 `interface{}` 到反射对象：
-    - 从基本类型到 `interface{}` 的转换。
-    - 从 `interface{}` 到反射对象的转换。
+  - 从基本类型到 `interface{}` 的转换。
+  - 从 `interface{}` 到反射对象的转换。
 - 从反射对象到 `interface{}`：
-    - 反射对象转换成接口类型。
-    - 通过显式类型转换变回原始类型。
+  - 反射对象转换成接口类型。
+  - 通过显式类型转换变回原始类型。
 
 ![双向转换](./images/golang-bidirectional-reflection.png)
 

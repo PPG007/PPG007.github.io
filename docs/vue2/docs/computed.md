@@ -17,46 +17,45 @@ computed 中定义的是属性，调用时不加括号，每次调用返回值�
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        姓:<input type="text" v-model:value="firstName">
-        <hr>
-        名:<input type="text" v-model:value="lastName">
-        <hr>
-        <span>姓名：{{name}}</span>
-        <hr>
+      姓:<input type="text" v-model:value="firstName" />
+      <hr />
+      名:<input type="text" v-model:value="lastName" />
+      <hr />
+      <span>姓名：{{name}}</span>
+      <hr />
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    firstName:'',
-                    lastName:'',
-
-                }
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            firstName: '',
+            lastName: '',
+          };
+        },
+        computed: {
+          name: {
+            // 初次读取
+            // 所依赖的数据发生变化
+            get() {
+              // 此处this是vm
+              return this.firstName + '-' + this.lastName;
             },
-            computed:{
-                name:{
-                    // 初次读取
-                    // 所依赖的数据发生变化
-                    get(){
-                        // 此处this是vm
-                        return this.firstName+"-"+this.lastName;
-                    }
-                    //可以不写set方法，如果不写set方法，将不能修改对应的属性
-                }
-            }
-        })
+            //可以不写set方法，如果不写set方法，将不能修改对应的属性
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -76,22 +75,21 @@ computed 中定义的是属性，调用时不加括号，每次调用返回值�
 ## 计算属性简写
 
 ```javascript
-const vm=new Vue({
-    el:'#root',
-    data() {
-        return {
-            firstName:'',
-            lastName:'',
-
-        }
+const vm = new Vue({
+  el: '#root',
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+    };
+  },
+  computed: {
+    name() {
+      //相当于getter
+      return this.firstName + '-' + this.lastName;
     },
-    computed:{
-        name(){
-			//相当于getter
-            return this.firstName+"-"+this.lastName;
-        }
-    }
-})
+  },
+});
 ```
 
 ::: danger 警告

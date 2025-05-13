@@ -5,37 +5,37 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2>Hello {{name}}</h2>
-        <button v-on:click="showInfo($event,123)">点击提示信息</button>
-        <button @click="showInfo($event,456)">点击提示信息</button>
+      <h2>Hello {{name}}</h2>
+      <button v-on:click="showInfo($event,123)">点击提示信息</button>
+      <button @click="showInfo($event,456)">点击提示信息</button>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:'PPG',
-                }
-            },
-            methods: {
-                showInfo(event,number){
-                    console.log(event)
-                    console.log(number)
-                    alert("Hello");
-                }
-            },
-        })
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+          };
+        },
+        methods: {
+          showInfo(event, number) {
+            console.log(event);
+            console.log(number);
+            alert('Hello');
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -64,120 +64,118 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
     <style>
-        .demo1{
-            height: 100px;
-            background-color: aqua;
-        }
-        *{
-            margin-top: 20px;
-        }
-        .box1{
-            padding: 5px;
-            background-color: skyblue;
-        }
-        .box2{
-            padding: 5px;
-            background-color: orange;
-        }
-        .list{
-            width: 200px;
-            height: 200px;
-            background-color: peru;
-            overflow: auto;
-        }
-        li{
-            height: 100px;
-        }
+      .demo1 {
+        height: 100px;
+        background-color: aqua;
+      }
+      * {
+        margin-top: 20px;
+      }
+      .box1 {
+        padding: 5px;
+        background-color: skyblue;
+      }
+      .box2 {
+        padding: 5px;
+        background-color: orange;
+      }
+      .list {
+        width: 200px;
+        height: 200px;
+        background-color: peru;
+        overflow: auto;
+      }
+      li {
+        height: 100px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2>Hello {{name}}</h2>
-        <a href="https://www.baidu.com" @click.prevent="showInfo">What's up</a>
+      <h2>Hello {{name}}</h2>
+      <a href="https://www.baidu.com" @click.prevent="showInfo">What's up</a>
 
-        <div class="demo1" @click="showInfo">
-            <button @click.stop="showInfo">点我</button>
-        </div>
+      <div class="demo1" @click="showInfo">
+        <button @click.stop="showInfo">点我</button>
+      </div>
 
-        <button @click.once="showInfo">点我</button>
+      <button @click.once="showInfo">点我</button>
 
-        <div class="box1" @click.capture="showMsg(1)">
-            div1
-            <div class="box2" @click="showMsg(2)">
-                div2
-            </div>
-        </div>
+      <div class="box1" @click.capture="showMsg(1)">
+        div1
+        <div class="box2" @click="showMsg(2)">div2</div>
+      </div>
 
-        <div class="demo1" @click.self="showInfo">
-            <button @click="showInfo">点我</button>
-        </div>
-        <!-- @wheel鼠标滚轮 -->
-        <!-- @scroll滚动条 -->
-        <ul class="list" @wheel.passive="demo">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-        </ul>
+      <div class="demo1" @click.self="showInfo">
+        <button @click="showInfo">点我</button>
+      </div>
+      <!-- @wheel鼠标滚轮 -->
+      <!-- @scroll滚动条 -->
+      <ul class="list" @wheel.passive="demo">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </ul>
     </div>
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:'PPG'
-                }
-            },
-            methods: {
-                showInfo(event){
-                    // event.preventDefault();
-                    // event.stopPropagation();
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+          };
+        },
+        methods: {
+          showInfo(event) {
+            // event.preventDefault();
+            // event.stopPropagation();
 
-                    alert("Hello");
-                },
-                showMsg(msg){
-                    console.log(msg);
-                },
-                demo(){
-                    for (let index = 0; index < 100000; index++) {
-                        console.log("#");
-                    }
-                    console.log("over")
-                }
-            },
-        })
+            alert('Hello');
+          },
+          showMsg(msg) {
+            console.log(msg);
+          },
+          demo() {
+            for (let index = 0; index < 100000; index++) {
+              console.log('#');
+            }
+            console.log('over');
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
 ## 键盘事件
 
 - Vue中常用按键别名：
-    - 回车：enter。
-    - 删除：delete，包含删除和退格。
-    - 退出：esc。
-    - 空格：space。
-    - 换行：tab，由于 tab 默认功能是切换焦点，如果绑定的是 keyup 事件，将不会出发，因此应当绑定 keydown 事件。
-    - 上：up。
-    - 下：down。
-    - 左：left。
-    - 右：right。
+  - 回车：enter。
+  - 删除：delete，包含删除和退格。
+  - 退出：esc。
+  - 空格：space。
+  - 换行：tab，由于 tab 默认功能是切换焦点，如果绑定的是 keyup 事件，将不会出发，因此应当绑定 keydown 事件。
+  - 上：up。
+  - 下：down。
+  - 左：left。
+  - 右：right。
 
 :::tip
 Vue 中未提供别名的按键，可以使用按键原始的 key 值(调用 `event.key` 查看按键名，调用 `event.keyCodes` 查看按键编码)，使用按键名时要注意不能使用驼峰命名，而应当使用 xxx-yyy 且全为小写，这与 Vue 修改 CSS 中的修改属性名规则也是相同的。
 :::
 
 - 系统修饰键：ctrl、alt、shift、meta(Windows 中的 win 键)：
-    - 配合 keyup 使用时，按下修饰键的同时，按下任意其他按键，随后释放其他按键事件才会被触发。
-    - 配合 keydown 使用：正常触发。
-    - 如果要指定 keyup 时的另一个按键，可以在这四个修饰符后再添加指定的按键，例如：`.ctrl.y` 指定 `ctrl+y` 才触发。
+  - 配合 keyup 使用时，按下修饰键的同时，按下任意其他按键，随后释放其他按键事件才会被触发。
+  - 配合 keydown 使用：正常触发。
+  - 如果要指定 keyup 时的另一个按键，可以在这四个修饰符后再添加指定的按键，例如：`.ctrl.y` 指定 `ctrl+y` 才触发。
 - 可以使用 keyCode 指定具体按键(不推荐，逐渐失去浏览器支持)。
 - 可以使用 `Vue.config.KeyCodes.自定义键名=按键编码` 定制按键别名。
 - 添加 exact 修饰符，在有且只有操作指定按键时才会触发。
@@ -185,36 +183,36 @@ Vue 中未提供别名的按键，可以使用按键原始的 key 值(调用 `ev
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <h2>Hello,{{name}}</h2>
-        <input type="text" placeholder="按下回车提示输入" @keyup.ppg="showInfo">
+      <h2>Hello,{{name}}</h2>
+      <input type="text" placeholder="按下回车提示输入" @keyup.ppg="showInfo" />
     </div>
 
     <script>
-        Vue.config.keyCodes.ppg=13;
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:'PPG'
-                }
-            },
-            methods: {
-                showInfo(event){
-                    // if(event.keyCode!==13) return
-                    console.log(event.target.value);
-                }
-            },
-        });
+      Vue.config.keyCodes.ppg = 13;
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+          };
+        },
+        methods: {
+          showInfo(event) {
+            // if(event.keyCode!==13) return
+            console.log(event.target.value);
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -227,5 +225,5 @@ Vue 中未提供别名的按键，可以使用按键原始的 key 值(调用 `ev
 - `.right`：右键。
 
 ```html
-<input type="button" name="submit" id="submit" value="提交" @click.middle='submit'>
+<input type="button" name="submit" id="submit" value="提交" @click.middle="submit" />
 ```

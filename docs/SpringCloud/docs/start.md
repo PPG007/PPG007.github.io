@@ -88,22 +88,22 @@ prev:
 
 指定打包方式：
 
- ```xml
+```xml
 <packaging>pom</packaging>
- ```
+```
 
 ::: tip 三种打包方式的不同：
 
 - pom：
-    打出来的可以作为其他项目的 maven 依赖，在工程 A 中添加工程 B 的 pom，A 就可以使用 B 中的类。用在父级工程或聚合工程中。用来做 jar 包的版本控制。
+  打出来的可以作为其他项目的 maven 依赖，在工程 A 中添加工程 B 的 pom，A 就可以使用 B 中的类。用在父级工程或聚合工程中。用来做 jar 包的版本控制。
 
 - jar：
 
-    通常是开发时要引用通用类，打成 jar 包便于存放管理。当你使用某些功能时就需要这些 jar 包的支持，需要导入 jar 包。
+  通常是开发时要引用通用类，打成 jar 包便于存放管理。当你使用某些功能时就需要这些 jar 包的支持，需要导入 jar 包。
 
 - war：
 
-    是做好一个 web 网站后，打成 war 包部署到服务器。目的是节省资源，提供效率。
+  是做好一个 web 网站后，打成 war 包部署到服务器。目的是节省资源，提供效率。
 
 :::
 
@@ -469,55 +469,55 @@ RestTemplate 是从 Spring3.0 开始支持的一个 HTTP 请求工具，它提�
 
 - GET 请求：
 
-    `getForEntity` 方法：
+  `getForEntity` 方法：
 
-    此方法获取响应头、状态码、内容等在内的完整信息,第一个参数为URL，第二个参数为返回结果类型，第三个参数以 map 存储请求参数。
+  此方法获取响应头、状态码、内容等在内的完整信息,第一个参数为URL，第二个参数为返回结果类型，第三个参数以 map 存储请求参数。
 
-    ```java
-    ResponseEntity<String> forEntity = restTemplate.getForEntity(URL, String.class,stringStringHashMap);
-    String body = forEntity.getBody();
-    HttpStatus statusCode = forEntity.getStatusCode();
-    HttpHeaders headers = forEntity.getHeaders();
-    int statusCodeValue = forEntity.getStatusCodeValue();
-    System.out.println("body==>"+body);
-    System.out.println("statusCode==>"+statusCode);
-    System.out.println("headers==>"+headers);
-    System.out.println("statusCodeValue==>"+statusCodeValue);
-    ```
+  ```java
+  ResponseEntity<String> forEntity = restTemplate.getForEntity(URL, String.class,stringStringHashMap);
+  String body = forEntity.getBody();
+  HttpStatus statusCode = forEntity.getStatusCode();
+  HttpHeaders headers = forEntity.getHeaders();
+  int statusCodeValue = forEntity.getStatusCodeValue();
+  System.out.println("body==>"+body);
+  System.out.println("statusCode==>"+statusCode);
+  System.out.println("headers==>"+headers);
+  System.out.println("statusCodeValue==>"+statusCodeValue);
+  ```
 
-    `getForObject` 方法：
+  `getForObject` 方法：
 
-    此方法获取返回内容,第一个参数为URL，第二个参数为返回结果类型，第三个参数以 map 存储请求参数。
+  此方法获取返回内容,第一个参数为URL，第二个参数为返回结果类型，第三个参数以 map 存储请求参数。
 
-    ```java
-    HashMap<String, String> stringStringHashMap = new HashMap<>();
-    stringStringHashMap.put("id","id2");
-    stringStringHashMap.put("name","name2");
-    String forObject = restTemplate.getForObject(URL, String.class, stringStringHashMap);
-    System.out.println(forObject);
-    ```
+  ```java
+  HashMap<String, String> stringStringHashMap = new HashMap<>();
+  stringStringHashMap.put("id","id2");
+  stringStringHashMap.put("name","name2");
+  String forObject = restTemplate.getForObject(URL, String.class, stringStringHashMap);
+  System.out.println(forObject);
+  ```
 
-    ::: tip
-    get 请求要注意参数的拼接，需要占位符。
-    :::
+  ::: tip
+  get 请求要注意参数的拼接，需要占位符。
+  :::
 
 - POST 请求：
 
-    `postForEntity` 和 `postForObject`：
+  `postForEntity` 和 `postForObject`：
 
-    第一个参数为 URL，第二个参数为 map 或者对象实例，使用对象实例时，以 JSON 方式发送。
+  第一个参数为 URL，第二个参数为 map 或者对象实例，使用对象实例时，以 JSON 方式发送。
 
-    ```java
-    LinkedMultiValueMap<String, String> stringStringLinkedMultiValueMap = new LinkedMultiValueMap<>();
-    restTemplate.postForEntity(URL_POST, stringStringLinkedMultiValueMap, String.class);
-    ```
+  ```java
+  LinkedMultiValueMap<String, String> stringStringLinkedMultiValueMap = new LinkedMultiValueMap<>();
+  restTemplate.postForEntity(URL_POST, stringStringLinkedMultiValueMap, String.class);
+  ```
 
-    若使用 KV 键值对传递请求参数，则必须使用 `LinkedMultiValueMap`。
+  若使用 KV 键值对传递请求参数，则必须使用 `LinkedMultiValueMap`。
 
-    `postForLocation`：
+  `postForLocation`：
 
-    `postForLocation` 方法的返回值是一个 Uri 对象，返回跳转到的地址，可以先使用 `postForLocation` 获取 URI 再使用访问。
+  `postForLocation` 方法的返回值是一个 Uri 对象，返回跳转到的地址，可以先使用 `postForLocation` 获取 URI 再使用访问。
 
-    ::: tip
-    postForLocation 方法返回的 Uri 实际上是指响应头的 Location 字段，所以，provider 中 register 接口的响应头必须要有 Location 字段（即请求的接口实际上是一个重定向的接口），否则 postForLocation 方法的返回值为 null。
-    :::
+  ::: tip
+  postForLocation 方法返回的 Uri 实际上是指响应头的 Location 字段，所以，provider 中 register 接口的响应头必须要有 Location 字段（即请求的接口实际上是一个重定向的接口），否则 postForLocation 方法的返回值为 null。
+  :::

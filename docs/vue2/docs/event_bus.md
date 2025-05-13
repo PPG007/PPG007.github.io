@@ -12,9 +12,9 @@ main.js 中通过为 Vue 原型对象添加属性实现创建总线，且该总�
 new Vue({
   render: h => h(App),
   beforeCreate() {
-    Vue.prototype.$bus=this;
-  }
-}).$mount('#app')
+    Vue.prototype.$bus = this;
+  },
+}).$mount('#app');
 ```
 
 ## 使用事件总线

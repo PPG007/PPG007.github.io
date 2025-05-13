@@ -5,86 +5,80 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../js/vue.js"></script>
 
     <style>
-        .basic{
-            height: 100px;
-            width: 500px;
-            border: 2px;
-            border-color: black;
-            border-style: solid;
-        }
-        .a{
-            background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
-        }
-        .b{
-            background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
-        }
-        .c{
-            background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
-        }
-        .font1{
-            font-size: 30px;
-            background-color: skyblue;
-        }
-        .font2{
-            font-size: 50px;
-            text-shadow: 10px 10px 10px;
-            background-color: skyblue;
-        }
-        .font3{
-            font-size: 50px;
-            background-color: skyblue;
-            border-radius: 20px;
-        }
+      .basic {
+        height: 100px;
+        width: 500px;
+        border: 2px;
+        border-color: black;
+        border-style: solid;
+      }
+      .a {
+        background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+      }
+      .b {
+        background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
+      }
+      .c {
+        background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+      }
+      .font1 {
+        font-size: 30px;
+        background-color: skyblue;
+      }
+      .font2 {
+        font-size: 50px;
+        text-shadow: 10px 10px 10px;
+        background-color: skyblue;
+      }
+      .font3 {
+        font-size: 50px;
+        background-color: skyblue;
+        border-radius: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root">
-        <div @click="changeStyle" :class="color" class="basic">
-            {{name}}
-        </div>
-        <hr>
-        <div :class="classes" class="basic">
-            {{name}}
-        </div>
+      <div @click="changeStyle" :class="color" class="basic">{{name}}</div>
+      <hr />
+      <div :class="classes" class="basic">{{name}}</div>
 
-        <hr>
-        <div :class="classesObj" class="basic">
-            {{name}}
-        </div>
+      <hr />
+      <div :class="classesObj" class="basic">{{name}}</div>
     </div>
 
     <script>
-        const vm=new Vue({
-            el:'#root',
-            data() {
-                return {
-                    name:"PPG",
-                    color:"",
-                    classes:['font1','font2','font3'],
-                    classesObj:{
-                        // 默认都是false
-                        font1:false,
-                        font2:true,
-                        font3:true
-                    }
-                }
+      const vm = new Vue({
+        el: '#root',
+        data() {
+          return {
+            name: 'PPG',
+            color: '',
+            classes: ['font1', 'font2', 'font3'],
+            classesObj: {
+              // 默认都是false
+              font1: false,
+              font2: true,
+              font3: true,
             },
-            methods: {
-                changeStyle(){
-                    const arr=['a','b','c'];
-                    this.color=arr[Math.floor(Math.random()*3)]
-                }
-            },
-        })
+          };
+        },
+        methods: {
+          changeStyle() {
+            const arr = ['a', 'b', 'c'];
+            this.color = arr[Math.floor(Math.random() * 3)];
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -97,30 +91,26 @@
 ## 绑定 style 样式
 
 ```html
-<div class="basic" v-bind:style='styleObj'>
-    {{name}}
-</div>
-<div class="basic" v-bind:style='[styleObj,styleObj2]'>
-    {{name}}
-</div>
+<div class="basic" v-bind:style="styleObj">{{name}}</div>
+<div class="basic" v-bind:style="[styleObj,styleObj2]">{{name}}</div>
 
 <script>
-    const vm=new Vue({
-        el:'#root',
-        data() {
-            return {
-                name:"PPG",
-                styleObj:{
-                    //必须使用驼峰命名
-                    backgroundImage: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)'
-                },
-                styleObj2:{
-                    //必须使用驼峰命名
-                    fontSize:'100px'
-                }
-            }
+  const vm = new Vue({
+    el: '#root',
+    data() {
+      return {
+        name: 'PPG',
+        styleObj: {
+          //必须使用驼峰命名
+          backgroundImage: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)',
         },
-    })
+        styleObj2: {
+          //必须使用驼峰命名
+          fontSize: '100px',
+        },
+      };
+    },
+  });
 </script>
 ```
 

@@ -1,8 +1,8 @@
 # 集合操作
 
 - 显示所有集合：
-    `show collections`。
+  `show collections`。
 - 创建集合：
-    `db.createCollection('name')`。
+  `db.createCollection('name')`。
 - 删除集合：
-    `db.collection_name.drop()`。
+  `db.collection_name.drop()`。

@@ -171,7 +171,7 @@ public class Client {
 
 - 调用 Calculator 的构造方法，因为表达式的最后一个运算符为减法，所以解析后的 expression 为 SubExpression，这个减法表达式又由一个加法表达式和变量表达式组成：
 
-    ![image-20210921222535749](./images/image-20210921222535749.png)
+  ![image-20210921222535749](./images/image-20210921222535749.png)
 
 - 调用 run 方法开始执行运算，先是调用减法表达式的 interpreter 方法，然后又调用加法的 interpreter 方法和变量表达式的 interpreter 方法，层层向下，直到两端操作数都是变量表达式。
 - 向上计算得出结果。

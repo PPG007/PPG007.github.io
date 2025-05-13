@@ -15,4 +15,4 @@ export default defineUserConfig({
     sidebar,
   }),
   bundler: viteBundler(),
-})
+});

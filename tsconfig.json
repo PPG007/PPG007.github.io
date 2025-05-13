@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "docs/.vuepress/config",
+    "rootDir": "docs",
+    "skipLibCheck": true,
+    "declaration": false
+  },
+  "include": ["docs/**/*.ts"],
+  "exclude": ["docs/.vuepress/**/*.ts"]
+}

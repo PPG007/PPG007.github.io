@@ -18,10 +18,10 @@ spec:
       imagePullSecrets:
         - name: myali-docker
       containers:
-      - name: sms
-        image: registry.cn-qingdao.aliyuncs.com/ppg007/cronjob-demo:1.0
-        command:
-          - ./tencent-sms
+        - name: sms
+          image: registry.cn-qingdao.aliyuncs.com/ppg007/cronjob-demo:1.0
+          command:
+            - ./tencent-sms
       restartPolicy: Never
   backoffLimit: 4
 ```
@@ -51,7 +51,7 @@ metadata:
   name: hello
   namespace: example
 spec:
-  schedule: "* * * * *"
+  schedule: '* * * * *'
   jobTemplate:
     spec:
       template:
@@ -59,11 +59,11 @@ spec:
           imagePullSecrets:
             - name: myali-docker
           containers:
-          - name: hello
-            image: registry.cn-qingdao.aliyuncs.com/ppg007/cronjob-demo:1.0
-            imagePullPolicy: IfNotPresent
-            command:
-            - ./tencent-sms
+            - name: hello
+              image: registry.cn-qingdao.aliyuncs.com/ppg007/cronjob-demo:1.0
+              imagePullPolicy: IfNotPresent
+              command:
+                - ./tencent-sms
           restartPolicy: Never
 ```
 

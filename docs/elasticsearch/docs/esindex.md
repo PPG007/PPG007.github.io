@@ -135,7 +135,7 @@ PUT _index_template/template_1
 }
 ```
 
-接下来创建匹配 bar* 的索引：
+接下来创建匹配 bar\* 的索引：
 
 ```js
 PUT /bar-test

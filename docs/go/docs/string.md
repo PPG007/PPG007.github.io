@@ -4,45 +4,45 @@
 
 - len(str)：求长度。
 
-    ```go
-    fmt.Println("字符串的长度：", len(str))
-    ```
+  ```go
+  fmt.Println("字符串的长度：", len(str))
+  ```
 
 - `+` 或 `fmt.Sprintf`：拼接字符串。
 
-    ```go
-    fmt.Println(fmt.Sprintf("%s%s", str, str))
-    ```
+  ```go
+  fmt.Println(fmt.Sprintf("%s%s", str, str))
+  ```
 
 - `strings.Split`：分割。
 
-    ```go
-    fmt.Println(strings.Split(str, ","))
-    ```
+  ```go
+  fmt.Println(strings.Split(str, ","))
+  ```
 
 - `strings.Contains`：判断是否包含。
 
-    ```go
-    fmt.Println(strings.Contains(str, "芜湖"))
-    ```
+  ```go
+  fmt.Println(strings.Contains(str, "芜湖"))
+  ```
 
 - `strings.HasPrefix,strings.HasSuffix`：前缀后缀判断。
 
-    ```go
-    fmt.Println(strings.HasPrefix(str, "这"), strings.HasSuffix(str, ","))
-    ```
+  ```go
+  fmt.Println(strings.HasPrefix(str, "这"), strings.HasSuffix(str, ","))
+  ```
 
 - `strings.Index(),strings.LastIndex`：子串出现的位置。
 
-    ```go
-    fmt.Println(strings.Index(str, ","))
-    ```
+  ```go
+  fmt.Println(strings.Index(str, ","))
+  ```
 
 - `strings.Join`：符号连接。
 
-    ```go
-    fmt.Println(strings.Join(strings.Split(str, ","), "-"))
-    ```
+  ```go
+  fmt.Println(strings.Join(strings.Split(str, ","), "-"))
+  ```
 
 Go 语言中字符有两种：uint8 类型，代表 ASCII 的一个字符，rune 类型，代表一个 UTF-8 字符。
 

@@ -1,37 +1,26 @@
 {
-    "index_uid": "docs",
-    "start_urls": [
-        "https://ppg007.github.io"
-    ],
-    "selectors": {
-        "lvl0": {
-            "selector": "li a.router-link-active span",
-            "global": true,
-            "default_value": "PPG007的文档"
-        },
-        "lvl1": ".theme-default-content h1",
-        "lvl2": ".theme-default-content h2",
-        "lvl3": ".theme-default-content h3",
-        "lvl4": ".theme-default-content h4",
-        "lvl5": ".theme-default-content h5",
-        "text": ".theme-default-content p, .theme-default-content li, .theme-default-content td"
+  "index_uid": "docs",
+  "start_urls": ["https://ppg007.github.io"],
+  "selectors": {
+    "lvl0": {
+      "selector": "li a.router-link-active span",
+      "global": true,
+      "default_value": "PPG007的文档"
     },
-    "strip_chars": " .,;:#",
-    "scrap_start_urls": true,
-    "custom_settings": {
-        "synonyms": {
-            "relevancy": [
-                "relevant",
-                "relevance"
-            ],
-            "relevant": [
-                "relevancy",
-                "relevance"
-            ],
-            "relevance": [
-                "relevancy",
-                "relevant"
-            ]
-        }
+    "lvl1": ".theme-default-content h1",
+    "lvl2": ".theme-default-content h2",
+    "lvl3": ".theme-default-content h3",
+    "lvl4": ".theme-default-content h4",
+    "lvl5": ".theme-default-content h5",
+    "text": ".theme-default-content p, .theme-default-content li, .theme-default-content td"
+  },
+  "strip_chars": " .,;:#",
+  "scrap_start_urls": true,
+  "custom_settings": {
+    "synonyms": {
+      "relevancy": ["relevant", "relevance"],
+      "relevant": ["relevancy", "relevance"],
+      "relevance": ["relevancy", "relevant"]
     }
+  }
 }

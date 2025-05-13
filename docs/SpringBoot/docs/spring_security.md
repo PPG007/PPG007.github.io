@@ -87,19 +87,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ```html
 <!-- 命名空间 -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-判断用户是否已经登陆认证，引号内的参数必须是 isAuthenticated()。
-sec:authorize="isAuthenticated()"
-
-获得当前用户的用户名，引号内的参数必须是 name。
-sec:authentication="name"
-
-判断当前用户是否拥有指定的权限。引号内的参数为权限的名称。
-sec:authorize=“hasRole(‘role’)”
-
-获得当前用户的全部角色，引号内的参数必须是 principal.authorities。
-sec:authentication="principal.authorities"
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  判断用户是否已经登陆认证，引号内的参数必须是 isAuthenticated()。 sec:authorize="isAuthenticated()"
+  获得当前用户的用户名，引号内的参数必须是 name。 sec:authentication="name"
+  判断当前用户是否拥有指定的权限。引号内的参数为权限的名称。 sec:authorize=“hasRole(‘role’)”
+  获得当前用户的全部角色，引号内的参数必须是 principal.authorities。
+  sec:authentication="principal.authorities"
+</html>
 ```
 
 ## SpringSecurity详解

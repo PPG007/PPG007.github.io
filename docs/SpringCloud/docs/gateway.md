@@ -48,7 +48,7 @@ spring:
           enabled: true
       routes:
         - id: payment_routh # 一个唯一id，最好与服务名一致
-          uri: http://localhost:8001  # 路由目的地
+          uri: http://localhost:8001 # 路由目的地
           predicates: # 断言，都为真才能路由
             - Path=/payment/** # 只有这个请求路径才路由
 ```
@@ -74,10 +74,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: after_route
-        uri: https://example.org
-        predicates:
-        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+        - id: after_route
+          uri: https://example.org
+          predicates:
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
 ```
 
 对应的是 Java8 中的 `ZonedDateTime` 类：
@@ -95,10 +95,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: before_route
-        uri: https://example.org
-        predicates:
-        - Before=2017-01-20T17:42:47.789-07:00[America/Denver]
+        - id: before_route
+          uri: https://example.org
+          predicates:
+            - Before=2017-01-20T17:42:47.789-07:00[America/Denver]
 ```
 
 ### Between
@@ -110,10 +110,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: between_route
-        uri: https://example.org
-        predicates:
-        - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2017-01-21T17:42:47.789-07:00[America/Denver]
+        - id: between_route
+          uri: https://example.org
+          predicates:
+            - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2017-01-21T17:42:47.789-07:00[America/Denver]
 ```
 
 ### Cookie
@@ -125,10 +125,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: cookie_route
-        uri: https://example.org
-        predicates:
-        - Cookie=chocolate, ch.p # 第一个参数是name，逗号后面是正则表达式
+        - id: cookie_route
+          uri: https://example.org
+          predicates:
+            - Cookie=chocolate, ch.p # 第一个参数是name，逗号后面是正则表达式
 ```
 
 ### Header
@@ -140,10 +140,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: header_route
-        uri: https://example.org
-        predicates:
-        - Header=X-Request-Id, \d+
+        - id: header_route
+          uri: https://example.org
+          predicates:
+            - Header=X-Request-Id, \d+
 ```
 
 ### Host
@@ -155,10 +155,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: host_route
-        uri: https://example.org
-        predicates:
-        - Host=**.somehost.org,**.anotherhost.org
+        - id: host_route
+          uri: https://example.org
+          predicates:
+            - Host=**.somehost.org,**.anotherhost.org
 ```
 
 ### Method
@@ -170,10 +170,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: method_route
-        uri: https://example.org
-        predicates:
-        - Method=GET,POST
+        - id: method_route
+          uri: https://example.org
+          predicates:
+            - Method=GET,POST
 ```
 
 ### Path
@@ -185,10 +185,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: path_route
-        uri: https://example.org
-        predicates:
-        - Path=/red/{segment},/blue/{segment}
+        - id: path_route
+          uri: https://example.org
+          predicates:
+            - Path=/red/{segment},/blue/{segment}
 ```
 
 ### Query
@@ -200,10 +200,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: query_route
-        uri: https://example.org
-        predicates:
-        - Query=red, gree.
+        - id: query_route
+          uri: https://example.org
+          predicates:
+            - Query=red, gree.
 ```
 
 ### RemoteAddr
@@ -215,10 +215,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: remoteaddr_route
-        uri: https://example.org
-        predicates:
-        - RemoteAddr=192.168.1.1/24
+        - id: remoteaddr_route
+          uri: https://example.org
+          predicates:
+            - RemoteAddr=192.168.1.1/24
 ```
 
 ### Weight
@@ -230,14 +230,14 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: weight_high
-        uri: https://weighthigh.org
-        predicates:
-        - Weight=group1, 8
-      - id: weight_low
-        uri: https://weightlow.org
-        predicates:
-        - Weight=group1, 2
+        - id: weight_high
+          uri: https://weighthigh.org
+          predicates:
+            - Weight=group1, 8
+        - id: weight_low
+          uri: https://weightlow.org
+          predicates:
+            - Weight=group1, 2
 ```
 
 80% 的请求进入 `https://weighthigh.org`，20% 进入 `https://weightlow.org`。

@@ -24,5 +24,5 @@ URL 字符只能使用以下这些字符：
 通过 `<base>` 标签指定网页内部的所有相对 URL 的计算基准，整张网页只能有一个 `<base>` 标签，而且只能放在 `<head>` 里面，不需要闭合的单独标签，且这个标签必须至少具有 `href` 或 `target` 属性中的一个。
 
 ```html
-<base href="https://www.google.com/" target="_blank">
+<base href="https://www.google.com/" target="_blank" />
 ```

@@ -5,42 +5,38 @@
 ## localStorage
 
 ```js
-function saveData(){
-    let person={name:'PPG',age:21};
-    window.localStorage.setItem('msg',JSON.stringify(person));
+function saveData() {
+  let person = { name: 'PPG', age: 21 };
+  window.localStorage.setItem('msg', JSON.stringify(person));
 }
-function readData(){
-
-    alert(localStorage.getItem('msg'))
-    console.log(JSON.parse(localStorage.getItem('msg')))
+function readData() {
+  alert(localStorage.getItem('msg'));
+  console.log(JSON.parse(localStorage.getItem('msg')));
 }
-function deleteData(){
-
-    console.log(localStorage.removeItem('msg'))
+function deleteData() {
+  console.log(localStorage.removeItem('msg'));
 }
-function deleteAll(){
-    localStorage.clear();
+function deleteAll() {
+  localStorage.clear();
 }
 ```
 
 ## sessionStorage
 
 ```js
-function saveData(){
-    let person={name:'PPG',age:21};
-    sessionStorage.setItem('msg',JSON.stringify(person));
+function saveData() {
+  let person = { name: 'PPG', age: 21 };
+  sessionStorage.setItem('msg', JSON.stringify(person));
 }
-function readData(){
-
-    alert(sessionStorage.getItem('msg'))
-    console.log(JSON.parse(sessionStorage.getItem('msg')))
+function readData() {
+  alert(sessionStorage.getItem('msg'));
+  console.log(JSON.parse(sessionStorage.getItem('msg')));
 }
-function deleteData(){
-
-    console.log(sessionStorage.removeItem('msg'))
+function deleteData() {
+  console.log(sessionStorage.removeItem('msg'));
 }
-function deleteAll(){
-    sessionStorage.clear();
+function deleteAll() {
+  sessionStorage.clear();
 }
 ```
 

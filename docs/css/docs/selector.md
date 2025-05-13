@@ -9,17 +9,17 @@ prev:
 - 元素选择器。
 - id 选择器。
 - 类选择器。如果将两个类选择器链接在一起，那么只会选择同时有这两个类的元素。
-- 通用选择器：使用 * 选择页面上所有的 HTML 元素。
+- 通用选择器：使用 \* 选择页面上所有的 HTML 元素。
 - 分组选择器：使用逗号分隔每个选择器。
 - 属性选择器：通过中括号选中包含某个属性的元素，可以指定属性值。
-    类型|描述
-    ----|----
-    [title]|选中有 title 属性的元素
-    [class~="important"]|选中 class 属性中包含 important 的元素
-    [title^="def"]|选中 title 属性值以 def开头的元素
-    [title$="def"]|选中 title 属性值 以 def结尾的元素
-    [title*="def"]|选中 title 属性值包含子串 def 的元素
-    [title\|="def"]|选中 title 属性值等于 def 或者是以 def- 开头的元素
+  类型|描述
+  ----|----
+  [title]|选中有 title 属性的元素
+  [class~="important"]|选中 class 属性中包含 important 的元素
+  [title^="def"]|选中 title 属性值以 def开头的元素
+  [title$="def"]|选中 title 属性值 以 def结尾的元素
+  [title*="def"]|选中 title 属性值包含子串 def 的元素
+  [title\|="def"]|选中 title 属性值等于 def 或者是以 def- 开头的元素
 - 后代选择器：例如 `h1 em{color:red;}` 会选中作为 h1 元素后代的 em 元素。
 - 子元素选择器：只能选中作为某元素子元素的元素，例如 `h1>strong` 只会选择只作为 h1 元素子元素的 strong 元素，如果一个 strong 元素和 h1 元素之间还有其他元素则不会被选中。
 - 相邻兄弟选择器：选择紧接在另一个元素后的元素，而且二者有相同的父元素，例如 `h1+p` 选择紧接在 h1 元素后出现的段落，h1 和 p 元素有共同的父元素。

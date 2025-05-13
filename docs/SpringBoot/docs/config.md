@@ -1,4 +1,3 @@
-
 # SpringBoot 配置
 
 ## 通过 properties 配置
@@ -141,7 +140,7 @@ student:
   hobbies:
     - code
     - music
-  grade: {math: 59,eng: 59}
+  grade: { math: 59, eng: 59 }
   teacher:
     id: ${teacher.id:random.int}#冒号后为默认值
     name: ${teacher.name:zzz}
@@ -205,27 +204,27 @@ private int age;
 
 - `file:./config`：
 
-    此位置就是在项目根目录下创建一个 config 文件夹(文件夹名字必须为 config )，在 config 文件夹中创建配置文件(config 文件夹与 src 同级)。
+  此位置就是在项目根目录下创建一个 config 文件夹(文件夹名字必须为 config )，在 config 文件夹中创建配置文件(config 文件夹与 src 同级)。
 
-    ![配置文件路径一](./images/配置文件路径一.jpg)
+  ![配置文件路径一](./images/配置文件路径一.jpg)
 
 - `file:./`：
 
-    此位置就是在根目录下直接创建配置文件，配置文件与 src 文件夹同级。
+  此位置就是在根目录下直接创建配置文件，配置文件与 src 文件夹同级。
 
-    ![配置文件路径一](./images/配置文件路径二.jpg)
+  ![配置文件路径一](./images/配置文件路径二.jpg)
 
 - `classpath:/config/`：
 
-    此位置就是在 resources 目录下创建 config 文件夹并在其中创建配置文件。
+  此位置就是在 resources 目录下创建 config 文件夹并在其中创建配置文件。
 
-    ![配置文件路径一](./images/配置文件路径三.jpg)
+  ![配置文件路径一](./images/配置文件路径三.jpg)
 
 - `classpath:/`：
 
-    此位置就是 resources 目录。
+  此位置就是 resources 目录。
 
-    ![配置文件路径一](./images/配置文件路径四.jpg)
+  ![配置文件路径一](./images/配置文件路径四.jpg)
 
 ::: tip 各位置配置文件的优先级顺序
 `file:./config` > `file:./` > `classpath:/config/` > `classpath:/`。
@@ -235,38 +234,38 @@ private int age;
 
 - 使用 properties：
 
-    创建多个 application-xxx.properties。
+  创建多个 application-xxx.properties。
 
-    在 application.properties(默认主配置文件)中添加：
+  在 application.properties(默认主配置文件)中添加：
 
-    ```properties
-    #application-logger.properties
-    spring.profiles.active=logger
-    ```
+  ```properties
+  #application-logger.properties
+  spring.profiles.active=logger
+  ```
 
 - 使用 YAML：
 
-    yaml 通过 `---` 分割不同的环境，所以一个配置文件可以有多个环境，最上面为主环境，主环境可以通过 `spring.profiles.active` 指定要使用的环境，其他环境通过 `spring.config.active.on-profile` 为自己起名字。
+  yaml 通过 `---` 分割不同的环境，所以一个配置文件可以有多个环境，最上面为主环境，主环境可以通过 `spring.profiles.active` 指定要使用的环境，其他环境通过 `spring.config.active.on-profile` 为自己起名字。
 
-    ```yaml
-    server:
-      port: 5555
+  ```yaml
+  server:
+    port: 5555
 
-    spring:
-      profiles:
-        active: dev
-    ---
-    server:
-      port: 6666
-    spring:
-      config:
-        activate:
-          on-profile: test
-    ---
-    server:
-      port: 7777
-    spring:
-      config:
-        activate:
-          on-profile: dev
-    ```
+  spring:
+    profiles:
+      active: dev
+  ---
+  server:
+    port: 6666
+  spring:
+    config:
+      activate:
+        on-profile: test
+  ---
+  server:
+    port: 7777
+  spring:
+    config:
+      activate:
+        on-profile: dev
+  ```

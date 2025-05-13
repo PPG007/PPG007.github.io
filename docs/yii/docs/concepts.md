@@ -439,12 +439,12 @@ echo Yii::getAlias('@foo/bar/file.php');   // 输出：/path2/bar/file.php
 - 每个类都必须置于命名空间之下 (比如 foo\bar\MyClass)。
 - 每个类都必须保存为单独文件，且其完整路径能用以下算法取得：
 
-    ```php
-    // $className 是一个开头包含反斜杠的完整类名
-    $classFile = Yii::getAlias('@' . str_replace('\\', '/', $className) . '.php');
-    ```
+  ```php
+  // $className 是一个开头包含反斜杠的完整类名
+  $classFile = Yii::getAlias('@' . str_replace('\\', '/', $className) . '.php');
+  ```
 
-    举例来说，若某个类名为 foo\bar\MyClass，对应类的文件路径别名会是 @foo/bar/MyClass.php。 为了让该别名能被正确解析为文件路径，@foo 或 @foo/bar 中的一个必须是根别名。
+  举例来说，若某个类名为 foo\bar\MyClass，对应类的文件路径别名会是 @foo/bar/MyClass.php。 为了让该别名能被正确解析为文件路径，@foo 或 @foo/bar 中的一个必须是根别名。
 
 Yii 类自动加载器支持类映射表功能，该功能会建立一个从类的名字到类文件路径的映射。当自动加载器加载一个文件时，首先检查映射表里有没有该类。如果有，对应的文件路径就直接加载了，省掉了进一步的检查。这让类的自动加载变得超级快。
 

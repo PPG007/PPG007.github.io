@@ -1,4 +1,2 @@
 import init from './bars';
-export {
-  init,
-};
+export { init };

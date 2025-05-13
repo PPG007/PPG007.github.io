@@ -5,6 +5,6 @@
 示例：
 
 ```js
-axios.default.method="POST"
-axios.default.baseURL='http://localhost'
+axios.default.method = 'POST';
+axios.default.baseURL = 'http://localhost';
 ```

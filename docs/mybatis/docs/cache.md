@@ -67,104 +67,104 @@ mapper.xml：
 
 - 测试一，两次查询同一记录(sqlsession 生命周期内):
 
-    ```text
-    Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    Opening JDBC Connection
-    Created connection 293508253.
-    Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    ==>  Preparing: select * from mydata.usertable where id=?
-    ==> Parameters: 1(Integer)
-    <==    Columns: id, username, password
-    <==        Row: 1, 丛维仪, 110
-    <==      Total: 1
-    User(id=1, username=丛维仪, password=110)
-    ==============================
-    User(id=1, username=丛维仪, password=110)
-    true
-    Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Returned connection 293508253 to pool.
-    ```
+  ```text
+  Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  Opening JDBC Connection
+  Created connection 293508253.
+  Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  ==>  Preparing: select * from mydata.usertable where id=?
+  ==> Parameters: 1(Integer)
+  <==    Columns: id, username, password
+  <==        Row: 1, 丛维仪, 110
+  <==      Total: 1
+  User(id=1, username=丛维仪, password=110)
+  ==============================
+  User(id=1, username=丛维仪, password=110)
+  true
+  Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Returned connection 293508253 to pool.
+  ```
 
-    ::: tip
-    由日志文件可以看出，两次查询同一记录只访问了一次数据库。
-    :::
+  ::: tip
+  由日志文件可以看出，两次查询同一记录只访问了一次数据库。
+  :::
 
 - 测试二，两次查询的不是同一记录：
 
-    ```text
-    Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    Opening JDBC Connection
-    Created connection 293508253.
-    Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    ==>  Preparing: select * from mydata.usertable where id=?
-    ==> Parameters: 1(Integer)
-    <==    Columns: id, username, password
-    <==        Row: 1, 丛维仪, 110
-    <==      Total: 1
-    User(id=1, username=丛维仪, password=110)
-    ==============================
-    ==>  Preparing: select * from mydata.usertable where id=?
-    ==> Parameters: 2(Integer)
-    <==    Columns: id, username, password
-    <==        Row: 2, 王海洋, 13573285937
-    <==      Total: 1
-    User(id=2, username=王海洋, password=13573285937)
-    false
-    Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Returned connection 293508253 to pool.
-    ```
+  ```text
+  Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  Opening JDBC Connection
+  Created connection 293508253.
+  Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  ==>  Preparing: select * from mydata.usertable where id=?
+  ==> Parameters: 1(Integer)
+  <==    Columns: id, username, password
+  <==        Row: 1, 丛维仪, 110
+  <==      Total: 1
+  User(id=1, username=丛维仪, password=110)
+  ==============================
+  ==>  Preparing: select * from mydata.usertable where id=?
+  ==> Parameters: 2(Integer)
+  <==    Columns: id, username, password
+  <==        Row: 2, 王海洋, 13573285937
+  <==      Total: 1
+  User(id=2, username=王海洋, password=13573285937)
+  false
+  Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Returned connection 293508253 to pool.
+  ```
 
-    ::: tip
-    由日志文件可以看出，两次查询不同记录访问了两次数据库。
-    :::
+  ::: tip
+  由日志文件可以看出，两次查询不同记录访问了两次数据库。
+  :::
 
 - 测试三，查询完第一条记录后，更新数据库内任意记录，再次查询同一条记录：
 
-    ```text
-    Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    PooledDataSource forcefully closed/removed all connections.
-    Opening JDBC Connection
-    Created connection 293508253.
-    Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    ==>  Preparing: select * from mydata.usertable where id=?
-    ==> Parameters: 1(Integer)
-    <==    Columns: id, username, password
-    <==        Row: 1, 丛维仪, 110
-    <==      Total: 1
-    User(id=1, username=丛维仪, password=110)
-    ==>  Preparing: update mydata.usertable set password=? where id=?
-    ==> Parameters: test1(String), 2(Integer)
-    <==    Updates: 1
-    ==============================
-    ==>  Preparing: select * from mydata.usertable where id=?
-    ==> Parameters: 1(Integer)
-    <==    Columns: id, username, password
-    <==        Row: 1, 丛维仪, 110
-    <==      Total: 1
-    User(id=1, username=丛维仪, password=110)
-    true
-    Rolling back JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
-    Returned connection 293508253 to pool.
-    ```
+  ```text
+  Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  PooledDataSource forcefully closed/removed all connections.
+  Opening JDBC Connection
+  Created connection 293508253.
+  Setting autocommit to false on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  ==>  Preparing: select * from mydata.usertable where id=?
+  ==> Parameters: 1(Integer)
+  <==    Columns: id, username, password
+  <==        Row: 1, 丛维仪, 110
+  <==      Total: 1
+  User(id=1, username=丛维仪, password=110)
+  ==>  Preparing: update mydata.usertable set password=? where id=?
+  ==> Parameters: test1(String), 2(Integer)
+  <==    Updates: 1
+  ==============================
+  ==>  Preparing: select * from mydata.usertable where id=?
+  ==> Parameters: 1(Integer)
+  <==    Columns: id, username, password
+  <==        Row: 1, 丛维仪, 110
+  <==      Total: 1
+  User(id=1, username=丛维仪, password=110)
+  true
+  Rolling back JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Resetting autocommit to true on JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Closing JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@117e949d]
+  Returned connection 293508253 to pool.
+  ```
 
-    ::: tip
-    由日志文件可以看出，更新数据库内容导致了缓存的更新。
-    :::
+  ::: tip
+  由日志文件可以看出，更新数据库内容导致了缓存的更新。
+  :::
 
 ### 缓存失效的情况
 
@@ -205,12 +205,13 @@ sqlSession.clearCache();
 
 - eviction：指定清除策略，默认的清除策略是 **LRU**。
 
-    可用的清除策略有：
+  可用的清除策略有：
 
-    - LRU：最近最少使用：移除最长时间不被使用的对象。
-    - FIFO：先进先出：按对象进入缓存的顺序来移除它们。
-    - SOFT：软引用：基于垃圾回收器状态和软引用规则移除对象。
-    - WEAK：弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。
+  - LRU：最近最少使用：移除最长时间不被使用的对象。
+  - FIFO：先进先出：按对象进入缓存的顺序来移除它们。
+  - SOFT：软引用：基于垃圾回收器状态和软引用规则移除对象。
+  - WEAK：弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。
+
 - flushInterval：可以被设置为任意的正整数，设置的值应该是一个以毫秒为单位的合理时间量。 默认情况是不设置，也就是没有刷新间隔，缓存仅仅会在调用语句时刷新。
 - size：（引用数目）可以被设置为任意正整数，要注意欲缓存对象的大小和运行环境中可用的内存资源。默认值是 1024。
 - readOnly：（只读）可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。 速度上会慢一些，但是更安全，因此默认值是 false。

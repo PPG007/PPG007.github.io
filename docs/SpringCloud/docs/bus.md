@@ -49,7 +49,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*" # 暴露出供动态刷新的接口
+        include: '*' # 暴露出供动态刷新的接口
 ---
 server:
   port: 3344
@@ -59,7 +59,6 @@ spring:
       on-profile: prod
 
 ---
-
 server:
   port: 8848
 spring:
@@ -87,7 +86,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: '*'
 spring:
   application:
     name: config-client
@@ -124,7 +123,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: '*'
 spring:
   application:
     name: config-client

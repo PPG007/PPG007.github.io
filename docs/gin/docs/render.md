@@ -66,10 +66,9 @@ templates/posts/index.tmpl：
 
 ```html
 {{ define "posts/index.tmpl" }}
-<html><h1>
-  {{ .title }}
-</h1>
-<p>Using posts/index.tmpl</p>
+<html>
+  <h1>{{ .title }}</h1>
+  <p>Using posts/index.tmpl</p>
 </html>
 {{ end }}
 ```
@@ -78,10 +77,9 @@ templates/posts/index/tmpl：
 
 ```html
 {{ define "users/index.tmpl" }}
-<html><h1>
-  {{ .title }}
-</h1>
-<p>Using users/index.tmpl</p>
+<html>
+  <h1>{{ .title }}</h1>
+  <p>Using users/index.tmpl</p>
 </html>
 {{ end }}
 ```

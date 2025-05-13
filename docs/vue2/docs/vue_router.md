@@ -11,41 +11,41 @@ npm install vue-router
 在 `src` 目录下创建 `router` 文件夹，并在其中创建 `index.js`：
 
 ```js
-import VueRouter from "vue-router";
-import Home from "@/components/Home";
-import About from "@/components/About";
-import News from "@/components/News";
-import Message from "@/components/Message";
-import Detail from "@/components/Detail";
+import VueRouter from 'vue-router';
+import Home from '@/components/Home';
+import About from '@/components/About';
+import News from '@/components/News';
+import Message from '@/components/Message';
+import Detail from '@/components/Detail';
 export default new VueRouter({
-    routes: [
-        {
-        	//指定路径
-            path:'/home',
-            //对应组件
-            component:Home
-        },
-        {
-            path:'/about',
-            component:About,
-        }
-    ]
-})
+  routes: [
+    {
+      //指定路径
+      path: '/home',
+      //对应组件
+      component: Home,
+    },
+    {
+      path: '/about',
+      component: About,
+    },
+  ],
+});
 ```
 
 在 `main.js` 中引用 VueRouter 并使用上述配置：
 
 ```js
-import Vue from 'vue'
-import App from './App.vue'
-import VueRouter from "vue-router";
-import router from'./router'
-Vue.config.productionTip = false
+import Vue from 'vue';
+import App from './App.vue';
+import VueRouter from 'vue-router';
+import router from './router';
+Vue.config.productionTip = false;
 Vue.use(VueRouter);
 new Vue({
   render: h => h(App),
-  router
-}).$mount('#app')
+  router,
+}).$mount('#app');
 ```
 
 在 APP 组件中添加超链接：
@@ -71,40 +71,40 @@ new Vue({
 ## 多级路由
 
 ```js
-import VueRouter from "vue-router";
-import Home from "@/components/Home";
-import About from "@/components/About";
-import News from "@/components/News";
-import Message from "@/components/Message";
-import Detail from "@/components/Detail";
+import VueRouter from 'vue-router';
+import Home from '@/components/Home';
+import About from '@/components/About';
+import News from '@/components/News';
+import Message from '@/components/Message';
+import Detail from '@/components/Detail';
 export default new VueRouter({
-    routes: [
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+    },
+    {
+      path: '/about',
+      component: About,
+      children: [
         {
-            path:'/home',
-            component:Home,
+          path: 'news',
+          component: News,
         },
         {
-            path:'/about',
-            component:About,
-            children:[
-                {
-                    path:'news',
-                    component:News,
-                },
-                {
-                    path:'message',
-                    component:Message,
-                    children:[
-                        {
-                            path:'detail',
-                            component:Detail,
-                        }
-                    ],
-                }
-            ]
-        }
-    ]
-})
+          path: 'message',
+          component: Message,
+          children: [
+            {
+              path: 'detail',
+              component: Detail,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+});
 ```
 
 ::: tip
@@ -118,7 +118,9 @@ export default new VueRouter({
 写法一：
 
 ```vue
-<router-link :to="`/about/message/detail?id=${msg.id}&title=${msg.title}`">{{ msg.id }}-{{ msg.title }}</router-link>
+<router-link
+  :to="`/about/message/detail?id=${msg.id}&title=${msg.title}`"
+>{{ msg.id }}-{{ msg.title }}</router-link>
 ```
 
 通过反引号并将 to 属性改为绑定形式，使用`${}`取得要传递的参数。
@@ -126,12 +128,15 @@ export default new VueRouter({
 写法二：
 
 ```vue
-<router-link :to="{
-            path:'/about/message/detail',
-            query:{
-              id:msg.id,
-              title:msg.title
-            }}">
+<router-link
+  :to="{
+    path: '/about/message/detail',
+    query: {
+      id: msg.id,
+      title: msg.title,
+    },
+  }"
+>
           {{ msg.id }}-{{ msg.title }}
         </router-link>
 ```
@@ -150,17 +155,17 @@ to 属性依然是绑定方式，写成对象形式。
 
 ```js
 routes: [
-        {
-            path:'/home',
-            component:Home,
-            name:'home'
-        },
-        {
-            path:'/about',
-            component:About,
-            name:'about',
-        }
-    ]
+  {
+    path: '/home',
+    component: Home,
+    name: 'home',
+  },
+  {
+    path: '/about',
+    component: About,
+    name: 'about',
+  },
+];
 ```
 
 在使用时通过绑定 `to` 属性并采用对象形式传递一个 `name` 参数指定要跳转到的路由。
@@ -171,20 +176,16 @@ routes: [
 
 ```js
 const router = new VueRouter({
-  routes: [
-    { path: '/a', redirect: '/b' }
-  ]
-})
+  routes: [{ path: '/a', redirect: '/b' }],
+});
 ```
 
 重定向到命名路由：
 
 ```js
 const router = new VueRouter({
-  routes: [
-    { path: '/a', redirect: { name: 'foo' }}
-  ]
-})
+  routes: [{ path: '/a', redirect: { name: 'foo' } }],
+});
 ```
 
 重定向到函数：
@@ -192,12 +193,15 @@ const router = new VueRouter({
 ```js
 const router = new VueRouter({
   routes: [
-    { path: '/a', redirect: to => {
-      // 方法接收 目标路由 作为参数
-      // return 重定向的 字符串路径/路径对象
-    }}
-  ]
-})
+    {
+      path: '/a',
+      redirect: to => {
+        // 方法接收 目标路由 作为参数
+        // return 重定向的 字符串路径/路径对象
+      },
+    },
+  ],
+});
 ```
 
 ### 别名
@@ -206,10 +210,8 @@ const router = new VueRouter({
 
 ```js
 const router = new VueRouter({
-  routes: [
-    { path: '/a', component: A, alias: '/b' }
-  ]
-})
+  routes: [{ path: '/a', component: A, alias: '/b' }],
+});
 ```
 
 ### 命名视图
@@ -232,11 +234,11 @@ const router = new VueRouter({
       components: {
         default: Foo,
         a: Bar,
-        b: Baz
-      }
-    }
-  ]
-})
+        b: Baz,
+      },
+    },
+  ],
+});
 ```
 
 ## params 参数(RestFul)
@@ -244,45 +246,45 @@ const router = new VueRouter({
 在 `index.js` 中修改：
 
 ```js
-import VueRouter from "vue-router";
-import Home from "@/components/Home";
-import About from "@/components/About";
-import News from "@/components/News";
-import Message from "@/components/Message";
-import Detail from "@/components/Detail";
+import VueRouter from 'vue-router';
+import Home from '@/components/Home';
+import About from '@/components/About';
+import News from '@/components/News';
+import Message from '@/components/Message';
+import Detail from '@/components/Detail';
 export default new VueRouter({
-    routes: [
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+      name: 'home',
+    },
+    {
+      path: '/about',
+      component: About,
+      name: 'about',
+      children: [
         {
-            path:'/home',
-            component:Home,
-            name:'home'
+          path: 'news',
+          component: News,
+          name: 'news',
         },
         {
-            path:'/about',
-            component:About,
-            name:'about',
-            children:[
-                {
-                    path:'news',
-                    component:News,
-                    name:'news'
-                },
-                {
-                    path:'message',
-                    component:Message,
-                    name:'message',
-                    children:[
-                        {
-                            path:'detail/:id/:title',
-                            component:Detail,
-                            name:'detail',
-                        }
-                    ],
-                }
-            ]
-        }
-    ]
-})
+          path: 'message',
+          component: Message,
+          name: 'message',
+          children: [
+            {
+              path: 'detail/:id/:title',
+              component: Detail,
+              name: 'detail',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+});
 ```
 
 在 `path` 属性中的路径后使用`/`分隔参数，`:`后接参数键。
@@ -290,12 +292,15 @@ export default new VueRouter({
 传递参数：
 
 ```vue
-<router-link :to="{
-            name:'detail',
-            params:{
-              id:msg.id,
-              title:msg.title
-            }}">
+<router-link
+  :to="{
+    name: 'detail',
+    params: {
+      id: msg.id,
+      title: msg.title,
+    },
+  }"
+>
           {{ msg.id }}-{{ msg.title }}
         </router-link>
 ```
@@ -305,7 +310,7 @@ export default new VueRouter({
 获取参数：
 
 ```js
-$route.params.id
+$route.params.id;
 ```
 
 ## props 配置
@@ -338,19 +343,19 @@ $route.params.id
 <template>
   <div>
     <h3>Detail</h3>
-    <h5>{{id}}</h5>
-    <h5>{{title}}</h5>
+    <h5>{{ id }}</h5>
+    <h5>{{ title }}</h5>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Detail",
+  name: 'Detail',
   mounted() {
-    console.log(this.$route)
+    console.log(this.$route);
   },
-  props:['id','title']
-}
+  props: ['id', 'title'],
+};
 </script>
 ```
 
@@ -413,12 +418,12 @@ props(route){
 
 ```js
 this.$router.push({
-    name: 'detail',
-    query: {
-        id: msg.id,
-        title: msg.title
-    }
-})
+  name: 'detail',
+  query: {
+    id: msg.id,
+    title: msg.title,
+  },
+});
 ```
 
 ### replace 方法
@@ -427,12 +432,12 @@ this.$router.push({
 
 ```js
 this.$router.replace({
-    name: 'detail',
-    query: {
-        id: msg.id,
-        title: msg.title
-    }
-})
+  name: 'detail',
+  query: {
+    id: msg.id,
+    title: msg.title,
+  },
+});
 ```
 
 ### back 方法
@@ -482,7 +487,7 @@ this.$router.go(-19);
 <keep-alive include="News,Message">
     <router-view></router-view>
 </keep-alive>
-<keep-alive :include="['News','Message']">
+<keep-alive :include="['News', 'Message']">
     <router-view></router-view>
 </keep-alive>
 ```
@@ -524,16 +529,16 @@ this.$router.go(-19);
 每次路由切换之前调用、初始化时被调用。
 
 ```js
-router.beforeEach((to, from, next)=>{
-    if (to.meta.authRequired){
-        if (localStorage.getItem('access')!=='admin'){
-            alert('403 Forbidden')
-        }else {
-            next();
-        }
-    }else {
-        next();
+router.beforeEach((to, from, next) => {
+  if (to.meta.authRequired) {
+    if (localStorage.getItem('access') !== 'admin') {
+      alert('403 Forbidden');
+    } else {
+      next();
     }
+  } else {
+    next();
+  }
 });
 ```
 
@@ -555,10 +560,10 @@ router 是创建的 VueRouter 对象，并在需要验证的路由规则的 `met
 接收两个参数，不接收 `next` 函数。
 
 ```js
-router.afterEach((to,from)=>{
-    //用于修改界面标题
-    document.title=to.meta.title||'VueRouter';
-    console.log(from);
+router.afterEach((to, from) => {
+  //用于修改界面标题
+  document.title = to.meta.title || 'VueRouter';
+  console.log(from);
 });
 ```
 
@@ -574,15 +579,14 @@ router.afterEach((to,from)=>{
 
 ```js
 routes: [
-    {
-        path:'/home',
-        component:Home,
-        name:'home',
-        meta:{title: 'Home'},
-        beforeEnter:((to, from, next) => {
-
-        })
-    }]
+  {
+    path: '/home',
+    component: Home,
+    name: 'home',
+    meta: { title: 'Home' },
+    beforeEnter: (to, from, next) => {},
+  },
+];
 ```
 
 ### 组件内路由守卫
@@ -591,15 +595,15 @@ routes: [
 
 - `beforeRouteEnter`：
 
-    在渲染该组件的对应路由被 confirm 之前(调用 next() 会导致 confirm )，*不能获取组件实例 this*，因为此时组件还没有被创建。
+  在渲染该组件的对应路由被 confirm 之前(调用 next() 会导致 confirm )，_不能获取组件实例 this_，因为此时组件还没有被创建。
 
 - `beforeRouteUpdate`(2.2 新增)：
 
-    当前路由改变但是该组件被复用时调用，举例来说，对于使用 `params` 动态路径传参，路径定义为 '/test/:id' 时，在 '/test/1' 和 '/test/2' 之间跳转时，由于渲染同样的组件，因此组件实例会被复用，这个钩子此时调用，*可以访问组件实例对象 this*。
+  当前路由改变但是该组件被复用时调用，举例来说，对于使用 `params` 动态路径传参，路径定义为 '/test/:id' 时，在 '/test/1' 和 '/test/2' 之间跳转时，由于渲染同样的组件，因此组件实例会被复用，这个钩子此时调用，_可以访问组件实例对象 this_。
 
 - `beforeRouteLeave`：
 
-    导航离开该组件的对应路由时调用，*可以访问组件实例对象 this*。
+  导航离开该组件的对应路由时调用，_可以访问组件实例对象 this_。
 
 ### 全局解析守卫
 
@@ -666,7 +670,7 @@ scrollBehavior (to, from, savedPosition) {
 ## 导航故障
 
 ```js
-router.onError(callback)
+router.onError(callback);
 ```
 
 注册一个回调，该回调会在路由导航过程中出错时被调用。注意被调用的错误必须是下列情形中的一种：

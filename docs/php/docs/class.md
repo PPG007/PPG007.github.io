@@ -254,7 +254,7 @@ echo $class::CONSTANT."\n";
 
 ::: tip
 
-如果子类中定义了构造函数则不会隐式调用其父类的构造函数。要执行父类的构造函数，需要在子类的构造函数中调用 parent::__construct()。如果子类没有定义构造函数则会如同一个普通的类方法一样从父类继承（假如没有被定义为 private 的话）。
+如果子类中定义了构造函数则不会隐式调用其父类的构造函数。要执行父类的构造函数，需要在子类的构造函数中调用 parent::\_\_construct()。如果子类没有定义构造函数则会如同一个普通的类方法一样从父类继承（假如没有被定义为 private 的话）。
 
 构造函数不受签名兼容性规则的约束。
 
@@ -815,12 +815,12 @@ PHP所提供的重载（overloading）是指动态地创建类属性和方法。
 
 属性重载：
 
-- `public __set(string $name, mixed $value): void`：在给不可访问（protected 或 private）或不存在的属性赋值时，__set() 会被调用。。
-- `public __get(string $name): mixed`：读取不可访问（protected 或 private）或不存在的属性的值时，__get() 会被调用。。
-- `public __isset(string $name): bool`：当对不可访问（protected 或 private）或不存在的属性调用 isset() 或 empty() 时，__isset() 会被调用。
-- `public __unset(string $name): void`：当对不可访问（protected 或 private）或不存在的属性调用 unset() 时，__unset() 会被调用。
+- `public __set(string $name, mixed $value): void`：在给不可访问（protected 或 private）或不存在的属性赋值时，\_\_set() 会被调用。。
+- `public __get(string $name): mixed`：读取不可访问（protected 或 private）或不存在的属性的值时，\_\_get() 会被调用。。
+- `public __isset(string $name): bool`：当对不可访问（protected 或 private）或不存在的属性调用 isset() 或 empty() 时，\_\_isset() 会被调用。
+- `public __unset(string $name): void`：当对不可访问（protected 或 private）或不存在的属性调用 unset() 时，\_\_unset() 会被调用。
 
-参数 $name 是指要操作的变量名称。__set() 方法的 $value 参数指定了 $name 变量的值。
+参数 $name 是指要操作的变量名称。\_\_set() 方法的 $value 参数指定了 $name 变量的值。
 
 属性重载只能在对象中进行。在静态方法中，这些魔术方法将不会被调用。所以这些方法都不能被 声明为 static。将这些魔术方法定义为 static 会产生一个警告。
 
@@ -879,8 +879,8 @@ var_dump(isset($obj->unset));
 
 方法重载：
 
-- `public __call(string $name, array $arguments): mixed`：在对象中调用一个不可访问方法时，__call() 会被调用。
-- `public static __callStatic(string $name, array $arguments): mixed`：在静态上下文中调用一个不可访问方法时，__callStatic() 会被调用。
+- `public __call(string $name, array $arguments): mixed`：在对象中调用一个不可访问方法时，\_\_call() 会被调用。
+- `public static __callStatic(string $name, array $arguments): mixed`：在静态上下文中调用一个不可访问方法时，\_\_callStatic() 会被调用。
 
 $name 参数是要调用的方法名称。$arguments 参数是一个枚举数组，包含着要传递给方法 $name 的参数。
 
@@ -948,7 +948,7 @@ foreach ($obj as $key => $value) {
 - `public __serialize(): array`：serialize() 函数会检查类中是否存在一个魔术方法 `__serialize()` 。如果存在，该方法将在任何序列化之前优先执行。它必须以一个代表对象序列化形式的 键/值 成对的关联数组形式来返回，如果没有返回数组，将会抛出一个 TypeError 错误。
 - `public __unserialize(array $data): void`：unserialize() 检查是否存在具有名为 `__unserialize()` 的魔术方法。此函数将会传递从 `__serialize()` 返回的恢复数组。然后它可以根据需要从该数组中恢复对象的属性。
 - `public __toString(): string`：same as java。
-- `__invoke( ...$values): mixed`：当尝试以调用函数的方式调用一个对象时，__invoke() 方法会被自动调用。
+- `__invoke( ...$values): mixed`：当尝试以调用函数的方式调用一个对象时，\_\_invoke() 方法会被自动调用。
 - `static __set_state(array $properties): object`：当调用 var_export() 导出类时，此静态 方法会被调用。本方法的唯一参数是一个数组，其中包含按 ['property' => value, ...] 格式排列的类属性。。
 - `__debugInfo(): array`：当通过 var_dump() 转储对象，获取应该要显示的属性的时候， 该函数就会被调用。如果对象中没有定义该方法，那么将会展示所有的公有、受保护和私有的属性。。
 
@@ -1101,7 +1101,7 @@ var_dump($obj1 === $obj2);
 
 PHP 增加了一个叫做后期静态绑定的功能，用于在继承范围内引用静态调用的类。“后期绑定”的意思是说，static:: 不再被解析为定义当前方法所在的类，而是在实际运行时计算的。也可以称之为“静态绑定”，因为它可以用于（但不限于）静态方法的调用。
 
-使用 self:: 或者 __CLASS__ 对当前类的静态引用，取决于定义当前方法所在的类：
+使用 self:: 或者 **CLASS** 对当前类的静态引用，取决于定义当前方法所在的类：
 
 ```php
 <?php

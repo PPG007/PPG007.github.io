@@ -10,14 +10,10 @@
 <template>
   <div class="container">
     <Category :listData="foods">
-      <img src="http://fenchingking.top/source/src/1291.jpg" width="200" height="300">
+      <img src="http://fenchingking.top/source/src/1291.jpg" width="200" height="300" />
     </Category>
-    <Category :listData="games">
-
-    </Category>
-    <Category :listData="films">
-
-    </Category>
+    <Category :listData="games"> </Category>
+    <Category :listData="films"> </Category>
   </div>
 </template>
 ```
@@ -25,12 +21,12 @@
 ```vue
 <template>
   <div class="category">
-    <h3>{{listData.title}}分类</h3>
+    <h3>{{ listData.title }}分类</h3>
 
     <slot>
       <ul>
-        <li v-for="(item,index) in listData.data" :key="index">
-          {{item}}
+        <li v-for="(item, index) in listData.data" :key="index">
+          {{ item }}
         </li>
       </ul>
     </slot>
@@ -56,18 +52,16 @@
 ```vue
 <template>
   <div class="category">
-    <h3>{{listData.title}}分类</h3>
+    <h3>{{ listData.title }}分类</h3>
 
     <slot name="slot1">
       <ul>
-        <li v-for="(item,index) in listData.data" :key="index">
-          {{item}}
+        <li v-for="(item, index) in listData.data" :key="index">
+          {{ item }}
         </li>
       </ul>
     </slot>
-    <slot name="slot2">
-
-    </slot >
+    <slot name="slot2"> </slot>
   </div>
 </template>
 ```
@@ -83,23 +77,23 @@
 ```vue
 <template>
   <div class="category">
-    <h3>{{foods.title}}分类</h3>
+    <h3>{{ foods.title }}分类</h3>
     <slot>
-      {{foods.title}}
+      {{ foods.title }}
     </slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Category",
+  name: 'Category',
   // props:['listData'],
-  data(){
-    return{
-      foods:{title:'foods','data':['foodA','foodB','foodC', 'foodD']}
-    }
-  }
-}
+  data() {
+    return {
+      foods: { title: 'foods', data: ['foodA', 'foodB', 'foodC', 'foodD'] },
+    };
+  },
+};
 </script>
 ```
 
@@ -119,7 +113,7 @@ export default {
     <Category>
       <template slot-scope="ppg">
         <ul>
-          <li v-for="(item, index) in ppg.slotFoods.data" :key="index">{{item}}</li>
+          <li v-for="(item, index) in ppg.slotFoods.data" :key="index">{{ item }}</li>
         </ul>
       </template>
     </Category>
@@ -127,7 +121,7 @@ export default {
     <Category>
       <template v-slot:default="ppg">
         <ol>
-          <li v-for="(item, index) in ppg.slotFoods.data" :key="index">{{item}}</li>
+          <li v-for="(item, index) in ppg.slotFoods.data" :key="index">{{ item }}</li>
         </ol>
       </template>
     </Category>

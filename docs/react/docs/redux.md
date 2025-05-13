@@ -9,15 +9,15 @@ Redux 是一个使用 action 事件来管理和更新应用状态的工具，通
 从一个小的 React 组件开始：
 
 ```tsx
-const App:FC = () => {
+const App: FC = () => {
   const [count, setCount] = useState(0);
   return (
     <>
       <p>{count}</p>
-      <button onClick={() => setCount(count+1)}>incr</button>
+      <button onClick={() => setCount(count + 1)}>incr</button>
     </>
-  )
-}
+  );
+};
 ```
 
 上面的组件中包含下面的部分：
@@ -60,7 +60,7 @@ action 是一个具有 type 字段的普通的 JavaScript 对象，action 可以
 const incrAction = {
   type: 'count/add',
   payload: 1,
-}
+};
 ```
 
 Reducer：
@@ -103,16 +103,35 @@ const Count: FC = () => {
   const [step, setStep] = useState(1);
   return (
     <div>
-      <button onClick={() => setValue(value+1)}>+</button>
+      <button onClick={() => setValue(value + 1)}>+</button>
       <span>{value}</span>
-      <button onClick={() => setValue(value-1)}>-</button>
-      <br/>
-      <input value={step} onChange={(e) => {setStep(parseInt(e.target.value))}}/>
-      <button onClick={() => {setValue(value+step)}}>add by step</button>
-      <button onClick={() => {setTimeout(() => {setValue(value+step)}, 1000)}}>add async</button>
+      <button onClick={() => setValue(value - 1)}>-</button>
+      <br />
+      <input
+        value={step}
+        onChange={e => {
+          setStep(parseInt(e.target.value));
+        }}
+      />
+      <button
+        onClick={() => {
+          setValue(value + step);
+        }}
+      >
+        add by step
+      </button>
+      <button
+        onClick={() => {
+          setTimeout(() => {
+            setValue(value + step);
+          }, 1000);
+        }}
+      >
+        add async
+      </button>
     </div>
-  )
-}
+  );
+};
 ```
 
 接下来将这个例子改造成使用 Redux，首先安装依赖：
@@ -127,50 +146,50 @@ yarn add -D @types/react-redux @types/redux
 Redux Toolkit 提供了 Redux Slice，这是单个 Reducer 逻辑和 action 的集合，用来将根 Redux 对象拆分成多个部分。下面定义一个 CounterSlice 用来完成计数器的功能：
 
 ```ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch } from "react";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Dispatch } from 'react';
 
 export type counterState = {
   value: number;
-}
+};
 
-export type counterIncByStepAction = PayloadAction<{step: number}>;
+export type counterIncByStepAction = PayloadAction<{ step: number }>;
 
 type counterReducer = {
   incr: (state: counterState) => void;
   desc: (state: counterState) => void;
   incrByStep: (state: counterState, action: counterIncByStepAction) => void;
-}
+};
 
 export const counterSlice = createSlice<counterState, counterReducer, 'counter'>({
   initialState: {
     value: 0,
   },
-  name: "counter",
+  name: 'counter',
   reducers: {
-    incr: (state) => {
-      state.value ++;
+    incr: state => {
+      state.value++;
     },
     desc: state => {
       state.value--;
     },
     incrByStep: (state, action) => {
       state.value += action.payload.step;
-    }
-  }
-})
+    },
+  },
+});
 
 export default counterSlice.reducer;
 
-export const {incr, incrByStep, desc} = counterSlice.actions;
+export const { incr, incrByStep, desc } = counterSlice.actions;
 
 export const incrAsync = (step: number) => (dispatch: Dispatch<counterIncByStepAction>) => {
   setTimeout(() => {
-    dispatch(incrByStep({step: step}));
+    dispatch(incrByStep({ step: step }));
   }, 1000);
-}
+};
 
-export const selectCount = ({counter}: {counter: counterState}) => {
+export const selectCount = ({ counter }: { counter: counterState }) => {
   return counter.value;
 };
 ```
@@ -178,9 +197,9 @@ export const selectCount = ({counter}: {counter: counterState}) => {
 使用 createSlice 方法创建一个 Redux Slice，首先需要指定一个 state 的初始值，这里将 state 初始值置为一个包含 value 字段的对象，然后需要一个 name，因为 action 是一个带有 type 字符串字段的对象，createSlice 方法会根据 name 值和 reducers 中方法的名字来自动生成 action，例如：
 
 ```ts
-export const {incr, incrByStep, desc} = counterSlice.actions;
+export const { incr, incrByStep, desc } = counterSlice.actions;
 // {type: 'counter/incr', payload: undefined}
-console.log(incr())
+console.log(incr());
 ```
 
 上面的 reducers 中并没有对 state 进行不可变式更新，而是直接操作的字段，这是因为 Redux Toolkit 使用了 [immer](https://github.com/immerjs/immer) 这个库，immer 检测到 draft state 改变时会基于这个改变去创建一个新的不可变的 state。
@@ -192,14 +211,14 @@ selectCount 就是之前提到的 Selector，这个函数接收一个参数，�
 接下来将这个 Slice 组装为 Redux Store：
 
 ```ts
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import counterReducer, { counterState } from './count.ts';
 
-const store = configureStore<{x: counterState}>({
+const store = configureStore<{ x: counterState }>({
   reducer: {
     x: counterReducer,
-  }
-})
+  },
+});
 
 export default store;
 ```
@@ -219,22 +238,46 @@ export default store;
 
 ```tsx
 const Count: FC = () => {
-  const count = useSelector<{x: counterState}, number>(selectCount);
+  const count = useSelector<{ x: counterState }, number>(selectCount);
   const dispatch = useDispatch<Dispatch<counterIncByStepAction | PayloadAction>>();
   const [step, setStep] = useState(1);
   return (
     <div>
-      <button onClick={() => {dispatch(incr())}}>+</button>
+      <button
+        onClick={() => {
+          dispatch(incr());
+        }}
+      >
+        +
+      </button>
       <span>{count}</span>
-      <button onClick={() => {dispatch(desc())}}>-</button>
-      <br/>
-      <input value={step} onChange={(e) => setStep(parseInt(e.target.value))}/>
-      <br/>
-      <button onClick={() => {dispatch(incrByStep({step}))}}>add by step</button>
-      <button onClick={() => {incrAsync(step)(dispatch)}}>add async</button>
+      <button
+        onClick={() => {
+          dispatch(desc());
+        }}
+      >
+        -
+      </button>
+      <br />
+      <input value={step} onChange={e => setStep(parseInt(e.target.value))} />
+      <br />
+      <button
+        onClick={() => {
+          dispatch(incrByStep({ step }));
+        }}
+      >
+        add by step
+      </button>
+      <button
+        onClick={() => {
+          incrAsync(step)(dispatch);
+        }}
+      >
+        add async
+      </button>
     </div>
-  )
-}
+  );
+};
 ```
 
 上面的组件中，展示用的 count 值我们使用 useSelector 方法并传入在 counterSlice 中定义的 Selector，useSelector 会将 state 作为入参调用我们的 Selector 并返回 Selector 的返回值。
@@ -251,9 +294,9 @@ const Count: FC = () => {
 function App() {
   return (
     <Provider store={store}>
-      <Count/>
+      <Count />
     </Provider>
-  )
+  );
 }
 ```
 
@@ -263,15 +306,15 @@ function App() {
 
 ```ts
 // slice
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type Article = {
   id: string;
   title: string;
   content: string;
-}
+};
 
-type ArticleState = Array<Article>
+type ArticleState = Array<Article>;
 
 const initialArticles: Array<Article> = [
   {
@@ -283,7 +326,7 @@ const initialArticles: Array<Article> = [
     id: '2',
     title: 'Second Post',
     content: 'More text',
-  }
+  },
 ];
 
 interface upsertPayload {
@@ -292,10 +335,10 @@ interface upsertPayload {
   content: string;
 }
 
-type ArticleReducer =  {
+type ArticleReducer = {
   create: (state: ArticleState, action: PayloadAction<upsertPayload>) => void;
   update: (state: ArticleState, action: PayloadAction<upsertPayload>) => void;
-}
+};
 
 const articleSlice = createSlice<ArticleState, ArticleReducer, 'article'>({
   name: 'article',
@@ -303,7 +346,7 @@ const articleSlice = createSlice<ArticleState, ArticleReducer, 'article'>({
   reducers: {
     create(state, action) {
       state.push({
-        id: `${state.length+1}`,
+        id: `${state.length + 1}`,
         content: action.payload.content,
         title: action.payload.title,
       });
@@ -312,37 +355,38 @@ const articleSlice = createSlice<ArticleState, ArticleReducer, 'article'>({
       if (!action.payload.id) {
         return;
       }
-      state = state.map((a) => {
+      state = state.map(a => {
         if (a.id === action.payload.id) {
-          a.title = action.payload.title
-          a.content = action.payload.content
+          a.title = action.payload.title;
+          a.content = action.payload.content;
         }
         return a;
-      })
-    }
-  }
-})
+      });
+    },
+  },
+});
 
 export default articleSlice.reducer;
 
-export const {
-  create,
-  update,
-} = articleSlice.actions;
+export const { create, update } = articleSlice.actions;
 
-export const selectArticles = ({article}: {article: ArticleState}) => {
-  return article
-}
+export const selectArticles = ({ article }: { article: ArticleState }) => {
+  return article;
+};
 
-export const selectArticle = (id: string) => ({article}: {article: ArticleState}) =>{
-  return article.find((a) => {return a.id === id})
-}
+export const selectArticle =
+  (id: string) =>
+  ({ article }: { article: ArticleState }) => {
+    return article.find(a => {
+      return a.id === id;
+    });
+  };
 // store
 const store = configureStore({
   reducer: {
     article: article,
-  }
-})
+  },
+});
 export default store;
 export type ArticleDispatch = typeof store.dispatch;
 ```
@@ -354,37 +398,41 @@ export type ArticleDispatch = typeof store.dispatch;
 type formType = {
   title: string;
   content: string;
-}
+};
 
 const Create: FC = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm<formType>();
   const [sender, holder] = message.useMessage();
-  const onSubmit = ({title, content}: formType) => {
-    dispatch(create({
-      title,
-      content
-    }));
+  const onSubmit = ({ title, content }: formType) => {
+    dispatch(
+      create({
+        title,
+        content,
+      })
+    );
     form.resetFields();
-    sender.success('ok')
+    sender.success('ok');
   };
   return (
     <>
       {holder}
       <Form onFinish={onSubmit} form={form}>
-        <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
-          <Input/>
+        <Form.Item name="title" label={'标题'} rules={[{ required: true }]}>
+          <Input />
         </Form.Item>
-        <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
-          <Input/>
+        <Form.Item name="content" label={'内容'} rules={[{ required: true }]}>
+          <Input />
         </Form.Item>
         <Form.Item>
-          <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+          <Button type={'primary'} htmlType={'submit'}>
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </>
-  )
-}
+  );
+};
 ```
 
 上面是一个简单的表单，输入标题和内容后点击提交，调用 dispatch 发出 action，然后触发 Redux 的 state 更新。
@@ -395,10 +443,8 @@ const Create: FC = () => {
 // List.tsx
 const List: FC = () => {
   const articles = useSelector(selectArticles);
-  return (
-    <AList dataSource={articles} renderItem={renderItem} rowKey={(item) => item.id}/>
-  )
-}
+  return <AList dataSource={articles} renderItem={renderItem} rowKey={item => item.id} />;
+};
 
 const renderItem = (article: Article) => {
   return (
@@ -408,66 +454,73 @@ const renderItem = (article: Article) => {
         description={article.content}
       />
     </AList.Item>
-  )
-}
+  );
+};
 ```
 
 这里使用了 selector 来获取当前 Redux 中的文章列表，每个文章的标题是一个 Link 组件，跳转至下面的文章详情页面：
 
 ```tsx
 const View: FC = () => {
-  const params = useParams<{id: string}>();
+  const params = useParams<{ id: string }>();
   const article = useSelector(selectArticle(params.id ? params.id : ''));
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(article ? article.title : '');
-  const [content, setContent] = useState(article? article.content : '');
+  const [content, setContent] = useState(article ? article.content : '');
   const dispatch = useDispatch();
-  if (!article){
-    return (
-      <Empty/>
-    )
+  if (!article) {
+    return <Empty />;
   }
   return (
     <Card
       title={
-      isEditing ? (
-        <Input value={title} onChange={(e) => setTitle(e.target.value)}/>
-      ) : article.title
+        isEditing ? <Input value={title} onChange={e => setTitle(e.target.value)} /> : article.title
       }
-      extra={(
+      extra={
         <Space>
-          <Button type={'link'} onClick={() => {
-            setIsEditing(!isEditing);
-          }}>{
-            isEditing ? 'cancel' : 'edit'
-          }</Button>
+          <Button
+            type={'link'}
+            onClick={() => {
+              setIsEditing(!isEditing);
+            }}
+          >
+            {isEditing ? 'cancel' : 'edit'}
+          </Button>
           <Link to={'..'}>back</Link>
         </Space>
-      )}
+      }
     >
-      {
-        isEditing ? (
-          <Input.TextArea
-            showCount
-            maxLength={100}
-            value={content}
-            onChange={(e) => {setContent(e.target.value)}}
-          />
-        ) : article.content
-      }
-      {
-        isEditing ? <Button onClick={() => {
-          dispatch(update({
-            id: article?.id,
-            title,
-            content,
-          }));
-          setIsEditing(false);
-        }}>Submit</Button> : undefined
-      }
+      {isEditing ? (
+        <Input.TextArea
+          showCount
+          maxLength={100}
+          value={content}
+          onChange={e => {
+            setContent(e.target.value);
+          }}
+        />
+      ) : (
+        article.content
+      )}
+      {isEditing ? (
+        <Button
+          onClick={() => {
+            dispatch(
+              update({
+                id: article?.id,
+                title,
+                content,
+              })
+            );
+            setIsEditing(false);
+          }}
+        >
+          Submit
+        </Button>
+      ) : undefined}
     </Card>
-  )
-}
+  );
+};
 ```
 
 View 组件复杂一些，这个组件首先获取路由参数中的 id 并调用 useSelector 获取 Redux 中对应的文章，如果文章获取不到就返回一个空页面。同时这个详情页面允许编辑，编辑和查看的状态通过 isEditing 这个布尔值来区分，点击按钮来回切换这个值，并使用两个局部 state 来保存编辑过程中的文章标题和内容，最后，使用 dispatch 来创建一个文章。
@@ -476,24 +529,26 @@ View 组件复杂一些，这个组件首先获取路由参数中的 id 并调�
 
 ```tsx
 // router/index.tsx
-const router = createHashRouter([{
-  path: '/',
-  element: <App/>,
-  children: [
-    {
-      path: 'create',
-      element: <Create/>,
-    },
-    {
-      element: <List/>,
-      index: true,
-    },
-    {
-      element: <View/>,
-      path: 'view/:id'
-    }
-  ]
-}])
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: 'create',
+        element: <Create />,
+      },
+      {
+        element: <List />,
+        index: true,
+      },
+      {
+        element: <View />,
+        path: 'view/:id',
+      },
+    ],
+  },
+]);
 // App.tsx
 const Extra: FC = () => {
   const isCreate = useLocation().pathname === '/create';
@@ -505,28 +560,24 @@ const Extra: FC = () => {
     <Space>
       <Link to={to}>{isCreate ? 'list' : 'create'}</Link>
     </Space>
-  )
-}
+  );
+};
 
-const App:FC = () => {
-
+const App: FC = () => {
   return (
-    <Card
-      title={'Articles'}
-      extra={<Extra/>}
-    >
-      <Outlet/>
+    <Card title={'Articles'} extra={<Extra />}>
+      <Outlet />
     </Card>
-  )
-}
+  );
+};
 // main.tsx
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
 ```
 
 ::: tip 总结
@@ -547,7 +598,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 这里使用 koa 来编写 http 服务，主要逻辑如下：
 
 ```ts
-import ObjectID from "bson-objectid";
+import ObjectID from 'bson-objectid';
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
@@ -556,7 +607,7 @@ type Article = {
   id: string;
   title: string;
   content: string;
-}
+};
 
 const app = new Koa();
 app.use(bodyParser());
@@ -570,7 +621,7 @@ app.use(async (ctx, next) => {
     ctx.response.status = 400;
     ctx.response.body = (e as Error).message;
   }
-})
+});
 
 const router = new Router({
   prefix: '/articles',
@@ -579,13 +630,13 @@ const router = new Router({
 type UpsertRequest = {
   title: string;
   content: string;
-}
+};
 let articles: Array<Article> = [];
-router.get('/', (ctx) => {
+router.get('/', ctx => {
   ctx.body = articles;
 });
 
-router.post('/', (ctx) => {
+router.post('/', ctx => {
   if (!ctx.request.body) {
     throw new Error('missing body');
   }
@@ -598,25 +649,25 @@ router.post('/', (ctx) => {
   articles.push(newArticle);
 });
 
-router.put('/:id', (ctx) => {
+router.put('/:id', ctx => {
   const id = ctx.params['id'];
   if (!ctx.request.body) {
     throw new Error('missing body');
   }
   const req: UpsertRequest = ctx.request.body as UpsertRequest;
   let articleFound = false;
-  articles = articles.map((a) => {
+  articles = articles.map(a => {
     if (a.id === id) {
       articleFound = true;
       a.title = req.title;
       a.content = req.content;
     }
-    return a
+    return a;
   });
   if (!articleFound) {
-    throw new Error('article not found')
+    throw new Error('article not found');
   }
-})
+});
 app.use(router.routes()).use(router.allowedMethods());
 app.listen(8080, '0.0.0.0');
 ```
@@ -629,32 +680,38 @@ app.listen(8080, '0.0.0.0');
 
 ```ts
 const axiosInstance = axios.create({
-  baseURL: '/v1/articles/'
-})
-
-export const update = createAsyncThunk<void, upsertPayload>('articles/update', async ({id, content, title}, {dispatch}) => {
-  if (!id) {
-    throw new Error('empty id')
-  }
-  await axiosInstance.put<void, AxiosResponse<void>, upsertPayload>(`${id}`, {
-    content,
-    title,
-  });
-  dispatch(list())
+  baseURL: '/v1/articles/',
 });
 
-export const create = createAsyncThunk<void, upsertPayload, {dispatch: ArticleDispatch}>('articles/create', async ({content, title}, {dispatch}) => {
-  await axiosInstance.post<void, AxiosResponse<void>, upsertPayload>('', {
-    content,
-    title,
-  })
-  dispatch(list())
-})
+export const update = createAsyncThunk<void, upsertPayload>(
+  'articles/update',
+  async ({ id, content, title }, { dispatch }) => {
+    if (!id) {
+      throw new Error('empty id');
+    }
+    await axiosInstance.put<void, AxiosResponse<void>, upsertPayload>(`${id}`, {
+      content,
+      title,
+    });
+    dispatch(list());
+  }
+);
+
+export const create = createAsyncThunk<void, upsertPayload, { dispatch: ArticleDispatch }>(
+  'articles/create',
+  async ({ content, title }, { dispatch }) => {
+    await axiosInstance.post<void, AxiosResponse<void>, upsertPayload>('', {
+      content,
+      title,
+    });
+    dispatch(list());
+  }
+);
 
 export const list = createAsyncThunk<Array<Article>, void>('articles/list', async () => {
-  const resp = await axiosInstance.get<Array<Article>>('')
+  const resp = await axiosInstance.get<Array<Article>>('');
   return resp.data;
-})
+});
 ```
 
 这个方法接收三个泛型类型，第一个类型是里面包裹的函数的返回类型，第二个类型是参数类型，这个参数可以在内部函数的入参中访问到，第三个参数是一个配置对象，这里只配置了 dispatch 的类型是 articleStore 的 dispatch 类型。
@@ -665,13 +722,13 @@ export const list = createAsyncThunk<Array<Article>, void>('articles/list', asyn
 const articleSlice = createSlice<ArticleState, {}, 'article'>({
   name: 'article',
   initialState: initialArticles,
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder.addCase(list.fulfilled, (_, action) => {
-      return action.payload
-    })
+      return action.payload;
+    });
   },
   reducers: {},
-})
+});
 ```
 
 extraReducers 选项是一个接收名为 builder 的参数的函数，builder 对象提供了一些方法，可以定义额外的 reducer 来响应各种 case，可以通过下面三种方式定义 case：
@@ -708,11 +765,11 @@ export default defineConfig({
     proxy: {
       '^/v1/.*': {
         target: 'http://127.0.0.1:8080',
-        rewrite: path => path.replace(/^\/v1/, '')
-      }
-    }
-  }
-})
+        rewrite: path => path.replace(/^\/v1/, ''),
+      },
+    },
+  },
+});
 ```
 
 ### 在组件中执行异步
@@ -723,13 +780,15 @@ export default defineConfig({
 const dispatch = useDispatch<ArticleDispatch>();
 const [form] = Form.useForm<formType>();
 const [sender, holder] = message.useMessage();
-const onSubmit = async ({title, content}: formType) => {
-  await dispatch(create({
-    title,
-    content
-  }));
+const onSubmit = async ({ title, content }: formType) => {
+  await dispatch(
+    create({
+      title,
+      content,
+    })
+  );
   form.resetFields();
-  sender.success('ok')
+  sender.success('ok');
 };
 ```
 
@@ -738,31 +797,35 @@ const onSubmit = async ({title, content}: formType) => {
 第一种方法是将 dispatch 的结果展开为一个 Promise，对这个 Promise 做 await 可以获得异常：
 
 ```ts
-const onSubmit = async ({title, content}: formType) => {
+const onSubmit = async ({ title, content }: formType) => {
   try {
-    await dispatch(create({
-      title,
-      content
-    })).unwrap();
+    await dispatch(
+      create({
+        title,
+        content,
+      })
+    ).unwrap();
     form.resetFields();
     sender.success('ok');
   } catch (e) {
-    sender.error((e as Error).message)
+    sender.error((e as Error).message);
   }
-}
+};
 ```
 
 第二种方法时校验 dispatch 的结果是不是 rejected 或者 fulfilled 状态：
 
 ```ts
-const onSubmit = async ({title, content}: formType) => {
-  const resp = await dispatch(create({
-    title,
-    content
-  }))
+const onSubmit = async ({ title, content }: formType) => {
+  const resp = await dispatch(
+    create({
+      title,
+      content,
+    })
+  );
   if (create.fulfilled.match(resp)) {
     form.resetFields();
-    sender.success('ok')
+    sender.success('ok');
   } else if (create.rejected.match(resp)) {
     sender.error(resp.error.message);
   }
@@ -776,22 +839,19 @@ const onSubmit = async ({title, content}: formType) => {
 修改之前的 selectArticles，加入一句日志输出：
 
 ```ts
-export const selectArticles = ({article}: {article: ArticleState}) => {
-  console.log('selectArticles')
-  return article
-}
+export const selectArticles = ({ article }: { article: ArticleState }) => {
+  console.log('selectArticles');
+  return article;
+};
 ```
 
 现在只要重新渲染使用到这个 Selector 的组件，这个日志就会被输出，这说明这个 Selector 被执行了多次。如果一个 Selector 中逻辑比较复杂、耗时，那么这样无意义的重复调用会影响性能。reselect 库提供了一个 createSelector 方法，此方法可以缓存 selector 的结果，此函数通常接受一组输入选择器和一个转换函数作为参数。输入选择器返回的数据将作为参数传递给转换函数，后者返回基于这些输入的派生数据。例如：
 
 ```ts
-export const selectArticlesWithDep = createSelector(
-  [selectArticles],
-  (articles) => {
-    console.log('selectArticlesWithDep')
-    return articles;
-  },
-)
+export const selectArticlesWithDep = createSelector([selectArticles], articles => {
+  console.log('selectArticlesWithDep');
+  return articles;
+});
 ```
 
 替换用到 selectArticles 的地方，然后来回切换页面，selector 将不会在依赖值不改变的情况下发生调用。
@@ -810,17 +870,17 @@ Redux Toolkit 提供了 `createEntityAdapter` 方法来创建范式化 state，�
 
 ```ts
 const articleAdapter = createEntityAdapter<Article>({
-  selectId: (a) => a.id,
-})
+  selectId: a => a.id,
+});
 ```
 
 `createEntityAdapter` 接收一个配置项，可以配置使用那个字段作为 id，还有一个 sortComparer 字段，这个字段是一个函数，工作方式与 `array.sort()` 相同，接收两个参数，用来排序，例如按照标题长度排序：
 
 ```ts
 const articleAdapter = createEntityAdapter<Article>({
-  selectId: (a) => a.id,
-  sortComparer: (a, b) => a.title.length - b.title.length
-})
+  selectId: a => a.id,
+  sortComparer: (a, b) => a.title.length - b.title.length,
+});
 ```
 
 接着来替换初始 state，adapter 的 `getInitialState()` 方法返回一个空的范式化 state。：
@@ -830,7 +890,7 @@ const articleSlice = createSlice({
   name: 'article',
   initialState: articleAdapter.getInitialState(),
   // ......
-})
+});
 ```
 
 然后来替换 extraReducers，将 listArticles 的结果更新到 state 中：
@@ -864,15 +924,11 @@ extraReducers: (builder) => {
 adapter 中也有封装好的 Selector 方法，通过调用 `getSelectors()` 方法可以获取内置的 Selectors，这个函数接收一个参数，此参数是一个函数，返回当前 Slice 在 Redux 状态树中的 state，下面的代码导出了 Selector：
 
 ```ts
-export const {
-  selectIds,
-  selectAll,
-  selectTotal,
-  selectById,
-} = articleAdapter.getSelectors<StateType>(({article}) => {
-  console.log(article)
-  return article
-})
+export const { selectIds, selectAll, selectTotal, selectById } =
+  articleAdapter.getSelectors<StateType>(({ article }) => {
+    console.log(article);
+    return article;
+  });
 ```
 
 如果使用 TypeScript，那么 `getSelectors` 的泛型可以通过导出 store 的 state 获取：
@@ -881,8 +937,8 @@ export const {
 const store = configureStore({
   reducer: {
     article: article,
-  }
-})
+  },
+});
 store.dispatch(list());
 export default store;
 
@@ -920,9 +976,9 @@ const View: FC = () => {
 根据上面的步骤，现在开始改造之前的文章管理中的内容，不再依赖 ArticleSlice，所有的数据都从服务端来，首先来创建一个 API 切片：
 
 ```ts
-import { BaseQueryFn, createApi, FetchArgs } from "@reduxjs/toolkit/query/react";
-import axios from "axios";
-import { Article } from "./article.ts";
+import { BaseQueryFn, createApi, FetchArgs } from '@reduxjs/toolkit/query/react';
+import axios from 'axios';
+import { Article } from './article.ts';
 
 interface UpsertArg {
   id?: string;
@@ -932,21 +988,21 @@ interface UpsertArg {
 
 const axiosInstance = axios.create({
   baseURL: '/v1/articles',
-})
+});
 
-const axiosBaseQuery: BaseQueryFn<FetchArgs> = (args) => {
+const axiosBaseQuery: BaseQueryFn<FetchArgs> = args => {
   return axiosInstance.request({
     method: args.method,
     params: args.params,
     data: args.body,
-    url: args.url
-  })
-}
+    url: args.url,
+  });
+};
 
 const api = createApi({
   reducerPath: 'articlesAPI',
   baseQuery: axiosBaseQuery,
-  endpoints: (builder) => {
+  endpoints: builder => {
     return {
       fetchArticles: builder.query<Array<Article>, void>({
         query: () => ({
@@ -974,14 +1030,14 @@ const api = createApi({
         }),
       }),
       getArticle: builder.query<Article, string>({
-        query: (id) => ({
+        query: id => ({
           url: `/${id}`,
           method: 'GET',
         }),
-      })
-    }
+      }),
+    };
   },
-})
+});
 ```
 
 解释一下上面的主要内容：
@@ -1021,7 +1077,7 @@ const store = configureStore({
     [api.reducerPath]: api.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
-})
+});
 export default store;
 ```
 
@@ -1032,44 +1088,46 @@ export default store;
 const Create: FC = () => {
   const [form] = Form.useForm<formType>();
   const [sender, holder] = message.useMessage();
-  const [create, {isLoading}] = useCreateArticlesMutation();
-  const onSubmit = async ({title, content}: formType) => {
+  const [create, { isLoading }] = useCreateArticlesMutation();
+  const onSubmit = async ({ title, content }: formType) => {
     try {
       await create({
         title,
         content,
-      }).unwrap()
+      }).unwrap();
       form.resetFields();
       sender.success('ok');
     } catch (e) {
-      sender.error((e as Error).message)
+      sender.error((e as Error).message);
     }
-  }
+  };
 
   return (
     <>
       {holder}
       <Spin spinning={isLoading}>
         <Form onFinish={onSubmit} form={form}>
-          <Form.Item name="title" label={'标题'} rules={[{required: true}]}>
-            <Input/>
+          <Form.Item name="title" label={'标题'} rules={[{ required: true }]}>
+            <Input />
           </Form.Item>
-          <Form.Item name="content" label={'内容'} rules={[{required: true}]}>
-            <Input/>
+          <Form.Item name="content" label={'内容'} rules={[{ required: true }]}>
+            <Input />
           </Form.Item>
           <Form.Item>
-            <Button type={'primary'} htmlType={'submit'}>Submit</Button>
+            <Button type={'primary'} htmlType={'submit'}>
+              Submit
+            </Button>
           </Form.Item>
         </Form>
       </Spin>
     </>
-  )
-}
+  );
+};
 // View.tsx
 const View: FC = () => {
-  const params = useParams<{id: string}>();
+  const params = useParams<{ id: string }>();
   const query = useGetArticleQuery(params.id || '');
-  const [update, {isLoading}] = useUpdateArticleMutation();
+  const [update, { isLoading }] = useUpdateArticleMutation();
   const article = query.currentData;
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState('');
@@ -1077,98 +1135,118 @@ const View: FC = () => {
   const [sender, holder] = message.useMessage();
   useEffect(() => {
     if (!article) {
-      return
+      return;
     }
     setTitle(article.title);
     setContent(article.content);
-  }, [article])
-  if (!article && query.isError){
+  }, [article]);
+  if (!article && query.isError) {
     return (
       <Result
         status={'error'}
         title={'oop!'}
-        extra={<Link to={'..'}><Button>back</Button></Link>}
+        extra={
+          <Link to={'..'}>
+            <Button>back</Button>
+          </Link>
+        }
       />
-    )
+    );
   }
   return (
     <Spin spinning={isLoading || query.isFetching}>
       {holder}
-      {
-        query.isSuccess && article ? (
-          <Card
-            title={
-              isEditing ? (
-                <Input value={title} onChange={(e) => setTitle(e.target.value)}/>
-              ) : article.title
-            }
-            extra={(
-              <Space>
-                <Button type={'link'} onClick={() => {
+      {query.isSuccess && article ? (
+        <Card
+          title={
+            isEditing ? (
+              <Input value={title} onChange={e => setTitle(e.target.value)} />
+            ) : (
+              article.title
+            )
+          }
+          extra={
+            <Space>
+              <Button
+                type={'link'}
+                onClick={() => {
                   setIsEditing(!isEditing);
-                }}>{
-                  isEditing ? 'cancel' : 'edit'
-                }</Button>
-                <Link to={'..'}>back</Link>
-              </Space>
-            )}
-          >
-            {
-              isEditing ? (
-                <Input.TextArea
-                  showCount
-                  maxLength={100}
-                  value={content}
-                  onChange={(e) => {setContent(e.target.value)}}
-                />
-              ) : article.content
-            }
-            {
-              isEditing ? <Button onClick={async () => {
+                }}
+              >
+                {isEditing ? 'cancel' : 'edit'}
+              </Button>
+              <Link to={'..'}>back</Link>
+            </Space>
+          }
+        >
+          {isEditing ? (
+            <Input.TextArea
+              showCount
+              maxLength={100}
+              value={content}
+              onChange={e => {
+                setContent(e.target.value);
+              }}
+            />
+          ) : (
+            article.content
+          )}
+          {isEditing ? (
+            <Button
+              onClick={async () => {
                 await update({
                   id: article.id,
                   content,
                   title,
                 }).unwrap();
                 setIsEditing(false);
-                sender.success('ok')
-              }}>Submit</Button> : undefined
-            }
-          </Card>
-        ) : undefined
-      }
+                sender.success('ok');
+              }}
+            >
+              Submit
+            </Button>
+          ) : undefined}
+        </Card>
+      ) : undefined}
     </Spin>
-  )
-}
+  );
+};
 // List.tsx
 const List: FC = () => {
   const resp = useFetchArticlesQuery();
   return (
     <Spin spinning={resp.isFetching}>
-      {
-        resp.isSuccess ?
-          <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/> :
-          <Empty/>
-      }
+      {resp.isSuccess ? (
+        <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={item => item.id} />
+      ) : (
+        <Empty />
+      )}
     </Spin>
-  )
-}
+  );
+};
 
 const renderItem = (article: Article) => {
   const [deleteFunc] = useDeleteArticleMutation();
   return (
     <AList.Item
-      extra={<Button danger onClick={() => {
-        deleteFunc(article.id);
-      }}>delete</Button>}
+      extra={
+        <Button
+          danger
+          onClick={() => {
+            deleteFunc(article.id);
+          }}
+        >
+          delete
+        </Button>
+      }
     >
       <AList.Item.Meta
         title={<Link to={`view/${article.id}`}>{article.title}</Link>}
         description={article.content}
       />
     </AList.Item>
-  )
-}
+  );
+};
 ```
 
 Query Hook 会返回一个包含多个字段的对象，包括：
@@ -1191,33 +1269,48 @@ const List: FC = () => {
   const resp = useFetchArticlesQuery();
   return (
     <Spin spinning={resp.isFetching}>
-      {
-        resp.isSuccess ?
-          (
-            <Card title={<Button onClick={() => {resp.refetch()}}>refresh</Button>}>
-              <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/>
-            </Card>
-          ) :
-          <Empty/>
-      }
+      {resp.isSuccess ? (
+        <Card
+          title={
+            <Button
+              onClick={() => {
+                resp.refetch();
+              }}
+            >
+              refresh
+            </Button>
+          }
+        >
+          <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={item => item.id} />
+        </Card>
+      ) : (
+        <Empty />
+      )}
     </Spin>
-  )
-}
+  );
+};
 const renderItem = (article: Article) => {
   const [deleteFunc] = useDeleteArticleMutation();
   return (
     <AList.Item
-      extra={<Button danger onClick={() => {
-        deleteFunc(article.id);
-      }}>delete</Button>}
+      extra={
+        <Button
+          danger
+          onClick={() => {
+            deleteFunc(article.id);
+          }}
+        >
+          delete
+        </Button>
+      }
     >
       <AList.Item.Meta
         title={<Link to={`view/${article.id}`}>{article.title}</Link>}
         description={article.content}
       />
     </AList.Item>
-  )
-}
+  );
+};
 ```
 
 Query Hook 提供了一个 `refetch()` 方法来强制重新获取数据，现在点击此按钮会抛出一个错误：`React has detected a change in the order of Hooks called by List. This will lead to bugs and errors if not fixed`，这是因为 Query Hook 的 isSuccess 在第一次请求成功之后就一直是 true 了，在调用 `refetch()` 重新发起请求之后此字段仍然是 true，所以会渲染 List 组件，但是此时请求还没结束，List 中内容为空，没有 List Item，所以 renderItem 中的 `useDeleteArticleMutation` 这个 Hook 不会有任何执行，当请求就绪后再次渲染组件，此时 List 中存在内容，所以会调用 `useDeleteArticleMutation`，React 中不允许条件调用 Hooks，每次渲染组件时调用的 Hooks 数量应该相同，所以上面的代码会报错，为了解决这个问题，使用 `!isFetching` 来替代 `isSuccess`：
@@ -1227,18 +1320,26 @@ const List: FC = () => {
   const resp = useFetchArticlesQuery();
   return (
     <Spin spinning={resp.isFetching}>
-      {
-        !resp.isFetching ?
-          (
-            <Card title={<Button onClick={() => {resp.refetch()}}>refresh</Button>}>
-              <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={(item) => item.id}/>
-            </Card>
-          ) :
-          <Empty/>
-      }
+      {!resp.isFetching ? (
+        <Card
+          title={
+            <Button
+              onClick={() => {
+                resp.refetch();
+              }}
+            >
+              refresh
+            </Button>
+          }
+        >
+          <AList dataSource={resp.currentData} renderItem={renderItem} rowKey={item => item.id} />
+        </Card>
+      ) : (
+        <Empty />
+      )}
     </Spin>
-  )
-}
+  );
+};
 ```
 
 当然这种手动刷新的机制在很多时候不太合适，而且对使用者来说也很繁琐，RTK Query 提供了基于标签的自动刷新机制，在 `createApi()` 中使用 tagTypes字段定义一系列标签，然后在 Query 中的 providesTags 定义需要重新刷新这个 Query 的一系列标签，在 Mutation 中的 invalidatesTags 定义这个 Mutation 会触发哪些标签导致的刷新，这样，在 Mutation 执行之后，providesTags 中包含这个 Mutation 的 invalidatesTags 中定义的标签的 Query 会被自动刷新，下面改造上面的手动刷新例子：
@@ -1247,7 +1348,7 @@ const List: FC = () => {
 const api = createApi({
   // ... other codes
   tagTypes: ['Create', 'Update', 'Delete'],
-  endpoints: (builder) => {
+  endpoints: builder => {
     return {
       fetchArticles: builder.query<Array<Article>, void>({
         // ... other codes
@@ -1268,10 +1369,10 @@ const api = createApi({
       getArticle: builder.query<Article, string>({
         // ... other codes
         providesTags: ['Create', 'Update', 'Delete'],
-      })
-    }
+      }),
+    };
   },
-})
+});
 ```
 
 这样，再次创建、修改、删除文章时就会触发对应 Query 的重新加载，页面会被及时更新。
@@ -1285,7 +1386,7 @@ const api = createApi({
   reducerPath: 'articlesAPI',
   // ... other codes
   keepUnusedDataFor: 10,
-})
+});
 ```
 
 ### 失效特定的项目
@@ -1348,7 +1449,7 @@ endpoints: (builder) => {
 在 React 应用中使用 RTK Query 会因为 Hooks 的存在变得简单，但是 Redux 是独立设计的，不依赖于 UI，因此应该在任意位置可用，API 切片中有一个 endpoints 字段，其中包含我们定义的查询，这些查询上有一个 `initiate()` 方法，执行此方法可以得到一个 ThunkAction，将这个 action 传给 dispatch 即可：
 
 ```ts
-store.dispatch(api.endpoints.fetchArticles.initiate())
+store.dispatch(api.endpoints.fetchArticles.initiate());
 ```
 
 为了能够读取当前 state 的数据，同样可以使用 Selector，只不过这里的 Selector 是从 RTK Query 的缓存中读取的，也就是说下面的方法并不会发出请求，需要 dispatch endpoint：
@@ -1357,10 +1458,9 @@ store.dispatch(api.endpoints.fetchArticles.initiate())
 // api.ts
 export const selectArticlesResult = api.endpoints?.fetchArticles.select();
 
-export const selectArticles = createSelector(
-  [selectArticlesResult],
-  (result) => result ? result.data : [],
-)
+export const selectArticles = createSelector([selectArticlesResult], result =>
+  result ? result.data : []
+);
 // List.ts
 const articles = useSelector(selectArticles);
 ```
@@ -1370,18 +1470,18 @@ const articles = useSelector(selectArticles);
 大型项目中接口的管理可能是分布在多个文件中的，为了将多个文件统一到一起，可以使用 API 切片上的 `injectEndpoints()` 方法：
 
 ```ts
-export const {useExtendQueryQuery} = api.injectEndpoints({
-  endpoints: (builder) => {
+export const { useExtendQueryQuery } = api.injectEndpoints({
+  endpoints: builder => {
     return {
       extendQuery: builder.query<Article, string>({
-        query: (id) => ({
+        query: id => ({
           method: 'GET',
-          url: `/${id}`
-        })
-      })
-    }
-  }
-})
+          url: `/${id}`,
+        }),
+      }),
+    };
+  },
+});
 ```
 
 ::: warning
@@ -1401,10 +1501,10 @@ getArticle: builder.query<Article, string>({
     return {
       id: baseQueryReturnValue.id,
       title: `${baseQueryReturnValue.title}_trans`,
-      content: `${baseQueryReturnValue.content}_trans`
-    }
-  }
-})
+      content: `${baseQueryReturnValue.content}_trans`,
+    };
+  },
+});
 ```
 
 这里只是简单的加了一个后缀，transformResponse 的第一个参数应该是服务器返回的类型，第三个参数 arg 是当前 query 的入参，在这里可以将响应对象转换为视图对象。
@@ -1416,57 +1516,70 @@ getArticle: builder.query<Article, string>({
 ```tsx
 // API Slice
 favorite: builder.mutation<void, string>({
-  query: (id) => ({
+  query: id => ({
     url: `/${id}/favorite`,
-    method: 'POST'
+    method: 'POST',
   }),
-  invalidatesTags: ['Update']
-})
+  invalidatesTags: ['Update'],
+});
 // List.tsx
 const renderItem = (article: Article) => {
   const [deleteFunc] = useDeleteArticleMutation();
   const [favorite] = useFavoriteMutation();
   return (
     <AList.Item
-      extra={<Button danger onClick={() => {
-        deleteFunc(article.id);
-      }}>delete</Button>}
+      extra={
+        <Button
+          danger
+          onClick={() => {
+            deleteFunc(article.id);
+          }}
+        >
+          delete
+        </Button>
+      }
     >
       <AList.Item.Meta
         title={<Link to={`view/${article.id}`}>{article.title}</Link>}
         description={article.content}
-        avatar={<Rate count={1} value={article.isFavorite ? 1 : 0} onChange={() => {
-          favorite(article.id);
-        }}/>}
+        avatar={
+          <Rate
+            count={1}
+            value={article.isFavorite ? 1 : 0}
+            onChange={() => {
+              favorite(article.id);
+            }}
+          />
+        }
       />
     </AList.Item>
-  )
-}
+  );
+};
 ```
 
 现在，点击任意一个文章的收藏按钮都会改变对应文章的状态，并且因为使用了 `invalidatesTags`，这会使得页面整体刷新。像更改收藏状态这样的小更新其实不需要重新获取整个帖子列表，我们甚至可以只更新 Redux 中已缓存的数据来匹配服务器上的预期改动，同时，立即更新缓存数据将使得页面更快速的更新，RTK Query 允许通过请求的生命周期函数来更新某个 query 的缓存：
 
 ```ts
 favorite: builder.mutation<void, string>({
-  query: (id) => ({
+  query: id => ({
     url: `/${id}/favorite`,
-    method: 'POST'
+    method: 'POST',
   }),
-  onQueryStarted: async (arg, {dispatch, queryFulfilled}) => {
+  onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
     const action = api.util?.updateQueryData('fetchArticles', undefined, data => {
       const index = data.findIndex(a => a.id === arg);
       if (index >= 0) {
         data[index].isFavorite = !data[index].isFavorite;
       }
-    })
+    });
     const result = dispatch(action);
     try {
       await queryFulfilled;
     } catch {
       result.undo();
     }
-  }
-})
+  },
+});
 ```
 
 RTK Query 提供了 `updateQueryData()` 方法，此方法可以直接更新缓存中的查询数据，第一个参数指定要更新哪个 endpoint 的缓存数据，第二个参数是入参筛选，例如如果要更新的 endpoint 存在入参，那么通过指定第二个参数可以更新指定的缓存数据，第三个参数是一个函数，入参就是缓存中的数据，可以直接操作，当然操作缓存仍然要已不可变的形式完成，不过 RTK Query 中使用了 Immer，因此可以直接修改。`updateQueryData()` 方法会返回一个 action，dispatch 这个方法即可实现更新 state。
@@ -1481,25 +1594,25 @@ API 切片中除了普通的 Query Hooks 之外，每个 Query Hook 都有一个
 
 ```tsx
 const List: FC = () => {
-  const [query, {data, isFetching}] = useLazyFetchArticlesQuery()
+  const [query, { data, isFetching }] = useLazyFetchArticlesQuery();
   useEffect(() => {
     const id = setTimeout(() => {
-      query()
-    }, 3000)
-    return () => {clearTimeout(id)}
-  }, [])
+      query();
+    }, 3000);
+    return () => {
+      clearTimeout(id);
+    };
+  }, []);
   return (
     <Spin spinning={isFetching}>
-      {
-        !isFetching ?
-          (
-            <AList dataSource={data} renderItem={renderItem} rowKey={(item) => item.id}/>
-          ) :
-          <Empty/>
-      }
+      {!isFetching ? (
+        <AList dataSource={data} renderItem={renderItem} rowKey={item => item.id} />
+      ) : (
+        <Empty />
+      )}
     </Spin>
-  )
-}
+  );
+};
 ```
 
 ## 不使用 Redux Toolkit 的例子
@@ -1512,7 +1625,7 @@ export type Article = {
   title: string;
   content: string;
   isFavorite?: boolean;
-}
+};
 
 interface ArticlePayload {
   id?: string;
@@ -1521,23 +1634,23 @@ interface ArticlePayload {
 }
 
 interface ArticleAction extends Action {
-  type: 'articles/upsert' | 'articles/delete' | 'articles/updateFavorite',
-  payload: ArticlePayload,
+  type: 'articles/upsert' | 'articles/delete' | 'articles/updateFavorite';
+  payload: ArticlePayload;
 }
 
-type ArticleState = Array<Article>
+type ArticleState = Array<Article>;
 
 const articleReducer: Reducer<ArticleState, ArticleAction> = (state = [], action) => {
   switch (action.type) {
     case 'articles/upsert':
       if (action.payload.id) {
-        state = state.map((a) => {
+        state = state.map(a => {
           if (a.id === action.payload.id) {
             a.title = action.payload.title || '';
             a.content = action.payload.content || '';
           }
           return a;
-        })
+        });
       } else {
         const temp: Article = {
           id: new ObjectID().toHexString(),
@@ -1556,24 +1669,21 @@ const articleReducer: Reducer<ArticleState, ArticleAction> = (state = [], action
           a.isFavorite = !a.isFavorite;
         }
         return a;
-      })
+      });
       break;
   }
   return state;
-}
+};
 
-const selectAllArticles: Selector<NativeState, Array<Article>> = (state) => state.article;
+const selectAllArticles: Selector<NativeState, Array<Article>> = state => state.article;
 
-const selectArticleById: (id: string) => Selector<NativeState, Article | undefined> = (id) => {
-  return (state) => {
-    return state.article.find((a) => a.id === id);
-  }
-}
+const selectArticleById: (id: string) => Selector<NativeState, Article | undefined> = id => {
+  return state => {
+    return state.article.find(a => a.id === id);
+  };
+};
 
-export {
-  selectAllArticles,
-  selectArticleById,
-}
+export { selectAllArticles, selectArticleById };
 
 export default articleReducer;
 ```
@@ -1583,18 +1693,18 @@ export default articleReducer;
 接下来构造 Store 对象，为了将各个 Reducer 组合起来，需要使用 `combineReducers` 方法：
 
 ```ts
-import {createStore, combineReducers} from 'redux';
-import articleReducer from "./article.ts";
+import { createStore, combineReducers } from 'redux';
+import articleReducer from './article.ts';
 
 const rootReducer = combineReducers({
   article: articleReducer,
-})
+});
 
 const nativeStore = createStore(rootReducer);
 
 export type NativeDispatch = typeof nativeStore.dispatch;
 
-export type NativeState =  ReturnType<typeof nativeStore.getState>;
+export type NativeState = ReturnType<typeof nativeStore.getState>;
 
 export default nativeStore;
 ```
@@ -1602,13 +1712,13 @@ export default nativeStore;
 现在 Redux 已经配置好了，应用可以正常使用，但是 Redux DevTools 没有内容，我们需要将 DevTools 添加到 Enhancers 中：
 
 ```ts
-import {createStore, combineReducers} from 'redux';
-import { composeWithDevTools } from "redux-devtools-extension";
-import articleReducer from "./article.ts";
+import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import articleReducer from './article.ts';
 
 const rootReducer = combineReducers({
   article: articleReducer,
-})
+});
 
 const nativeStore = createStore(rootReducer, composeWithDevTools());
 ```
@@ -1620,15 +1730,15 @@ Redux 中 Store 的 `subscribe()` 方法可以添加一个变化监听器，每�
 现在来注册一个监听器，当 state 发生变化时打印日志：
 
 ```ts
-const unsubscribeFn= nativeStore.subscribe(() => {
+const unsubscribeFn = nativeStore.subscribe(() => {
   const nowState = nativeStore.getState();
   if (!Object.is(nowState, prevState)) {
     console.log(`state changed from ${JSON.stringify(prevState)} to ${JSON.stringify(nowState)}`);
   }
   prevState = nowState;
-})
+});
 
-export {unsubscribeFn};
+export { unsubscribeFn };
 ```
 
 现在改变 state 都会打印日志，`subscribe()` 方法会返回一个退订函数，调用这个函数可以取消一个订阅，例如：
@@ -1642,19 +1752,19 @@ export {unsubscribeFn};
 StoreEnhancer 是一个函数，此函数接收一个 Store Creator 的入参，返回一个新的 Creator，例如现在要使得每次调用 dispatch 的时候打印日志，可以使用下面的 StoreEnhancer 来实现：
 
 ```ts
-const logEnhancer: StoreEnhancer = (creator) => {
+const logEnhancer: StoreEnhancer = creator => {
   return (state, action) => {
     const store = creator(state, action);
     const originalDispatch = store.dispatch;
-    store.dispatch = (action) => {
+    store.dispatch = action => {
       console.log('Dispatching:', action);
       const result = originalDispatch(action);
-      console.log('Dispatched, next state:', store.getState())
-      return result
-    }
+      console.log('Dispatched, next state:', store.getState());
+      return result;
+    };
     return store;
-  }
-}
+  };
+};
 ```
 
 同时，我们又希望能够继续使用 Redux DevTools，由于 `createStore()` 方法只接收一个 Enhancer，因此我们需要将多个 Enhancer 组合起来，需要使用 redux 中的 `compose()` 方法：
@@ -1675,11 +1785,11 @@ Enhancer 非常强大，因为它可以覆盖或者替换 Store 上的任何内�
 
 ```ts
 const logMiddleware: Middleware = api => next => action => {
-  console.log('dispatching', action)
-  const result =  next(action);
-  console.log('Dispatched, next state:', api.getState())
+  console.log('dispatching', action);
+  const result = next(action);
+  console.log('Dispatched, next state:', api.getState());
   return result;
-}
+};
 ```
 
 middleware 是一个函数，返回另一个函数，此函数入参是 dispatch，然后返回下一个函数，这个函数入参是 action，通过这样包装实现 middleware 的功能。
@@ -1703,7 +1813,10 @@ Redux Reducer 不能包含副作用，例如异步请求、保存文件等，但
 首先来修改一下之前 action 的类型定义：
 
 ```ts
-export type ArticleAsyncFn = (dispatch: Dispatch<ArticleAction>, state: ArticleState) => Promise<void>
+export type ArticleAsyncFn = (
+  dispatch: Dispatch<ArticleAction>,
+  state: ArticleState
+) => Promise<void>;
 
 export interface ArticleAction extends Action {
   // ......
@@ -1714,23 +1827,26 @@ export interface ArticleAction extends Action {
 现在，ArticleAction 的 payload 字段可以是一个函数了，在 middleware 中只要判断这一点就可以实现发出异步请求了，例如：
 
 ```ts
-const asyncMiddleware: Middleware = ({dispatch, getState}) => next => async (action) => {
-  if (typeof action.payload === 'function') {
-    const fn = action.payload as ArticleAsyncFn;
-    try {
-      dispatch({type: 'articles/pending'})
-      await fn(dispatch, getState());
-    } catch (e) {
-      let message = JSON.stringify(e);
-      if (e instanceof Error) {
-        message = e.message;
+const asyncMiddleware: Middleware =
+  ({ dispatch, getState }) =>
+  next =>
+  async action => {
+    if (typeof action.payload === 'function') {
+      const fn = action.payload as ArticleAsyncFn;
+      try {
+        dispatch({ type: 'articles/pending' });
+        await fn(dispatch, getState());
+      } catch (e) {
+        let message = JSON.stringify(e);
+        if (e instanceof Error) {
+          message = e.message;
+        }
+        dispatch({ type: 'articles/rejected', payload: { message: message } });
+        throw e;
       }
-      dispatch({type: 'articles/rejected', payload: {message: message}})
-      throw e;
     }
-  }
-  return next(action)
-}
+    return next(action);
+  };
 ```
 
 这个 middleware 中首先判断 payload 是不是函数，如果是的话就调用这个函数，并且根据结果 dispatch 相关的 action。
@@ -1738,72 +1854,72 @@ const asyncMiddleware: Middleware = ({dispatch, getState}) => next => async (act
 接下来就需要定义发起异步请求的相关方法：
 
 ```ts
-const fetchArticlesFn: ArticleAsyncFn = async (dispatch) => {
+const fetchArticlesFn: ArticleAsyncFn = async dispatch => {
   const resp = await axiosInstance.get<Array<Article>>('/');
   dispatch({
     type: 'articles/resolved',
     payload: {
       articles: resp.data,
-    }
+    },
   });
-}
+};
 
 const deleteArticleFn = (id: string): ArticleAsyncFn => {
-  return async (dispatch) => {
+  return async dispatch => {
     await axiosInstance.delete<void>(`/${id}`);
-    dispatch(fetchArticles())
-  }
-}
+    dispatch(fetchArticles());
+  };
+};
 
 const upsertArticleFn = (params: UpsertRequest): ArticleAsyncFn => {
-  return async (dispatch) => {
+  return async dispatch => {
     if (params.id) {
       await axiosInstance.put(`/${params.id}`, params);
     } else {
       await axiosInstance.post<void>('/', params);
     }
-    dispatch(fetchArticles())
-  }
-}
+    dispatch(fetchArticles());
+  };
+};
 
 const updateFavoriteFn = (id: string): ArticleAsyncFn => {
-  return async (dispatch) => {
+  return async dispatch => {
     await axiosInstance.post<void>(`/${id}/favorite`);
-    dispatch(fetchArticles())
-  }
-}
+    dispatch(fetchArticles());
+  };
+};
 ```
 
 然后 dispatch 时传入这些函数作为 payload 即可，当然这样的方式要不断构造 action 对象，所以可以定义对应的 ActionCreator：
 
 ```ts
-const fetchArticles = (): ArticleAction =>({
+const fetchArticles = (): ArticleAction => ({
   type: 'articles/fetch',
   payload: fetchArticlesFn,
-})
+});
 
-const deleteArticle = (id: string): ArticleAction =>({
+const deleteArticle = (id: string): ArticleAction => ({
   type: 'articles/delete',
   payload: deleteArticleFn(id),
-})
+});
 
-const upsertArticle = (params: UpsertRequest): ArticleAction =>({
+const upsertArticle = (params: UpsertRequest): ArticleAction => ({
   type: 'articles/fetch',
   payload: upsertArticleFn(params),
-})
+});
 
-const updateFavorite = (id: string): ArticleAction =>({
+const updateFavorite = (id: string): ArticleAction => ({
   type: 'articles/updateFavorite',
   payload: updateFavoriteFn(id),
-})
+});
 ```
 
 这样在组件中就可以像下面这样使用了：
 
 ```ts
-const onSubmit = async ({title, content}: formType) => {
+const onSubmit = async ({ title, content }: formType) => {
   try {
-    await dispatch(upsertArticle({title, content}));
+    await dispatch(upsertArticle({ title, content }));
   } catch (e) {
     if (e instanceof Error) {
       sender.error(e.message);
@@ -1813,7 +1929,7 @@ const onSubmit = async ({title, content}: formType) => {
     return;
   }
   sender.success('ok');
-}
+};
 ```
 
 #### 使用 thunk middleware
@@ -1829,48 +1945,59 @@ yarn add redux-thunk
 然后引入这个中间件：
 
 ```ts
-import thunk from "redux-thunk";
+import thunk from 'redux-thunk';
 const middleEnhancer = applyMiddleware(thunk);
 ```
 
 引入此中间件后，dispatch 可以接受函数作为参数了，所以现在来修改之前发出请求的异步函数：
 
 ```ts
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-const fetchArticles: ThunkAction<Promise<void>, NativeState, void, ArticleAction> = async (dispatch) => {
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+const fetchArticles: ThunkAction<
+  Promise<void>,
+  NativeState,
+  void,
+  ArticleAction
+> = async dispatch => {
   const resp = await axiosInstance.get<Array<Article>>('/');
   dispatch({
     type: 'articles/resolved',
     payload: {
       articles: resp.data,
-    }
+    },
   });
-}
+};
 
-const deleteArticle = (id: string): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
-  return async (dispatch) => {
+const deleteArticle = (
+  id: string
+): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async dispatch => {
     await axiosInstance.delete<void>(`/${id}`);
-    await dispatch(fetchArticles)
-  }
-}
+    await dispatch(fetchArticles);
+  };
+};
 
-const upsertArticle = (params: UpsertRequest): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
-  return async (dispatch) => {
+const upsertArticle = (
+  params: UpsertRequest
+): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async dispatch => {
     if (params.id) {
       await axiosInstance.put(`/${params.id}`, params);
     } else {
       await axiosInstance.post<void>('/', params);
     }
-    await dispatch(fetchArticles)
-  }
-}
+    await dispatch(fetchArticles);
+  };
+};
 
-const updateFavorite = (id: string): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
-  return async (dispatch) => {
+const updateFavorite = (
+  id: string
+): ThunkAction<Promise<void>, NativeState, void, ArticleAction> => {
+  return async dispatch => {
     await axiosInstance.post<void>(`/${id}/favorite`);
-    await dispatch(fetchArticles)
-  }
-}
+    await dispatch(fetchArticles);
+  };
+};
 ```
 
 这里将函数或者函数的返回值声明为 ThunkAction 类型，这个类型接收四个泛型，第一个泛型是返回类型，这里都是返回 `Promise<void>`，第二个泛型是 Store 中状态树的类型，第三个泛型是额外参数，这里设置为 void，第四个泛型是当前 reducer 正常的 Action 类型。
@@ -1878,19 +2005,29 @@ const updateFavorite = (id: string): ThunkAction<Promise<void>, NativeState, voi
 接下来，为了在 dispatch 传入函数的情况下仍然有 TypeScript 类型标注，因此需要定义一个新的 Dispatch 类型：
 
 ```ts
-export type ArticleDispatch = ThunkDispatch<NativeState, void, ArticleAction>
+export type ArticleDispatch = ThunkDispatch<NativeState, void, ArticleAction>;
 ```
 
 最后，在组件中使用这些 action：
 
 ```tsx
-{/* other codes */}
 {
-  isEditing ? <Button onClick={async () => {
-    await dispatch(upsertArticle({title, content, id: article?.id}))
-    setIsEditing(false);
-    sender.success('ok')
-  }}>Submit</Button> : undefined
+  /* other codes */
 }
-{/* other codes */}
+{
+  isEditing ? (
+    <Button
+      onClick={async () => {
+        await dispatch(upsertArticle({ title, content, id: article?.id }));
+        setIsEditing(false);
+        sender.success('ok');
+      }}
+    >
+      Submit
+    </Button>
+  ) : undefined;
+}
+{
+  /* other codes */
+}
 ```

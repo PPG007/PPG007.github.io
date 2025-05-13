@@ -34,7 +34,7 @@ p:first-child i {
 
 ```css
 q:lang(en) {
-  quotes: "~" "~";
+  quotes: '~''~';
 }
 ```
 

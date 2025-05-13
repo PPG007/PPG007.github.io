@@ -60,7 +60,7 @@
 
 - `BeanNameUrlHandlerMapping`：
 
-    处理器映射器的一种，根据请求的 url 与 Spring 容器中定义的处理器 bean 的 id 属性值进行匹配，这种方式中 bean 的 id 属性必须以`'/'`开头。
+  处理器映射器的一种，根据请求的 url 与 Spring 容器中定义的处理器 bean 的 id 属性值进行匹配，这种方式中 bean 的 id 属性必须以`'/'`开头。
 
 - `SimpleControllerHandlerAdapter`：
 
@@ -207,28 +207,28 @@ public String test4(){
 
 - 情况一，jsp、html 等静态页面没有设置 UTF-8，或者文件格式不是 UTF-8：
 
-    解决：添加头部指定编码格式为 UTF-8。
+  解决：添加头部指定编码格式为 UTF-8。
 
 - 情况二，调试中，控制台输出乱码：
 
-    解决：在 Tomcat 的启动参数中添加 `-Dfile.encoding=UTF-8`，指定 jvm 以 UTF-8 启动。**注意：此项设置需要重启IDE方可生效**。
+  解决：在 Tomcat 的启动参数中添加 `-Dfile.encoding=UTF-8`，指定 jvm 以 UTF-8 启动。**注意：此项设置需要重启IDE方可生效**。
 
 - 情况三：浏览器前端界面乱码：
 
-    解决：在 web.xml 中配置 Spring 的 `CharacterEncodingFilter` 即可：
+  解决：在 web.xml 中配置 Spring 的 `CharacterEncodingFilter` 即可：
 
-    ```xml
-        <filter>
-        <filter-name>spring</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>spring</filter-name>
-        <!-- /*表示还要过滤静态文件 -->
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    ```
+  ```xml
+      <filter>
+      <filter-name>spring</filter-name>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+      <init-param>
+          <param-name>encoding</param-name>
+          <param-value>UTF-8</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>spring</filter-name>
+      <!-- /*表示还要过滤静态文件 -->
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  ```

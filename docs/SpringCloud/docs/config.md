@@ -26,17 +26,17 @@
 
 ```yaml
 server:
-    port: 8848
+  port: 8848
 spring:
-    cloud:
-        config:
-            server:
-                git:
-                    password: 06050704zxl
-                    uri: https://gitee.com/pidehen2/spring-cloud-config-learn.git
-                    username: 1658272229@qq.com
-    application:
-        name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          password: 06050704zxl
+          uri: https://gitee.com/pidehen2/spring-cloud-config-learn.git
+          username: 1658272229@qq.com
+  application:
+    name: config-server
 ```
 
 在主启动类上添加 `@EnableConfigServer` 注解开启服务。
@@ -94,27 +94,26 @@ public class TestController {
 
 ```yaml
 server:
-    port: 8848
+  port: 8848
 spring:
-    cloud:
-        config:
-            server:
-                git:
-                    password: 06050704zxl
-                    uri: https://gitee.com/pidehen2/spring-cloud-config-learn.git
-                    username: 1658272229@qq.com
-    application:
-        name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          password: 06050704zxl
+          uri: https://gitee.com/pidehen2/spring-cloud-config-learn.git
+          username: 1658272229@qq.com
+  application:
+    name: config-server
 eureka:
-    client:
-        service-url:
-            defaultZone: http://localhost:7001/eureka/,http://localhost2:7002/eureka/
-    instance:
-        instance-id: config-server
-        prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/,http://localhost2:7002/eureka/
+  instance:
+    instance-id: config-server
+    prefer-ip-address: true
 info:
-    app.name: config-server
-
+  app.name: config-server
 ```
 
 ### 客户端配置
@@ -160,7 +159,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*" # 类似Hystrix，将刷新接口暴露
+        include: '*' # 类似Hystrix，将刷新接口暴露
 ```
 
 ### 修改要刷新的类

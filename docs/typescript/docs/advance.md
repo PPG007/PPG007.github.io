@@ -9,13 +9,17 @@ type Name = string;
 type NameResolver = () => string;
 type NameOrResolver = Name | NameResolver;
 function getName(n: NameOrResolver): string {
-    if (typeof n == 'string') {
-        return n as Name;
-    }
-    return n();
+  if (typeof n == 'string') {
+    return n as Name;
+  }
+  return n();
 }
-console.log(getName('ppg007'))
-console.log(getName(() => { return 'PPG007' }))
+console.log(getName('ppg007'));
+console.log(
+  getName(() => {
+    return 'PPG007';
+  })
+);
 ```
 
 ## 字符串字面量类型
@@ -25,9 +29,9 @@ console.log(getName(() => { return 'PPG007' }))
 ```ts
 type language = 'Java' | 'TypeScript';
 function show(l: language): void {
-    console.log(l);
+  console.log(l);
 }
-show('Java')
+show('Java');
 ```
 
 ## 元组
@@ -35,7 +39,7 @@ show('Java')
 数组合并了相同类型的对象，元组 Tuple 合并了不同类型的对象。
 
 ```ts
-let tom: [string, number] = ['Tom', 25]
+let tom: [string, number] = ['Tom', 25];
 
 console.log(tom[0].toLowerCase());
 console.log(tom[1].toFixed());
@@ -53,42 +57,42 @@ console.log(tom);
 
 ```ts
 enum WeekDay {
-    Sunday,
-    Monday,
-    TuesDay,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
+  Sunday,
+  Monday,
+  TuesDay,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
 }
-console.log(WeekDay["Monday"] === 1); // true
-console.log(WeekDay["TuesDay"] === 2); // true
-console.log(WeekDay["Saturday"] === 6); // true
+console.log(WeekDay['Monday'] === 1); // true
+console.log(WeekDay['TuesDay'] === 2); // true
+console.log(WeekDay['Saturday'] === 6); // true
 
-console.log(WeekDay[1] === "Monday"); // true
-console.log(WeekDay[2] === "TuesDay"); // true
-console.log(WeekDay[6] === "Saturday"); // true
+console.log(WeekDay[1] === 'Monday'); // true
+console.log(WeekDay[2] === 'TuesDay'); // true
+console.log(WeekDay[6] === 'Saturday'); // true
 ```
 
 也可以给枚举项手动赋值，未手动赋值的项的递增步长仍为 1。
 
 ```ts
 enum WeekDay {
-    Monday = 1,
-    TuesDay,
-    Wednesday,
-    Thursday,
-    Friday,
-    // 手动赋值的枚举项可以不是数字，此时需要使用类型断言来让 tsc 无视类型检查
-    Saturday = <any>'6',
+  Monday = 1,
+  TuesDay,
+  Wednesday,
+  Thursday,
+  Friday,
+  // 手动赋值的枚举项可以不是数字，此时需要使用类型断言来让 tsc 无视类型检查
+  Saturday = <any>'6',
 }
-console.log(WeekDay["Monday"] === 1); // true
-console.log(WeekDay["TuesDay"] === 2); // true
-console.log(WeekDay["Saturday"] === 6); // false
+console.log(WeekDay['Monday'] === 1); // true
+console.log(WeekDay['TuesDay'] === 2); // true
+console.log(WeekDay['Saturday'] === 6); // false
 
-console.log(WeekDay[1] === "Monday"); // true
-console.log(WeekDay[2] === "TuesDay"); // true
-console.log(WeekDay['6'] === "Saturday"); // true
+console.log(WeekDay[1] === 'Monday'); // true
+console.log(WeekDay[2] === 'TuesDay'); // true
+console.log(WeekDay['6'] === 'Saturday'); // true
 ```
 
 ### 常数项和计算所得项
@@ -99,9 +103,9 @@ console.log(WeekDay['6'] === "Saturday"); // true
 
 ```ts
 enum Color {
-    Red,
-    Green,
-    Blue = 'blue'.length,
+  Red,
+  Green,
+  Blue = 'blue'.length,
 }
 ```
 
@@ -111,10 +115,10 @@ enum Color {
 
 ```ts
 enum Color {
-    Red,
-    Green,
-    Blue = 'blue'.length,
-    Yellow,
+  Red,
+  Green,
+  Blue = 'blue'.length,
+  Yellow,
 }
 ```
 
@@ -123,13 +127,8 @@ enum Color {
 当满足以下条件时，枚举成员被当作是常数：
 
 - 不具有初始化函数并且之前的枚举成员是常数。在这种情况下，当前枚举成员的值为上一个枚举成员的值加 1。但第一个枚举元素是个例外。如果它没有初始化方法，那么它的初始值为 0。
-- 枚举成员使用常数枚举表达式初始化。常数枚举表达式是 TypeScript 表达式的子集，它可以在编译阶段求值。当一个表达式满足下面条件之一时，它就是一个常数枚举表达式：
-    - 数字字面量。
-    - 引用之前定义的常数枚举成员（可以是在不同的枚举类型中定义的）如果这个成员是在同一个枚举类型中定义的，可以使用非限定名来引用。
-    - 带括号的常数枚举表达式。
-    - `+`, `-`, `~` 一元运算符应用于常数枚举表达式。
-    - `+`, `-`, `*`, `/`, `%`, `<<`, `>>`, `>>>`, `&`, `|`, `^` 二元运算符，常数枚举表达式做为其一个操作对象。若常数枚举表达式求值后为 NaN 或 Infinity，则会在编译阶段报错。
-所有其它情况的枚举成员被当作是需要计算得出的值。
+- 枚举成员使用常数枚举表达式初始化。常数枚举表达式是 TypeScript 表达式的子集，它可以在编译阶段求值。当一个表达式满足下面条件之一时，它就是一个常数枚举表达式：- 数字字面量。- 引用之前定义的常数枚举成员（可以是在不同的枚举类型中定义的）如果这个成员是在同一个枚举类型中定义的，可以使用非限定名来引用。- 带括号的常数枚举表达式。- `+`, `-`, `~` 一元运算符应用于常数枚举表达式。- `+`, `-`, `*`, `/`, `%`, `<<`, `>>`, `>>>`, `&`, `|`, `^` 二元运算符，常数枚举表达式做为其一个操作对象。若常数枚举表达式求值后为 NaN 或 Infinity，则会在编译阶段报错。
+  所有其它情况的枚举成员被当作是需要计算得出的值。
 
 ### 常数枚举
 
@@ -137,9 +136,9 @@ enum Color {
 
 ```ts
 const enum color {
-    Red,
-    Green,
-    Blue
+  Red,
+  Green,
+  Blue,
 }
 console.log(color.Blue);
 ```
@@ -168,11 +167,11 @@ ES6 中实例的属性只能通过构造函数中的 this.xxx 来定义，ES7 �
 
 ```ts
 class Animal {
-    name = 'Jack';
+  name = 'Jack';
 
-    constructor() {
-        // ...
-    }
+  constructor() {
+    // ...
+  }
 }
 
 let a = new Animal();
@@ -185,11 +184,11 @@ ES7 提案中，可以使用 static 定义一个静态属性。
 
 ```ts
 class Animal {
-    static num = 42;
+  static num = 42;
 
-    constructor() {
-        // ...
-    }
+  constructor() {
+    // ...
+  }
 }
 
 console.log(Animal.num); // 42
@@ -205,20 +204,20 @@ TypeScript 可以使用三种访问修饰符：
 
 ```ts
 class Animal {
-    protected name: string;
-    public getName(): string {
-        return this.name;
-    }
-    public constructor(name: string) {
-        this.name = name;
-    }
+  protected name: string;
+  public getName(): string {
+    return this.name;
+  }
+  public constructor(name: string) {
+    this.name = name;
+  }
 }
 
 class Cat extends Animal {
-    public constructor(){
-        super('cat');
-        console.log(this.name);
-    }
+  public constructor() {
+    super('cat');
+    console.log(this.name);
+  }
 }
 
 console.log(new Animal('123'));
@@ -239,12 +238,12 @@ console.log(new Cat());
 
 ```ts
 class Animal {
-    public getName(): string {
-        return this.name;
-    }
-    public constructor(private name: string) {
-        this.name = name;
-    }
+  public getName(): string {
+    return this.name;
+  }
+  public constructor(private name: string) {
+    this.name = name;
+  }
 }
 console.log(new Animal('123').getName());
 ```
@@ -255,15 +254,15 @@ console.log(new Animal('123').getName());
 
 ```ts
 class Animal {
-    readonly name: string;
-    public constructor(name: string) {
-        this.name = name;
-    }
+  readonly name: string;
+  public constructor(name: string) {
+    this.name = name;
+  }
 }
 
 let a = new Animal('Jack');
 console.log(a.name);
-a.name = '123' // error
+a.name = '123'; // error
 ```
 
 ::: warning
@@ -272,9 +271,9 @@ a.name = '123' // error
 
 ```ts
 class Animal {
-    public constructor(public readonly name: string) {
-        this.name = name;
-    }
+  public constructor(public readonly name: string) {
+    this.name = name;
+  }
 }
 ```
 
@@ -286,19 +285,19 @@ class Animal {
 
 ```ts
 abstract class Animal {
-    constructor(private readonly name: string) {
-        this.name = name;
-    }
-    public getName(): string{
-        return this.name;
-    }
-    public abstract say():void;
+  constructor(private readonly name: string) {
+    this.name = name;
+  }
+  public getName(): string {
+    return this.name;
+  }
+  public abstract say(): void;
 }
 
 class Cat extends Animal {
-    public say(): void {
-        console.log('miao');
-    }
+  public say(): void {
+    console.log('miao');
+  }
 }
 
 let tom: Animal = new Cat('tom');
@@ -311,22 +310,21 @@ tom.say();
 
 ```ts
 interface Alarm {
-    alert(): void;
+  alert(): void;
 }
 
-class Door {
-}
+class Door {}
 
 class SecurityDoor extends Door implements Alarm {
-    alert() {
-        console.log('SecurityDoor alert');
-    }
+  alert() {
+    console.log('SecurityDoor alert');
+  }
 }
 
 class Car implements Alarm {
-    alert() {
-        console.log('Car alert');
-    }
+  alert() {
+    console.log('Car alert');
+  }
 }
 
 let a: Alarm;
@@ -340,24 +338,24 @@ a.alert();
 
 ```ts
 interface Alarm {
-    alert(): void;
+  alert(): void;
 }
 
 interface Light {
-    lightOn(): void;
-    lightOff(): void;
+  lightOn(): void;
+  lightOff(): void;
 }
 
 class Car implements Alarm, Light {
-    alert() {
-        console.log('Car alert');
-    }
-    lightOn() {
-        console.log('Car light on');
-    }
-    lightOff() {
-        console.log('Car light off');
-    }
+  alert() {
+    console.log('Car alert');
+  }
+  lightOn() {
+    console.log('Car light on');
+  }
+  lightOff() {
+    console.log('Car light off');
+  }
 }
 
 let car = new Car();
@@ -372,24 +370,24 @@ l.lightOff();
 
 ```ts
 interface Alarm {
-    alert(): void;
+  alert(): void;
 }
 
 interface Light extends Alarm {
-    lightOn(): void;
-    lightOff(): void;
+  lightOn(): void;
+  lightOff(): void;
 }
 
 class Car implements Light {
-    alert() {
-        console.log('Car alert');
-    }
-    lightOn() {
-        console.log('Car light on');
-    }
-    lightOff() {
-        console.log('Car light off');
-    }
+  alert() {
+    console.log('Car alert');
+  }
+  lightOn() {
+    console.log('Car light on');
+  }
+  lightOff() {
+    console.log('Car light off');
+  }
 }
 
 let car = new Car();
@@ -403,16 +401,16 @@ l.alert();
 
 ```ts
 class Point {
-    x: number;
-    y: number;
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
+  x: number;
+  y: number;
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 }
 
 interface Point3d extends Point {
-    z: number;
+  z: number;
 }
 
 let point3d: Point3d = { x: 1, y: 2, z: 3 };
@@ -432,7 +430,7 @@ let point3d: Point3d = { x: 1, y: 2, z: 3 };
 
 ```ts
 function createArray<T>(): Array<T> {
-    return [];
+  return [];
 }
 let intArray = createArray<number>();
 intArray.push(1);
@@ -442,8 +440,8 @@ console.log(intArray);
 ### 多个类型参数
 
 ```ts
-function createTuple<A, B>(a: A, b: B) :[A, B] {
-    return [a, b]
+function createTuple<A, B>(a: A, b: B): [A, B] {
+  return [a, b];
 }
 
 let a = createTuple<number, boolean>(2, true);
@@ -457,31 +455,31 @@ console.log(a);
 
 ```ts
 interface Alert {
-    alert(): string;
+  alert(): string;
 }
 
 function log<T extends Alert>(a: T): void {
-    console.log(a.alert());
+  console.log(a.alert());
 }
 
 class Door implements Alert {
-    public alert(): string {
-        return 'Door alert'
-    }
+  public alert(): string {
+    return 'Door alert';
+  }
 }
 
 log<Door>(new Door());
-log(new Door);
+log(new Door());
 ```
 
 多个类型参数之间也可以互相约束，要求 T 继承 U，这样就保证了 U 上不会出现 T 中不存在的字段：
 
 ```ts
 function copyFields<T extends U, U>(target: T, source: U): T {
-    for (let id in source) {
-        target[id] = (<T>source)[id];
-    }
-    return target;
+  for (let id in source) {
+    target[id] = (<T>source)[id];
+  }
+  return target;
 }
 
 let x = { a: 1, b: 2, c: 3, d: 4 };
@@ -492,15 +490,15 @@ console.log(x);
 ### 泛型接口
 
 ```ts
-import { log } from "console";
+import { log } from 'console';
 
 interface createArrayFunc {
-    <T>(): T[]
+  <T>(): T[];
 }
 
-let fn: createArrayFunc = function<T>(): T[]{
-    return [];
-}
+let fn: createArrayFunc = function <T>(): T[] {
+  return [];
+};
 
 let arr = fn<boolean>();
 arr.push(false);
@@ -511,31 +509,31 @@ log(arr);
 
 ```ts
 interface CreateArr<T> {
-    create(...items: Array<T>): Array<T>
-    createEmpty(): Array<T>
+  create(...items: Array<T>): Array<T>;
+  createEmpty(): Array<T>;
 }
 
 class CreateNumberArr implements CreateArr<number> {
-    public create(...items: number[]): number[] {
-        return items;
-    }
-    public createEmpty(): number[] {
-        return [];
-    }
+  public create(...items: number[]): number[] {
+    return items;
+  }
+  public createEmpty(): number[] {
+    return [];
+  }
 }
 
 const fn = new CreateNumberArr();
 console.log(fn.create(1, 2, 3));
-console.log(fn.createEmpty().push(4))
+console.log(fn.createEmpty().push(4));
 ```
 
 ### 泛型类
 
 ```ts
 class ResponseResult<T> {
-    code: number;
-    data: T;
-    message: string;
+  code: number;
+  data: T;
+  message: string;
 }
 
 let resp = new ResponseResult<Map<string, string>>();
@@ -552,9 +550,9 @@ resp.data = data;
 
 ```ts
 class ResponseResult<T = string> {
-    code: number;
-    data: T;
-    message: string;
+  code: number;
+  data: T;
+  message: string;
 }
 
 let resp = new ResponseResult();
@@ -576,10 +574,10 @@ console.log(JSON.stringify(resp));
 
 ```ts
 interface Alarm {
-    price: number;
+  price: number;
 }
 interface Alarm {
-    weight: number;
+  weight: number;
 }
 ```
 
@@ -587,8 +585,8 @@ interface Alarm {
 
 ```ts
 interface Alarm {
-    price: number;
-    weight: number;
+  price: number;
+  weight: number;
 }
 ```
 
@@ -598,21 +596,21 @@ interface Alarm {
 
 ```ts
 interface Alarm {
-    price: number;
+  price: number;
 }
 interface Alarm {
-    price: number;  // 虽然重复了，但是类型都是 `number`，所以不会报错
-    weight: number;
+  price: number; // 虽然重复了，但是类型都是 `number`，所以不会报错
+  weight: number;
 }
 ```
 
 ```ts
 interface Alarm {
-    price: number;
+  price: number;
 }
 interface Alarm {
-    price: string;  // 类型不一致，会报错
-    weight: number;
+  price: string; // 类型不一致，会报错
+  weight: number;
 }
 ```
 
@@ -622,12 +620,12 @@ interface Alarm {
 
 ```ts
 interface Alarm {
-    price: number;
-    alert(s: string): string;
+  price: number;
+  alert(s: string): string;
 }
 interface Alarm {
-    weight: number;
-    alert(s: string, n: number): string;
+  weight: number;
+  alert(s: string, n: number): string;
 }
 ```
 
@@ -635,10 +633,10 @@ interface Alarm {
 
 ```ts
 interface Alarm {
-    price: number;
-    weight: number;
-    alert(s: string): string;
-    alert(s: string, n: number): string;
+  price: number;
+  weight: number;
+  alert(s: string): string;
+  alert(s: string, n: number): string;
 }
 ```
 

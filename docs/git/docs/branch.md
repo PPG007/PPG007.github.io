@@ -9,32 +9,32 @@
 当创建一个新分支例如 dev 分支时，Git 会新建一个名字为 dev 的指针，指向 master 相同的提交，再把 HEAD 指向 dev，就表示当前分支在 dev 上。
 
 - 创建分支的四种方式：
-    - 使用 `git checkout -b <branch>` 创建并切换到指定分支。
-    - 使用 `git switch -c <branch>` 创建并切换到指定分支。
-    - 使用 `git branch <branch>` 创建一个分支。
-    - 使用 `git fetch <repository> :<branch>`创建一个新分支。
+  - 使用 `git checkout -b <branch>` 创建并切换到指定分支。
+  - 使用 `git switch -c <branch>` 创建并切换到指定分支。
+  - 使用 `git branch <branch>` 创建一个分支。
+  - 使用 `git fetch <repository> :<branch>`创建一个新分支。
 - 删除指定分支：
 
-    使用 `git branch -d <branch>` 命令删除一个分支。
+  使用 `git branch -d <branch>` 命令删除一个分支。
 
 - 删除一个没有被合并过的分支：
 
-    使用 `git branch -D <branch>` 命令强行删除。
+  使用 `git branch -D <branch>` 命令强行删除。
 
 - 删除一个远程分支：
 
-    使用 `git push <repository>  ：<branch>`。
+  使用 `git push <repository>  ：<branch>`。
 
 - 切换分支：
-    - 使用 `git switch <branch>` 命令切换到指定分支。
-    - 使用 `git checkout <branch>` 命令切换到指定分支。
+  - 使用 `git switch <branch>` 命令切换到指定分支。
+  - 使用 `git checkout <branch>` 命令切换到指定分支。
 - 查看分支信息：
 
-    使用 `git branch` 命令查看当前分支和其他分支。
+  使用 `git branch` 命令查看当前分支和其他分支。
 
 - 合并分支：
 
-    合并某个分支到当前分支：`git merge <name>`。
+  合并某个分支到当前分支：`git merge <name>`。
 
 ## 解决冲突
 

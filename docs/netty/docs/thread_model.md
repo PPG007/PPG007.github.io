@@ -54,13 +54,13 @@
 - NioEventLoop 是串行的。
 - NioEventLoopGroup 可以有多个线程，即可以有多个 NioEventLoop。
 - 每个 Boss NioEventLoop 循环执行步骤有三步：
-    - 轮询 accept 事件。
-    - 处理 accept 事件，与 client 建立连接，生成 NioSocketChannel，并将其注册到某个 Worker NioEventLoop 上的 selector。
-    - 处理任务队列的任务，即 runAllTasks。
+  - 轮询 accept 事件。
+  - 处理 accept 事件，与 client 建立连接，生成 NioSocketChannel，并将其注册到某个 Worker NioEventLoop 上的 selector。
+  - 处理任务队列的任务，即 runAllTasks。
 - 每个 Worker NioEventLoop 循环执行的步骤：
-    - 轮询 read、write 事件。
-    - 处理 I/O 事件，在对应的 NioSocketChannel 处理。
-    - 处理任务队列的任务，即 runAllTasks。
+  - 轮询 read、write 事件。
+  - 处理 I/O 事件，在对应的 NioSocketChannel 处理。
+  - 处理任务队列的任务，即 runAllTasks。
 - 每个 Worker NioEventLoop 处理业务时，会使用 `pipeline` 管道，管道中包含 channel，即通过管道可以获取 channel，管道中维护了很多处理器。
 - 每个 NioEventLoop 包含一个 Selector、一个 taskQueue。
 - 每个 NioEventLoop 的Selector上可以注册监听多个 NioChannel。

@@ -10,17 +10,17 @@ const proto = {
   foo() {
     console.log(this.x);
   },
-  y: 'test'
+  y: 'test',
 };
 const obj = {
   x: 'world',
   foo() {
     super.foo();
-  }
-}
+  },
+};
 Object.setPrototypeOf(obj, proto);
-let backup = {}
-Object.assign(backup,obj)
+let backup = {};
+Object.assign(backup, obj);
 console.log(backup);
 console.log(backup.y);
 ```
@@ -44,24 +44,24 @@ console.log(backup.y);
 
 - Object.keys()：返回一个数组，成员是参数对象自身的所有可遍历属性的键名。
 
-    ```javascript
-    for (const key of Object.keys(obj)) {
-      console.log(key);
-    }
-    ```
+  ```javascript
+  for (const key of Object.keys(obj)) {
+    console.log(key);
+  }
+  ```
 
 - Object.values()：返回一个数组，成员是参数对象自身的所有可遍历属性的键值。
 
-    ```javascript
-    for (const value of Object.values(obj)) {
-      console.log(value);
-    }
-    ```
+  ```javascript
+  for (const value of Object.values(obj)) {
+    console.log(value);
+  }
+  ```
 
 - Object.entries()：返回一个数组，成员是参数对象自身的所有可遍历属性的键值对数组。
 
-    ```javascript
-    for (const [key, value] of Object.entries(obj)) {
-      console.log([key, value]);
-    }
-    ```
+  ```javascript
+  for (const [key, value] of Object.entries(obj)) {
+    console.log([key, value]);
+  }
+  ```

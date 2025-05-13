@@ -88,23 +88,23 @@ public class ClientInitialize extends ChannelInitializer<SocketChannel> {
 
 - ReplayingDecoder：
 
-    ReplayingDecoder 扩展了 ByteToMessageDecoder 类,使用这个类,我们不必调用 `readableBytes()` 方法，即不需要判断字节数是否满足转换要求。
+  ReplayingDecoder 扩展了 ByteToMessageDecoder 类,使用这个类,我们不必调用 `readableBytes()` 方法，即不需要判断字节数是否满足转换要求。
 
-    示例：
+  示例：
 
-    ```java
-    public class ByteToLongDecoder2 extends ReplayingDecoder<Long> {
+  ```java
+  public class ByteToLongDecoder2 extends ReplayingDecoder<Long> {
 
-        @Override
-        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-            out.add(in.readLong());
-        }
-    }
-    ```
+      @Override
+      protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+          out.add(in.readLong());
+      }
+  }
+  ```
 
-    缺点：
+  缺点：
 
-    并不是所有的 ByteBuf 操作都被支持,如果调用了一个不被支持的方法,将会抛出一个 UnsupportedOperationException，ReplayingDecoder 在某些情况下可能稍慢于 ByteToMessageDecoder,例如网络缓慢并且消息格式复杂时,消息会被拆成了多个碎片,速度变慢。
+  并不是所有的 ByteBuf 操作都被支持,如果调用了一个不被支持的方法,将会抛出一个 UnsupportedOperationException，ReplayingDecoder 在某些情况下可能稍慢于 ByteToMessageDecoder,例如网络缓慢并且消息格式复杂时,消息会被拆成了多个碎片,速度变慢。
 
 - LineBasedFrameDecoder：使用行尾控制字符(`\n\r`)做分隔符解析数据。
 - DelimiterBasedFrameDecoder：使用自定义的特殊字符作为消息的分隔符。

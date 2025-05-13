@@ -52,11 +52,11 @@ metadata:
   name: mem-limit-range
 spec:
   limits:
-  - default:
-      memory: 512Mi
-    defaultRequest:
-      memory: 256Mi
-    type: Container
+    - default:
+        memory: 512Mi
+      defaultRequest:
+        memory: 256Mi
+      type: Container
 ```
 
 然后使用下面的命令为一个已经创建的命名空间添加内存限制：
@@ -80,11 +80,11 @@ metadata:
   namespace: example
 spec:
   limits:
-  - default:
-      memory: 512Mi
-    defaultRequest:
-      memory: 256Mi
-    type: Container
+    - default:
+        memory: 512Mi
+      defaultRequest:
+        memory: 256Mi
+      type: Container
 ```
 
 使用命令：
@@ -109,11 +109,11 @@ metadata:
   namespace: example
 spec:
   limits:
-  - max:
-      memory: 1Gi
-    min:
-      memory: 500Mi
-    type: Container
+    - max:
+        memory: 1Gi
+      min:
+        memory: 500Mi
+      type: Container
 ```
 
 ::: tip 现在，只要在 constraints-mem-example 命名空间中创建容器，Kubernetes 就会执行下面的步骤：
@@ -138,11 +138,11 @@ metadata:
   namespace: example
 spec:
   limits:
-  - default:
-      cpu: 1
-    defaultRequest:
-      cpu: 0.5
-    type: Container
+    - default:
+        cpu: 1
+      defaultRequest:
+        cpu: 0.5
+      type: Container
 ```
 
 ::: tip
@@ -161,11 +161,11 @@ metadata:
   namespace: example
 spec:
   limits:
-  - max:
-      cpu: "1"
-    min:
-      cpu: "200m"
-    type: Container
+    - max:
+        cpu: '1'
+      min:
+        cpu: '200m'
+      type: Container
 ```
 
 ::: tip 现在不管什么时候在 example 命名空间中创建容器，Kubernetes 都会执行下面这些步骤：
@@ -188,11 +188,10 @@ metadata:
   namespace: example
 spec:
   hard:
-    requests.cpu: "1"
+    requests.cpu: '1'
     requests.memory: 1Gi
-    limits.cpu: "2"
+    limits.cpu: '2'
     limits.memory: 2Gi
-
 ```
 
 ::: tip ResourceQuota 在 quota-mem-cpu-example 命名空间中设置了如下要求：
@@ -217,5 +216,5 @@ metadata:
   namespace: example
 spec:
   hard:
-    pods: "2"
+    pods: '2'
 ```

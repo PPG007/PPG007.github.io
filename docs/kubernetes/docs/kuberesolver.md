@@ -69,9 +69,9 @@ metadata:
   namespace: example
   name: kuberesolver-role
 rules:
-- apiGroups: [""]
-  resources: ["endpoints", "pods"]
-  verbs: ["get", "watch"]
+  - apiGroups: ['']
+    resources: ['endpoints', 'pods']
+    verbs: ['get', 'watch']
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -79,9 +79,9 @@ metadata:
   name: kuberesolver-rolebinding
   namespace: example
 subjects:
-- kind: ServiceAccount
-  name: kuberesolver
-  namespace: example
+  - kind: ServiceAccount
+    name: kuberesolver
+    namespace: example
 roleRef:
   kind: Role
   name: kuberesolver-role

@@ -16,8 +16,8 @@ const obj = {};
 
 ```javascript
 const obj = {
-    [getKey()]: true
-}
+  [getKey()]: true,
+};
 ```
 
 对象方法使用简写形式。
@@ -29,7 +29,7 @@ const obj = {
 不要直接调用 `Object.prototype` 上的方法，有的方法可能会被屏蔽，可以这样：
 
 ```javascript
-Object.prototype.hasOwnProperty.call(obj,key);
+Object.prototype.hasOwnProperty.call(obj, key);
 ```
 
 对象浅拷贝应该使用扩展运算符。
@@ -199,7 +199,7 @@ if 语句使用 ToBoolean 抽象方法来计算表达式，规则：
 圆括号、方括号前后不加空格。计算属性要有空格。
 
 ```javascript
-[1, 2, 3]
+[1, 2, 3];
 ```
 
 花括号内前后加空格。

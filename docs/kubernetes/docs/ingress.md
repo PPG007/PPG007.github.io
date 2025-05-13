@@ -78,7 +78,7 @@ spec:
                   number: 8000
 ```
 
-Nginx Ingress Controller 的高级功能都可以通过添加 annotations 实现，上面添加了一个重写的 annotation，这样所有 path 中被 (.*) 捕获的内容都会被替换到 annotation 中设置的 $n 中，例如上面的例子中，重定向的结果示例如下：
+Nginx Ingress Controller 的高级功能都可以通过添加 annotations 实现，上面添加了一个重写的 annotation，这样所有 path 中被 (.\*) 捕获的内容都会被替换到 annotation 中设置的 $n 中，例如上面的例子中，重定向的结果示例如下：
 
 - client.com/client rewrites to client.com/。
 - client.com/client/ rewrites to client.com/。
@@ -149,7 +149,7 @@ openssl req -new -nodes -keyout grpc.key -out grpc.csr -config /tmp/openssl.cnf 
 openssl x509 -req -days 3650 -in grpc.csr -signkey grpc.key -out grpc.crt -extensions v3_req -extfile /tmp/openssl.cnf
 ```
 
-此时会生成三个文件：grpc.crt  grpc.csr  grpc.key。
+此时会生成三个文件：grpc.crt grpc.csr grpc.key。
 
 执行下面的命令将证书添加到集群中 gRPC 服务所在的 namespace：
 
@@ -166,7 +166,7 @@ metadata:
   name: ingress-grpc-demo
   namespace: example
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC" # 添加 GRPC 协议支持的 annotation
+    nginx.ingress.kubernetes.io/backend-protocol: 'GRPC' # 添加 GRPC 协议支持的 annotation
 spec:
   ingressClassName: nginx
   rules:
