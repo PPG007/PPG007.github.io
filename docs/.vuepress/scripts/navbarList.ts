@@ -2,10 +2,6 @@ import { NavbarGroup } from '../types';
 
 const groups: Array<NavbarGroup> = [
   {
-    text: '在线工具',
-    icon: 'fa-solid:tools',
-  },
-  {
     text: '前端',
     icon: 'devicon-plain:devicon',
   },

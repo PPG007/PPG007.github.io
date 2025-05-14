@@ -4,9 +4,12 @@ heroImage: /indexImage
 heroFullScreen: true
 tagline: null
 actions:
+  - text: 在线工具
+    link: /tools/
+    type: primary
+    icon: fa-solid:tools
   - text: GitHub
     link: https://github.com/PPG007/PPG007.github.io
-    type: primary
     icon: line-md:github-loop
 highlights:
   - header: 阅前注意
