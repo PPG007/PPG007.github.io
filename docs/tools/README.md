@@ -20,8 +20,12 @@
 
 <URL />
 
+## 个税计算
+
+<Tax />
+
 <script setup>
-import { ObjectId, UUID, Time, Base64, URL } from '@components';
+import { ObjectId, UUID, Time, Base64, URL, Tax } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
 

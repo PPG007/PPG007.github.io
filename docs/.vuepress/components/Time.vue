@@ -9,7 +9,7 @@
   </ElRow>
   <ElRow justify="space-around">
     <ElCol :span="8">
-      <ElDatePicker v-model="selectDate" type="datetime" size="large"/>
+      <ElDatePicker v-model="selectDate" type="datetime" size="large" />
     </ElCol>
     <ElCol :span="8">
       <TimeStamp :value="selectDate" />
@@ -20,7 +20,7 @@
       <TimeStamp @change="onInputChanged" />
     </ElCol>
     <ElCol :span="8">
-      <ElInput readonly :value="inputDateStr" size="large"/>
+      <ElInput readonly :value="inputDateStr" size="large" />
     </ElCol>
   </ElRow>
 </template>
@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { ElInput, ElDatePicker, ElRow, ElCol } from 'element-plus';
-import TimeStamp from './TimeStamp.vue';
+import { TimeStamp } from './core';
 const now = ref(new Date());
 const selectDate = ref<Date>(new Date());
 const inputDateStr = ref<string>();

@@ -25,3 +25,8 @@ export const formatDate = (t: Date | number, unit: 'ms' | 's' = 's') => {
   }
   return date;
 };
+
+export const round = (n: number, digits: number = 2): number => {
+  const temp = Math.pow(10, digits);
+  return Math.round(n * temp) / temp;
+};
