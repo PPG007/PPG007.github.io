@@ -16,7 +16,7 @@
 import { ObjectId, UUID, Time } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
-import 'element-plus/theme-chalk/dark/css-vars.css';
+
 const { isDarkMode } = useDarkMode();
 watch(
   isDarkMode,

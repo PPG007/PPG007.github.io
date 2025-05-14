@@ -55,6 +55,9 @@ export default defineUserConfig({
   bundler: viteBundler({
     viteOptions: {
       plugins: [ElementPlus({})],
+      ssr: {
+        noExternal: ['element-plus'],
+      }
     },
   }),
   alias: {
