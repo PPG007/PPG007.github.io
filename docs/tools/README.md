@@ -12,8 +12,16 @@
 
 <Time />
 
+## Base64
+
+<Base64 />
+
+## URL encode/decode
+
+<URL />
+
 <script setup>
-import { ObjectId, UUID, Time } from '@components';
+import { ObjectId, UUID, Time, Base64, URL } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
 
