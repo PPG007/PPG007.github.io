@@ -3,7 +3,7 @@ import { defineUserConfig } from 'vuepress';
 import { getDirname, path } from 'vuepress/utils';
 import { init } from './scripts';
 import { hopeTheme } from 'vuepress-theme-hope';
-import ElementPlus from 'unplugin-element-plus/vite'
+import ElementPlus from 'unplugin-element-plus/vite';
 
 const { navbar, sidebar } = await init();
 const __dirname = getDirname(import.meta.url);
@@ -55,7 +55,7 @@ export default defineUserConfig({
   bundler: viteBundler({
     viteOptions: {
       plugins: [ElementPlus({})],
-    }
+    },
   }),
   alias: {
     '@components': path.resolve(__dirname, 'components'),
