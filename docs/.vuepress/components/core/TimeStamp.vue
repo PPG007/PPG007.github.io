@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { ElInput, ElSelect, ElOption } from 'element-plus';
-import { formatTimestamp, formatDate } from '../../utils';
+import { formatTimestamp, formatDate } from '../utils';
 type unitType = 'ms' | 's';
 const props = withDefaults(defineProps<{
   value?: Date | number;

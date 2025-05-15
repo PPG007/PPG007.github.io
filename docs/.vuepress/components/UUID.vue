@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { v1, v4 } from 'uuid';
-import { copyToClipboard } from '../utils';
+import { copyToClipboard } from './utils';
 import { ElButton, ElResult, ElText, ElSpace, ElDivider } from 'element-plus';
 const id = ref(v4());
 const genV1 = () => {

@@ -41,7 +41,7 @@
 import { ObjectID } from 'bson';
 import { ElButton, ElTabs, ElTabPane, ElResult, ElText, ElForm, ElFormItem, ElInput, ElDatePicker, ElDivider, ElSpace } from 'element-plus';
 import { ref } from 'vue';
-import { copyToClipboard } from '../utils';
+import { copyToClipboard } from './utils';
 type tab = 'random' | 'time';
 const randomId = ref(new ObjectID());
 const inputId = ref('');

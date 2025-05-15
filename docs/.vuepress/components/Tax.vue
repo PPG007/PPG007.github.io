@@ -60,7 +60,7 @@
 import { ref, computed } from 'vue';
 import { ElRow, ElCol, ElButton, ElInputNumber, ElText, ElTag, ElTooltip, ElDrawer, ElTimeline, ElTimelineItem } from 'element-plus';
 import { TaxProps } from './types';
-import { round } from '../utils';
+import { round } from './utils';
 import { TaxTimelineItem } from './core';
 
 interface TaxRate {

@@ -28,8 +28,12 @@
 
 <PointDistance />
 
+## JSON
+
+<Json />
+
 <script setup>
-import { ObjectId, UUID, Time, Base64, URL, Tax, PointDistance } from '@components';
+import { ObjectId, UUID, Time, Base64, URL, Tax, PointDistance, Json } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
 
