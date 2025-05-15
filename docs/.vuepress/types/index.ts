@@ -7,7 +7,7 @@ interface SidebarConfig {
   [key: string]: Array<SidebarChildren>;
 }
 
-type NavbarGroupName = '前端' | 'Java' | 'Go' | 'Node' | 'PHP' | '云相关' | '数据库' | '在线工具' | 'others';
+type NavbarGroupName = '前端' | 'Java' | 'Go' | 'Node' | 'PHP' | '云相关' | '数据库' | 'others';
 
 interface NavbarConfig {
   group: NavbarGroupName;

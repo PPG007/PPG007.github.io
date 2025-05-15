@@ -1,9 +1,12 @@
 import viteBundler from '@vuepress/bundler-vite';
 import { defineUserConfig } from 'vuepress';
+import { getDirname, path } from 'vuepress/utils';
 import { init } from './scripts';
 import { hopeTheme } from 'vuepress-theme-hope';
+import ElementPlus from 'unplugin-element-plus/vite';
 
 const { navbar, sidebar } = await init();
+const __dirname = getDirname(import.meta.url);
 
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -49,5 +52,15 @@ export default defineUserConfig({
       },
     },
   }),
-  bundler: viteBundler(),
+  bundler: viteBundler({
+    viteOptions: {
+      plugins: [ElementPlus({})],
+      ssr: {
+        noExternal: ['element-plus'],
+      }
+    },
+  }),
+  alias: {
+    '@components': path.resolve(__dirname, 'components'),
+  },
 });

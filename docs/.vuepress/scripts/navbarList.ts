@@ -30,10 +30,6 @@ const groups: Array<NavbarGroup> = [
     icon: 'iconoir:database-tag-solid',
   },
   {
-    text: '在线工具',
-    icon: 'fa-solid:tools',
-  },
-  {
     text: 'others',
     icon: 'material-icon-theme:folder-other',
   },
