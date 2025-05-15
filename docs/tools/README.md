@@ -24,8 +24,12 @@
 
 <Tax />
 
+## 经纬度距离计算
+
+<PointDistance />
+
 <script setup>
-import { ObjectId, UUID, Time, Base64, URL, Tax } from '@components';
+import { ObjectId, UUID, Time, Base64, URL, Tax, PointDistance } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
 

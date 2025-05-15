@@ -32,6 +32,9 @@ importers:
       element-plus:
         specifier: ^2.9.10
         version: 2.9.10(vue@3.5.13(typescript@5.8.3))
+      geolib:
+        specifier: ^3.3.4
+        version: 3.3.4
       js-base64:
         specifier: ^3.7.7
         version: 3.7.7
@@ -1337,6 +1340,9 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  geolib@3.3.4:
+    resolution: {integrity: sha512-EicrlLLL3S42gE9/wde+11uiaYAaeSVDwCUIv2uMIoRBfNJCn8EsSI+6nS3r4TCKDO6+RQNM9ayLq2at+oZQWQ==}
 
   get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -3730,6 +3736,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  geolib@3.3.4: {}
 
   get-caller-file@2.0.5: {}
 

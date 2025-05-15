@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineExpose, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { ElInput, ElSelect, ElOption } from 'element-plus';
 import { formatTimestamp, formatDate } from '../../utils';
 type unitType = 'ms' | 's';

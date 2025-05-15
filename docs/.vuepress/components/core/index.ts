@@ -1,4 +1,5 @@
-import TaxTimelineItem from "./TaxTimelineItem.vue";
-import TimeStamp from "./TimeStamp.vue";
+import TaxTimelineItem from './TaxTimelineItem.vue';
+import TimeStamp from './TimeStamp.vue';
+import EditableTag from './EditableTag.vue';
 
-export { TaxTimelineItem, TimeStamp };
+export { TaxTimelineItem, TimeStamp, EditableTag };
