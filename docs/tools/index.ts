@@ -22,7 +22,8 @@ const config: BarConfig = {
   navbar: {
     text: '在线工具',
     link: '/tools',
-    group: 'others'
+    group: 'others',
+    icon: 'fa-solid:tools',
   },
 }
 

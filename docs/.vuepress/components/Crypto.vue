@@ -22,7 +22,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { ElInput, ElSelect, ElOption, ElRow, ElCol } from 'element-plus';
-import { enc, HmacMD5, HmacSHA1, HmacSHA256, HmacSHA512, MD5, SHA1, SHA256, SHA512 } from 'crypto-js';
+import crypto from 'crypto-js';
+
+const { enc, HmacMD5, HmacSHA1, HmacSHA256, HmacSHA512, MD5, SHA1, SHA256, SHA512 } = crypto;
 
 type method = 'md5' | 'sha1' | 'sha256' | 'sha512';
 const supportedMethods = ['md5', 'sha1', 'sha256', 'sha512'];
