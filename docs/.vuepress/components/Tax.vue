@@ -40,7 +40,7 @@
   </ElRow>
 
   <ElDrawer v-model="isDrawerVisible" :show-close="false">
-    <template #title>
+    <template #header>
       <ElText type="success" size="large">计算结果</ElText>
     </template>
     <ElTimeline>

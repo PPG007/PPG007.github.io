@@ -12,3 +12,8 @@ export interface TaxProps {
   paidTax: number; // 已缴税额
   monthTax: number; // 当月应缴税额
 }
+
+export interface Image {
+  blob: Blob;
+  url: string;
+}
