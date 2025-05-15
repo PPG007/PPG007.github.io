@@ -36,8 +36,12 @@
 
 <OCR />
 
+## Hash 计算
+
+<Crypto />
+
 <script setup>
-import { ObjectId, UUID, Time, Base64, URL, Tax, PointDistance, Json, OCR } from '@components';
+import { ObjectId, UUID, Time, Base64, URL, Tax, PointDistance, Json, OCR, Crypto } from '@components';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { watch } from 'vue';
 
