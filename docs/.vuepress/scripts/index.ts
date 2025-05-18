@@ -1,2 +1,4 @@
 import init from './bars';
-export { init };
+import useHtmlClassWatcher from './useHtmlClassWatcher';
+
+export { init, useHtmlClassWatcher };
