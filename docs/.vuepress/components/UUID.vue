@@ -4,7 +4,7 @@
       <ElText type="primary" size="large">{{ id }}</ElText>
     </template>
     <template #title>
-      <ElButton type="success" size="large" @click="copyToClipboard(id)">复制</ElButton>
+      <ElButton type="primary" size="large" @click="copyToClipboard(id)">复制</ElButton>
     </template>
     <template #sub-title>
       <ElSpace size="large">

@@ -116,7 +116,7 @@ const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
     if (fs.lstatSync(tempPath).isDirectory()) {
       configs.push(...(await parseConfigFiles(tempPath)));
     } else if (files[i].endsWith('.js') && !hasRead) {
-      const result = await import(path.join(__dirname, '../../../', tempPath));
+      const result = await import(/* @vite-ignore */path.join(__dirname, '../../../', tempPath));
       if (result.default) {
         configs.push(result.default as BarConfig);
         hasRead = true;

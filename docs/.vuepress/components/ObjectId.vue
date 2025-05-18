@@ -7,7 +7,7 @@
         </template>
         <template #sub-title class="buttons">
           <ElSpace size="large">
-            <ElButton type="success" size="large" @click="copyToClipboard(randomId.toHexString())">复制</ElButton>
+            <ElButton type="primary" size="large" @click="copyToClipboard(randomId.toHexString())">复制</ElButton>
             <ElDivider direction="vertical"/>
             <ElButton size="large" @click="refresh">刷新</ElButton>
           </ElSpace>
