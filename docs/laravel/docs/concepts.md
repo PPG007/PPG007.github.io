@@ -806,6 +806,72 @@ class AppServiceProvider extends ServiceProvider
 
 ## Service Providers
 
-要自定义 Service Provider，需要继承 `Illuminate\Support\ServiceProvider`，大多数情况下应该都包含 register 和 boot 两个方法。在 register 方法中，应该只绑定服务到容器中，不应该尝试注册任何事件监听器、路由或任何其他功能。
+要自定义 Service Provider，需要创建一个类并继承 `Illuminate\Support\ServiceProvider`，大多数情况下应该都包含 register 和 boot 两个方法。
+
+::: tip
+
+使用 `php artisan make:provider DemoProvider` 可以在 `app/Providers` 目录下创建一个 Service Provider，同时注册到 `bootstrap/providers.php` 文件中。
+
+:::
+
+### register 方法
+
+在 register 方法中，应该只绑定服务到容器中，不应该尝试注册任何事件监听器、路由或任何其他功能。
+
+除了此前可以使用 `bind()`、`singleton()` 等方法提供绑定之外，还可以使用 `$bindings` 和 `$singletons` 属性来提供绑定：
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    public $bindings = [
+        AnimalService::class => CatService::class,
+    ];
+    public $singletons = [CounterService::class];
+}
+```
+
+### boot 方法
+
+`boot()` 方法将会在所有 Service Provider 的 `register()` 方法被调用后调用，因此可以安全地使用其他服务，还可以注册事件监听器、路由和任何其他需要启动的应用程序的其他功能。
+
+例如在自定义的 Service Provider 中使用另一个 Service Provider 绑定的内容：
+
+```php
+class DemoProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        //
+    }
+    public function boot(): void
+    {
+        $animal = $this->app->get(AnimalService::class);
+        $animal->run();
+    }
+}
+```
+
+也可以为 boot 方法指定类型提示：
+
+```php
+public function boot(AnimalService $animalService): void
+{
+    $animalService->run();
+}
+```
+
+### 注册 Service Provider
+
+所有的 Service Provider 都需要在 `bootstrap/providers.php` 文件中注册，此文件返回一个包含所有需要注册的 Service Provider 的数组。
+
+### 延迟加载
+
+如果一个 Service Provider 只是在容器中进行绑定，那么可以选择推迟 register，直到提供的绑定被用到时才注册，这样可以提升性能。
+
+要实现延迟加载，需要实现 `Illuminate\Contracts\Support\DeferrableProvider` 接口，并实现 `provides` 方法，此方法返回一个数组，包含所有提供的绑定。
 
 ## Facades
+
+Facades 提供了简洁的语法来使用 Laravel 几乎所有的功能。
+
+Facade 命名空间内的具体功能类是通过继承 `Facade` 类并重写 `getFacadeAccessor` 方法，此方法返回一个字符串，在使用任何静态方法时，Laravel 会使用这个字符串来从容器中解析出对应的绑定。
