@@ -4,7 +4,12 @@ const config: BarConfig = {
   sidebar: {
     '/laravel': [
       {
-        children: ['/laravel/docs/start.md', '/laravel/docs/concepts.md', '/laravel/docs/deploy.md'],
+        children: [
+          '/laravel/docs/start.md',
+          '/laravel/docs/concepts.md',
+          '/laravel/docs/deploy.md',
+          '/laravel/docs/routing.md',
+        ],
         text: 'Laravel',
       },
     ],
