@@ -128,3 +128,92 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
 ```
+
+## 路由参数
+
+### 必传参数
+
+路由参数用 `{}` 包裹，参数名应该由字母字符或者`_`组成，路由参数根据顺序注入到路由处理回调中，回调中的参数名无关紧要。
+
+```php
+Route::post('/{username}/hello', function (string $name) {
+    return 'Hello' . $name;
+});
+```
+
+如果路由回调中需要容器注入参数，那么路由参数应该排在注入参数后面：
+
+```php
+Route::post('/{username}/hello', function (AnimalService $animalService, string $name) {
+    $animalService->run();
+    return 'Hello ' . $name;
+});
+```
+
+### 可选参数
+
+如果一个路由参数可以不传，那么需要在参数名称后添加 `?` 标记并在回调函数中指定默认值：
+
+```php
+Route::post('/hello/{username?}', function (AnimalService $animalService, string $name = 'PPG007') {
+    $animalService->run();
+    return 'Hello ' . $name;
+});
+```
+
+::: tip
+
+可选参数必须在路由的末尾。
+
+:::
+
+### 正则表达式限制
+
+可以使用 where 方法来指定一个路由中参数需要满足的正则表达式，例如限制传入的 id 是 objectId：
+
+```php
+Route::get('/orders/{id}', function (string $id) {
+    return $id;
+})->where([
+    'id' => '[a-f,0-9]{24}'
+]);
+```
+
+Laravel 也提供了一些内置的规则：
+
+```php
+Route::get('/orders/{type}/{id}', function (string $type, string $id) {
+    return $id;
+})->where([
+    'id' => '[a-f,0-9]{24}'
+])->whereIn('type', ['customer', 'business']);
+```
+
+::: info
+
+如果传入的参数不能匹配正则表达式，那么会返回 404。
+
+:::
+
+如果希望路由参数始终受到正则表达式限制，那么可以在 Service Provider 中使用 `pattern` 方法：
+
+```php
+public function boot(): void
+{
+    Route::pattern('id', '[a-f,0-9]{24}');
+}
+```
+
+Laravel 路由允许路由参数中出现 `/` 之外的所有字符，如果需要在路由参数中包含 `/` 字符， 那么需要设置正则表达式明确允许：
+
+```php
+Route::post('/proxy/{path}', function (string $path) {
+    return $path;
+})->where('path', '.*');
+```
+
+::: tip
+
+与可选参数相同，出现 `/` 字符的参数也必须在路由的末尾。
+
+:::
