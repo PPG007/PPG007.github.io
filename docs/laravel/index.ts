@@ -9,6 +9,7 @@ const config: BarConfig = {
           '/laravel/docs/concepts.md',
           '/laravel/docs/deploy.md',
           '/laravel/docs/routing.md',
+          '/laravel/docs/middleware.md',
         ],
         text: 'Laravel',
       },
