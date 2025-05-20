@@ -217,3 +217,149 @@ Route::post('/proxy/{path}', function (string $path) {
 与可选参数相同，出现 `/` 字符的参数也必须在路由的末尾。
 
 :::
+
+## 命名路由
+
+命名路由可以方便的为特定路由生成 URL 或者重定向，使用 `name` 方法指定路由名称：
+
+```php
+Route::get('/name', function () {
+    return 'name';
+})->name('name');
+
+Route::redirect('test', 'name');
+```
+
+::: tip
+
+路由名称应当唯一。
+
+:::
+
+如果路由具有参数，那么可以使用 `route` 方法生成 URL：
+
+```php
+Route::post('/proxy/{path}', function (Request $req) {
+    return route('proxy', ['path' => 'test/path'], false);
+})->where('path', '.*')->name('proxy');
+```
+
+`route` 方法的第一个参数是路由名称，第二个参数是路由参数，如果提供的路由参数没有定义在路由路径中，那么这些参数会被追加到 query 中，第三个参数表示是否生成绝对路径，默认为 true。
+
+使用 `named` 方法可以检查当前请求是否被分发到了命名路由：
+
+```php
+Route::post('/proxy/{path}', function (Request $req) {
+    return $req->route()->named('proxy');
+})->where('path', '.*')->name('proxy');
+```
+
+## 路由组
+
+定义基础的路由组：
+
+```php
+Route::group([], function () {
+    Route::get('/a', function () {
+        return 'a';
+    });
+});
+```
+
+### Controller
+
+如果一组路由在同一个 Controller 里，可以使用 `controller` 方法：
+
+::: code-tabs#group-controller
+
+@tab DemoController
+
+```php
+class DemoController extends Controller
+{
+    public function getMember(string $id)
+    {
+        return 'getMember';
+    }
+
+    public function createMember()
+    {
+        return 'createMember';
+    }
+}
+```
+
+@tab api.php
+
+```php
+Route::controller(DemoController::class)->group(function () {
+    Route::get('/members/{id}', 'getMember');
+    Route::post('/members', 'createMember');
+});
+```
+
+:::
+
+### 路由前缀
+
+使用 `prefix` 方法可以给一组路由添加前缀：
+
+```php
+Route::controller(DemoController::class)->prefix('demo')->group(function () {
+    Route::get('/members/{id}', 'getMember');
+    Route::post('/members', 'createMember');
+});
+```
+
+### 路由名称前缀
+
+使用 `name` 方法可以给一组路由添加名称前缀：
+
+```php
+Route::controller(DemoController::class)->prefix('demo')->name('demo.')->group(function () {
+    Route::get('/members/{id}', 'getMember')->name('get');
+    Route::post('/members', 'createMember')->name('create');
+});
+```
+
+::: tip
+
+`name` 方法中设置的前缀将被直接拼接到子路由的名称上，所以如果需要分隔符的话需要在 `name` 里添加。
+
+:::
+
+## 路由模型绑定
+
+[TODO](https://laravel.com/docs/12.x/routing#route-model-binding)
+
+## 404 路由
+
+使用 `fallback` 方法可以定义一个 404 路由：
+
+```php
+Route::fallback(function () {
+    return 'NotFound';
+});
+```
+
+## 速率限制
+
+[TODO](https://laravel.com/docs/12.x/routing#rate-limiting)
+
+## CORS
+
+Laravel 提供了 `HandleCors` 中间件并根据配置自动响应 CORS OPTIONS 请求，如果需要自定义 CORS 配置，那么可以通过 `php artisan config:publish cors` 命令将配置文件暴露出来。
+
+## 路由缓存
+
+使用 `route:cache` 命令可以缓存路由，缓存的路由会提高路由性能：
+
+```shell
+php artisan route:cache
+```
+
+使用 `route:clear` 命令可以清除路由缓存：
+
+```shell
+php artisan route:clear
+```
