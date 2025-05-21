@@ -130,10 +130,132 @@ Route::controller(DemoController::class)->middleware('test')->group(function () 
 });
 ```
 
+Laravel 包含预定义的 `web` 和 `api` 中间件组，它们分别对应于 `web` 和 `api` 路由组，这两个中间件组是默认生效的，如果希望将自定义中间件添加到这些组中，可以使用 `web` 或 `api` 方法：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->api(
+        prepend: [Auth::class],
+    );
+})
+```
+
 ### 中间件别名
+
+如果一个中间件类名比较长，那么可以使用 `alias` 方法给中间件起别名：
+
+::: code-tabs#group-middleware-alias
+
+@tab app.php
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'a' => Auth::class,
+        'f' => First::class,
+        's' => Second::class,
+    ]);
+})
+```
+
+@tab api.php
+
+```php
+Route::controller(DemoController::class)->middleware(['a', 'f', 's'])->group(function () {
+    Route::get('/members/{id}', 'getMember')->name('get');
+    Route::post('/members', 'createMember')->name('create');
+});
+```
+
+:::
 
 ### 中间件排序
 
+如果需要中间件按顺序执行，那么可以在 `bootstrap/app.php` 中使用 `priority` 方法：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->priority([
+        First::class,
+        Second::class,
+        Auth::class,
+    ]);
+})
+```
+
 ## 中间件参数
 
-## 可终止中间件
+中间件还可以接收参数，参数会在 `handle` 方法中的 $next 参数后作为参数传入：
+
+::: code-tabs#group-middleware-param
+
+@tabs api.php
+
+```php
+Route::controller(DemoController::class)->middleware(['a', 'f:demo', 's'])->group(function () {
+    Route::get('/members/{id}', 'getMember')->name('get');
+    Route::post('/members', 'createMember')->name('create');
+});
+```
+
+@tabs app.php
+
+```php
+public function handle(Request $request, Closure $next, $scene): Response
+{
+    Log::info('first', [
+        'scene' => $scene,
+    ]);
+    return $next($request);
+}
+```
+
+:::
+
+如果有多个参数，可以使用 `:` 分隔：
+
+```php
+Route::controller(DemoController::class)->middleware(['a', 'f:demo,test', 's'])->group(function () {
+    Route::get('/members/{id}', 'getMember')->name('get');
+    Route::post('/members', 'createMember')->name('create');
+});
+```
+
+## 终止后执行中间件
+
+如果需要在响应发出后继续执行一些逻辑，可以在中间件中定义 `terminate` 方法，此方法将在使用了 FastCGI 的情况下，在响应发送后自动被调用。
+
+```php
+<?php
+
+namespace Illuminate\Session\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class TerminatingMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        return $next($request);
+    }
+
+    /**
+     * Handle tasks after the response has been sent to the browser.
+     */
+    public function terminate(Request $request, Response $response): void
+    {
+        // ...
+    }
+}
+```
+
+`terminate` 方法同时接收请求和响应，终止后执行中间件应该添加到全局中间件中。
+
+在中间件上调用 `terminate` 方法时，Laravel 将会解析一个新的中间件实例，如果要在调用 `handle` 和 `terminate` 方法中使用相同的实例，应该在 AppServiceProvider 中将这个中间件注册为单例。
