@@ -348,6 +348,144 @@ public function update(Request $request, string $id)
 
 :::
 
+如果需要合并其他内容到请求中，可以使用 `merge` 或 `mergeIfMissing` 方法：
+
+```php
+public function update(Request $request, string $id)
+{
+    $params = [
+        'name' => 'mergedName',
+        'newProp' => 'newVal',
+    ];
+    $request->mergeIfMissing($params);
+    Log::info('update', $request->input());
+    return '';
+}
+```
+
+### 输入校验
+
+`has` 方法可以判断参数是否存在值，如果传入的是数组，那么数组中所有的参数都存在才会返回 true，或者使用 `hasAny` 方法判断任一参数存在：
+
+```php
+public function update(Request $request, string $id)
+{
+    Log::info('update', [
+        'has' => $request->has('name'),
+        'hasAll' => $request->has(['name', 'notExists']),
+        'hasAny' => $request->hasAny(['name', 'notExists']),
+    ]);
+    return '';
+}
+```
+
+`whenHas` 可以在参数存在时执行闭包函数，此方法接收两个闭包，第一个闭包将在参数存在时执行，第二个闭包将在参数不存在时执行：
+
+```php
+public function update(Request $request, string $id)
+{
+    $request->whenHas('notExists', function () {
+        Log::info('has notExists value');
+    }, function () {
+        Log::info('notExists is not present');
+    });
+    return '';
+}
+```
+
+如果需要判断参数是否存在且不是空字符串，可以使用 `filled` 方法；如果需要判断参数是否不存在或者为空字符串，可以使用 `isNotFilled` 方法：
+
+```php
+public function update(Request $request, string $id)
+{
+    Log::info('update', [
+        'filled' => $request->filled('name'),
+        'allFilled' => $request->filled(['name', 'empty']),
+        'notFilled' => $request->isNotFilled('empty'),
+        'allNotFilled' => $request->isNotFilled(['name', 'empty']),
+        'anyFilled' => $request->anyFilled(['name', 'empty']),
+    ]);
+    return '';
+}
+```
+
+当 `filled` 参数传入数组时，只有全部的参数都不为空字符串才返回 true。
+
+当 `isNotFilled` 参数传入数组时，只有全部的参数都为空字符串才返回 true。
+
+如果要判断任一参数不为空字符串，使用 `anyFilled` 方法。
+
+`whenFilled` 方法将会在传入的参数不是空字符串时执行闭包，同样接收两个闭包，第一个当参数不为空字符串时执行，第二个当参数为空字符串或为空时执行：
+
+```php
+public function update(Request $request, string $id)
+{
+    $request->whenFilled('empty', function () {
+        Log::info('empty param not empty');
+    }, function () {
+        Log::info('empty param empty');
+    });
+    return '';
+}
+```
+
+要判断请求中的是否包含某个参数可以使用 `missing` 和 `whenMissing` 方法：
+
+```php
+public function update(Request $request, string $id)
+{
+    Log::info('update', [
+        'missing' => $request->missing('empty'),
+    ]);
+    $request->whenMissing('empty', function () {
+        Log::info('missing empty');
+    }, function () {
+        Log::info('empty exists');
+    });
+    return '';
+}
+```
+
+### Cookies
+
+获取 Cookie 值：
+
+```php
+$value = $request->cookie('name');
+```
+
+### 参数格式转换
+
+默认情况下，Laravel 会在全局中间件中包含 `Illuminate\Foundation\Http\Middleware\TrimStrings` 和 `Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull` 中间件，这两个中间件会对传入的字符串参数进行 trim 操作，将空字符串转换成 null。
+
+如果希望禁用这两个中间件，可以在 `bootstrap/app.php` 中移除：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->remove([
+        ConvertEmptyStringsToNull::class,
+        TrimStrings::class,
+    ]);
+})
+```
+
+如果只想对个别情况移除上面的中间件，可以使用 `convertEmptyStringsToNull` 和 `trimStrings`，当传入的闭包函数返回 false 时，中间件将生效：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trimStrings([
+        function (Request $request) {
+        return $request->hasHeader('test');
+        }
+    ]);
+    $middleware->convertEmptyStringsToNull([
+        function (Request $request) {
+            return $request->hasHeader('test');
+        }
+    ]);
+})
+```
+
 ## 文件
 
 ## 配置
