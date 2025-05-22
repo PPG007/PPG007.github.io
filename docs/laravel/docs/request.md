@@ -488,4 +488,40 @@ $value = $request->cookie('name');
 
 ## 文件
 
+分布式集群的场景内，上传文件最好还是放入 OSS 服务内，前端使用后端签发的 URL 直传，不再经过后端。
+
 ## 配置
+
+### 可信代理
+
+一般来说，分布式集群或者代理转发场景中，HTTPS 请求的 TLS 验证应该止于负载均衡服务器或代理服务器，具体的业务服务只会接触到 HTTP 请求，在这种场景下，Laravel 在使用 `url` 工具时不会生成 HTTPS 的 URL，要解决此问题，可以启用 `Illuminate\Http\Middleware\TrustProxies` 中间件：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustProxies(at: [
+        '192.168.1.1',
+        '10.0.0.0/8',
+    ]);
+})
+```
+
+也可以设置受信任的请求头：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustProxies(headers: Request::HEADER_X_FORWARDED_FOR |
+        Request::HEADER_X_FORWARDED_HOST |
+        Request::HEADER_X_FORWARDED_PORT |
+        Request::HEADER_X_FORWARDED_PROTO |
+        Request::HEADER_X_FORWARDED_AWS_ELB
+    );
+})
+```
+
+也可以直接信任所有的代理：
+
+```php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustProxies(at: '*');
+})
+```
