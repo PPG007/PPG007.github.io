@@ -12,6 +12,7 @@ const config: BarConfig = {
           '/laravel/docs/middleware.md',
           '/laravel/docs/controller.md',
           '/laravel/docs/request.md',
+          '/laravel/docs/response.md',
         ],
         text: 'Laravel',
       },
