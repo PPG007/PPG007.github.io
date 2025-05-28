@@ -14,6 +14,7 @@ const config: BarConfig = {
           '/laravel/docs/request.md',
           '/laravel/docs/response.md',
           '/laravel/docs/session.md',
+          '/laravel/docs/validation.md',
           '/laravel/docs/utils.md',
         ],
         text: 'Laravel',
