@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, watch } from 'vue';
 import JsonEditor from 'json-editor-vue';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { ElTabs, ElTabPane } from 'element-plus';
@@ -19,9 +19,12 @@ const tabs = ref([{
 }])
 const { isDarkMode } = useDarkMode();
 
-const className = computed(() => {
-  return isDarkMode.value ? 'jse-theme-dark' : '';
-});
+const className = ref('');
+
+watch(isDarkMode, (isDark) => {
+  className.value = isDark ? 'jse-theme-dark' : '';
+}, { immediate: true })
+
 const onTabsEdited = (name: string | number | undefined, action: 'add' | 'remove') => {
   if (action === 'remove' && name) {
     tabs.value = tabs.value.filter((tab) => tab.name !== name);
