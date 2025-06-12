@@ -1,56 +1,55 @@
 <template>
-  <ElRow v-for="(point, index) in points" :key="index" justify="center" align="middle">
-    <ElCol :span="2">
+  <el-row v-for="(point, index) in points" :key="index" justify="center" align="middle">
+    <el-col :span="2">
       <EditableTag type="primary" v-model="point.name" :initialValue="index.toString()" />
-    </ElCol>
-    <ElCol :span="2">
-      <ElText>经度：</ElText>
-    </ElCol>
-    <ElCol :span="5">
-      <ElInputNumber v-model="point.lng" :controls="false" :min="0" :precision="4" />
-    </ElCol>
-    <ElCol :span="2">
-      <ElText>纬度：</ElText>
-    </ElCol>
-    <ElCol :span="5">
-      <ElInputNumber v-model="point.lat" :controls="false" :min="0" :precision="4" />
-    </ElCol>
-    <ElCol :span="2">
-      <ElButton type="danger" :disabled="index < 2" @click="deletePoint(index)">删除</ElButton>
-    </ElCol>
-  </ElRow>
-  <ElRow justify="space-around" align="middle">
-    <ElCol :span="1">
-      <ElButton type="primary" size="large" @click="appendPoint">添加坐标点</ElButton>
-    </ElCol>
-    <ElCol :span="1">
-      <ElButton type="primary" size="large" @click="calculate">计算</ElButton>
-    </ElCol>
-  </ElRow>
-  <ElDialog v-model="isDialogVisible">
-    <ElTable :data="visibleDistanceList" :stripe="true" height="500">
-      <ElTableColumn prop="from" label="起点">
+    </el-col>
+    <el-col :span="2">
+      <el-text>经度：</el-text>
+    </el-col>
+    <el-col :span="5">
+      <el-input-number v-model="point.lng" :controls="false" :min="0" :precision="4" />
+    </el-col>
+    <el-col :span="2">
+      <el-text>纬度：</el-text>
+    </el-col>
+    <el-col :span="5">
+      <el-input-number v-model="point.lat" :controls="false" :min="0" :precision="4" />
+    </el-col>
+    <el-col :span="2">
+      <el-button type="danger" :disabled="index < 2" @click="deletePoint(index)">删除</el-button>
+    </el-col>
+  </el-row>
+  <el-row justify="space-around" align="middle">
+    <el-col :span="1">
+      <el-button type="primary" size="large" @click="appendPoint">添加坐标点</el-button>
+    </el-col>
+    <el-col :span="1">
+      <el-button type="primary" size="large" @click="calculate">计算</el-button>
+    </el-col>
+  </el-row>
+  <el-dialog v-model="isDialogVisible">
+    <el-table :data="visibleDistanceList" :stripe="true" height="500">
+      <el-table-column prop="from" label="起点">
         <template #header>
-          <ElSelect v-model="selectedFromList" multiple placeholder="选择起点" collapse-tags collapse-tags-tooltip>
-            <ElOption v-for="(item, index) in fromFilters" :key="index" :label="item" :value="item" />
-          </ElSelect>
+          <el-select v-model="selectedFromList" multiple placeholder="选择起点" collapse-tags collapse-tags-tooltip>
+            <el-option v-for="(item, index) in fromFilters" :key="index" :label="item" :value="item" />
+          </el-select>
         </template>
-      </ElTableColumn>
-      <ElTableColumn prop="to" label="终点">
+      </el-table-column>
+      <el-table-column prop="to" label="终点">
         <template #header>
-          <ElSelect v-model="selectedToList" multiple placeholder="选择终点" collapse-tags collapse-tags-tooltip>
-            <ElOption v-for="(item, index) in toFilters" :key="index" :label="item" :value="item" />
-          </ElSelect>
+          <el-select v-model="selectedToList" multiple placeholder="选择终点" collapse-tags collapse-tags-tooltip>
+            <el-option v-for="(item, index) in toFilters" :key="index" :label="item" :value="item" />
+          </el-select>
         </template>
-      </ElTableColumn>
-      <ElTableColumn prop="distance" label="距离（米）" sortable />
-    </ElTable>
-  </ElDialog>
+      </el-table-column>
+      <el-table-column prop="distance" label="距离（米）" sortable />
+    </el-table>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { ElRow, ElCol, ElInputNumber, ElButton, ElDialog, ElText, ElTable, ElTableColumn, ElSelect, ElOption } from 'element-plus';
 import { getPreciseDistance } from 'geolib';
 import { EditableTag } from './core';
 

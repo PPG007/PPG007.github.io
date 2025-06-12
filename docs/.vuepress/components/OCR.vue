@@ -1,35 +1,35 @@
 <template>
-  <ElRow v-if="selectedImage">
-    <ElCol :span="24">
-      <ElImage :src="selectedImage?.url" />
-    </ElCol>
-  </ElRow>
-  <ElRow justify="space-around" align="middle">
-    <ElCol :span="8">
-      <ElButton @click="readImage" size="large" type="primary">从剪切板读取图片</ElButton>
-    </ElCol>
-    <ElCol :span="8">
-      <ElUpload accept="image/*" :limit="1" :auto-upload="false" :on-change="onImageSelected" :show-file-list="false">
-        <ElButton size="large" type="primary">从文件选取图片</ElButton>
-      </ElUpload>
-    </ElCol>
-    <ElCol :span="3">
-      <ElSelect v-model="selectedLanguage" size="large">
-        <ElOption v-for="(value, key) in supportedLanguages" :key="key" :label="value" :value="key" />
-      </ElSelect>
-    </ElCol>
-  </ElRow>
-  <ElRow v-if="recognizedText">
-    <ElCol>
-      <ElInput :value="recognizedText" readonly type="textarea" resize="none" :autosize="{ minRows: 20 }" />
-    </ElCol>
-  </ElRow>
+  <el-row v-if="selectedImage">
+    <el-col :span="24">
+      <el-image :src="selectedImage?.url" />
+    </el-col>
+  </el-row>
+  <el-row justify="space-around" align="middle">
+    <el-col :span="8">
+      <el-button @click="readImage" size="large" type="primary">从剪切板读取图片</el-button>
+    </el-col>
+    <el-col :span="8">
+      <el-upload accept="image/*" :limit="1" :auto-upload="false" :on-change="onImageSelected" :show-file-list="false">
+        <el-button size="large" type="primary">从文件选取图片</el-button>
+      </el-upload>
+    </el-col>
+    <el-col :span="3">
+      <el-select v-model="selectedLanguage" size="large">
+        <el-option v-for="(value, key) in supportedLanguages" :key="key" :label="value" :value="key" />
+      </el-select>
+    </el-col>
+  </el-row>
+  <el-row v-if="recognizedText">
+    <el-col>
+      <el-input :value="recognizedText" readonly type="textarea" resize="none" :autosize="{ minRows: 20 }" />
+    </el-col>
+  </el-row>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { ElImage, ElButton, ElRow, ElCol, ElUpload, UploadFile, ElInput, ElSelect, ElOption } from 'element-plus';
 import { readImageFromClipboard, setLoading } from './utils';
+import { UploadFile } from 'element-plus';
 import tesseract from 'tesseract.js';
 import { Image } from './types';
 

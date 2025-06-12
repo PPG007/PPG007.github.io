@@ -1,17 +1,16 @@
 <template>
-  <ElInput v-model="inputText" :readonly="readonly" size="large">
+  <el-input v-model="inputText" :readonly="readonly" size="large">
     <template #append v-if="!disableUnit">
-      <ElSelect v-model="unit" size="large">
-        <ElOption label="秒" value="s" />
-        <ElOption label="毫秒" value="ms" />
-      </ElSelect>
+      <el-select v-model="unit" size="large">
+        <el-option label="秒" value="s" />
+        <el-option label="毫秒" value="ms" />
+      </el-select>
     </template>
-  </ElInput>
+  </el-input>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { ElInput, ElSelect, ElOption } from 'element-plus';
 import { formatTimestamp, formatDate } from '../utils';
 type unitType = 'ms' | 's';
 const props = withDefaults(defineProps<{

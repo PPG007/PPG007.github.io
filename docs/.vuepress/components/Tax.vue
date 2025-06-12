@@ -1,64 +1,63 @@
 <template>
-  <ElRow justify="center" align="middle">
-    <ElCol :span="5">
-      <ElText size="large" type="primary">专项附加扣除</ElText>
-    </ElCol>
-    <ElCol :span="5">
-      <ElInputNumber v-model="extraDeductionAmount" :min="0" :precision="2" size="large" :controls="false">
-      </ElInputNumber>
-    </ElCol>
-  </ElRow>
-  <ElRow justify="center" align="middle">
-    <ElCol :span="5">
-      <ElTooltip placement="left" content="新建行的内容将与最后一行相同">
-        <ElButton size="large" :disabled="!appendable" @click="appendIncome">添加一行</ElButton>
-      </ElTooltip>
-    </ElCol>
-    <ElCol :span="5">
-      <ElButton size="large" type="primary" @click="calculate">计算</ElButton>
-    </ElCol>
-  </ElRow>
-  <ElRow justify="center" align="middle" v-for="(income, index) in incomeList" :key="index">
-    <ElCol :span="3">
-      <ElTag type="primary">{{ index + 1 }}月</ElTag>
-    </ElCol>
-    <ElCol :span="3">
-      <ElText size="large">税前收入：</ElText>
-    </ElCol>
-    <ElCol :span="5">
-      <ElInputNumber v-model="income.income" :controls="false" :min="0" :precision="2" />
-    </ElCol>
-    <ElCol :span="5">
-      <ElText size="large">五险一金等专项扣除：</ElText>
-    </ElCol>
-    <ElCol :span="5">
-      <ElInputNumber v-model="income.deductionAmount" :controls="false" :min="0" :precision="2" />
-    </ElCol>
-    <ElCol :span="2">
-      <ElButton @click="deleteItem(index)" :disabled="!index" type="danger">删除</ElButton>
-    </ElCol>
-  </ElRow>
+  <el-row justify="center" align="middle">
+    <el-col :span="5">
+      <el-text size="large" type="primary">专项附加扣除</el-text>
+    </el-col>
+    <el-col :span="5">
+      <el-input-number v-model="extraDeductionAmount" :min="0" :precision="2" size="large" :controls="false">
+      </el-input-number>
+    </el-col>
+  </el-row>
+  <el-row justify="center" align="middle">
+    <el-col :span="5">
+      <el-tooltip placement="left" content="新建行的内容将与最后一行相同">
+        <el-button size="large" :disabled="!appendable" @click="appendIncome">添加一行</el-button>
+      </el-tooltip>
+    </el-col>
+    <el-col :span="5">
+      <el-button size="large" type="primary" @click="calculate">计算</el-button>
+    </el-col>
+  </el-row>
+  <el-row justify="center" align="middle" v-for="(income, index) in incomeList" :key="index">
+    <el-col :span="3">
+      <el-tag type="primary">{{ index + 1 }}月</el-tag>
+    </el-col>
+    <el-col :span="3">
+      <el-text size="large">税前收入：</el-text>
+    </el-col>
+    <el-col :span="5">
+      <el-input-number v-model="income.income" :controls="false" :min="0" :precision="2" />
+    </el-col>
+    <el-col :span="5">
+      <el-text size="large">五险一金等专项扣除：</el-text>
+    </el-col>
+    <el-col :span="5">
+      <el-input-number v-model="income.deductionAmount" :controls="false" :min="0" :precision="2" />
+    </el-col>
+    <el-col :span="2">
+      <el-button @click="deleteItem(index)" :disabled="!index" type="danger">删除</el-button>
+    </el-col>
+  </el-row>
 
-  <ElDrawer v-model="isDrawerVisible" :show-close="false">
+  <el-drawer v-model="isDrawerVisible" :show-close="false">
     <template #header>
-      <ElText type="success" size="large">计算结果</ElText>
+      <el-text type="success" size="large">计算结果</el-text>
     </template>
-    <ElTimeline>
-      <ElTimelineItem v-for="(item, index) in taxProps" :key="index" hide-timestamp>
+    <el-timeline>
+      <el-timeline-item v-for="(item, index) in taxProps" :key="index" hide-timestamp>
         <TaxTimelineItem :value="item" />
-      </ElTimelineItem>
+      </el-timeline-item>
 
-      <ElTimelineItem>
+      <el-timeline-item>
         <h3>累计应缴纳税额</h3>
         {{  totalTax }}元
-      </ElTimelineItem>
-    </ElTimeline>
-  </ElDrawer>
+      </el-timeline-item>
+    </el-timeline>
+  </el-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { ElRow, ElCol, ElButton, ElInputNumber, ElText, ElTag, ElTooltip, ElDrawer, ElTimeline, ElTimelineItem } from 'element-plus';
 import { TaxProps } from './types';
 import { round } from './utils';
 import { TaxTimelineItem } from './core';

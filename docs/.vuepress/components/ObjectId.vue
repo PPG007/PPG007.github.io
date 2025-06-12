@@ -1,45 +1,44 @@
 <template>
-  <ElTabs v-model="tab" @tab-change="refresh">
-    <ElTabPane label="随机 ObjectId" name="random">
-      <ElResult>
+  <el-tabs v-model="tab" @tab-change="refresh">
+    <el-tab-pane label="随机 ObjectId" name="random">
+      <el-result>
         <template #icon>
-          <ElText type="primary" size="large">{{ randomId.toHexString() }}</ElText>
+          <el-text type="primary" size="large">{{ randomId.toHexString() }}</el-text>
         </template>
         <template #sub-title class="buttons">
-          <ElSpace size="large">
-            <ElButton type="primary" size="large" @click="copyToClipboard(randomId.toHexString())">复制</ElButton>
-            <ElDivider direction="vertical"/>
-            <ElButton size="large" @click="refresh">刷新</ElButton>
-          </ElSpace>
+          <el-space size="large">
+            <el-button type="primary" size="large" @click="copyToClipboard(randomId.toHexString())">复制</el-button>
+            <el-divider direction="vertical"/>
+            <el-button size="large" @click="refresh">刷新</el-button>
+          </el-space>
         </template>
-      </ElResult>
-    </ElTabPane>
+      </el-result>
+    </el-tab-pane>
 
-    <ElTabPane label="ObjectId 时间转换" name="time">
-      <ElForm inline label-position="top" size="large" class="form-inline">
-        <ElFormItem label="ObjectId">
-          <ElInput v-model="inputId" clearable />
-        </ElFormItem>
-        <ElFormItem label="对应时间">
-          <ElInput :value="getTime(inputId)" readonly />
-        </ElFormItem>
-      </ElForm>
+    <el-tab-pane label="ObjectId 时间转换" name="time">
+      <el-form inline label-position="top" size="large" class="form-inline">
+        <el-form-item label="ObjectId">
+          <el-input v-model="inputId" clearable />
+        </el-form-item>
+        <el-form-item label="对应时间">
+          <el-input :value="getTime(inputId)" readonly />
+        </el-form-item>
+      </el-form>
 
-      <ElForm inline label-position="top" size="large" class="form-inline">
-        <ElFormItem label="时间">
-          <ElDatePicker v-model="inputTime" type="datetime" />
-        </ElFormItem>
-        <ElFormItem label="对应 ObjectId">
-          <ElInput :value="objectIdFromTime(inputTime)" readonly />
-        </ElFormItem>
-      </ElForm>
-    </ElTabPane>
-  </ElTabs>
+      <el-form inline label-position="top" size="large" class="form-inline">
+        <el-form-item label="时间">
+          <el-date-picker v-model="inputTime" type="datetime" />
+        </el-form-item>
+        <el-form-item label="对应 ObjectId">
+          <el-input :value="objectIdFromTime(inputTime)" readonly />
+        </el-form-item>
+      </el-form>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script setup lang="ts">
 import { ObjectID } from 'bson';
-import { ElButton, ElTabs, ElTabPane, ElResult, ElText, ElForm, ElFormItem, ElInput, ElDatePicker, ElDivider, ElSpace } from 'element-plus';
 import { ref } from 'vue';
 import { copyToClipboard } from './utils';
 type tab = 'random' | 'time';
