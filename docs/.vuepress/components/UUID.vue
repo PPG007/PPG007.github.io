@@ -1,26 +1,25 @@
 <template>
-  <ElResult>
+  <el-result>
     <template #icon>
-      <ElText type="primary" size="large">{{ id }}</ElText>
+      <el-text type="primary" size="large">{{ id }}</el-text>
     </template>
     <template #title>
-      <ElButton type="primary" size="large" @click="copyToClipboard(id)">复制</ElButton>
+      <el-button type="primary" size="large" @click="copyToClipboard(id)">复制</el-button>
     </template>
     <template #sub-title>
-      <ElSpace size="large">
-        <ElButton @click="genV1" size="large">生成 UUID V1</ElButton>
-        <ElDivider direction="vertical" />
-        <ElButton @click="genV4" size="large">生成 UUID V4</ElButton>
-      </ElSpace>
+      <el-space size="large">
+        <el-button @click="genV1" size="large">生成 UUID V1</el-button>
+        <el-divider direction="vertical" />
+        <el-button @click="genV4" size="large">生成 UUID V4</el-button>
+      </el-space>
     </template>
-  </ElResult>
+  </el-result>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { v1, v4 } from 'uuid';
 import { copyToClipboard } from './utils';
-import { ElButton, ElResult, ElText, ElSpace, ElDivider } from 'element-plus';
 const id = ref(v4());
 const genV1 = () => {
   id.value = v1();
