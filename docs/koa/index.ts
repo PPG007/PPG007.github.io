@@ -20,7 +20,7 @@ const config: BarConfig = {
   navbar: {
     text: 'Koa',
     link: '/koa',
-    group: 'Node',
+    group: '前端',
     icon: 'simple-icons:koa',
   },
 };

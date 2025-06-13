@@ -12,7 +12,7 @@ const config: BarConfig = {
   navbar: {
     text: 'TypeScript',
     link: '/typescript',
-    group: 'Node',
+    group: '前端',
     icon: 'skill-icons:typescript',
   },
 };
