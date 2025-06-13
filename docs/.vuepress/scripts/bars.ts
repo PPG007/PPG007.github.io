@@ -4,6 +4,7 @@ import {
   NavbarLinkOptions,
   SidebarOptions,
   SidebarObjectOptions,
+  AutoLinkOptions,
 } from 'vuepress-theme-hope';
 import { BarConfig } from '../types';
 import fs from 'fs';
@@ -30,10 +31,10 @@ const convertSingleNavBar = (item: NavbarGroupOptions): NavbarLinkOptions => {
     icon: item.icon,
   };
   if (item.children.length && typeof item.children[0].link === 'string') {
-    result.link = item.children[0].link
+    result.link = item.children[0].link;
   }
   return result;
-}
+};
 
 // 根据各个子配置生成总的 sidebar 配置对象
 const loadSidebar = (configs: Array<BarConfig>): SidebarOptions => {
@@ -71,8 +72,14 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
       uniqueMap[group].children = currentChildren;
     }
   });
-  Object.keys(uniqueMap).forEach((v) => {
-    navbar.push(uniqueMap[v]);
+  Object.keys(uniqueMap).forEach((group) => {
+    const order = navbarList.find((item) => item.text === group)?.childrenOrder || [];
+    uniqueMap[group].children.sort((a, b) => {
+      const orderA = order.indexOf((a as AutoLinkOptions).text) + 1 || Infinity;
+      const orderB = order.indexOf((b as AutoLinkOptions).text) + 1 || Infinity;
+      return orderA - orderB;
+    });
+    navbar.push(uniqueMap[group]);
   });
 
   return sortNavbar(navbar).map((item) => {
@@ -88,13 +95,8 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
 // 根据 navbar 顺序文件进行排序
 const sortNavbar = (navbar: Array<NavbarGroupOptions>) => {
   navbar.sort((a, b) => {
-    const orderA = navbarList.findIndex((item) => item.text === a.text);
-    const orderB = navbarList.findIndex((item) => item.text === b.text);
-    if (orderA === undefined) {
-      return 1;
-    } else if (orderB === undefined) {
-      return -1;
-    }
+    const orderA = navbarList.findIndex((item) => item.text === a.text) + 1 || Infinity;
+    const orderB = navbarList.findIndex((item) => item.text === b.text) + 1 || Infinity;
     return orderA - orderB;
   });
   return navbar;
@@ -116,7 +118,7 @@ const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
     if (fs.lstatSync(tempPath).isDirectory()) {
       configs.push(...(await parseConfigFiles(tempPath)));
     } else if (files[i].endsWith('.js') && !hasRead) {
-      const result = await import(/* @vite-ignore */path.join(__dirname, '../../../', tempPath));
+      const result = await import(/* @vite-ignore */ path.join(__dirname, '../../../', tempPath));
       if (result.default) {
         configs.push(result.default as BarConfig);
         hasRead = true;
@@ -125,6 +127,7 @@ const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
   }
   return configs;
 };
+
 export default async function () {
   const config = await parseConfigFiles(configPath);
   const sidebar = loadSidebar(config);
