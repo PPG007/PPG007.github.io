@@ -1,21 +1,22 @@
 <template>
-  <el-row justify="space-around" align="middle">
-    <el-col :span="9">
-      <el-input v-model="input" type="textarea" :rows="rows" placeholder="请输入内容"/>
-    </el-col>
-    <el-col :span="6">
+  <ElRow justify="space-around" align="middle">
+    <ElCol :span="9">
+      <ElInput v-model="input" type="textarea" :rows="rows" placeholder="请输入内容"/>
+    </ElCol>
+    <ElCol :span="6">
       <div class="buttons">
-        <el-button type="primary" @click="encode" size="large">编码</el-button>
-        <el-button type="primary" @click="decode" size="large" plain>解码</el-button>
+        <ElButton type="primary" @click="encode" size="large">编码</ElButton>
+        <ElButton type="primary" @click="decode" size="large" plain>解码</ElButton>
       </div>
-    </el-col>
-    <el-col :span="9">
-      <el-input :value="result" readonly type="textarea" :rows="rows"/>
-    </el-col>
-  </el-row>
+    </ElCol>
+    <ElCol :span="9">
+      <ElInput :value="result" readonly type="textarea" :rows="rows"/>
+    </ElCol>
+  </ElRow>
 </template>
 
 <script setup lang="ts">
+import { ElInput, ElRow, ElCol, ElButton } from 'element-plus';
 import { ref } from 'vue';
 import { Base64 } from 'js-base64';
 const input = ref('');

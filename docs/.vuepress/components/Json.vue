@@ -1,15 +1,16 @@
 <template>
-  <el-tabs type="card" @edit="onTabsEdited" editable v-model="tab">
-    <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
+  <ElTabs type="card" @edit="onTabsEdited" editable v-model="tab">
+    <ElTabPane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
       <JsonEditor :class="className" />
-    </el-tab-pane>
-  </el-tabs>
+    </ElTabPane>
+  </ElTabs>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import JsonEditor from 'json-editor-vue';
 import { useDarkMode } from 'vuepress-theme-hope/client';
+import { ElTabs, ElTabPane } from 'element-plus';
 
 const tab = ref<number>(1);
 const tabs = ref([{

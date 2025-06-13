@@ -1,32 +1,33 @@
 <template>
-  <el-row justify="center">
-    <el-col :span="5">
+  <ElRow justify="center">
+    <ElCol :span="5">
       <p>当前时间戳</p>
-    </el-col>
-    <el-col :span="8">
+    </ElCol>
+    <ElCol :span="8">
       <TimeStamp :value="now" disableUnit />
-    </el-col>
-  </el-row>
-  <el-row justify="space-around">
-    <el-col :span="8">
-      <el-date-picker v-model="selectDate" type="datetime" size="large" />
-    </el-col>
-    <el-col :span="8">
+    </ElCol>
+  </ElRow>
+  <ElRow justify="space-around">
+    <ElCol :span="8">
+      <ElDatePicker v-model="selectDate" type="datetime" size="large" />
+    </ElCol>
+    <ElCol :span="8">
       <TimeStamp :value="selectDate" />
-    </el-col>
-  </el-row>
-  <el-row justify="space-around">
-    <el-col :span="8">
+    </ElCol>
+  </ElRow>
+  <ElRow justify="space-around">
+    <ElCol :span="8">
       <TimeStamp @change="onInputChanged" />
-    </el-col>
-    <el-col :span="8">
-      <el-input readonly :value="inputDateStr" size="large" />
-    </el-col>
-  </el-row>
+    </ElCol>
+    <ElCol :span="8">
+      <ElInput readonly :value="inputDateStr" size="large" />
+    </ElCol>
+  </ElRow>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { ElInput, ElDatePicker, ElRow, ElCol } from 'element-plus';
 import { TimeStamp } from './core';
 const now = ref(new Date());
 const selectDate = ref<Date>(new Date());
