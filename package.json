@@ -33,9 +33,9 @@
     "vuepress-theme-hope": "2.0.0-rc.87"
   },
   "scripts": {
-    "docs:build": "tsc && vuepress build docs",
-    "docs:clean-dev": "tsc && vuepress dev docs --clean-cache",
-    "docs:dev": "tsc && vuepress dev docs",
+    "docs:build": "NODE_OPTIONS=--max-old-space-size=8192 tsc && vuepress build docs",
+    "docs:clean-dev": "NODE_OPTIONS=--max-old-space-size=8192 tsc && vuepress dev docs --clean-cache",
+    "docs:dev": "NODE_OPTIONS=--max-old-space-size=8192 tsc && vuepress dev docs",
     "docs:update-package": "pnpm dlx vp-update",
     "compile": "tsc"
   }
