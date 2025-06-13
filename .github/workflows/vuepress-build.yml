@@ -5,6 +5,7 @@ on:
     paths:
       - 'docs/**'
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   build:
