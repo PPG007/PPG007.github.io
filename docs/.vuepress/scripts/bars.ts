@@ -95,8 +95,13 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
 // 根据 navbar 顺序文件进行排序
 const sortNavbar = (navbar: Array<NavbarGroupOptions>) => {
   navbar.sort((a, b) => {
-    const orderA = navbarList.findIndex((item) => item.text === a.text) + 1 || Infinity;
-    const orderB = navbarList.findIndex((item) => item.text === b.text) + 1 || Infinity;
+    let orderA = navbarList.findIndex((item) => item.text === a.text) + 1 || Infinity;
+    let orderB = navbarList.findIndex((item) => item.text === b.text) + 1 || Infinity;
+    if (a.link === '/') {
+      orderA = 0;
+    } else if (b.link === '/') {
+      orderB = 0;
+    }
     return orderA - orderB;
   });
   return navbar;
