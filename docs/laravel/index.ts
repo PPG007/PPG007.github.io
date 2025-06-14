@@ -18,6 +18,7 @@ const config: BarConfig = {
           '/laravel/docs/error.md',
           '/laravel/docs/log.md',
           '/laravel/docs/database.md',
+          '/laravel/docs/eloquent.md',
           '/laravel/docs/utils.md',
         ],
         text: 'Laravel',
