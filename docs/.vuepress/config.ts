@@ -28,7 +28,7 @@ export default defineUserConfig({
         type: 'shiki',
         themes: {
           dark: 'one-dark-pro',
-          light: 'github-light-high-contrast',
+          light: 'light-plus',
         },
         whitespace: 'all',
       },
