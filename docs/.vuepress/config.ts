@@ -15,7 +15,6 @@ export default defineUserConfig({
   lang: 'zh-CN',
   title: 'PPG007 的文档',
   description: 'PPG007 的站点',
-  public: 'docs/images',
   theme: hopeTheme({
     navbar,
     sidebar,
