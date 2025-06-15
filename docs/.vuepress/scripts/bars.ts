@@ -15,7 +15,7 @@ const configPath = 'docs/.vuepress/config';
 
 const defaultNavbar: Array<NavbarGroupOptions> = [
   { text: '首页', link: '/', icon: 'material-symbols:home', children: [] },
-  { text: '测试', link: '/kb-frontend', icon: 'material-icon-theme:test-js', children: [] },
+  { text: '测试', link: '/kb-frontend/', icon: 'material-icon-theme:test-js', children: [] },
 ];
 
 const formatLink = (link: string): string => {
