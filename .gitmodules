@@ -1,0 +1,6 @@
+[submodule "kb-frontend"]
+	path = kb-frontend
+	url = git@github.com:PPG007/kb-frontend.git
+[submodule "kb-java"]
+	path = kb-java
+	url = git@github.com:PPG007/kb-java.git
