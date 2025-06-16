@@ -1,4 +1,4 @@
 import init from './bars';
-import useHtmlClassWatcher from './useHtmlClassWatcher';
+import useThemeColor from './useThemeColor';
 
-export { init, useHtmlClassWatcher };
+export { init, useThemeColor };
