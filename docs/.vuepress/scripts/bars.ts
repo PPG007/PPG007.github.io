@@ -8,7 +8,7 @@ import {
 } from 'vuepress-theme-hope';
 import { BarConfig } from '../types';
 import fs from 'fs';
-import path from 'path';
+import path, { parse } from 'path';
 import navbarList from './navbarList';
 
 const configPath = 'docs/.vuepress/config';
@@ -108,7 +108,7 @@ const sortNavbar = (navbar: Array<NavbarGroupOptions>) => {
 };
 
 // 递归读取所有配置文件
-const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
+const parseConfigFiles = async (dirName: string, prefix?: string): Promise<Array<BarConfig>> => {
   const configs: Array<BarConfig> = [];
   if (dirName.startsWith('.')) {
     return configs;
@@ -121,11 +121,16 @@ const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
       continue;
     }
     if (fs.lstatSync(tempPath).isDirectory()) {
-      configs.push(...(await parseConfigFiles(tempPath)));
+      configs.push(...(await parseConfigFiles(tempPath, prefix)));
     } else if (files[i].endsWith('.js') && !hasRead) {
       const result = await import(/* @vite-ignore */ path.join(__dirname, '../../../', tempPath));
       if (result.default) {
-        configs.push(result.default as BarConfig);
+        const config = result.default as BarConfig;
+        if (prefix) {
+          config.sidebar = {};
+          config.navbar.link = `/${prefix}${config.navbar.link}`;
+        }
+        configs.push(config);
         hasRead = true;
       }
     }
@@ -133,10 +138,27 @@ const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
   return configs;
 };
 
+// 读取子模块配置
+const getSubmoduleConfig = async (): Promise<Array<BarConfig>> => {
+  const files = fs.readdirSync('.');
+  const configs: Array<BarConfig> = [];
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const info = fs.lstatSync(file);
+    if (!file.startsWith('kb-') || !info.isDirectory()) {
+      continue;
+    }
+    const temp = await parseConfigFiles(path.join(file, configPath), file);
+    configs.push(...temp);
+  }
+  return configs;
+};
+
 export default async function () {
   const config = await parseConfigFiles(configPath);
+  const submoduleConfig = await getSubmoduleConfig();
   const sidebar = loadSidebar(config);
-  const navbar = loadNavbar(defaultNavbar, config);
+  const navbar = loadNavbar(defaultNavbar, [...config, ...submoduleConfig]);
   return {
     sidebar,
     navbar,

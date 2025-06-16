@@ -7,6 +7,7 @@ import ElementPlus from 'unplugin-element-plus/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
+import { exit } from 'node:process';
 
 const { navbar, sidebar } = await init();
 const __dirname = getDirname(import.meta.url);
