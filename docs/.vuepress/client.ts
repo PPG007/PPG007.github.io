@@ -45,10 +45,14 @@ export default defineClientConfig({
   enhance({ router }) {
     const url = useIframeUrl();
     router.beforeEach((to, _, next) => {
+      if (to.fullPath.startsWith('/iframe/')) {
+        next();
+        return;
+      }
       url.value = '';
       if (to.fullPath.startsWith('/kb-')) {
         url.value = to.fullPath;
-        return next('/iframe/');
+        return next(`/iframe/?iframe=${to.fullPath}`);
       }
       next();
     });
