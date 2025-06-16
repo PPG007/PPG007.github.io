@@ -128,7 +128,9 @@ const parseConfigFiles = async (dirName: string, prefix?: string): Promise<Array
         const config = result.default as BarConfig;
         if (prefix) {
           config.sidebar = {};
-          config.navbar.link = `/${prefix}${config.navbar.link}`;
+          if (!config.navbar.link.startsWith(prefix)) {
+            config.navbar.link = `/${prefix}${config.navbar.link}`;
+          }
         }
         configs.push(config);
         hasRead = true;

@@ -7,7 +7,7 @@ import ElementPlus from 'unplugin-element-plus/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { exit } from 'node:process';
+import { hostname } from './consts';
 
 const { navbar, sidebar } = await init();
 const __dirname = getDirname(import.meta.url);
@@ -20,7 +20,7 @@ export default defineUserConfig({
   theme: hopeTheme({
     navbar,
     sidebar,
-    hostname: 'https://ppg007.github.io',
+    hostname,
     docsDir: 'docs',
     docsRepo: 'https://github.com/PPG007/PPG007.github.io',
     docsBranch: 'main',

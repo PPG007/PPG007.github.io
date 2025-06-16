@@ -3,7 +3,8 @@ import 'vanilla-jsoneditor/themes/jse-theme-dark.css';
 import { defineClientConfig } from 'vuepress/client';
 import { useDarkMode } from 'vuepress-theme-hope/client';
 import { onMounted, watch } from 'vue';
-import { useThemeColor } from './scripts';
+import { useThemeColor, useIframeUrl } from './scripts';
+import { Layout } from './components';
 
 const setElementUIDark = (dark: boolean) => {
   if (dark) {
@@ -15,7 +16,7 @@ const setElementUIDark = (dark: boolean) => {
 
 export default defineClientConfig({
   setup() {
-    let changeThemeFn = (color?: string): void => {}
+    let changeThemeFn = (color?: string): void => {};
     const { isDarkMode } = useDarkMode();
     const color = useThemeColor();
     watch(isDarkMode, () => {
@@ -30,6 +31,20 @@ export default defineClientConfig({
       changeThemeFn = changeTheme;
       changeThemeFn(color.value);
       setElementUIDark(isDarkMode.value);
+    });
+  },
+  layouts: {
+    Layout,
+  },
+  enhance({ router }) {
+    const url = useIframeUrl();
+    router.beforeEach((to, _, next) => {
+      url.value = '';
+      if (to.fullPath.startsWith('/kb-')) {
+        url.value = to.fullPath;
+        return next('/iframe/');
+      }
+      next();
     });
   },
 });
