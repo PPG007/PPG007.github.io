@@ -700,17 +700,15 @@ public function maxMemberCountTag(): HasOne
 public function tag(): HasOneThrough
 {
     return $this->hasOneThrough(
-        MemberTag::class,
-        MemberTagValue::class,
-        'member_id',
-        'id',
-        'id',
-        'tag_id',
+        MemberTag::class, // 目标模型
+        MemberTagValue::class, // 中间模型
+        'member_id', // 中间模型与当前模型相关的外键，即 member_tag_value 表上的外键
+        'id', // 目标模型上指向中间模型上的键
+        'id', // 当前模型上的指向中间模型的键，默认是 id
+        'tag_id', // 中间模型上与目标模型关联的键
     );
 }
 ```
-
-此方法的第一个参数是要关联的模型，第二个参数是中间表模型，第三个参数是中间表关联的关联模型外键名，第四个参数是最终关联模型外键名，第五个参数是当前模型的关联键，第六个参数是中间模型的关联键。
 
 #### Has Many Through
 
@@ -720,12 +718,12 @@ public function tag(): HasOneThrough
 public function tags(): HasManyThrough
 {
     return $this->hasManyThrough(
-        MemberTag::class,
-        MemberTagValue::class,
-        'member_id',
-        'id',
-        'id',
-        'tag_id',
+        MemberTag::class, // 目标模型
+        MemberTagValue::class, // 中间模型
+        'member_id', // 中间模型与当前模型相关的外键，即 member_tag_value 表上的外键
+        'id', // 目标模型上指向中间模型上的键
+        'id', // 当前模型上的指向中间模型的键，默认是 id
+        'tag_id', // 中间模型上与目标模型关联的键
     );
 }
 ```
@@ -741,9 +739,9 @@ public function tags():BelongsToMany
 {
     return $this->belongsToMany(
         MemberTag::class,
-        'member_tag_value',
-        'member_id',
-        'tag_id',
+        'member_tag_value', // 中间表名
+        'member_id', // 当前表主键关联的中间表的外键
+        'tag_id', // 目标表主键关联的中间表的外键
     );
 }
 ```
@@ -1428,241 +1426,3 @@ TODO：
 ### 自定义类型转换
 
 TODO：
-
-## 工厂
-
-本地测试场景中，经常需要生成一些测试数据，使用模型工厂可以方便的批量生成测试数据。
-
-### 创建工厂
-
-使用 `make:factory` 命令可以创建一个模型工厂：
-
-```shell
-php artisan make:factory MemberFactory
-```
-
-定义的模型工厂会保存在 `database/factories` 目录下。当为一个模型定义了对应的模型工厂时，只要在模型上使用 `HasFactory` trait 即可使用 `factory` 静态方法实例化一个工厂：
-
-```php
-class MemberTag extends Model
-{
-    use HasFactory;
-}
-```
-
-默认情况下，模型对应的工厂的匹配规则是在 `Database\Factories` 命名空间内使用 `{ModelName}Factory` 尝试匹配一个类，如果希望自定义这个行为，可以重写模型类上的 `newFactory` 方法并直接返回指定的工厂类实例：
-
-```php
-class ProductSku extends Model
-{
-    use HasFactory;
-
-    protected $table = 'product_sku';
-
-    protected static function newFactory()
-    {
-        return ProductSkuFactory::new();
-    }
-}
-```
-
-然后在工厂类上使用 `$model` 属性设置关联的模型类：
-
-```php
-protected $model = MemberTag::class;
-```
-
-### 使用工厂创建数据
-
-在工厂类的 `definition` 方法中可以定义数据的赋值规则：
-
-```php
-class MemberTagFactory extends Factory
-{
-
-    protected $model = MemberTag::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            'name' => fake()->unique()->colorName(),
-        ];
-    }
-}
-```
-
-使用 `make` 方法可以创建数据，使用 `create` 方法可以创建并持久化：
-
-```php
-MemberTag::factory()->count(fake()->randomDigitNotZero())->create();
-```
-
-在使用 `make` 或 `create` 方法时，可以传入一个数组来覆盖属性值。
-
-::: tip
-
-使用工厂创建模型时，批量赋值保护将被禁用，所有的属性都可以赋值。
-
-:::
-
-批量创建模型时，可能希望每个创建的模型的一个属性值交替出现，使用 `sequence` 方法可以实现，例如为每个 member 创建两个地址，一个设置为默认地址，另一个是普通地址：
-
-```php
-class MemberSeeder extends Seeder
-{
-    public function run(): void
-    {
-        Member::factory()
-            ->count(20)
-            ->hasAttached(MemberTag::query()->inRandomOrder()->limit(3)->get(), relationship: 'tags')
-            ->has(MemberAddress::factory()->count(2)->sequence(
-                ['is_default' => true],
-                ['is_default' => false]
-            ), 'address')
-            ->create();
-    }
-}
-```
-
-### 工厂与映射关系
-
-#### 一对多
-
-使用工厂构造链上的 `has` 方法可以为当前当前模型创建关联数据，例如为创建商品时同步创建商品的属性：
-
-```php
-class ProductSeeder extends Seeder
-{
-    public function run(): void
-    {
-        Product::factory()
-            ->has(ProductProperty::factory()->count(fake()->randomElement([2, 3])), 'properties')
-            ->count(10)
-            ->create();
-    }
-}
-```
-
-此方法的第二个参数是关系的名字，也就是在模型中定义的关系方法的名称，如果关系名无法被默认推断，可以通过这个参数指定。
-
-#### 归属
-
-如果希望从子模型创建父模型，可以在构造子模型时使用 `for` 方法：
-
-```php
-class MemberTagSeeder extends Seeder
-{
-    public function run(): void
-    {
-        $groups = MemberTagGroup::all();
-        $groups->each(function ($group) {
-           MemberTag::factory()->for($group, 'group')->count(fake()->randomDigitNotZero())->create();
-        });
-    }
-}
-```
-
-`for` 方法既可以接收工厂构造链，也可以将已有的模型实例传入，如果传入构造链那么构造链的结果也会被创建，同样可以使用第二个参数指定关系名。
-
-#### 多对多
-
-与一对多类似，还是使用 `has` 方法即可同时创建多对多关系的中间表数据：
-
-```php
-Member::factory()
-    ->count(20)
-    ->hasAttached(MemberTag::query()->inRandomOrder()->limit(3)->get(), relationship: 'tags')
-    ->has(MemberAddress::factory()->count(2)->sequence(
-        ['is_default' => true],
-        ['is_default' => false]
-    ), 'address')
-    ->create();
-```
-
-`has` 方法只能传入构造链，不能传入实例，如果需要传入实例，请使用 `hasAttached` 方法。
-
-#### 内部关系
-
-在归属的场景下，可以在 `definition` 方法中定义内部关系：
-
-```php
-public function definition(): array
-{
-    return [
-        'name' => fake()->unique()->colorName(),
-        'group_id' => MemberTagGroup::factory(),
-    ];
-}
-```
-
-## 序列化
-
-使用 `toArray` 方法可以将模型和关联的关系转为数组，使用 `attributesToArray` 方法也能将模型转为数组，但是不包含关联关系。
-
-使用 `toJson` 方法可以将模型和关联关系转为 JSON 字符串，在 Laravel 路由中返回模型对象时，Laravel 会自动将它们序列化为 JSON。
-
-::: tip
-
-尽管关联关系在模型类中是以小驼峰命名的，但是在 JSON 序列化后，关联关系的属性名将使用蛇形命名。
-
-:::
-
-有时可能希望返回的 JSON 中不包含一些字段，例如密码等，可以通过在模型类中定义 `hidden` 属性来指定隐藏的字段：
-
-```php
-class Member extends Model
-{
-    use HasFactory;
-
-    protected $table = 'member';
-
-    protected $hidden = ['deleted_at'];
-}
-```
-
-关系同样也能隐藏，例如：
-
-```php
-class Member extends Model
-{
-    use HasFactory;
-
-    protected $table = 'member';
-
-    protected $with = ['addresses'];
-
-    protected $hidden = ['deleted_at', 'addresses'];
-
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(MemberAddress::class);
-    }
-}
-```
-
-或者反过来，通过 `visible` 属性来指定包含的字段，用法同 `hidden`。
-
-如果需要临时设置可见性，可以使用 `makeHidden` 或 `setHidden` 方法，后者将覆盖模型上的 `hidden` 属性：
-
-```php
-Route::get('/members', function () {
-    return Member::all()->makeHidden(['deleted_at']);
-});
-```
-
-这两个方法同样有对应的方法，`makeVisible` 和 `setVisible`。
-
-通过重写 `serializeDate` 方法可以设置日期的序列化格式：
-
-```php
-protected function serializeDate(DateTimeInterface $date)
-{
-    return $date->format(DateTimeInterface::RFC3339);
-}
-```
-
-要指定日期的序列化格式，还可以使用之前的 `casts` 方法设置。
