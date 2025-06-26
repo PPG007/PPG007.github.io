@@ -9,15 +9,14 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import JsonEditor from 'json-editor-vue';
-import { useDarkMode } from 'vuepress-theme-hope/client';
+import { useDarkMode } from '../scripts';
 
 const tab = ref<number>(1);
 const tabs = ref([{
   name: 1,
   label: '1',
 }])
-const { isDarkMode } = useDarkMode();
-
+const isDarkMode = useDarkMode();
 const className = ref('');
 
 watch(isDarkMode, (isDark) => {
