@@ -33,10 +33,10 @@
     "vuepress-theme-hope": "2.0.0-rc.87"
   },
   "scripts": {
-    "docs:build": "tsc && NODE_OPTIONS=--max-old-space-size=8192 vuepress build docs",
-    "docs:clean-dev": "tsc && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs --clean-cache",
-    "docs:dev": "tsc && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs",
+    "docs:build": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress build docs",
+    "docs:clean-dev": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs --clean-cache",
+    "docs:dev": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs",
     "docs:update-package": "pnpm dlx vp-update",
-    "compile": "tsc"
+    "compile": "./compile.sh"
   }
 }

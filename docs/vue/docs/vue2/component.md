@@ -87,24 +87,24 @@ Vue使用组件三大步骤：
 
 - 关于组件名：
 
-  - 一个单词组成：
-    - 全小写。
-    - 首字母大写。
-  - 多个单词：
-    - kebab-case 命名。
-    - 驼峰命名(需要使用 Vue 脚手架)。
+    - 一个单词组成：
+        - 全小写。
+        - 首字母大写。
+    - 多个单词：
+        - kebab-case 命名。
+        - 驼峰命名(需要使用 Vue 脚手架)。
 
   ::: warning 注意
 
-  - 组件名尽可能回避 HTML 中已有名称。
-  - 可以使用 name 配置项指定组件在开发者工具中呈现的名字(定义组件时就起名字)。
+    - 组件名尽可能回避 HTML 中已有名称。
+    - 可以使用 name 配置项指定组件在开发者工具中呈现的名字(定义组件时就起名字)。
 
   :::
 
 - 关于组件标签：
 
-  - 第一种写法：`<school></school>`。
-  - 第二种写法：`<school/>`。
+    - 第一种写法：`<school></school>`。
+    - 第二种写法：`<school/>`。
 
   ::: danger
   不使用脚手架时，第二种写法会导致后续组件不能渲染。
@@ -209,16 +209,16 @@ Vue使用组件三大步骤：
 :::
 
 - 关于this的指向：
-  - 组件配置中：
+    - 组件配置中：
     data 函数，methods 中的函数、watch 中的函数、computed 中的函数，它们的 this 都是 `VueComponent` 实例对象。
-  - `new Vue(options)` 配置中：
+    - `new Vue(options)` 配置中：
     data 函数、methods 函数、watch 函数、computed 函数，它们的 this 均是 Vue 实例对象。
 - VueComponent 的实例对象，简称 vc (也可称为组件实例对象)，Vue 实例对象简称 vm。
 - vm 管理着所有的 vc，每个 vc 管理着自己的子组件。
 
 ## 一个重要的内置关系
 
-![Vue一个重要关系](./images/Vue一个重要关系.png)
+![Vue一个重要关系](../images/Vue一个重要关系.png)
 
 `VueComponent.prototype.__proto__===Vue.prototype`。
 
