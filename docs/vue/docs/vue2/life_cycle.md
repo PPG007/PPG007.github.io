@@ -1,6 +1,6 @@
 # 生命周期
 
-![Vue生命周期](./images/Vue生命周期.png)
+![Vue生命周期](../images/Vue生命周期.png)
 
 常用生命周期钩子：
 
