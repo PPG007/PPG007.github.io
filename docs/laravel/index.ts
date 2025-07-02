@@ -20,6 +20,7 @@ const config: BarConfig = {
           '/laravel/docs/database.md',
           '/laravel/docs/eloquent.md',
           '/laravel/docs/artisan.md',
+          '/laravel/docs/context.md',
           '/laravel/docs/utils.md',
         ],
         text: 'Laravel',
