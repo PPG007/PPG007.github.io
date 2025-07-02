@@ -1,7 +1,7 @@
 <template>
   <el-tabs type="card" @edit="onTabsEdited" editable v-model="tab">
     <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="tab.label" :name="tab.name">
-      <JsonEditor :class="className" />
+      <JsonEditor :class="className" :mode="Mode.text"/>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import JsonEditor from 'json-editor-vue';
+import { Mode } from 'vanilla-jsoneditor';
 import { useDarkMode } from '../scripts';
 
 const tab = ref<number>(1);
