@@ -177,3 +177,7 @@ public function getMember(string $id = '')
     return URL::signedRoute('accounts.index', absolute: false);
 }
 ```
+
+## Strings
+
+[docs](https://laravel.com/docs/12.x/strings)
