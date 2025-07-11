@@ -44,7 +44,6 @@ export default defineUserConfig({
         suggestion: true,
         hotKeys: [{ key: 's', ctrl: true }],
       },
-      copyright: true,
       git: true,
       comment: {
         provider: 'Giscus',
