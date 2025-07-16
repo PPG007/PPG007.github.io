@@ -5,13 +5,16 @@
     </el-col>
   </el-row>
   <el-row justify="space-around" align="middle">
-    <el-col :span="8">
+    <el-col :span="7">
       <el-button @click="readImage" size="large" type="primary">从剪切板读取图片</el-button>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="7">
       <el-upload accept="image/*" :limit="1" :auto-upload="false" :on-change="onImageSelected" :show-file-list="false">
         <el-button size="large" type="primary">从文件选取图片</el-button>
       </el-upload>
+    </el-col>
+    <el-col :span="7">
+      <el-button size="large" type="primary" :disabled="!recognizedText" @click="onDeleteLineBreak">去除换行</el-button>
     </el-col>
     <el-col :span="3">
       <el-select v-model="selectedLanguage" size="large">
@@ -21,7 +24,7 @@
   </el-row>
   <el-row v-if="recognizedText">
     <el-col>
-      <el-input :value="recognizedText" readonly type="textarea" resize="none" :autosize="{ minRows: 20 }" />
+      <el-input v-model="recognizedText" type="textarea" resize="none" :autosize="{ minRows: 20 }" />
     </el-col>
   </el-row>
 </template>
@@ -69,6 +72,9 @@ watch([selectedImage, selectedLanguage], ([newImage, newLanguage]) => {
     loading.close();
   })
 })
+const onDeleteLineBreak = () => {
+  recognizedText.value = recognizedText.value.replace(/\n/g, '');
+}
 </script>
 
 <style lang="css" scoped>
