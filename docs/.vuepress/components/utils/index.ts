@@ -1,5 +1,5 @@
 import { ElMessage, ElLoading } from 'element-plus';
-import { Image } from '../types';
+import { Image, TimeUnit } from '../types';
 
 export const copyToClipboard = async (content: string) => {
   await navigator.clipboard.writeText(content);
@@ -12,17 +12,20 @@ export const setLoading = () => {
   });
 };
 
-export const formatTimestamp = (t: Date | number, unit: 'ms' | 's' = 's') => {
+export const formatTimestamp = (t: Date | number, unit: TimeUnit = 's') => {
   if (typeof t === 'number') {
     return t;
   }
   if (unit === 'ms') {
     return t.getTime();
   }
+  if (unit === 'iso') {
+    return t.toISOString();
+  }
   return Math.floor(t.getTime() / 1000);
 };
 
-export const formatDate = (t: Date | number, unit: 'ms' | 's' = 's') => {
+export const formatDate = (t: Date | number, unit: TimeUnit = 's') => {
   if (t instanceof Date) {
     return t;
   }

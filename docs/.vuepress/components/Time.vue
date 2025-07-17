@@ -1,5 +1,5 @@
 <template>
-  <el-row justify="center">
+  <el-row justify="center" align="middle">
     <el-col :span="5">
       <p>当前时间戳</p>
     </el-col>
@@ -32,14 +32,14 @@ const now = ref(new Date());
 const selectDate = ref<Date>(new Date());
 const inputDateStr = ref<string>();
 onMounted(() => {
-  now.value = new Date;
+  now.value = new Date();
   setInterval(() => {
-    now.value = new Date;
+    now.value = new Date();
   }, 1000);
-})
+});
 const onInputChanged = (value: Date) => {
   inputDateStr.value = value.toISOString();
-}
+};
 </script>
 
 <style scoped>

@@ -17,3 +17,5 @@ export interface Image {
   blob: Blob;
   url: string;
 }
+
+export type TimeUnit = 'ms' | 's' | 'iso';
