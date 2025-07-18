@@ -51,7 +51,7 @@
 import { ref, watch, reactive } from 'vue';
 import { Base64 } from 'js-base64';
 import { Mode } from 'vanilla-jsoneditor';
-import JsonEditor from 'json-editor-vue';
+import { JsonEditor } from './core';
 import { errorTip } from './utils';
 const input = ref('');
 const result = reactive<{
