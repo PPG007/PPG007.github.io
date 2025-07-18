@@ -12,17 +12,16 @@
             </el-col>
           </el-row>
         </template>
-        <JsonEditor :class="className" v-model:mode="tab.mode" v-model="tab.value" />
+        <JsonEditor v-model:mode="tab.mode" v-model="tab.value" />
       </el-card>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
-import JsonEditor from 'json-editor-vue';
+import { ref, computed } from 'vue';
+import { JsonEditor } from './core';
 import { Mode } from 'vanilla-jsoneditor';
-import { useDarkMode } from '../scripts';
 
 const tab = ref<number>(1);
 const tabs = ref([
@@ -33,20 +32,10 @@ const tabs = ref([
     mode: Mode.text,
   },
 ]);
-const isDarkMode = useDarkMode();
-const className = ref('');
 const isButtonEnabled = computed(() => {
   const currentTab = tabs.value.find((t) => t.name === tab.value);
   return currentTab?.value !== '' && currentTab?.mode === Mode.text;
 });
-
-watch(
-  isDarkMode,
-  (isDark) => {
-    className.value = isDark ? 'jse-theme-dark' : '';
-  },
-  { immediate: true }
-);
 
 const onTabsEdited = (name: string | number | undefined, action: 'add' | 'remove') => {
   if (action === 'remove' && name) {

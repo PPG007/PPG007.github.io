@@ -70,3 +70,7 @@ export const replaceEscapes = (str: string) => {
 
   return str.replace(/\\[nrtbf\\'"]/g, match => escapeMap[match]);
 }
+
+export const errorTip = (tip: string) => {
+  ElMessage.error(tip);
+}

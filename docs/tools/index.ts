@@ -12,6 +12,7 @@ const config: BarConfig = {
           '/tools/docs/tax.md',
           '/tools/docs/pointDistance.md',
           '/tools/docs/json.md',
+          '/tools/docs/jwt.md',
           '/tools/docs/ocr.md',
           '/tools/docs/crypto.md',
         ],
