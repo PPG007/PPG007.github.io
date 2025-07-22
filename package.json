@@ -9,6 +9,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.15.17",
     "@vuepress/bundler-vite": "2.0.0-rc.24",
+    "@vuepress/plugin-blog": "2.0.0-rc.112",
     "@vuepress/plugin-copyright": "2.0.0-rc.112",
     "@vuepress/plugin-slimsearch": "2.0.0-rc.112",
     "@vuepress/plugin-watermark": "2.0.0-rc.112",
