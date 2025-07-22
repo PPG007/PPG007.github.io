@@ -8,10 +8,10 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.15.17",
-    "@vuepress/bundler-vite": "2.0.0-rc.23",
-    "@vuepress/plugin-copyright": "2.0.0-rc.103",
-    "@vuepress/plugin-slimsearch": "2.0.0-rc.103",
-    "@vuepress/plugin-watermark": "2.0.0-rc.103",
+    "@vuepress/bundler-vite": "2.0.0-rc.24",
+    "@vuepress/plugin-copyright": "2.0.0-rc.112",
+    "@vuepress/plugin-slimsearch": "2.0.0-rc.112",
+    "@vuepress/plugin-watermark": "2.0.0-rc.112",
     "@vueuse/core": "^13.2.0",
     "bson": "4.6.4",
     "crypto-js": "^4.2.0",
@@ -28,9 +28,9 @@
     "use-element-plus-theme": "^0.0.5",
     "uuid": "^11.1.0",
     "vanilla-jsoneditor": "^3.3.1",
-    "vue": "^3.5.13",
-    "vuepress": "2.0.0-rc.23",
-    "vuepress-theme-hope": "2.0.0-rc.87"
+    "vue": "3.5.17",
+    "vuepress": "2.0.0-rc.24",
+    "vuepress-theme-hope": "2.0.0-rc.94"
   },
   "scripts": {
     "docs:build": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress build docs",
