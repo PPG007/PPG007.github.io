@@ -17,6 +17,9 @@ importers:
       '@vuepress/bundler-vite':
         specifier: 2.0.0-rc.24
         version: 2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@5.8.3)
+      '@vuepress/plugin-blog':
+        specifier: 2.0.0-rc.112
+        version: 2.0.0-rc.112(typescript@5.8.3)(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@5.8.3))(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))
       '@vuepress/plugin-copyright':
         specifier: 2.0.0-rc.112
         version: 2.0.0-rc.112(typescript@5.8.3)(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@5.8.3))(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3)))

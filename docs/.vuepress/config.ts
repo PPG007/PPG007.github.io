@@ -52,7 +52,21 @@ export default defineUserConfig({
         category: 'General',
         categoryId: 'DIC_kwDOGk5u3s4COgEc',
       },
+      blog: {
+        filter(page) {
+          return page.path.includes('blogs');
+        },
+        excerptLength: 30,
+      },
     },
+    blog: {
+      description: '理解万岁',
+      medias: {
+        GitHub: 'https://github.com/PPG007',
+      },
+      name: 'PPG007',
+      avatar: '/indexImage',
+    }
   }),
   bundler: viteBundler({
     viteOptions: {

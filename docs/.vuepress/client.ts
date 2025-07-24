@@ -1,8 +1,12 @@
 import 'element-plus/theme-chalk/dark/css-vars.css';
 import 'vanilla-jsoneditor/themes/jse-theme-dark.css';
+import 'vuepress-theme-hope/presets/squircle-blogger-avatar.scss';
+import 'vuepress-theme-hope/presets/bounce-icon.scss';
+import 'vuepress-theme-hope/presets/hr-driving-car.scss';
 import { defineClientConfig } from 'vuepress/client';
 import { onMounted, watch } from 'vue';
 import { useThemeColor, useDarkMode } from './scripts';
+import { Blog } from './layouts';
 
 const setElementUIDark = (dark: boolean) => {
   if (dark) {
@@ -14,7 +18,7 @@ const setElementUIDark = (dark: boolean) => {
 
 export default defineClientConfig({
   setup() {
-    let changeThemeFn = (color?: string): void => { }
+    let changeThemeFn = (color?: string): void => { };
     const isDarkMode = useDarkMode();
     const color = useThemeColor();
     watch(isDarkMode, () => {
@@ -22,7 +26,7 @@ export default defineClientConfig({
     });
     watch(color, (newVal) => {
       changeThemeFn(newVal);
-    })
+    });
     onMounted(async () => {
       const { useElementPlusTheme } = await import('use-element-plus-theme');
       const { changeTheme } = useElementPlusTheme();
@@ -30,5 +34,8 @@ export default defineClientConfig({
       changeThemeFn(color.value);
       setElementUIDark(isDarkMode.value);
     });
+  },
+  layouts: {
+    Blog,
   },
 });
