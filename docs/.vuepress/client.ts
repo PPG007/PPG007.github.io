@@ -18,7 +18,7 @@ const setElementUIDark = (dark: boolean) => {
 
 export default defineClientConfig({
   setup() {
-    let changeThemeFn = (color?: string): void => { };
+    let changeThemeFn: (color?: string) => void;
     const isDarkMode = useDarkMode();
     const color = useThemeColor();
     watch(isDarkMode, () => {
