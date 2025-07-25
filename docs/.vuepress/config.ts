@@ -15,7 +15,6 @@ export default defineUserConfig({
   lang: 'zh-CN',
   title: 'PPG007 的文档',
   description: 'PPG007 的站点',
-  public: 'docs/images',
   theme: hopeTheme({
     navbar,
     sidebar,
@@ -23,6 +22,8 @@ export default defineUserConfig({
     docsDir: 'docs',
     docsRepo: 'https://github.com/PPG007/PPG007.github.io',
     docsBranch: 'main',
+    repo: 'https://github.com/PPG007/PPG007.github.io',
+    repoDisplay: true,
     markdown: {
       highlighter: {
         type: 'shiki',
@@ -53,9 +54,7 @@ export default defineUserConfig({
         categoryId: 'DIC_kwDOGk5u3s4COgEc',
       },
       blog: {
-        filter(page) {
-          return page.path.includes('blogs');
-        },
+        filter: ({ path }) => (path.includes('blogs')),
         excerptLength: 30,
       },
     },
