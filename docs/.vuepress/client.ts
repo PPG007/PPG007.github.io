@@ -25,13 +25,16 @@ export default defineClientConfig({
       setElementUIDark(isDarkMode.value);
     });
     watch(color, (newVal) => {
+      if (!changeThemeFn) {
+        return;
+      }
       changeThemeFn(newVal);
     });
     onMounted(async () => {
       const { useElementPlusTheme } = await import('use-element-plus-theme');
       const { changeTheme } = useElementPlusTheme();
       changeThemeFn = changeTheme;
-      changeThemeFn(color.value);
+      changeTheme(color.value);
       setElementUIDark(isDarkMode.value);
     });
   },
