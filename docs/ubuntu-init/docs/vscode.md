@@ -17,9 +17,10 @@ files.trimTrailingWhitespace：保存文件时删除行尾多余的空格
 plugins:
 
 ```text
-chinese
+prettier
 gitlens
 markdownlint
+eslint
 one dark
 remote ssh
 docker
@@ -29,4 +30,5 @@ TODO Hightlight
 Material Icon Theme
 Go
 Go Interface Annotations
+vue
 ```
