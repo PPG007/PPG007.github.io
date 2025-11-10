@@ -8,7 +8,7 @@ prev:
 
 ```shell
 # install git
-sudo apt install git-all
+sudo apt-get install git
 # config git
 git config --global user.name "<your name>"
 git config --global user.email "<your email>"
@@ -19,4 +19,17 @@ ssh-keygen -t ed25519 -C "<your email>"
 cat .ssh/id_ed25519.pub
 # add public key to a server
 ssh-copy-id -i ${path to your public key} ${username}@${host}
+```
+
+# Git alias
+
+```shell
+git config --global alias.cl clone
+git config --global alias.cm commit
+git config --global alias.pl pull
+git config --global alias.ps push
+git config --global alias.rb rebase
+git config --global alias.br branch
+git config --global alias.sw switch
+git config --global alias.cp cherry-pick
 ```

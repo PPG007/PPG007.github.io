@@ -8,9 +8,9 @@ sudo apt-get install zsh
 # set zsh default shell,then logout
 chsh -s /usr/bin/zsh
 # install curl
-sudo apt install curl
+sudo apt-get install curl
 # or install wget to get oh-my-zsh
-sudo apt install wget
+sudo apt-get install wget
 # install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # or
@@ -20,17 +20,12 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 install terminator:
 
 ```shell
-# if use aliyun repository, just only run the first command
-sudo apt install terminator
 # install terminator
 sudo add-apt-repository ppa:mattrose/terminator
 sudo apt-get update
 sudo apt install terminator
 # set terminator default
 gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/terminator
-gsettings set org.gnome.desktop.default-applications.terminal exec-arg "-x"
-# maybe need this
-gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/terminator
 ```
 
 install zsh plugins:
@@ -42,6 +37,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # install git-open
 git clone https://github.com/paulirish/git-open.git $ZSH_CUSTOM/plugins/git-open
+```
+
+```text
 # then vim ~/.zshrc
 plugins=(git sudo zsh-syntax-highlighting zsh-autosuggestions colored-man-pages safe-paste git-open)
 # then
