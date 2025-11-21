@@ -32,4 +32,6 @@ git config --global alias.rb rebase
 git config --global alias.br branch
 git config --global alias.sw switch
 git config --global alias.cp cherry-pick
+git config --global alias.ss status
+git config --global alias.rs restore
 ```
