@@ -19,6 +19,7 @@ interface NavbarConfig {
 interface BarConfig {
   sidebar: SidebarConfig;
   navbar: NavbarConfig;
+  devMode?: boolean;
 }
 
 interface NavbarGroup {

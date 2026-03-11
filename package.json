@@ -36,7 +36,7 @@
   "scripts": {
     "docs:build": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress build docs",
     "docs:clean-dev": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs --clean-cache",
-    "docs:dev": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 vuepress dev docs",
+    "docs:dev": "./compile.sh && NODE_OPTIONS=--max-old-space-size=8192 && MODE=development vuepress dev docs",
     "docs:update-package": "pnpm dlx vp-update",
     "compile": "./compile.sh"
   }

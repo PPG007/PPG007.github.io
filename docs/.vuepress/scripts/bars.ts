@@ -13,6 +13,13 @@ import navbarList from './navbarList';
 
 const configPath = 'docs/.vuepress/config';
 
+const isDevMode = () => {
+  if (!process || !process.env || process.env.MODE !== 'development') {
+    return false;
+  }
+  return true;
+};
+
 const defaultNavbar: Array<NavbarGroupOptions> = [
   { text: '首页', link: '/', icon: 'material-symbols:home', children: [] },
 ];
@@ -39,9 +46,24 @@ const convertSingleNavBar = (item: NavbarGroupOptions): NavbarLinkOptions => {
 // 根据各个子配置生成总的 sidebar 配置对象
 const loadSidebar = (configs: Array<BarConfig>): SidebarOptions => {
   const sidebar: SidebarObjectOptions = {};
-  configs.forEach(({ sidebar: config }) => {
+  configs.forEach(({ sidebar: config, devMode }) => {
+    if (devMode && !isDevMode()) {
+      return;
+    }
     Object.keys(config).forEach((key) => {
-      sidebar[key] = config[key];
+      const value = config[key];
+      value.forEach(({ children }, index) => {
+        children.forEach((_, childIndex) => {
+          if (!children[childIndex].startsWith('/')) {
+            children[childIndex] = `/${children[childIndex]}`;
+          }
+          if (!children[childIndex].startsWith(key)) {
+            children[childIndex] = `${key}/docs${children[childIndex]}`;
+          }
+        });
+        value[index].children = children;
+      });
+      sidebar[key] = value;
     });
   });
   return sidebar;
@@ -53,6 +75,9 @@ const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>
     [key: string]: NavbarGroupOptions;
   } = {};
   configs.forEach((config) => {
+    if (config.devMode && !isDevMode()) {
+      return;
+    }
     const {
       navbar: { group, text, link, icon },
     } = config;
