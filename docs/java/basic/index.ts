@@ -4,7 +4,7 @@ const config: BarConfig = {
   sidebar: {
     '/java/basic': [
       {
-        children: ['init.md'],
+        children: ['types.md'],
         text: 'Java 基础',
       },
     ],
