@@ -3,12 +3,11 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md'],
+      children: ['domain.md', 'ca.md'],
     },
   ],
-  text: 'Java 基础',
-  icon: 'logos:java',
-  devMode: true,
+  text: '域名获取及 CA 认证',
+  icon: 'stash:domain',
   dir: __dirname,
 };
 

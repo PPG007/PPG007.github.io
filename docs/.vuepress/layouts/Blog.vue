@@ -23,6 +23,6 @@ import { useRouter } from 'vuepress/client';
 
 const router = useRouter();
 const onClickTools = () => {
-  router.push('/tools/docs/');
+  router.push('/others/tools/');
 };
 </script>

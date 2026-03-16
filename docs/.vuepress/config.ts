@@ -54,7 +54,7 @@ export default defineUserConfig({
         categoryId: 'DIC_kwDOGk5u3s4COgEc',
       },
       blog: {
-        filter: ({ path }) => (path.includes('blogs')),
+        filter: ({ path }) => path.includes('blogs'),
         excerptLength: 30,
       },
     },
@@ -65,7 +65,7 @@ export default defineUserConfig({
       },
       name: 'PPG007',
       avatar: '/indexImage',
-    }
+    },
   }),
   bundler: viteBundler({
     viteOptions: {
@@ -84,6 +84,8 @@ export default defineUserConfig({
     },
   }),
   alias: {
+    '@': path.resolve(__dirname),
+    '@doc-types': path.resolve(__dirname, 'types'),
     '@components': path.resolve(__dirname, 'components'),
   },
 });

@@ -3,12 +3,11 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md'],
+      children: ['database.md', 'collection.md', 'document.md', 'aggregation.md'],
     },
   ],
-  text: 'Java 基础',
-  icon: 'logos:java',
-  devMode: true,
+  text: 'MongoDB',
+  icon: 'skill-icons:mongodb',
   dir: __dirname,
 };
 

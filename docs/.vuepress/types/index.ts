@@ -1,31 +1,27 @@
-interface SidebarChildren {
-  text: string;
+interface Sidebar {
+  text?: string;
+  prefix?: string;
+  icon?: string;
   children: Array<string>;
 }
 
-interface SidebarConfig {
-  [key: string]: Array<SidebarChildren>;
-}
-
-type NavbarGroupName = '前端' | 'Java' | 'Go' | 'PHP' | '云相关' | '数据库' | 'others';
-
-interface NavbarConfig {
-  group: NavbarGroupName;
-  text: string;
-  link: string;
-  icon?: string;
-}
-
 interface BarConfig {
-  sidebar: SidebarConfig;
-  navbar: NavbarConfig;
-  devMode?: boolean;
-}
-
-interface NavbarGroup {
-  text: NavbarGroupName;
+  text?: string;
   icon?: string;
-  childrenOrder?: Array<string>;
+  navbarText?: string;
+  navbarIcon?: string;
+  sidebars?: Array<Sidebar>;
+  devMode?: boolean;
+  dir: string;
 }
 
-export { SidebarChildren, SidebarConfig, NavbarConfig, BarConfig, NavbarGroup };
+interface GroupConfig {
+  text: string;
+  icon?: string;
+  dir: string;
+  children?: Array<BarConfig>;
+}
+
+type GroupConfigs = Array<GroupConfig>;
+
+export { Sidebar, BarConfig, GroupConfig, GroupConfigs };

@@ -3,12 +3,11 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md'],
+      children: ['common_settings.md', 'common_keys.md'],
     },
   ],
-  text: 'Java 基础',
-  icon: 'logos:java',
-  devMode: true,
+  text: 'VsCode',
+  icon: 'material-icon-theme:vscode',
   dir: __dirname,
 };
 

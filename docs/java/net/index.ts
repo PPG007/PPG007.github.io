@@ -3,12 +3,12 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md'],
+      children: ['tcp.md', 'udp.md', 'url.md'],
+      text: '网络通信',
     },
   ],
-  text: 'Java 基础',
-  icon: 'logos:java',
-  devMode: true,
+  text: '网络通信',
+  icon: 'tabler:network',
   dir: __dirname,
 };
 
