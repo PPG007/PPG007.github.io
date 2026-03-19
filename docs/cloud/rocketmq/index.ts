@@ -3,12 +3,11 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md'],
+      children: ['basic.md', 'features.md', 'start.md', 'examples-java.md'],
     },
   ],
-  text: 'Java 基础',
-  icon: 'logos:java',
-  devMode: true,
+  text: 'RocketMQ',
+  icon: 'simple-icons:apacherocketmq',
   dir: __dirname,
 };
 

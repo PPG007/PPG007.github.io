@@ -6,8 +6,8 @@ heroText: ''
 heroFullScreen: true
 tagline: null
 actions:
-  - text: 在线工具
-    link: /tools/
+  - text: 在线工具222
+    link: /others/tools/
     type: primary
     icon: fa-solid:tools
   - text: GitHub

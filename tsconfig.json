@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
     "outDir": "docs/.vuepress/config",
     "rootDir": "docs",
     "skipLibCheck": true,
-    "declaration": false
+    "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["docs/.vuepress/*"],
+      "@doc-types": ["docs/.vuepress/types/index"],
+      "@components/*": ["docs/.vuepress/components/*"],
+    }
   },
   "include": ["docs/**/*.ts"],
   "exclude": ["docs/.vuepress/**/*.ts"]

@@ -4,14 +4,12 @@ import {
   NavbarLinkOptions,
   SidebarOptions,
   SidebarObjectOptions,
-  AutoLinkOptions,
+  SidebarArrayOptions,
+  SidebarGroupOptions,
 } from 'vuepress-theme-hope';
-import { BarConfig } from '../types';
+import { GroupConfig, GroupConfigs } from '../types';
 import fs from 'fs';
 import path from 'path';
-import navbarList from './navbarList';
-
-const configPath = 'docs/.vuepress/config';
 
 const isDevMode = () => {
   if (!process || !process.env || process.env.MODE !== 'development') {
@@ -24,6 +22,10 @@ const defaultNavbar: Array<NavbarGroupOptions> = [
   { text: '首页', link: '/', icon: 'material-symbols:home', children: [] },
 ];
 
+const parseDir = (dir: string): string => {
+  return dir.split('/').slice(-1)[0];
+};
+
 const formatLink = (link: string): string => {
   if (link.endsWith('/')) {
     return link;
@@ -31,135 +33,110 @@ const formatLink = (link: string): string => {
   return `${link}/`;
 };
 
-const convertSingleNavBar = (item: NavbarGroupOptions): NavbarLinkOptions => {
-  const result: NavbarLinkOptions = {
+const joinLinks = (...links: Array<string>): string => {
+  const items: Array<string> = [];
+  links.forEach((link) => {
+    if (!link) {
+      return;
+    }
+    items.push(link.replace(/^\//, '').replace(/\/$/, ''));
+  });
+  return items.join('/');
+};
+
+const convertSingleNavBar = (item: NavbarGroupOptions): NavbarLinkOptions | NavbarGroupOptions => {
+  if (item.children && item.children.length) {
+    return item;
+  }
+  return {
     text: item.text,
     link: item.link || '/',
     icon: item.icon,
   };
-  if (item.children.length && typeof item.children[0].link === 'string') {
-    result.link = item.children[0].link;
-  }
-  return result;
 };
 
 // 根据各个子配置生成总的 sidebar 配置对象
-const loadSidebar = (configs: Array<BarConfig>): SidebarOptions => {
-  const sidebar: SidebarObjectOptions = {};
-  configs.forEach(({ sidebar: config, devMode }) => {
-    if (devMode && !isDevMode()) {
+const loadSidebar = (configs: Array<GroupConfig>): SidebarOptions => {
+  const options: SidebarObjectOptions = {};
+  configs.forEach(({ dir, children }) => {
+    if (!children) {
       return;
     }
-    Object.keys(config).forEach((key) => {
-      const value = config[key];
-      value.forEach(({ children }, index) => {
-        children.forEach((_, childIndex) => {
-          if (!children[childIndex].startsWith('/')) {
-            children[childIndex] = `/${children[childIndex]}`;
-          }
-          if (!children[childIndex].startsWith(key)) {
-            children[childIndex] = `${key}/docs${children[childIndex]}`;
-          }
-        });
-        value[index].children = children;
+    children.forEach(({ sidebars, devMode, dir: subDir }) => {
+      if (!sidebars || (devMode && !isDevMode())) {
+        return;
+      }
+      const key = `/${parseDir(dir)}/${parseDir(subDir)}`;
+      const values: SidebarArrayOptions = [];
+      sidebars.forEach((sidebar) => {
+        const children = sidebar.children.map((child) => joinLinks('docs', sidebar.prefix || '', child));
+        if (sidebar.text) {
+          const temp: SidebarGroupOptions = {
+            text: sidebar.text,
+            icon: sidebar.icon,
+            children,
+          };
+          values.push(temp);
+          return;
+        }
+        values.push(...children);
       });
-      sidebar[key] = value;
+      options[key] = values;
     });
   });
-  return sidebar;
+  return options;
 };
 
 // 根据各个子配置生成总的 navbar 配置对象
-const loadNavbar = (navbar: Array<NavbarGroupOptions>, configs: Array<BarConfig>): NavbarOptions => {
-  const uniqueMap: {
-    [key: string]: NavbarGroupOptions;
-  } = {};
-  configs.forEach((config) => {
-    if (config.devMode && !isDevMode()) {
+const loadNavbar = (navbars: Array<NavbarGroupOptions>, configs: Array<GroupConfig>): NavbarOptions => {
+  const navbarTextList = navbars.map((item) => item.text);
+  const options: NavbarOptions = navbars.map((item) => {
+    return convertSingleNavBar(item);
+  });
+  configs.forEach(({ text, dir, icon, children }) => {
+    if (navbarTextList.includes(text)) {
       return;
     }
-    const {
-      navbar: { group, text, link, icon },
-    } = config;
-    const child: NavbarLinkOptions = {
-      text: text,
-      link: formatLink(link),
-      icon: icon,
-    };
-    if (!Object.keys(uniqueMap).includes(group)) {
-      uniqueMap[group] = {
-        text: group,
-        children: [child],
-      };
-    } else {
-      const currentChildren = uniqueMap[group].children;
-      currentChildren.push(child);
-      uniqueMap[group].children = currentChildren;
-    }
-  });
-  Object.keys(uniqueMap).forEach((group) => {
-    const order = navbarList.find((item) => item.text === group)?.childrenOrder || [];
-    uniqueMap[group].children.sort((a, b) => {
-      const orderA = order.indexOf((a as AutoLinkOptions).text) + 1 || Infinity;
-      const orderB = order.indexOf((b as AutoLinkOptions).text) + 1 || Infinity;
-      return orderA - orderB;
-    });
-    navbar.push(uniqueMap[group]);
+    navbarTextList.push(text);
+    options.push(
+      convertSingleNavBar({
+        text,
+        icon,
+        prefix: parseDir(dir),
+        children:
+          children
+            ?.filter(({ devMode }) => !devMode || isDevMode())
+            .map((child, index) => {
+              return {
+                text: child.text || child.navbarText || `${text} - ${index + 1}`,
+                icon: child.icon || child.navbarIcon,
+                link: formatLink(parseDir(child.dir)),
+              };
+            }) || [],
+      }),
+    );
   });
 
-  return sortNavbar(navbar).map((item) => {
-    const group = navbarList.find((navbar) => navbar.text === item.text);
-    item.icon = group ? group.icon : item.icon;
-    if (item.children.length <= 1) {
-      return convertSingleNavBar(item);
-    }
-    return item;
-  });
+  return options;
 };
 
-// 根据 navbar 顺序文件进行排序
-const sortNavbar = (navbar: Array<NavbarGroupOptions>) => {
-  navbar.sort((a, b) => {
-    let orderA = navbarList.findIndex((item) => item.text === a.text) + 1 || Infinity;
-    let orderB = navbarList.findIndex((item) => item.text === b.text) + 1 || Infinity;
-    if (a.link === '/') {
-      orderA = 0;
-    } else if (b.link === '/') {
-      orderB = 0;
-    }
-    return orderA - orderB;
-  });
-  return navbar;
-};
-
-// 递归读取所有配置文件
-const parseConfigFiles = async (dirName: string): Promise<Array<BarConfig>> => {
-  const configs: Array<BarConfig> = [];
-  if (dirName.startsWith('.')) {
-    return configs;
+const parseGroupConfigFiles = async (dirName: string): Promise<Array<GroupConfig>> => {
+  const jsPath = path.join(dirName, 'index.js');
+  const isJsExist = fs.existsSync(jsPath);
+  if (!isJsExist) {
+    return [];
   }
-  const files = fs.readdirSync(dirName);
-  let hasRead = false;
-  for (let i = 0; i < files.length; i++) {
-    const tempPath = path.join(dirName, files[i]);
-    if (files[i].startsWith('.')) {
-      continue;
-    }
-    if (fs.lstatSync(tempPath).isDirectory()) {
-      configs.push(...(await parseConfigFiles(tempPath)));
-    } else if (files[i].endsWith('.js') && !hasRead) {
-      const result = await import(/* @vite-ignore */ path.join(__dirname, '../../../', tempPath));
-      if (result.default) {
-        configs.push(result.default as BarConfig);
-        hasRead = true;
-      }
-    }
+  const jsConfig = await import(/* @vite-ignore */ path.join(__dirname, '../../../', jsPath));
+  if (!jsConfig || !jsConfig.default || !jsConfig.default.default) {
+    return [];
   }
-  return configs;
+  return jsConfig.default.default as GroupConfigs;
 };
+
+const configPath = 'docs/.vuepress/config';
 
 export default async function () {
-  const config = await parseConfigFiles(configPath);
+  const config = await parseGroupConfigFiles(configPath);
   const sidebar = loadSidebar(config);
   const navbar = loadNavbar(defaultNavbar, config);
   return {
