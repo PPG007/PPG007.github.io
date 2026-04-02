@@ -3,7 +3,17 @@ import { BarConfig } from '@doc-types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md', 'flow.md', 'oop.md', 'enum.md', 'common-class.md', 'enum.md', 'record.md'],
+      children: [
+        'types.md',
+        'operator.md',
+        'flow.md',
+        'oop.md',
+        'enum.md',
+        'common-class.md',
+        'enum.md',
+        'record.md',
+        'exception.md',
+      ],
     },
   ],
   text: 'Java 基础',
