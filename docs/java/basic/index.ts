@@ -14,6 +14,7 @@ const config: BarConfig = {
         'exception.md',
         'reflect.md',
         'annotation.md',
+        'generics.md',
       ],
     },
   ],
