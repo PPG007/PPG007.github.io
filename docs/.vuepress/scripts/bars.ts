@@ -62,8 +62,8 @@ const loadSidebar = (configs: Array<GroupConfig>): SidebarOptions => {
     if (!children) {
       return;
     }
-    children.forEach(({ sidebars, devMode, dir: subDir }) => {
-      if (!sidebars || (devMode && !isDevMode())) {
+    children.forEach(({ sidebars, devMode, dir: subDir, archived }) => {
+      if (!sidebars || (devMode && !isDevMode()) || archived) {
         return;
       }
       const key = `/${parseDir(dir)}/${parseDir(subDir)}`;
@@ -105,7 +105,7 @@ const loadNavbar = (navbars: Array<NavbarGroupOptions>, configs: Array<GroupConf
         prefix: parseDir(dir),
         children:
           children
-            ?.filter(({ devMode }) => !devMode || isDevMode())
+            ?.filter(({ devMode, archived }) => (!devMode || isDevMode()) && !archived)
             .map((child, index) => {
               return {
                 text: child.text || child.navbarText || `${text} - ${index + 1}`,

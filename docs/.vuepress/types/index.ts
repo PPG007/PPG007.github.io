@@ -13,6 +13,7 @@ interface BarConfig {
   sidebars?: Array<Sidebar>;
   devMode?: boolean;
   dir: string;
+  archived?: boolean;
 }
 
 interface GroupConfig {
