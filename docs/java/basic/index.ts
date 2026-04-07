@@ -15,6 +15,7 @@ const config: BarConfig = {
         'reflect.md',
         'annotation.md',
         'generics.md',
+        'collection.md',
       ],
     },
   ],
