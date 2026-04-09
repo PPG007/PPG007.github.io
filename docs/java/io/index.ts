@@ -18,6 +18,7 @@ const config: BarConfig = {
   text: 'Java IO',
   icon: 'oui:input-output',
   dir: __dirname,
+  archived: true,
 };
 
 export default config;
