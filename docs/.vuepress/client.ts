@@ -1,7 +1,12 @@
+// @ts-expect-error -- resolved by Vite as a side-effect style import
 import 'element-plus/theme-chalk/dark/css-vars.css';
+// @ts-expect-error -- resolved by Vite as a side-effect style import
 import 'vanilla-jsoneditor/themes/jse-theme-dark.css';
+// @ts-expect-error -- resolved by Vite as a side-effect style import
 import 'vuepress-theme-hope/presets/squircle-blogger-avatar.scss';
+// @ts-expect-error -- resolved by Vite as a side-effect style import
 import 'vuepress-theme-hope/presets/bounce-icon.scss';
+// @ts-expect-error -- resolved by Vite as a side-effect style import
 import 'vuepress-theme-hope/presets/hr-driving-car.scss';
 import { defineClientConfig } from 'vuepress/client';
 import { onMounted, watch } from 'vue';

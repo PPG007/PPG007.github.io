@@ -17,6 +17,7 @@ const config: BarConfig = {
         'generics.md',
         'collection.md',
         'io.md',
+        'date.md',
       ],
     },
   ],

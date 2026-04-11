@@ -14,7 +14,11 @@
       "@/*": ["docs/.vuepress/*"],
       "@doc-types": ["docs/.vuepress/types/index"],
       "@components/*": ["docs/.vuepress/components/*"],
-    }
+    },
+    "ignoreDeprecations": "6.0",
+    "types": [
+      "node"
+    ],
   },
   "include": ["docs/**/*.ts"],
   "exclude": ["docs/.vuepress/**/*.ts"]
