@@ -18,6 +18,7 @@ const config: BarConfig = {
         'collection.md',
         'io.md',
         'date.md',
+        'lambda.md',
       ],
     },
   ],
