@@ -19,12 +19,12 @@ const config: BarConfig = {
         'io.md',
         'date.md',
         'lambda.md',
+        'concurrent.md',
       ],
     },
   ],
   text: 'Java 基础',
   icon: 'logos:java',
-  devMode: true,
   dir: __dirname,
 };
 
