@@ -130,3 +130,49 @@ do {
 ## break 和 continue
 
 break 语句可以跳出当前所在最近的一层循环，而 continue 语句则会跳过当前循环的剩余部分，直接进入下一次循环。
+
+## 输入
+
+Java 中，如果要通过终端读取用户输入，可以使用 `System.console`：
+
+```java
+public class Main {
+    static void main() {
+        Console console = System.console();
+        while (true) {
+            char[] password = console.readPassword();
+            String passwordStr = new String(password);
+            if ("exit".equals(passwordStr)) {
+                break;
+            }
+            System.out.println(passwordStr);
+        }
+    }
+}
+```
+
+::: tip
+
+IDEA 中直接执行时，`System.console()` 会返回 null，因为它无法提供一个真正的控制台环境。需要通过终端命令运行 `java Main.java` 来执行。
+
+:::
+
+除了 `System.console`，还可以使用 `Scanner` 类来读取输入：
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            if ("exit".equals(input)) {
+                break;
+            }
+            System.out.println(input);
+        }
+        scanner.close();
+    }
+}
+```

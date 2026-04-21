@@ -28,6 +28,7 @@ const config: BarConfig = {
   text: '并发编程',
   icon: 'flat-color-icons:parallel-tasks',
   dir: __dirname,
+  archived: true,
 };
 
 export default config;

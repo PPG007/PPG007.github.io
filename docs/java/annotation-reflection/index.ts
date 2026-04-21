@@ -21,6 +21,7 @@ const config: BarConfig = {
   text: '注解和反射',
   icon: 'devicon:java',
   dir: __dirname,
+  archived: true,
 };
 
 export default config;

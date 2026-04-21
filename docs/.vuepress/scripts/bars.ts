@@ -98,21 +98,35 @@ const loadNavbar = (navbars: Array<NavbarGroupOptions>, configs: Array<GroupConf
       return;
     }
     navbarTextList.push(text);
+    const commonChildren: NavbarGroupOptions['children'] =
+      children
+        ?.filter(({ devMode, archived }) => (!devMode || isDevMode()) && !archived)
+        .map((child, index) => ({
+          text: child.text || child.navbarText || `${text} - ${index + 1}`,
+          icon: child.icon || child.navbarIcon,
+          link: formatLink(parseDir(child.dir)),
+        })) || [];
+    const archivedChildren: Array<NavbarLinkOptions> =
+      children
+        ?.filter(({ archived }) => archived)
+        .map((child, index) => ({
+          text: child.text || child.navbarText || `${text} - ${index + 1}`,
+          icon: child.icon || child.navbarIcon,
+          link: formatLink(parseDir(child.dir)),
+        })) || [];
+    if (archivedChildren.length) {
+      commonChildren.push({
+        text: '已归档',
+        icon: 'material-symbols:archive',
+        children: archivedChildren,
+      });
+    }
     options.push(
       convertSingleNavBar({
         text,
         icon,
         prefix: parseDir(dir),
-        children:
-          children
-            ?.filter(({ devMode }) => !devMode || isDevMode())
-            .map((child, index) => {
-              return {
-                text: child.text || child.navbarText || `${text} - ${index + 1}`,
-                icon: child.icon || child.navbarIcon,
-                link: formatLink(parseDir(child.dir)),
-              };
-            }) || [],
+        children: commonChildren,
       }),
     );
   });
