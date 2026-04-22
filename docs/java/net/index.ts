@@ -10,6 +10,7 @@ const config: BarConfig = {
   text: '网络通信',
   icon: 'tabler:network',
   dir: __dirname,
+  archived: true,
 };
 
 export default config;

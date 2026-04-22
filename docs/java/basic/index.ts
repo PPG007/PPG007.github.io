@@ -20,6 +20,7 @@ const config: BarConfig = {
         'date.md',
         'lambda.md',
         'concurrent.md',
+        'net.md',
       ],
     },
   ],
