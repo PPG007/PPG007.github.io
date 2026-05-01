@@ -326,6 +326,20 @@ public class Pair <T extends Number, K extends Number>{
 
 :::
 
+extends 还可以用于组合限制，例如下面的代码中，要求 T 必须同时是 `Number` 的子类和 `Comparable<T>` 的实现类：
+
+```java
+public class Pair <T extends Number & Comparable<T>, K extends Number>{
+    // ...
+}
+```
+
+::: tip
+
+当使用 extends 进行组合限制时，必须保证第一个类型参数是一个类，后续的类型参数必须是接口。
+
+:::
+
 ### extends 的作用
 
 考虑这样一个方法：
