@@ -625,3 +625,171 @@ frozenset 是 set 的不可变版本，一旦创建就不能修改，例如：
 my_frozenset = frozenset([1, 2, 3])
 print(my_frozenset) # 输出 frozenset({1, 2, 3})
 ```
+
+## 高级特性
+
+### 切片
+
+Python 中的切片（slice）是一种强大的工具，可以用来获取序列（如字符串、列表、元组等）中的一部分元素。切片的语法如下：
+
+```python
+sequence[start:stop:step]
+```
+
+其中，`start` 是切片的起始索引，默认为 0；`stop` 是切片的结束索引，不包含该索引位置的元素；`step` 是切片的步长，默认为 1。
+
+例如获取字符串中的一部分：
+
+```python
+my_string = "Hello, World!"
+print(my_string[0:5]) # 输出 'Hello'
+print(my_string[7:]) # 输出 'World!'
+print(my_string[::2]) # 输出 'Hlo ol!'
+```
+
+获取 list 中的一部分：
+
+```python
+my_list = [1, 2, 3, 4, 5]
+print(my_list[1:4]) # 输出 [2, 3, 4]
+print(my_list[:3]) # 输出 [1, 2, 3]
+print(my_list[::2]) # 输出 [1, 3, 5]
+```
+
+获取 tuple 中的一部分：
+
+```python
+my_tuple = (1, 2, 3, 4, 5)
+print(my_tuple[1:4]) # 输出 (2, 3, 4)
+print(my_tuple[:3]) # 输出 (1, 2, 3)
+print(my_tuple[::2]) # 输出 (1, 3, 5)
+```
+
+切片也能倒着获取元素，例如：
+
+```python
+my_string = "Hello, World!"
+print(my_string[::-1]) # 输出 '!dlroW ,olleH'
+```
+
+### 迭代
+
+要遍历一个序列中的元素，可以使用 `for-in` 循环。`for-in` 循环需要一个可迭代对象（iterable），例如字符串、列表、元组、字典等都是可迭代对象。
+
+要想判断一个对象是否是可迭代对象，可以使用 `collections.abc.Iterable` 来进行检查，例如：
+
+```python
+from collections.abc import Iterable
+print(isinstance("hello", Iterable)) # 输出 True
+print(isinstance([1, 2, 3], Iterable)) # 输出 True
+print(isinstance(123, Iterable)) # 输出 False
+```
+
+### 列表生成式
+
+前面已经提到，使用 `range` 函数可以生成一个整数序列，例如：
+
+```python
+print(list(range(1, 10))) # 输出 [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+那么如果需要生成一个平方数列表，可以使用 `map` 或者循环，但是 Python 提供了一种更简洁的方式来生成列表，那就是列表生成式（list comprehension），例如：
+
+```python
+squares = [x * x for x in range(1, 10)]
+print(squares) # 输出 [1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+
+列表生成式的语法是 `[expression for item in iterable if condition]`，其中 `expression` 是生成列表元素的表达式，`item` 是迭代变量，`iterable` 是可迭代对象，`condition` 是可选的过滤条件。例如，下面的代码生成一个包含 1 到 10 中偶数的列表：
+
+```python
+even_numbers = [x for x in range(1, 11) if x % 2 == 0]
+print(even_numbers) # 输出 [2, 4, 6, 8, 10]
+```
+
+列表生成式也能嵌套，例如求两个列表的笛卡尔积：
+
+```python
+list1 = [1, 2, 3]
+list2 = ['a', 'b', 'c']
+cartesian_product = [(x, y) for x in list1 for y in list2]
+print(cartesian_product) # 输出 [(1, 'a'), (1, 'b'), (1, 'c'), (2, 'a'), (2, 'b'), (2, 'c'), (3, 'a'), (3, 'b'), (3, 'c')]
+```
+
+注意，`for` 后面的 `if` 是过滤条件，不能带 `else`，如果需要使用 `else`，可以将其放在 `for` 前面的表达式中，例如：
+
+```python
+numbers = [1, 2, 3, 4, 5]
+result = [x if x % 2 == 0 else -x for x in numbers]
+print(result) # 输出 [-1, 2, -3, 4, -5]
+```
+
+### 生成器
+
+如果列表的元素可以按照某种算法推算出来，那么就不必创建一个完整的列表，而是可以在需要的时候才生成元素，这就是生成器（generator）。
+
+创建生成器有多种方式，最简单的方法是将列表生成式的 `[]` 改成 `()`，例如：
+
+```python
+squares = (x * x for x in range(1, 10))
+print(squares) # 输出 <generator object <genexpr> at 0x7ff8c0c0>
+```
+
+如果要一个个获取生成器中的元素，可以使用 `next()` 函数，例如：
+
+```python
+squares = (x * x for x in range(1, 10))
+print(next(squares)) # 输出 1
+print(next(squares)) # 输出 4
+print(next(squares)) # 输出 9
+```
+
+当没有更多元素时，`next()` 函数会抛出 `StopIteration` 异常。
+
+或者者可以使用 `for-in` 循环来遍历生成器中的元素，例如：
+
+```python
+squares = (x * x for x in range(1, 10))
+for square in squares:
+    print(square)
+```
+
+第二种创建生成器的方法是使用生成器函数，生成器函数是一个普通的函数，但是使用 `yield` 语句来返回一个值，并且在下一次调用时从上次返回的地方继续执行，例如一个斐波那契数列的生成器函数可以这样定义：
+
+```python
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+for num in fibonacci(10):
+    print(num)
+```
+
+普通函数时顺序执行，遇到 `return` 或者最后一行函数语句就返回，而生成器函数在每次调用 `next()` 时执行，遇到 `yield` 就返回，再次执行时从上次返回的 `yield` 语句继续执行。
+
+::: warning
+
+调用生成器函数会创建一个生成器对象，多次调用生成器函数会创建多个生成器对象，每个生成器对象都有自己的状态。
+
+:::
+
+### 迭代器
+
+可以被 `next()` 函数调用并不断返回下一个值的对象称为迭代器（iterator）。迭代器对象实现了迭代器协议，即包含 `__iter__()` 和 `__next__()` 方法。
+
+可以使用 `isinstance()` 函数来检查一个对象是否是迭代器，例如：
+
+```python
+from collections.abc import Iterator
+print(isinstance(iter([1, 2, 3]), Iterator)) # 输出 True
+print(isinstance(iter('hello'), Iterator)) # 输出 True
+print(isinstance(123, Iterator)) # 输出 False
+```
+
+将 `Iterable` 转换为 `Iterator` 可以使用内置的 `iter()` 函数，例如：
+
+```python
+print(iter([1, 2, 3])) # 输出 <list_iterator object at 0x7ff8c0c0>
+print(iter('hello')) # 输出 <str_iterator object at 0x7ff8c0c0>
+```
