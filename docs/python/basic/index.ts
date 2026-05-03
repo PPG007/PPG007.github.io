@@ -3,7 +3,7 @@ import { BarConfig } from '@/types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: ['types.md', 'operator.md', 'flow.md', 'function.md', 'oop.md'],
+      children: ['types.md', 'operator.md', 'flow.md', 'function.md', 'oop.md', 'error.md', 'io.md', 'concurrent.md'],
     },
   ],
   text: 'Python 基础',
