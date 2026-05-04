@@ -793,3 +793,32 @@ print(isinstance(123, Iterator)) # 输出 False
 print(iter([1, 2, 3])) # 输出 <list_iterator object at 0x7ff8c0c0>
 print(iter('hello')) # 输出 <str_iterator object at 0x7ff8c0c0>
 ```
+
+### 类型标注
+
+类型标注（type annotation）是 Python 3.5 引入的一种语法，可以用来为函数参数、返回值以及变量添加类型信息，虽然类型标注不会改变 Python 的动态类型特性，但它可以帮助开发者更好地理解代码的意图，并且在使用静态类型检查工具（如 mypy）时提供类型检查的支持。
+
+类型标注的语法如下：
+
+```python
+def function_name(param1: type1, param2: type2) -> return_type:
+    # 函数体
+```
+
+对于变量的类型标注，可以直接在变量名后面添加冒号和类型，例如：
+
+```python
+x: int = 10
+y: str = 'hello'
+```
+
+例如定义一个接受整型或者浮点型的 list 的参数，返回一个整型或者浮点型的函数：
+
+```python
+from typing import List, Union
+
+def sum_numbers(numbers: List[Union[int, float]]) -> Union[int, float]:
+    return sum(numbers)
+```
+
+`typing` 模块提供了许多类型提示的工具，例如 `List`、`Dict`、`Tuple`、`Union` 等，可以用来表示复杂的数据结构和类型关系。
