@@ -27,7 +27,7 @@
     "unplugin-element-plus": "^0.10.0",
     "unplugin-vue-components": "^28.7.0",
     "use-element-plus-theme": "^0.0.5",
-    "uuid": "^11.1.0",
+    "uuid": "^14.0.0",
     "vanilla-jsoneditor": "^3.3.1",
     "vue": "3.5.17",
     "vuepress": "2.0.0-rc.24",
