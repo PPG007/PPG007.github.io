@@ -13,6 +13,8 @@ const config: BarConfig = {
         'io.md',
         'concurrent.md',
         'common_modules.md',
+        'net.md',
+        'database.md',
       ],
     },
   ],
