@@ -3,7 +3,7 @@ import { BarConfig } from '@/types';
 const config: BarConfig = {
   sidebars: [
     {
-      children: [],
+      children: ['start.md', 'params.md'],
     },
   ],
   text: 'FastAPI',
