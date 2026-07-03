@@ -7,6 +7,7 @@ import ElementPlus from 'unplugin-element-plus/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
+import { ragSearchPlugin } from '@ppg007/vuepress-plugin-ragsearch';
 
 const { navbar, sidebar } = await init();
 const __dirname = getDirname(import.meta.url);
@@ -88,4 +89,12 @@ export default defineUserConfig({
     '@doc-types': path.resolve(__dirname, 'types'),
     '@components': path.resolve(__dirname, 'components'),
   },
+  plugins: [
+    ragSearchPlugin({
+      baseUrl: 'http://120.27.17.40',
+      token: {
+        type: 'localStorage'
+      }
+    })
+  ]
 });
