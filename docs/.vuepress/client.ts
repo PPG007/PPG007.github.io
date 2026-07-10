@@ -37,8 +37,15 @@ export default defineClientConfig({
     });
     onMounted(async () => {
       const { useElementPlusTheme } = await import('use-element-plus-theme');
+      const { setRAGSearchThemeColor } = await import('@ppg007/vuepress-plugin-ragsearch/client')
       const { changeTheme } = useElementPlusTheme();
-      changeThemeFn = changeTheme;
+      changeThemeFn = (color?: string) => {
+        if (!color) {
+          return;
+        }
+        changeTheme(color);
+        setRAGSearchThemeColor(color);
+      };
       changeTheme(color.value);
       setElementUIDark(isDarkMode.value);
     });

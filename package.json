@@ -6,6 +6,7 @@
   "license": "GPL-3.0",
   "type": "module",
   "devDependencies": {
+    "@ppg007/vuepress-plugin-ragsearch": "^0.4.0",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.15.17",
     "@vuepress/bundler-vite": "2.0.0-rc.24",
