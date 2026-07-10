@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@ppg007/vuepress-plugin-ragsearch':
-        specifier: ^0.4.0
-        version: 0.4.0(vue@3.5.17(typescript@6.0.2))(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@6.0.2))(typescript@6.0.2)(vue@3.5.17(typescript@6.0.2)))
+        specifier: ^0.5.0
+        version: 0.5.0(vue@3.5.17(typescript@6.0.2))(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@6.0.2))(typescript@6.0.2)(vue@3.5.17(typescript@6.0.2)))
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
@@ -823,8 +823,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@ppg007/vuepress-plugin-ragsearch@0.4.0':
-    resolution: {integrity: sha512-reRTh/dssPRg42gwzBMm5kNTo+lpBSeqfSPWZgXbI93fjOLmTaLpq2bHi79TqKMWZXWCd48uhSHnBH8FY/1TVg==}
+  '@ppg007/vuepress-plugin-ragsearch@0.5.0':
+    resolution: {integrity: sha512-AxAKdgwQIuL1eFxT62SqccllRlmmakj5nV1d+WHoQC7v7sJJIM+cShnpOhxV4di9qS4TPMrRttoi9jDsP8Ut7g==}
     peerDependencies:
       vue: ^3.4.0
       vuepress: ^2.0.0-rc.0
@@ -3815,7 +3815,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@ppg007/vuepress-plugin-ragsearch@0.4.0(vue@3.5.17(typescript@6.0.2))(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@6.0.2))(typescript@6.0.2)(vue@3.5.17(typescript@6.0.2)))':
+  '@ppg007/vuepress-plugin-ragsearch@0.5.0(vue@3.5.17(typescript@6.0.2))(vuepress@2.0.0-rc.24(@vuepress/bundler-vite@2.0.0-rc.24(@types/node@22.15.17)(sass-embedded@1.88.0)(typescript@6.0.2))(typescript@6.0.2)(vue@3.5.17(typescript@6.0.2)))':
     dependencies:
       markdown-it: 14.1.0
       shiki: 4.3.0
