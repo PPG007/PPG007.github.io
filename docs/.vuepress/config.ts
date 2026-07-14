@@ -91,7 +91,7 @@ export default defineUserConfig({
   },
   plugins: [
     ragSearchPlugin({
-      baseUrl: 'http://120.27.17.40',
+      baseUrl: 'https://ppg007.cc.cd',
       token: {
         type: 'localStorage'
       }
