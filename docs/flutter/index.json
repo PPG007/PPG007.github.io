@@ -1,0 +1,41 @@
+{
+  "sidebar": {
+    "/flutter": [
+      {
+        "children": [
+          {
+            "text": "起步",
+            "collapsible": true,
+            "children": [
+              "/flutter/docs/installation.md",
+              "/flutter/docs/example.md"
+            ]
+          },
+          {
+            "text": "用户界面",
+            "collapsible": true,
+            "children": [
+              "/flutter/docs/widgets.md",
+              {
+                "text": "布局构建",
+                "collapsible": true,
+                "children": [
+                  "/flutter/docs/flutterLayout.md",
+                  "/flutter/docs/layoutExample.md",
+                  "/flutter/docs/buildAdaptive.md",
+                  "/flutter/docs/constraints.md"
+                ]
+              }
+            ]
+          }
+        ],
+        "text": "Flutter"
+      }
+    ]
+  },
+  "navbar": {
+    "text": "Flutter",
+    "link": "/flutter",
+    "group": "前端"
+  }
+}
